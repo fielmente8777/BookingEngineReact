@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+  pre_build:
+    commands:
+      - echo "Installing dependencies..."
+      - npm install
+  build:
+    commands:
+      - echo "Building React app..."
+      - npm run build
+      - mkdir newfolder
+      - cp -r build/* newfolder/
+  post_build:
+    commands:
+      - echo "Build completed successfully!"
+      - echo "Cleaning up unnecessary files..."
+      - find . -type f ! -path "./newfolder/*" -delete
+      - find . -type d -empty -delete
+      - cp -r newfolder/* ./
+      - rm -r newfolder
+artifacts:
+  files:
+    - "**/*"
