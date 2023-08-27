@@ -615,7 +615,7 @@ nav {
 }
 
 
-.drp-lst{
+.drp-lst {
   display: none;
 }
 
@@ -1297,3 +1297,301 @@ footer a:hover {
   margin-right: 25px;
   color: #CACACA;
 }
+
+
+
+
+@media screen and (max-width: 480px) {
+
+  .form-main {
+    height: auto;
+  }
+
+  .form {
+    width: 100%;
+    margin: 4rem 0;
+  }
+
+  .form_inner {
+    flex-direction: column;
+  }
+
+  .form-rsv {
+
+    width: 100%;
+
+  }
+
+  .cal-labl {
+    padding: 12px 0;
+  }
+
+  .caldiv {
+    padding: 0 12px;
+  }
+
+  .calendarDiv {
+    padding-bottom: 20px;
+  }
+
+  .fill_detail {
+    width: 100%;
+    height: 135px;
+    border-top: 1px solid #b3b3b3;
+  }
+
+  .card_inner {
+    flex-direction: column;
+  }
+
+  .carousel-inner {
+    width: auto;
+  }
+
+  .aminities-block {
+    flex-direction: column;
+  }
+
+
+  .dec-lst {
+    font-size: 10px;
+    letter-spacing: 0;
+  }
+
+  .room_price {
+    width: auto;
+    padding-top: 10px;
+  }
+
+  .inner-contact-left {
+    width: 100%;
+    padding: 2rem 1rem;
+    border-bottom: 1px solid #B3B3B3;
+  }
+
+  .contact-main {
+    flex-direction: column;
+  }
+
+  .inputBox {
+    align-items: start;
+    flex-direction: column;
+    row-gap: 8px;
+  }
+
+  .inputBox input {
+    width: 100%;
+  }
+
+  .content_inner {
+    flex-direction: column;
+    align-items: start;
+    height: auto;
+    row-gap: 8px;
+  }
+
+  .names {
+    width: 100%;
+  }
+
+  .form-country {
+    width: 100%;
+  }
+
+  .content_inner textarea {
+    width: 100%;
+  }
+
+
+  .inner-contact-right {
+    width: auto;
+    padding: 10px;
+  }
+
+  .cmplt {
+    width: 100%;
+  }
+
+  .bookingbtn {
+    padding-right: 0px;
+  }
+
+
+  .rndClndr {
+    width: 85%;
+  }
+
+  .submit button {
+    font-size: 18px;
+    line-height: 15px;
+  }
+
+
+  .inner_filter {
+    display: none;
+  }
+
+  .filters {
+    justify-content: center;
+  }
+
+  .land-aminit li {
+    width: 135px;
+  }
+}
+
+
+@media screen and (max-width: 768px) and (min-width: 481px) {
+
+  .form {
+    width: 100%;
+  }
+
+  .card_inner {
+    flex-direction: column;
+  }
+
+  .carousel-inner {
+    width: 100%;
+  }
+
+  .carousel-item {
+    width: 100%;
+  }
+
+  .room-last {
+    padding: 10px 0;
+  }
+
+  .land-aminit li {
+    width: 150px;
+  }
+
+  .inner_filter {
+    align-items: center;
+    width: auto;
+  }
+
+  .btn-fc {
+    width: auto;
+    font-size: 12px;
+  }
+
+  .room_price {
+    display: flex;
+    width: 25%;
+    text-align: end;
+    flex-direction: column;
+    align-items: end;
+    justify-content: end;
+  }
+
+  .no-rooms span {
+    font-size: 16px;
+    line-height: 30px;
+  }
+
+  .no-rooms {
+    padding: 5px 0;
+    gap: 5px;
+  }
+
+  .contact-main {
+    flex-direction: column-reverse;
+  }
+
+  .inner-contact-left {
+    width: 100%;
+    padding: 2rem 1rem;
+    border-top: 1px solid #B3B3B3;
+    border-right: 0;
+  }
+
+  .inner-contact-right {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 769px) {
+
+  .form {
+    width: 100%;
+  }
+
+  .card_inner {
+    flex-direction: column;
+  }
+
+  .carousel-inner {
+    width: 100%;
+  }
+
+  .carousel-item {
+    width: 100%;
+  }
+
+  .room-last {
+    padding: 10px 0;
+  }
+
+  .land-aminit li {
+    width: 150px;
+  }
+
+  .inner_filter {
+    align-items: center;
+    width: auto;
+  }
+
+  .btn-fc {
+    width: auto;
+    font-size: 12px;
+  }
+
+  .room_price {
+    display: flex;
+    width: 25%;
+    text-align: end;
+    flex-direction: column;
+    align-items: end;
+    justify-content: end;
+  }
+
+  .no-rooms span {
+    font-size: 16px;
+    line-height: 30px;
+  }
+
+  .no-rooms {
+    padding: 5px 0;
+    gap: 5px;
+  }
+
+  .contact-main {
+    flex-direction: column-reverse;
+  }
+
+  .inner-contact-left {
+    width: 100%;
+    padding: 2rem 1rem;
+    border-top: 1px solid #B3B3B3;
+    border-right: 0;
+  }
+
+  .inner-contact-right {
+    width: 100%;
+  }
+}
+
+/* @media screen and (max-width: 1024px) and (min-width: 769px) {
+
+
+  .land-aminit li {
+    width: 160px;
+  }
+
+  .inner_filter {
+    width: 40%;
+}
+
+} */

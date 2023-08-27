@@ -19,13 +19,18 @@ const FullCalendar1 = (props) => {
     const [date, setDate] = useState(new Date());
     const [isOpen, setIsOpen] = useState(false);
 
+    const isDateDisabled = date => {
+        // Disable dates before the current date
+        return date < new Date();
+    };
+
     const handleClick = () => {
         setIsOpen(!isOpen);
     };
 
     const handleDateChange = (selectedDate) => {
-        checkout_date= formatDate(selectedDate);
-        localStorage.setItem("Checkout",checkout_date)
+        checkout_date = formatDate(selectedDate);
+        localStorage.setItem("Checkout", checkout_date)
         setDate(selectedDate);
         setIsOpen(false); // Close the calendar after selecting a date
     };
@@ -35,11 +40,11 @@ const FullCalendar1 = (props) => {
     const selectedMonth = date.toLocaleString('default', { month: 'long' });
     const selectedYear = date.getFullYear();
     let checkout_date = formatDate(date)
-    localStorage.setItem("Checkout",checkout_date)
+    localStorage.setItem("Checkout", checkout_date)
 
     return (
         <div className='caldiv'>
-            <button className='datebtn' onClick={handleClick} style={{background:props.bg_color}}>
+            <button className='datebtn' onClick={handleClick} style={{ background: props.bg_color }}>
                 <span>{date.toLocaleDateString('en-US', { weekday: 'long' })}</span>
                 <span className='date'>{selectedDay}</span>
                 <span>{selectedMonth}</span>
@@ -47,7 +52,8 @@ const FullCalendar1 = (props) => {
             </button>
             {isOpen && (
                 <div className='rndClndr'>
-                    <Calendar onChange={handleDateChange} value={date} />
+                    <Calendar onChange={handleDateChange} value={date}
+                        tileDisabled={({ date }) => isDateDisabled(date)} />
                 </div>
             )}
 

@@ -4,10 +4,10 @@ import { ThreeCircles } from  'react-loader-spinner'
 function Spinner(props) {
   return (
     <>
-        <div className={props.display} style={{marginLeft:"35%",marginTop:"20%"}} >
+        <div className={props.display} style={{marginLeft:"45%",marginTop:"20%"}} >
             <ThreeCircles
-                height="300"
-                width="300"
+                height="125"
+                width="125"
                 color="#4fa94d"
                 wrapperStyle={{}}
                 wrapperClass=""

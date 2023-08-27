@@ -19,6 +19,11 @@ const FullCalendar = (props) => {
     const [date, setDate] = useState(new Date());
     const [isOpen, setIsOpen] = useState(false);
 
+    const isDateDisabled = date => {
+        // Disable dates before the current date
+        return date < new Date();
+    };
+
     const handleClick = () => {
         setIsOpen(!isOpen);
     };
@@ -47,7 +52,7 @@ const FullCalendar = (props) => {
             </button>
             {isOpen && (
                 <div className='rndClndr'>
-                    <Calendar onChange={handleDateChange} value={date} />
+                    <Calendar onChange={handleDateChange} value={date} tileDisabled={({ date }) => isDateDisabled(date)} />
                 </div>
             )}
 
