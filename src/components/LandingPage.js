@@ -130,14 +130,7 @@ export default function Landing(props) {
                                             <div className="child-gap d-flex flex-column align-items-center">
                                                 <label for="#">Children</label>
                                                 <label for="#" className="upto">(up to 12 years)</label>
-                                                {/* style="font-size: 11px;" */}
-                                                {/*  <select name="#" id="kid" className="options">
-                                                        <option value="0">0</option>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                    </select> */}
+                                                
 
                                                 <select name="#" className="options" id="kid" onchange="showDropdown()" style={{background:props.bt_color}}>
                                                     <option value="0">0</option>
@@ -148,20 +141,7 @@ export default function Landing(props) {
                                                 </select>
                                             </div>
 
-                                            {/* <div className="child-gap d-flex flex-column align-items-center mt-2">
-                                                <label for="#">Child Age</label>
-                                                <div id="dropdown-container" className="child_show">
-                                                    <select name="#" className="options" id="child_age" onchange="showDropdown()">
-                                                        <option value="0">0</option>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                    </select>
-                                                </div>
-                                            </div> */}
-
-
+                                            
                                         </div>
                                     </div>
 

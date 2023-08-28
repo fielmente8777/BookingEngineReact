@@ -40,8 +40,7 @@ export default function Footer(props) {
               <a className='fa-social' href={props.facebook} target="_blank" rel='noreferrer'><FaFacebookF /></a>
               <a className='fa-social' href={props.instagram} target="_blank" rel='noreferrer'><FaInstagram /></a>
 
-              {/* <a className='fa-social' href="https://www.youtube.com/" target="_blank"><FaYoutube /></a> */}
-              {/* <a className='fa-social' href="" target="_blank"><FaLinkedinIn /></a> */}
+
             </div>
 
 
@@ -76,7 +75,7 @@ export default function Footer(props) {
             </p>
           </div>
           <div className="copyright-inner copy-right">
-            <span>Designed & Developed by <a href="#">Eazotel.com</a></span>
+            <span>Designed & Developed by <a href="https://eazotel.com/">Eazotel.com</a></span>
           </div>
 
         </div>

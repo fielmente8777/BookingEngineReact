@@ -12,9 +12,9 @@ import NotFoundPage from './components/NotFoundPage';
 
 
 function App() {
-  const [Bg_color, setBg_color] = useState("orange")      //background for header and footer
-  const [Box_color, setBox_color] = useState("green")     //Box color for reservation
-  const [Button_color, setButton_color] = useState("blue")//Button color of checkin and out
+  const [Bg_color, setBg_color] = useState("orange")        //background for header and footer
+  const [Box_color, setBox_color] = useState("green")       //Box color for reservation
+  const [Button_color, setButton_color] = useState("blue")  //Button color of checkin and out
   const [HotelEmail, setHotelEmail] = useState("test@gmail.com")
   const [HotelAbout, setHotelAbout] = useState("About Us")
   const [HotelName, setHotelName] = useState("Hotelname")
@@ -29,6 +29,8 @@ function App() {
   const [Room_searchButton, setRoom_searchButton] = useState("Look For Rooms");
   const [RoomFinal_searchButton, setRoomFinal_searchButton] = useState("Reserve");
   const [PaymentButton,setPaymentButton] = useState("Submit")
+
+
   const [Spinner_spin,setSpinner_spin] = useState("")
   const [Spinner_spin1,setSpinner_spin1] = useState("d-none")
   const [Spinner_spin2,setSpinner_spin2] = useState("d-none")
@@ -36,7 +38,7 @@ function App() {
   async function Get_Hotel_status_exists() {
       //spinner start
 
-        const response = await fetch("https://booking.eazotel.com/fielmente/booking/identity/?id="+localStorage.getItem("id"), {
+        const response = await fetch("http://127.0.0.1:8000/api/bookingEngine/engineDetails?id="+localStorage.getItem("id"), {
           method: "GET", 
           headers: {
             Accept: "application/json, text/plain, /",
@@ -46,39 +48,29 @@ function App() {
         });
 
         const json = await response.json();
-        // const json1 = await response1.json();
+        // const json = await response1.json();
 
         if (json.Status === true ) {
-              const response1 = await fetch("https://booking.eazotel.com/fielmente/booking/information", {
-                method: "POST", 
-                headers: {
-                  Accept: "application/json, text/plain, /",
-                  "Content-Type": "application/json",
-                },
-                body:JSON.stringify({
-                  "Hotel_id_hash":localStorage.getItem("id")
-                }),
-              });
-              const json1 = await response1.json();
-              setHotelName(json1.Navbar["HotelName"])
-              setHotelImage(json1.Navbar["Hotel_Image"])
-              setHotelLogo(json1.Navbar["Hotel_Logo"])
-              setHotelEmail(json1.Navbar["HotelEmail"])
+              setHotelName(json.Profile["hotelName"])
+              setHotelEmail(json.Profile["hotelEmail"])
 
               //Footer Information
-              setHotelAbout(json1.Footer["Aboutus"])
-              setBg_color(json1.Footer["Bg_color"])
-              setBox_color(json1.Footer["box_color"])
-              setButton_color(json1.Footer["Button_color"])
-              setFacebook(json1.Footer["Facebook"])
-              setInstagram(json1.Footer["Instagram"])
-              setTwitter(json1.Footer["Twitter"])
-
+              setHotelAbout(json.Data["AboutUs"])
+              setBg_color(json.Data.Colors["BackgroundColor"])
+              setBox_color(json.Data.Colors["BoardColor"])
+              setButton_color(json.Data.Colors["ButtonColor"])
+              
               //Buttons Labels
-              setReservation_button(json1.Label["Reservation_box"]);
-              setRoom_searchButton(json1.Label["Room_search_button"])
-              setRoomFinal_searchButton(json1.Label["Reserve_button"])
-              setPaymentButton(json1.Label["Guest_Info_submit"])
+              setReservation_button(json.Data.Labels["ReserveBoard"]);
+              setRoom_searchButton(json.Data.Labels["ReserveButton"])
+              setRoomFinal_searchButton(json.Data.Labels["ConfirmButton"])
+              setPaymentButton(json.Data.Labels["PayButton"])
+
+              //Image
+              setHotelLogo(json.WebsiteData["Footer"]["Logo"])
+              setFacebook(json.WebsiteData["Links"].Facebook)
+              setInstagram(json.WebsiteData["Links"].Instagram)
+              setTwitter(json.WebsiteData["Links"].Twitter)
               //spinner end
 
               setSpinner_spin("d-none")
