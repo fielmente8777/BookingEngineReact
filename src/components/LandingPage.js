@@ -77,7 +77,7 @@ export default function Landing(props) {
         <>
             <section classNameName={`section`}>
                 {/* style={{width:"100%",objectFit:"cover",backgroundImage:`url(${props.Bg_image})`,backgroundRepeat:"no-repeat" }} */}
-                <div className={`container form-main ${props.display}`}>
+                <div className={`container form-main ${props.display}`} >
                     <div className="form">
                         <div className="reservation" style={{background:props.color}}>
                             <h4 >{props.ReservationLabel}</h4>
