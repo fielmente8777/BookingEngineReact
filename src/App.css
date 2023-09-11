@@ -51,6 +51,7 @@ body {
 a {
   text-decoration: none;
 
+
 }
 
 ul {
@@ -58,6 +59,7 @@ ul {
 }
 
 li {
+  text-decoration-style: none;
   list-style: none;
 }
 

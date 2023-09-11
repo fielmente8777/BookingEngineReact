@@ -1,20 +1,31 @@
 import React from 'react'
 
-import { FaTripadvisor,FaTwitter } from "react-icons/fa";
+import { FaTripadvisor, FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 // import { FaYoutube } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 
+import { useTranslation } from 'react-i18next';
+import './i18n'; // Import your i18n configuration
+
 
 export default function Footer(props) {
+
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
+
+
   return (
-    <footer className={`${props.display}`} style={{background:props.color}}>
+    <footer className={`${props.display}`} style={{ background: props.color }}>
       <div className="container footer_top">
         <div className="footer-outer">
           <div className="footer-main">
             <div className="Contact">
-              <h1>Reach us at</h1>
+              <h1>{t('Reach us at')}</h1>
               <ul className="contact-inner">
                 {/* <li><a href="#" className="Contact-item"><i className="fa-solid fa-location-dot foot-icons"></i>
                   ADDRESS: Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mattis, felis a ultricies malesuada, sem tortor ultrices ante.
@@ -23,11 +34,12 @@ export default function Footer(props) {
                   {/* <p>Near Clubhouse Road old manali, Manali 175131 India.
                   </p> */}
                 </li>
-                <li><a className="Contact-item" href="#">EMAIL ID: &nbsp;{props.email}</a>
+                <li><a className="Contact-item" href="#">{t('EMAIL ID')}: &nbsp;{props.email}</a>
                   {/* <i className="fa-regular fa-envelope foot-icons"></i> */}
                 </li>
                 <li>
-                  <p>{props.aboutus}</p>
+                  {/* <p>{props.aboutus}</p> */}
+                  <p>{t('About Us')}</p>
                 </li>
                 {/* <li><a className="Contact-item" href="#"><i
                   className="fa-sharp fa-solid fa-phone foot-icons"></i>97561437**</a></li>  */}
@@ -46,10 +58,9 @@ export default function Footer(props) {
 
             <div className="conditions">
               <div className="inner_conditions d-flex g-4">
-                <a href="/#" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">Terms & Conditions |</a>
-                <a href="/#" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">Payment Terms |</a>
-                <a href="/#" data-bs-toggle="modal" data-bs-target="#staticBackdrop4">Cancellation & Refund
-                  Policy</a>
+                <a href="/#" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">{t('Terms & Conditions')} |</a>
+                <a href="/#" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">{t('Payment Terms')} |</a>
+                <a href="/#" data-bs-toggle="modal" data-bs-target="#staticBackdrop4">{t('Cancellation & Refund Policy')}</a>
               </div>
             </div>
 
@@ -71,11 +82,11 @@ export default function Footer(props) {
         </div>
         <div className="copyright">
           <div className="copyright-inner">
-            <p>&#169; Copyright 2023 Hotel Taj, Udaipur, India
+            <p>&#169; {t('Copyright 2023 Hotel Taj, Udaipur, India')}
             </p>
           </div>
           <div className="copyright-inner copy-right">
-            <span>Designed & Developed by <a href="https://eazotel.com/">Eazotel.com</a></span>
+            <span>{t('Designed & Developed by')}<a href="https://eazotel.com/">Eazotel.com</a></span>
           </div>
 
         </div>
