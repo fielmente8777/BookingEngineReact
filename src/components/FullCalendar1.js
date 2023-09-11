@@ -45,13 +45,14 @@ const FullCalendar1 = (props) => {
     return (
         <div className='caldiv'>
             <button className='datebtn' onClick={handleClick} style={{ background: props.bg_color }}>
-                <span>{date.toLocaleDateString('en-US', { weekday: 'long' })}</span>
-                <span className='date'>{selectedDay}</span>
-                <span>{selectedMonth}</span>
-                <span>{selectedYear}</span>
+                {/* We have to customize this color, this color will come form backend */}
+                <span className='text-light'>{date.toLocaleDateString('en-US', { weekday: 'long' })}</span>
+                <span className='date text-light' >{selectedDay}</span>
+                <span className='text-light'>{selectedMonth}</span>
+                <span className='text-light'>{selectedYear}</span>
             </button>
             {isOpen && (
-                <div className='rndClndr'>
+                <div className='rndClndr '>
                     <Calendar onChange={handleDateChange} value={date}
                         tileDisabled={({ date }) => isDateDisabled(date)} />
                 </div>

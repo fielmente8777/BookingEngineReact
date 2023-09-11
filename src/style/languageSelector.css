@@ -1,0 +1,31 @@
+.center-container {
+    position: fixed;
+    background-color: red;
+
+    z-index: 2;
+    /* Set the container height to 100% of the viewport height */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    /* Adjust the gap between buttons as needed */
+}
+
+.language-button {
+    padding: 10px 20px;
+    /* Adjust padding as needed */
+    background-color: #007bff;
+    /* Button background color */
+    color: #fff;
+    /* Button text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.language-button:hover {
+    background-color: #0056b3;
+    /* Button background color on hover */
+}

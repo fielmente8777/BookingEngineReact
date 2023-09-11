@@ -9,8 +9,19 @@ import { Link } from "react-router-dom";
 // import FooterLogo from '../Images/backgroundimge.jpeg'
 import FooterLogo from '../Images/img1.jpg'
 
+import { useTranslation } from 'react-i18next';
+import './i18n'; // Import your i18n configuration
+
 
 export default function Footer(props) {
+
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
+
+
   return (
     <footer className={`${props.display}`} style={{ background: props.color }}>
       <div className="container footer_top">
@@ -106,7 +117,7 @@ export default function Footer(props) {
         </div>
         <div className="copyright">
           <div className="copyright-inner">
-            <p>&#169; Copyright 2023 Hotel Taj, Udaipur, India
+            <p>&#169; {t('Copyright 2023 Hotel Taj, Udaipur, India')}
             </p>
           </div>
           <div className="copyright-inner copy-right">

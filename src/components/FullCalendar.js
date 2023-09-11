@@ -29,8 +29,8 @@ const FullCalendar = (props) => {
     };
 
     const handleDateChange = (selectedDate) => {
-        checkin_date= formatDate(selectedDate);
-        localStorage.setItem("Checkin",checkin_date)
+        checkin_date = formatDate(selectedDate);
+        localStorage.setItem("Checkin", checkin_date)
         setDate(selectedDate);
         setIsOpen(false); // Close the calendar after selecting a date
     };
@@ -40,15 +40,16 @@ const FullCalendar = (props) => {
     const selectedMonth = date.toLocaleString('default', { month: 'long' });
     const selectedYear = date.getFullYear();
     let checkin_date = formatDate(date)
-    localStorage.setItem("Checkin",checkin_date)
+    localStorage.setItem("Checkin", checkin_date)
 
     return (
         <div className='caldiv'>
-            <button className='datebtn' onClick={handleClick} style={{background:props.bg_color}}>
-                <span>{date.toLocaleDateString('en-US', { weekday: 'long' })}</span>
-                <span className='date'>{selectedDay}</span>
-                <span>{selectedMonth}</span>
-                <span>{selectedYear}</span>
+            <button className='datebtn' onClick={handleClick} style={{ background: props.bg_color }}>
+                {/* We have to customize this color, this color will come form backend */}
+                <span className='text-light'>{date.toLocaleDateString('en-US', { weekday: 'long' })}</span>
+                <span className='date text-light'>{selectedDay}</span>
+                <span className='text-light'>{selectedMonth}</span>
+                <span className='text-light'>{selectedYear}</span>
             </button>
             {isOpen && (
                 <div className='rndClndr'>

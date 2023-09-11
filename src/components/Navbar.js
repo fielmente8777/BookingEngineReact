@@ -1,36 +1,81 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FaEnvelope, FaPhoneAlt, FaGlobe } from "react-icons/fa";
+import { useTranslation } from 'react-i18next';
+import './i18n'; // Import your i18n configuration
+import LanguageSelector from './Selectlanguage';
+
+
+
 
 export default function Navbar(props) {
+
+    const { t, i18n } = useTranslation();
+    const changeLanguage = (lng) => {
+        i18n.changeLanguage(lng);
+    };
+
+    const languages = [
+        { code: 'en', label: 'English' },
+        { code: 'es', label: 'Spanish' },
+        { code: 'de', label: 'German' },
+        { code: 'hi', label: 'Hindi' },
+        { code: 'fr', label: 'French' },
+        { code: 'it', label: 'Italian' },
+        { code: 'ja', label: 'Japanese' },
+        { code: 'ko', label: 'Korean' },
+        { code: 'pt', label: 'Portuguese' },
+        { code: 'ru', label: 'Russian' },
+        // Add more languages here as needed
+    ];
     return (
 
-        <nav class={`navbar navbar-expand-lg ${props.display}`} style={{background:props.color}}>
+        <nav class={`navbar navbar-expand-lg ${props.display}`} style={{ background: props.color }}>
             <div class="container navbar">
                 <div class="nav-logo">
                     <img src={props.logo}
                         alt="logo" />
                 </div>
+
+
                 <a class="navbar-brand" href="#" style={{ color: '#fff', fontWeight: '500' }} >{props.hotelname}</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
                     aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                     <span style={{ color: "#fff" }}><i class="fa-solid fa-bars"></i></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-                    <ul class="navbar-nav mb-2 mb-lg-0" style={{background:props.color}}>
+                    <ul class="navbar-nav mb-2 mb-lg-0" style={{ background: props.color }}>
 
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">
+                        <li class="nav-item ">
+                            <a class="nav-link " aria-current="page" href="#">
                                 <select id="currency" onchange="convertCurrency()">
-                                    <option value="USD">USD</option>
+                                    <option value="USD" >USD</option>
                                     <option value="EUR">EUR</option>
                                     <option value="GBP">GBP</option>
                                 </select>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page"><FaGlobe />
-                            </a>
+
+                            {/* <a class="nav-link" aria-current="page" onClick={handleLanguageClick}>
+                                <FaGlobe />
+                            </a> */}
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <FaGlobe />
+                                </button>
+                                <ul class="dropdown-menu">
+                                    {languages.map((language) => (
+                                        <button
+                                            key={language.code}
+                                            onClick={() => changeLanguage(language.code)}
+                                            className="language-button w-100 mt-1"
+                                        >
+                                            {language.label}
+                                        </button>
+                                    ))}
+                                </ul>
+                            </div>
                         </li>
 
                         <li class="nav-item">
@@ -40,13 +85,13 @@ export default function Navbar(props) {
                         <li class="nav-item">
                             <a href="https://mail.google.com/" class="nav-link nav-icon" aria-current="page" target="_blank"><FaEnvelope /></a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item ">
                             <a class="nav-link" aria-current="page" href="#" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal1">Login</a>
+                                data-bs-target="#exampleModal1">{t('Login')}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal2">Sign up</a>
+                                data-bs-target="#exampleModal2">{t('Sign up')}</a>
                         </li>
 
                         {/* <li class="nav-item">

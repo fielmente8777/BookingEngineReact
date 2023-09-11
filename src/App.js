@@ -11,10 +11,15 @@ import Spinner from './components/Spinner';
 import NotFoundPage from './components/NotFoundPage';
 import { BrowserRouter } from 'react-router-dom'
 
+import { useTranslation } from 'react-i18next';
+import './components/i18n'; // Import your i18n configuration
+
+
+
 function App() {
-  const [Bg_color, setBg_color] = useState("orange")        //background for header and footer
-  const [Box_color, setBox_color] = useState("green")       //Box color for reservation
-  const [Button_color, setButton_color] = useState("blue")  //Button color of checkin and out
+  const [Bg_color, setBg_color] = useState("#0A3A75")        //background for header and footer
+  const [Box_color, setBox_color] = useState("#0A3A75")       //Box color for reservation
+  const [Button_color, setButton_color] = useState("#0A3A75")  //Button color of checkin and out
   const [HotelEmail, setHotelEmail] = useState("test@gmail.com")
   const [HotelAbout, setHotelAbout] = useState("About Us")
   const [HotelName, setHotelName] = useState("Hotelname")
@@ -31,9 +36,9 @@ function App() {
   const [PaymentButton, setPaymentButton] = useState("Submit")
 
 
-  const [Spinner_spin, setSpinner_spin] = useState("")
-  const [Spinner_spin1, setSpinner_spin1] = useState("d-none")
-  const [Spinner_spin2, setSpinner_spin2] = useState("d-none")
+  const [Spinner_spin, setSpinner_spin] = useState("d-none")
+  const [Spinner_spin1, setSpinner_spin1] = useState("")
+  const [Spinner_spin2, setSpinner_spin2] = useState("")
 
   async function Get_Hotel_status_exists() {
     //spinner start
@@ -88,12 +93,22 @@ function App() {
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get("id");
   localStorage.setItem('id', token)
-  Get_Hotel_status_exists()
+  // Get_Hotel_status_exists()
+
+  const { t, i18n } = useTranslation();
+
+  // Change the language
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
+
+
+
 
   return (
     <>
       <BrowserRouter>
-        <Spinner display={Spinner_spin} />
 
         <Navbar hotelname={HotelName} logo={HotelLogo} display={Spinner_spin1} color={Bg_color} />
 
