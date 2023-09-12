@@ -29,7 +29,7 @@ export default function Footer(props) {
           <div className="footer-main col-3">
             <div className="FootAddrs">
               <div className="footLogo">
-                <img src={FooterLogo} alt="" />
+                <img src={props.Logo} alt="" />
               </div>
               <p className='my-2'>{props.aboutus}</p>
             </div>
@@ -50,16 +50,14 @@ export default function Footer(props) {
           <div className="col-3">
             <h6 className='footHeading'>Reach us at</h6>
             <p className="Contact-item"><i className="fa-solid fa-location-dot foot-icons"></i>
-              ADDRESS: Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mattis, felis a ultricies malesuada, sem tortor ultrices ante.
-            </p>
-            <p>Near Clubhouse Road old manali, Manali 175131 India.
+              ADDRESS:{props.HotelAddress}
             </p>
             <ul className="contact-inner">
               <li><Link className="Contact-item" to="#"><i className="fa-regular fa-envelope foot-icons"></i>{props.email}</Link>
 
               </li>
               <li><Link className="Contact-item" to="#"><i
-                className="fa-sharp fa-solid fa-phone foot-icons"></i>97561437**</Link></li>
+                className="fa-sharp fa-solid fa-phone foot-icons"></i> {props.HotelNumber}</Link></li>
 
             </ul>
 
@@ -99,21 +97,11 @@ export default function Footer(props) {
             </ul>
           </div>
           <div className="map col-3"><iframe
-              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3374.1032103134894!2d77.18125107552578!3d32.2553051738861!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1686917527144!5m2!1sen!2sin"
+              src={props.Location}
               width="600" height="450" allowfullscreen="" loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"></iframe></div>
 
-          {/* <div className="map"> */}
-          {/* <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1814.1984800827395!2d73.67755159839476!3d24.575492999999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3967efecf87f0b8b%3A0x2708953a0e177443!2sTaj%20Lake%20Palace%2C%20Udaipur!5e0!3m2!1sen!2sin!4v1685987887493!5m2!1sen!2sin"
-              width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"></iframe> */}
-
-          {/* <iframe
-              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3374.1032103134894!2d77.18125107552578!3d32.2553051738861!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1686917527144!5m2!1sen!2sin"
-              width="600" height="450" allowfullscreen="" loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"></iframe> */}
-          {/* </div> */}
+         
         </div>
         <div className="copyright">
           <div className="copyright-inner">
@@ -121,7 +109,7 @@ export default function Footer(props) {
             </p>
           </div>
           <div className="copyright-inner copy-right">
-            <span>Designed & Developed by <Link to="https://eazotel.com/" target='_blank'>Eazotel.com</Link></span>
+            <span>{t('Designed & Developed by')} <Link to="https://eazotel.com/" target='_blank'>Eazotel.com</Link></span>
           </div>
 
         </div>

@@ -12,25 +12,6 @@ import './i18n'; // Import your i18n configuration
 export default function Landing(props) {
     let [Headlines, setHeadlines] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
-    async function Get_Hotel_status_exists() {
-        const response = await fetch("https://booking.eazotel.com/fielmente/booking/identity/?id=" + localStorage.getItem("id"), {
-            method: "GET",
-            headers: {
-                Accept: "application/json, text/plain, /",
-                "Content-Type": "application/json",
-            },
-
-        });
-
-        const json = await response.json();
-        // const json1 = await response1.json();
-
-        if (json.Status === true) {
-
-        } else {
-            alert("404 page")
-        }
-    }
 
 
 
@@ -43,26 +24,20 @@ export default function Landing(props) {
         localStorage.setItem("Adult", adult);
         localStorage.setItem("Kid", kid);
 
-        const response = await fetch("https://booking.eazotel.com/fielmente/booking/search/", {
-            method: "POST",
+        const response = await fetch(`${props.baseUrl}/api/rooms/get?id=${localStorage.getItem('hotelid')}`, {
+            method: "GET",
             headers: {
                 Accept: "application/json, text/plain, /",
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                "Hotel_id_hash": localStorage.getItem("id"),
-                "Checkin_date": checkin_date,
-                "Checkout_date": checkout_date,
-                "Adult": localStorage.getItem("Adult"),
-                "Kid": localStorage.getItem("Kid")
-            }),
         });
 
         const json = await response.json();
 
         if (json.Status === true) {
             document.getElementById("No_rooms").style.display = "none"
-            setHeadlines((json.Rooms));
+            document.getElementById("id_filters").style.display="block"
+            setHeadlines((json.Details));
 
         } else {
             document.getElementById("No_rooms").style.display = "block"
@@ -204,16 +179,110 @@ export default function Landing(props) {
             <div className='' id="No_rooms" style={{ textAlign: "center", color: "grey", display: "none" }}>
                 <h3>{t('No rooms Available')}</h3>
             </div>
+            <div className='container' id="id_filters" style={{display: "none" }}>
+                <div class="filters" style={{backgroundColor:props.color}}>
+                    <div class="inner_filter">
+                        <label>Show by</label>
+                        <div class="roomBtn">
+                            <buttton class="btn btn-secondary btn-fc">Rooms</buttton>
+                            <buttton class="btn btn-secondary btn-fc">Rates</buttton>
+                        </div>
+                    </div>
+
+                    <div className="crd-head">
+                        <h3>select rooms</h3>
+                    </div>
+
+                    <div class="inner_filter rgt-flt">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary btn-fc" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Room type
+                            </button>
+                            <ul class="dropdown-menu drp-lst">
+                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Havana Deluxe King
+                                    Room</a></li>
+                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Havana Deluxe Twin</a>
+                                </li>
+                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Havana Premier King
+                                    Room</a></li>
+                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Havana Twin King
+                                    Room</a></li>
+                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Havana Connecting
+                                    Room</a></li>
+                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> El Presidente Suite</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle btn-fc" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Specciaal Offers
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> FLEXIBLE 24-HOURS STAY
+                                    [Room Only]</a></li>
+                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Early Saver [Room with
+                                    Breakfast]</a></li>
+                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> FLEXIBLE 24-HOURS STAY
+                                    [Room with Breakfast]</a></li>
+                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Monthly Deal</a></li>
+                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Early Saver [Room
+                                    Only]</a></li>
+                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Staycation Offer [Room
+                                    with Breakfast]l</a></li>
+                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Staycation Offer [Room
+                                    Only]</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle btn-fc" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Filters
+                            </button>
+                            <ul class="dropdown-menu rightopn">
+                                <div class="fc-rt d-flex">
+                                    <div class="left-dropdown">
+                                        <div class="status">
+                                            <h6 class="mx-3">Status</h6>
+                                            <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Hide unable
+                                                to book</a></li>
+                                        </div>
+                                        <div class="drop-feature">
+                                            <h6 class="mx-3">Room Features</h6>
+                                            <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Balcony</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Bathtub
+                                            </a></li>
+                                        </div>
+                                    </div>
+                                    <div class="right-dropdown">
+                                        <h6 class="mx-3">Benefits</h6>
+                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> No breakfast</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Internet
+                                        </a></li>
+                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Pay later</a>
+                                        </li>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {Headlines.map((element) => {
+                
                 return <div key={element.url}>
                     <Cards
-                        name={element.Room ? element.Room.slice(0, 80) : ""}
-                        description={element.Description ? element.Description.slice(0, 80) : ""}
-                        available={element.Available}
-                        price={element.Price ? element.Price : ""}
-                        beds={element.Beds ? element.Beds : ""}
-                        facilities={element.Facilities}
-                        images={element.Images}
+                        name={element.roomName ? element.roomName.slice(0, 80) : ""}
+                        description={element.roomDescription ? element.roomDescription.slice(0, 80) : ""}
+                        available={element.noOfRooms}
+                        price={element.price ? element.price : ""}
+                        type = {element.roomTypeName}
+                        facilities={element.roomFacilities}
+                        images={element.roomImage}
                         color={props.color}
                         FinalConfirmButton={props.FinalConfirmButton}
                         Paymentbutton={props.Paymentbutton}

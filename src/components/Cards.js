@@ -20,8 +20,8 @@ export default function Cards(props) {
     }
     
     
-    const DelCount=()=>{
-        let number = Number(document.getElementById("count_of_room").innerHTML);
+    const DelCount=(id)=>{
+        let number = Number(document.getElementById(id).innerHTML);
         if(number>1){
             number-=1;
             let price = number*Number(Original_Price)
@@ -30,8 +30,8 @@ export default function Cards(props) {
         }
     }
 
-    const AddCount=()=>{
-        let number = Number(document.getElementById("count_of_room").innerHTML);
+    const AddCount=(id)=>{
+        let number = Number(document.getElementById(id).innerHTML);
         if(number<Available_rooms){
             number+=1;
             let price = number*Number(Original_Price)
@@ -61,98 +61,6 @@ export default function Cards(props) {
 
                 {/* filters start   */}
 
-                <div class="filters" style={{backgroundColor:props.color}}>
-                    <div class="inner_filter">
-                        <label>Show by</label>
-                        <div class="roomBtn">
-                            <buttton class="btn btn-secondary btn-fc">Rooms</buttton>
-                            <buttton class="btn btn-secondary btn-fc">Rates</buttton>
-                        </div>
-                    </div>
-
-                    <div className="crd-head">
-                        <h3>select rooms</h3>
-                    </div>
-
-                    <div class="inner_filter rgt-flt">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary btn-fc" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Room type
-                            </button>
-                            <ul class="dropdown-menu drp-lst">
-                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Havana Deluxe King
-                                    Room</a></li>
-                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Havana Deluxe Twin</a>
-                                </li>
-                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Havana Premier King
-                                    Room</a></li>
-                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Havana Twin King
-                                    Room</a></li>
-                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Havana Connecting
-                                    Room</a></li>
-                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> El Presidente Suite</a>
-                                </li>
-                            </ul>
-
-                        </div>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle btn-fc" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Specciaal Offers
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> FLEXIBLE 24-HOURS STAY
-                                    [Room Only]</a></li>
-                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Early Saver [Room with
-                                    Breakfast]</a></li>
-                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> FLEXIBLE 24-HOURS STAY
-                                    [Room with Breakfast]</a></li>
-                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Monthly Deal</a></li>
-                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Early Saver [Room
-                                    Only]</a></li>
-                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Staycation Offer [Room
-                                    with Breakfast]l</a></li>
-                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Staycation Offer [Room
-                                    Only]</a></li>
-                            </ul>
-                        </div>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle btn-fc" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Filters
-                            </button>
-                            <ul class="dropdown-menu rightopn">
-                                <div class="fc-rt d-flex">
-                                    <div class="left-dropdown">
-                                        <div class="status">
-                                            <h6 class="mx-3">Status</h6>
-                                            <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Hide unable
-                                                to book</a></li>
-                                        </div>
-                                        <div class="drop-feature">
-                                            <h6 class="mx-3">Room Features</h6>
-                                            <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Balcony</a>
-                                            </li>
-                                            <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Bathtub
-                                            </a></li>
-                                        </div>
-                                    </div>
-                                    <div class="right-dropdown">
-                                        <h6 class="mx-3">Benefits</h6>
-                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> No breakfast</a>
-                                        </li>
-                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Internet
-                                        </a></li>
-                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Pay later</a>
-                                        </li>
-                                    </div>
-                                </div>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
                 {/* filters end  */}
                 <div className="card_details">
                     <div className="card_inner">
@@ -179,7 +87,7 @@ export default function Cards(props) {
                             <div className="room-last d-flex justify-content-between align-items-end">
                                 <div className="room-name">
                                     <h3>{props.name}</h3>
-                                    <span className="dec-sqr">500 sq/ft</span>
+                                    <span className="dec-sqr">{props.type}</span>
                                 </div>
                                 <div className="last-rooms">
                                     <p className="dec-lst">*Last {props.available} Rooms available<i
@@ -223,10 +131,10 @@ export default function Cards(props) {
                                     <div className="no-rooms d-flex">
                                         <span>Room(s)</span>
                                         <div className="room">
-                                            <button className="btn-minus" onClick={DelCount}>-</button>
+                                            <button className="btn-minus" onClick={()=>{DelCount(props.type)}}>-</button>
                                             <button className="btn-total"
-                                                id="count_of_room">{Rooms}</button>
-                                            <button className="btn-plus" onClick={AddCount}>+</button>
+                                                id={`${props.type}`}>{Rooms}</button>
+                                            <button className="btn-plus" onClick={()=>{AddCount(props.type)}}>+</button>
                                         </div>
                                     </div>
 
