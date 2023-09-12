@@ -31,7 +31,7 @@ export default function Footer(props) {
               <div className="footLogo">
                 <img src={props.Logo} alt="" />
               </div>
-              <p className='my-2'>{props.aboutus}</p>
+              <h6 className='my-2 footHeading'>{props.aboutus}</h6>
             </div>
 
             <div className="social-media">

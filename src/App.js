@@ -10,7 +10,6 @@ import { useState } from 'react';
 import Spinner from './components/Spinner';
 import NotFoundPage from './components/NotFoundPage';
 import { BrowserRouter } from 'react-router-dom'
-
 import { useTranslation } from 'react-i18next';
 import './components/i18n'; // Import your i18n configuration
 

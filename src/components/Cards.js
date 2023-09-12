@@ -124,7 +124,7 @@ export default function Cards(props) {
                                 </div>
                                 <div className="room_price w-30">
                                     {/* <label>From</label>  */}
-                                    <h3><span id="total_price"> {Price}/- </span> INR</h3>
+                                    <h3><span id="total_price" style={{fontSize:"24px"}}> {Price}/- </span> INR</h3>
                                     <span>Per Night</span>
 
                                     {/* <span style="color:red" className="span m-1">Last {{ Available }} Rooms</span>  */}

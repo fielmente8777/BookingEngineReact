@@ -16,7 +16,7 @@
 .language-button {
     padding: 10px 20px;
     /* Adjust padding as needed */
-    background-color: #007bff;
+    background-color: #1D619C;
     /* Button background color */
     color: #fff;
     /* Button text color */
@@ -26,6 +26,6 @@
 }
 
 .language-button:hover {
-    background-color: #0056b3;
+    background-color: #1D619C;
     /* Button background color on hover */
 }

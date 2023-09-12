@@ -147,6 +147,7 @@ nav {
     margin-top: 10px;
     text-align: end;
     font-size: 12px;
+    border: 2px solid red;
 }
 
 
@@ -256,7 +257,7 @@ footer a {
 }
 
 .footHeading {
-    font-size: 18px;
+    font-size: 1.5rem;
 }
 
 .foot_policies {
