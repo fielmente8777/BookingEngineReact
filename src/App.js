@@ -9,7 +9,7 @@ import FullCalendar from './components/FullCalendar';
 import { useState } from 'react';
 import Spinner from './components/Spinner';
 import NotFoundPage from './components/NotFoundPage';
-
+import { BrowserRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next';
 import './components/i18n'; // Import your i18n configuration
 
@@ -107,17 +107,17 @@ function App() {
 
   return (
     <>
+      <BrowserRouter>
+        <Spinner display={Spinner_spin} />
 
 
-      <Spinner display={Spinner_spin} />
+        <Navbar hotelname={HotelName} logo={HotelLogo} display={Spinner_spin1} color={Bg_color} />
+        <LandingPage Bg_image={HotelImage} color={Box_color} display={Spinner_spin1} bt_color={Button_color} ReservationLabel={Reservation_button} ReservationButton={Room_searchButton} FinalConfirmButton={RoomFinal_searchButton} Paymentbutton={PaymentButton} />
 
-      <Navbar hotelname={HotelName} logo={HotelLogo} display={Spinner_spin1} color={Bg_color} />
+        <Footer color={Bg_color} aboutus={HotelAbout} display={Spinner_spin1} email={HotelEmail} facebook={Facebook} instagram={Instagram} twitter={Twitter} />
 
-      <LandingPage Bg_image={HotelImage} color={Box_color} display={Spinner_spin1} bt_color={Button_color} ReservationLabel={Reservation_button} ReservationButton={Room_searchButton} FinalConfirmButton={RoomFinal_searchButton} Paymentbutton={PaymentButton} />
-
-      <Footer color={Bg_color} aboutus={HotelAbout} display={Spinner_spin1} email={HotelEmail} facebook={Facebook} instagram={Instagram} twitter={Twitter} />
-
-      <NotFoundPage display={Spinner_spin2} />
+        <NotFoundPage display={Spinner_spin2} />
+      </BrowserRouter>
     </>
   );
 }
