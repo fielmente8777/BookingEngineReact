@@ -44,8 +44,8 @@ export default function Navbar(props) {
                     <span style={{ color: "#fff" }}><i class="fa-solid fa-bars"></i></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-                    <ul class="navbar-nav mb-2 mb-lg-0" style={{ background: props.color }}>
-
+                    <ul class="navbar-nav mb-2 mb-lg-0" >
+                    {/* style={{ background: props.color }} */}
                         <li class="nav-item ">
                             <a class="nav-link " aria-current="page" href="#">
                                 <select id="currency" onchange="convertCurrency()">
@@ -64,12 +64,12 @@ export default function Navbar(props) {
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <FaGlobe />
                                 </button>
-                                <ul class="dropdown-menu">
+                                <ul class="dropdown-menu p-0">
                                     {languages.map((language) => (
                                         <button
                                             key={language.code}
                                             onClick={() => changeLanguage(language.code)}
-                                            className="language-button w-100 mt-1"
+                                            className="language-button w-100"
                                         >
                                             {language.label}
                                         </button>

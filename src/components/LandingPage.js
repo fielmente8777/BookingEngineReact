@@ -219,7 +219,7 @@ export default function Landing(props) {
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle btn-fc" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    Specciaal Offers
+                                    Special Offers
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> FLEXIBLE 24-HOURS STAY

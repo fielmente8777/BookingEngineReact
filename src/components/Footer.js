@@ -26,12 +26,12 @@ export default function Footer(props) {
     <footer className={`${props.display}`} style={{ background: props.color }}>
       <div className="container footer_top">
         <div className="footer-outer row">
-          <div className="footer-main col-3">
+          <div className="footer-main footAdd col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
             <div className="FootAddrs">
               <div className="footLogo">
                 <img src={props.Logo} alt="" />
               </div>
-              <h6 className='my-2 footHeading'>{props.aboutus}</h6>
+              <p className='my-2'>{props.aboutus}</p>
             </div>
 
             <div className="social-media">
@@ -47,10 +47,10 @@ export default function Footer(props) {
 
           </div>
 
-          <div className="col-3">
+          <div className="reachUs col-12 col-sm-4 col-md-4 col-lg-2 col-xl-2">
             <h6 className='footHeading'>Reach us at</h6>
             <p className="Contact-item"><i className="fa-solid fa-location-dot foot-icons"></i>
-              ADDRESS:{props.HotelAddress}
+              {props.HotelAddress}
             </p>
             <ul className="contact-inner">
               <li><Link className="Contact-item" to="#"><i className="fa-regular fa-envelope foot-icons"></i>{props.email}</Link>
@@ -63,7 +63,7 @@ export default function Footer(props) {
 
           </div>
 
-          <div className="footeuseful_links col-1">
+          <div className="footeuseful_links col-12 col-sm-4 col-md-4 col-lg-2 col-xl-2">
             <h6 className='footHeading'>Links</h6>
             <ul>
               <li>
@@ -78,7 +78,7 @@ export default function Footer(props) {
             </ul>
           </div>
 
-          <div className="foot_policies col-2">
+          <div className="foot_policies col-12 col-sm-4 col-md-4 col-lg-2 col-xl-2">
             <h6 className='footHeading'>Policies</h6>
             <ul>
               <li>
@@ -96,12 +96,14 @@ export default function Footer(props) {
               </li>
             </ul>
           </div>
-          <div className="map col-3"><iframe
-              src={props.Location}
-              width="600" height="450" allowfullscreen="" loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"></iframe></div>
 
-         
+
+          <div className="map col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3"><iframe
+            src={props.Location}
+            width="600" height="450" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+
+
         </div>
         <div className="copyright">
           <div className="copyright-inner">
