@@ -24,7 +24,7 @@ export default function Landing(props) {
         localStorage.setItem("Adult", adult);
         localStorage.setItem("Kid", kid);
 
-        const response = await fetch(`${props.baseUrl}/api/rooms/get?id=${localStorage.getItem('hotelid')}`, {
+        const response = await fetch(`${props.baseUrl}/room/${localStorage.getItem('hotelid')}`, {
             method: "GET",
             headers: {
                 Accept: "application/json, text/plain, /",
@@ -38,6 +38,7 @@ export default function Landing(props) {
             document.getElementById("No_rooms").style.display = "none"
             document.getElementById("id_filters").style.display="block"
             setHeadlines((json.Details));
+            console.log(json)
 
         } else {
             document.getElementById("No_rooms").style.display = "block"
@@ -287,6 +288,9 @@ export default function Landing(props) {
                             color={props.color}
                             FinalConfirmButton={props.FinalConfirmButton}
                             Paymentbutton={props.Paymentbutton}
+                            Bg_color = {props.Bg_color}
+                            HotelName = {props.HotelName}
+                            HotelLogo = {props.HotelLogo}
                         />
 
                     </div>

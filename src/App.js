@@ -46,11 +46,11 @@ function App() {
   const [Spinner_spin2, setSpinner_spin2] = useState("d-none")
 
   async function Get_Hotel_status_exists() {
-    const response = await fetch(`${baseUrl}/api/engine/get?id=${localStorage.getItem("hotelid")}`, {
+    const response = await fetch(`${baseUrl}/booking/getengine/${localStorage.getItem("hotelid")}`, {
       method: "GET",
       headers: {
         Accept: "application/json, text/plain, /",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
 
     });
@@ -77,7 +77,7 @@ function App() {
     }
   }
 
-  const baseUrl = "http://127.0.0.1:8000"
+  const baseUrl = "http://127.0.0.1:5000"
   const urlParams = new URLSearchParams(window.location.search);
   const hotelid = urlParams.get("id");
   localStorage.setItem('hotelid', hotelid)
@@ -100,7 +100,7 @@ function App() {
 
         <Navbar hotelname={HotelName} logo={HotelLogo} display={Spinner_spin1} color={Bg_color} />
 
-        <LandingPage baseUrl={baseUrl} Bg_image={HotelImage} color={Box_color} display={Spinner_spin1} bt_color={Button_color} ReservationLabel={Reservation_button} ReservationButton={Room_searchButton} FinalConfirmButton={RoomFinal_searchButton} Paymentbutton={PaymentButton} />
+        <LandingPage Bg_color={Bg_color} HotelName={HotelName} HotelLogo={HotelLogo} baseUrl={baseUrl} Bg_image={HotelImage} color={Box_color} display={Spinner_spin1} bt_color={Button_color} ReservationLabel={Reservation_button} ReservationButton={Room_searchButton} FinalConfirmButton={RoomFinal_searchButton} Paymentbutton={PaymentButton} />
 
         <Footer color={Bg_color} Logo={HotelLogo} HotelAddress={HotelAddress} HotelNumber={HotelNumber} 
                 aboutus={HotelAbout} display={Spinner_spin1} email={HotelEmail} facebook={Facebook} 

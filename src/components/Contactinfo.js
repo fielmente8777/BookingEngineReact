@@ -18,44 +18,57 @@ function Contactinfo(props) {
 
     const [Razorpay, createOrder] = useRazorpay(); // Destructure 'Razorpay' and 'createOrder' from the hook
 
-    const [amount, setAmount] = useState('');
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
+    const [amount, setAmount] = useState(tax*(props.price * props.nights)+(props.price * props.nights));
+    const [OrderId,setOrderId] = useState('')
+
+    const GetOrderId = async()=>{
+        const response = await fetch(`http://127.0.0.1:5000/booking/create_order`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, /",
+                "Content-Type": "application/json",
+            },
+            body : JSON.stringify({
+                "amount":amount,
+                "currency":"INR"
+            })
+        });
+
+        const json = await response.json();
+
+        if (json.Status === true) {
+            setOrderId(json.order_id)
+
+        } else {
+            document.getElementById("No_rooms").style.display = "block"
+        }
+    }
 
     const handlePayment = async () => {
         try {
-            // Replace with your order creation logic (if you have a backend)
-            // const orderData = await createOrder(orderDetails);
-
-            // Mock order data for testing (replace with your desired order details)
+            
             const mockOrderData = {
                 amount: parseInt(amount) * 100, // Convert amount to paise (assuming INR)
-                orderId: 'order_' + Math.random().toString(36).substring(7), // Generate a unique order ID
+                orderId: OrderId, // Generate a unique order ID
             };
 
             const options = {
-                key: "rzp_test_b5vdZJwHg24FGl", // Enter the Key ID generated from the Dashboard
+                key: "rzp_test_UZ0V9jh3jMC0C9", // Enter the Key ID generated from the Dashboard
                 amount: mockOrderData.amount.toString(), // Use the amount from the order data
                 currency: "INR",
-                name: "Acme Corp",
+                name: props.HotelName,
                 description: "Test Transaction",
-                image: "https://example.com/your_logo",
-                order_id: mockOrderData.orderId, // Use the order ID from the order data
+                image: props.HotelLogo,
+                order_id: OrderId, // Use the order ID from the order data
                 handler: function (response) {
                     alert(response.razorpay_payment_id);
                     alert(response.razorpay_order_id);
                     alert(response.razorpay_signature);
+                    window.location.reload()
                 },
-                prefill: {
-                    name: "Piyush Garg",
-                    email: "youremail@example.com",
-                    contact: "9999999999",
-                },
-                notes: {
-                    address: "Razorpay Corporate Office",
-                },
+                
                 theme: {
-                    color: "#3399cc",
+                    color: props.Bg_color,
                 },
             };
 
@@ -230,14 +243,14 @@ function Contactinfo(props) {
 
 
                         </div>
-
-                        {/* <div className="button_s">
-                        <button className="submitbtn">Submit</button>
-                    </div>  */}
+                        {!OrderId?
+                        <div className="button_s">
+                            <button className="submitbtn" onClick={GetOrderId}>Request Payment</button>
+                        </div> :
 
                         <div className="bookingbtn">
                             <button className="cmplt pay_button" id="rzp-button1" onClick={handlePayment} style={{ backgroundColor: props.color }}>{props.Paymentbutton}</button>
-                        </div>
+                        </div>}
                     </div>
 
                     {/* contact information end  */}

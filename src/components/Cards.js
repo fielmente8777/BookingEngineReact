@@ -100,20 +100,19 @@ export default function Cards(props) {
                                     <div className="land-aminit">
 
                                         <ul>
-                                            <li><i className='fa fa-wifi'></i> Wi-fi</li>
-                                            <li><i className='fa fa-lock'></i> Security Locker</li>
-                                            <li><i className='fa-solid fa-mug-saucer'></i> Free Breakfast </li>
-                                            <li><i className='fas fa-book-open'></i> Study Table</li>
-                                            <li><i className='fas fa-baby'></i> Hairdryers</li>
-                                            <li><i className='fa-solid fa-tv'></i> Television</li>
-                                            <li><i className='fa fa-coffee'></i> Air Conditioner</li>
-                                            <li><i className='fas fa-baby'></i> Kids Toys</li>
-                                            <li><i className='fa fa-clock-o'></i> Alarm Clock</li>
-                                            <li><i className='fas fa-bath'></i> Small Fridge</li>
-                                            <li><i className='fas fa-bath'></i> Amazing Shower</li>
-                                            <li><i className='fa fa-coffee'></i> Coffee Makers</li>
-                                            <li><i className='fa fa-phone'></i> Direct Calling</li>
-
+                                            {props.facilities.wifi?<li><i className='fa fa-wifi'></i> Wi-fi</li>:""}
+                                            {props.facilities.television?<li><i className='fa-solid fa-tv'></i> Television</li>:""}
+                                            {props.facilities.airConditonar?<li><i className='fa fa-coffee'></i> Air Conditioner</li>:""}
+                                            {props.facilities.hairdryers?<li><i className='fas fa-baby'></i> Hairdryers</li>:""}
+                                            {props.facilities.coffeeMakers?<li><i className='fa fa-coffee'></i> Coffee Makers</li>:""}
+                                            {props.facilities.directDial?<li><i className='fa fa-phone'></i> Direct Calling</li>:""}
+                                            {props.facilities.tableWithChair?<li><i className='fas fa-book-open'></i> Study Table</li>:""}
+                                            {props.facilities.alarmclock?<li><i className='fa fa-clock-o'></i> Alarm Clock</li>:""}
+                                            {props.facilities.fridge?<li><i className='fas fa-bath'></i> Small Fridge</li>:""}
+                                            {props.facilities.bathroomWithShower?<li><i className='fas fa-bath'></i> Amazing Shower</li>:""}
+                                            {props.facilities.electronicLocker?<li><i className='fa fa-lock'></i> Security Locker</li>:""}
+                                            {props.facilities.freeBreakfast?<li><i className='fa-solid fa-mug-saucer'></i> Free Breakfast </li>:""}
+                                            {props.facilities.kidEquipment?<li><i className='fas fa-baby'></i> Kids Toys</li>:""}
                                         </ul>
                                     </div>
 
@@ -149,7 +148,9 @@ export default function Cards(props) {
             {/* Contact informtion start  */}
 
             {isOpen && (
-                <Contactinfo Paymentbutton = {props.Paymentbutton} nights={Nights} room={Rooms} color={props.color} price={Price}  grandtotal={Grandtotal}  />
+                <Contactinfo Bg_color={props.Bg_color}
+                HotelName={props.HotelName}
+                HotelLogo={props.HotelLogo} Paymentbutton = {props.Paymentbutton} nights={Nights} room={Rooms} color={props.color} price={Price}  grandtotal={Grandtotal}  />
             )}
 
 
