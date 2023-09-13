@@ -14,10 +14,6 @@ export default function Cards(props) {
     const [isOpen, setIsOpen] = useState(false);
     let Features = props.facilities;
     let images = props.images;
-    let image=[]
-    for(let i in images){
-        image.push(images[i])
-    }
     
     
     const DelCount=(id)=>{
@@ -67,7 +63,7 @@ export default function Cards(props) {
                         
                         <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
-                                {image.map((element)=>{
+                                {images.map((element)=>{
                                     return <div class="carousel-item active">
                                         <img src={element} class="d-block w-100" alt="..." />
                                     </div>

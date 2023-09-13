@@ -16,7 +16,10 @@ const FullCalendar1 = (props) => {
 
         return [year, month, day].join('-');
     }
-    const [date, setDate] = useState(new Date());
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    const [date, setDate] = useState(tomorrow);
     const [isOpen, setIsOpen] = useState(false);
 
     const isDateDisabled = date => {

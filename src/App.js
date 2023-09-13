@@ -65,7 +65,7 @@ function App() {
       setHotelAbout(json.Details.Footer.AboutText)
       setHotelAddress(json.Details.Footer.Address)
       setHotelNumber(json.Details.Footer.Phone)
-
+      setHotelName(json.Details.HotelName)
       setFacebook(json.Details.Links.Facebook)
       setInstagram(json.Details.Links.Instagram)
       setTwitter(json.Details.Links.Twitter)
