@@ -7,12 +7,14 @@ body {
 
 
 li {
+    text-decoration-style: none;
     list-style: none;
 }
 
 ul {
     padding: 0;
     margin: 0;
+    list-style: none;
 }
 
 li a {
@@ -27,13 +29,18 @@ footer h1 {
     border-bottom: 0;
 }
 
-h1 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+
     border: 0 !important;
 }
 
-h2 {
-    border: 0 !important;
-}
 
 nav {
     display: flex;
@@ -45,8 +52,8 @@ nav {
 
 .navbar {
     height: 65px;
+    color: rgb(234, 234, 226) !important;
 }
-
 
 .navbar button:focus:not(:focus-visible) {
     outline: 0;
@@ -81,13 +88,18 @@ nav {
     justify-content: end !important;
 }
 
+.H-name {
+    color: #fff;
+    font-size: 25px;
+}
+
 .nav-link {
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
     width: auto;
     text-align: center;
-    text-decoration: underline;
+    /* text-decoration: underline; */
 }
 
 .nav-icon {
@@ -118,8 +130,22 @@ nav {
     cursor: pointer;
 }
 
+/* For curreny Btn  */
+
+#currency {
+    background: transparent;
+    border: 0;
+    color: #fff;
+    outline: 0;
+}
 
 
+.nav-item .dropdown .btn {
+    background: transparent;
+    border: 0;
+    color: #fff;
+    outline: 0;
+}
 
 .login {
     border: 1px solid #927345d7;
@@ -132,14 +158,6 @@ nav {
     display: block;
     width: 100%;
 }
-
-
-/* label {
-    display: block;
-    margin-top: 10px;
-} */
-
-
 
 
 .footer-login {
@@ -226,9 +244,7 @@ footer {
     font-size: 14px;
 }
 
-footer a {
-    color: #CACACA;
-}
+
 
 .footsocialicon:hover {
     color: #ac7272d5;
@@ -257,7 +273,7 @@ footer a {
 }
 
 .footHeading {
-    font-size: 1.5rem;
+    font-size: 18px;
 }
 
 .foot_policies {
@@ -271,7 +287,7 @@ footer a {
     display: flex;
     flex-direction: column;
     gap: 8px;
-
+    padding-left: 50px;
 }
 
 .foot_policies a:hover {
@@ -296,6 +312,12 @@ footer a {
 .footer-main ul {
     line-height: 2;
     padding: 0;
+}
+
+footer a {
+    color: #CACACA;
+    font-size: 15px;
+    line-height: 2;
 }
 
 
@@ -373,22 +395,23 @@ footer a:hover {
         padding: 5px 16px;
     }
 
-
-    .footer-outer {
-        flex-direction: column-reverse;
-        /* border: 1px solid red; */
+    footer {
+        padding-left: 10px;
     }
 
     .footer-main {
         width: auto;
     }
 
-    /* .map {
-        display: block;
-        width: auto;
-        margin-left: 0;
-        height: 300px;
-    } */
+    .footer-outer {
+        padding: 0;
+        gap: 20px;
+    }
+
+    .footeuseful_links {
+        padding-left: 15px;
+    }
+
 
     .map iframe {
         width: 100%;
@@ -396,18 +419,15 @@ footer a:hover {
     }
 
 
-
-
-
     .inner_conditions a {
         font-size: 9px;
         margin: 0 1px;
     }
 
-
     .social-media {
         padding: 0;
     }
+
 
     .inner_conditions {
         margin: 10px 0;
@@ -424,6 +444,8 @@ footer a:hover {
 
     .copyright-inner {
         width: 100%;
+        text-align: center;
+        font-size: 14px;
     }
 
     .copy-right {
@@ -447,19 +469,15 @@ footer a:hover {
     }
 
 
-    .footer-outer {
-        flex-direction: column-reverse;
-    }
-
-    .footer-main {
-        width: auto;
+    .footAdd {
+        margin-bottom: 20px;
     }
 
     .map {
         display: block;
-        width: auto;
         margin-left: 0;
         height: 300px;
+        margin-top: 20px;
     }
 
     .map iframe {

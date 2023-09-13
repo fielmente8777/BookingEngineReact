@@ -21,11 +21,11 @@
     color: #fff;
     /* Button text color */
     border: none;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     cursor: pointer;
 }
 
 .language-button:hover {
-    background-color: #1D619C;
+    background: rgb(10, 58, 117);
     /* Button background color on hover */
 }
