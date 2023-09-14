@@ -282,6 +282,7 @@ export default function Landing(props) {
                             description={element.roomDescription ? element.roomDescription.slice(0, 80) : ""}
                             available={element.noOfRooms}
                             price={element.price ? element.price : ""}
+                            roomtype={element.roomType}
                             type = {element.roomTypeName}
                             facilities={element.roomFacilities}
                             images={element.roomImage}
@@ -291,6 +292,7 @@ export default function Landing(props) {
                             Bg_color = {props.Bg_color}
                             HotelName = {props.HotelName}
                             HotelLogo = {props.HotelLogo}
+                            setPayment={props.setPayment}
                         />
 
                     </div>

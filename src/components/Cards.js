@@ -148,9 +148,9 @@ export default function Cards(props) {
             {/* Contact informtion start  */}
 
             {isOpen && (
-                <Contactinfo Bg_color={props.Bg_color}
+                <Contactinfo Bg_color={props.Bg_color} setPayment={props.setPayment}
                 HotelName={props.HotelName}
-                HotelLogo={props.HotelLogo} Paymentbutton = {props.Paymentbutton} nights={Nights} room={Rooms} color={props.color} price={Price}  grandtotal={Grandtotal}  />
+                HotelLogo={props.HotelLogo} Paymentbutton = {props.Paymentbutton} nights={Nights} room={Rooms} color={props.color} price={Price}  grandtotal={Grandtotal} type={props.roomtype}  />
             )}
 
 

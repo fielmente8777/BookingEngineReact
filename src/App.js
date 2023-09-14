@@ -46,6 +46,7 @@ function App() {
   const [Spinner_spin1, setSpinner_spin1] = useState("d-none")
   const [Spinner_spin2, setSpinner_spin2] = useState("d-none")
 
+  const [Payment,setPayment]=useState('')
   async function Get_Hotel_status_exists() {
     const response = await fetch(`${baseUrl}/booking/getengine/${localStorage.getItem("hotelid")}`, {
       method: "GET",
@@ -101,7 +102,10 @@ function App() {
 
         <Navbar hotelname={HotelName} logo={HotelLogo} display={Spinner_spin1} color={Bg_color} />
 
-        <LandingPage Bg_color={Bg_color} HotelName={HotelName} HotelLogo={HotelLogo} baseUrl={baseUrl} Bg_image={HotelImage} color={Box_color} display={Spinner_spin1} bt_color={Button_color} ReservationLabel={Reservation_button} ReservationButton={Room_searchButton} FinalConfirmButton={RoomFinal_searchButton} Paymentbutton={PaymentButton} />
+        {!Payment?<LandingPage Bg_color={Bg_color} HotelName={HotelName} HotelLogo={HotelLogo} baseUrl={baseUrl}
+                   Bg_image={HotelImage} color={Box_color} display={Spinner_spin1} bt_color={Button_color} 
+                   ReservationLabel={Reservation_button} ReservationButton={Room_searchButton} 
+                   FinalConfirmButton={RoomFinal_searchButton} Paymentbutton={PaymentButton} setPayment={setPayment} />:""}
 
         <Footer color={Bg_color} Logo={HotelLogo} HotelAddress={HotelAddress} HotelNumber={HotelNumber} 
                 aboutus={HotelAbout} display={Spinner_spin1} email={HotelEmail} facebook={Facebook} 

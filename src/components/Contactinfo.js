@@ -20,18 +20,38 @@ function Contactinfo(props) {
 
     const [amount, setAmount] = useState(tax*(props.price * props.nights)+(props.price * props.nights));
     const [OrderId,setOrderId] = useState('')
+    const [Type,setType] = useState(props.type)
 
     const GetOrderId = async()=>{
-        const response = await fetch(`http://127.0.0.1:5000/booking/create_order`, {
+        const response = await fetch(`http://127.0.0.1:5000/payment/create_order`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
                 "Content-Type": "application/json",
             },
             body : JSON.stringify({
+                "ndid":localStorage.getItem('hotelid'),
                 "amount":amount,
-                "currency":"INR"
-            })
+                "currency":"INR",
+                "guestName": "Nitin Chauhan",
+                "roomType":Type ,
+                "payment": {
+                    "Status": "PENDING",
+                    "RefNo": "",
+                    "PaymentProvider": "RazorPay",
+                    "Mode": "Online"
+                },
+                "checkIn": localStorage.getItem('Checkin'),
+                "checkOut": localStorage.getItem('Checkout'),
+                "bookedRooms":props.room ,
+                "price": {
+                    "Principal":props.price * props.nights ,
+                    "Tax": tax*(props.price * props.nights),
+                    "Total": amount
+                },
+                "isCheckedIn": false,
+                "isCheckedOut": false
+                        })
         });
 
         const json = await response.json();
@@ -42,6 +62,22 @@ function Contactinfo(props) {
         } else {
             document.getElementById("No_rooms").style.display = "block"
         }
+    }
+
+    const PaymentSuccessFull = async(payid)=>{
+        const response = await fetch(`http://127.0.0.1:5000/booking/update`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, /",
+                "Content-Type": "application/json",
+            },
+            body : JSON.stringify({
+                "ndid":localStorage.getItem('hotelid'),
+                "orderid":OrderId,
+                "paymentid":payid
+            })
+        })
+        props.setPayment("Done")
     }
 
     const handlePayment = async () => {
@@ -61,9 +97,8 @@ function Contactinfo(props) {
                 image: props.HotelLogo,
                 order_id: OrderId, // Use the order ID from the order data
                 handler: function (response) {
-                    alert(response.razorpay_payment_id);
-                    alert(response.razorpay_order_id);
-                    alert(response.razorpay_signature);
+                    setOrderId(response.razorpay_order_id);
+                    PaymentSuccessFull(response.razorpay_payment_id)
                     window.location.reload()
                 },
                 
