@@ -13,6 +13,7 @@ import NotFoundPage from './components/NotFoundPage';
 import { BrowserRouter } from 'react-router-dom'
 import { useTranslation } from 'react-i18next';
 import './components/i18n'; // Import your i18n configuration
+import SuccessPage from './components/SuccessPage';
 
 
 
@@ -46,7 +47,23 @@ function App() {
   const [Spinner_spin1, setSpinner_spin1] = useState("d-none")
   const [Spinner_spin2, setSpinner_spin2] = useState("d-none")
 
-  const [Payment,setPayment]=useState('')
+  const [Payment,setPayment]=useState({
+    "Status":false,
+    "Booking":"1",
+    "Payment":"2",
+    "Order":"3",
+    "Name":"4",
+    "Phone":"5",
+    "Email":"6",
+    "Country":"6",
+    "Checkin":"7",
+    "Checkout":"8",
+    "Adult":"8",
+    "Kid":"1",
+    "Tax":"2",
+    "Amount":"3"
+
+  })
   async function Get_Hotel_status_exists() {
     const response = await fetch(`${baseUrl}/booking/getengine/${localStorage.getItem("hotelid")}`, {
       method: "GET",
@@ -102,10 +119,11 @@ function App() {
 
         <Navbar hotelname={HotelName} logo={HotelLogo} display={Spinner_spin1} color={Bg_color} />
 
-        {!Payment?<LandingPage Bg_color={Bg_color} HotelName={HotelName} HotelLogo={HotelLogo} baseUrl={baseUrl}
+        {!Payment.Status?<LandingPage Bg_color={Bg_color} HotelName={HotelName} HotelLogo={HotelLogo} baseUrl={baseUrl}
                    Bg_image={HotelImage} color={Box_color} display={Spinner_spin1} bt_color={Button_color} 
                    ReservationLabel={Reservation_button} ReservationButton={Room_searchButton} 
-                   FinalConfirmButton={RoomFinal_searchButton} Paymentbutton={PaymentButton} setPayment={setPayment} />:""}
+                   FinalConfirmButton={RoomFinal_searchButton} Paymentbutton={PaymentButton} setPayment={setPayment} />
+                   : <SuccessPage Payment={Payment} />}
 
         <Footer color={Bg_color} Logo={HotelLogo} HotelAddress={HotelAddress} HotelNumber={HotelNumber} 
                 aboutus={HotelAbout} display={Spinner_spin1} email={HotelEmail} facebook={Facebook} 

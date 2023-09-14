@@ -46,7 +46,7 @@ export default function Navbar(props) {
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                     <ul class="navbar-nav mb-2 mb-lg-0" >
                     {/* style={{ background: props.color }} */}
-                        <li class="nav-item ">
+                        {/* <li class="nav-item ">
                             <a class="nav-link " aria-current="page" href="#">
                                 <select id="currency" onchange="convertCurrency()">
                                     <option value="USD" >USD</option>
@@ -54,7 +54,7 @@ export default function Navbar(props) {
                                     <option value="GBP">GBP</option>
                                 </select>
                             </a>
-                        </li>
+                        </li> */}
                         <li class="nav-item">
 
                             {/* <a class="nav-link" aria-current="page" onClick={handleLanguageClick}>

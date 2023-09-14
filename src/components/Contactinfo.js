@@ -21,6 +21,12 @@ function Contactinfo(props) {
     const [amount, setAmount] = useState(tax*(props.price * props.nights)+(props.price * props.nights));
     const [OrderId,setOrderId] = useState('')
     const [Type,setType] = useState(props.type)
+    const [BookingId,setBookingId] = useState("1")
+    const [Name,setName] = useState('')
+    const [Phone,setPhone] = useState('')
+    const [Email,setEmail] = useState('')
+    const [Country,setCountry] = useState('')
+    const [City,setCity] = useState('')
 
     const GetOrderId = async()=>{
         const response = await fetch(`http://127.0.0.1:5000/payment/create_order`, {
@@ -33,7 +39,13 @@ function Contactinfo(props) {
                 "ndid":localStorage.getItem('hotelid'),
                 "amount":amount,
                 "currency":"INR",
-                "guestName": "Nitin Chauhan",
+                "guestName": Name,
+                "guestInfo":{
+                    "EmailId":Email,
+                    "Phone":Phone,
+                    "City":City,
+                    "Country":Country
+                },
                 "roomType":Type ,
                 "payment": {
                     "Status": "PENDING",
@@ -77,7 +89,9 @@ function Contactinfo(props) {
                 "paymentid":payid
             })
         })
-        props.setPayment("Done")
+
+        
+
     }
 
     const handlePayment = async () => {
@@ -96,10 +110,26 @@ function Contactinfo(props) {
                 description: "Test Transaction",
                 image: props.HotelLogo,
                 order_id: OrderId, // Use the order ID from the order data
-                handler: function (response) {
+                handler: async function (response) {
                     setOrderId(response.razorpay_order_id);
-                    PaymentSuccessFull(response.razorpay_payment_id)
-                    window.location.reload()
+                    await PaymentSuccessFull(response.razorpay_payment_id)
+                    props.setPayment({
+                        "Status":true,
+                        "Order":response.razorpay_order_id,
+                        "Payment":response.razorpay_payment_id,
+                        "Name":Name,
+                        "Phone":Email,
+                        "Email":Phone,
+                        "City":City,
+                        "Country":Country,
+                        "Checkin":localStorage.getItem('Checkin'),
+                        "Checkout":localStorage.getItem('Checkout'),
+                        "Adult":localStorage.getItem('Adult'),
+                        "Kid":localStorage.getItem('Kid'),
+                        "Tax": tax*(props.price * props.nights),
+                        "Amount":amount
+                    
+                      })
                 },
                 
                 theme: {
@@ -150,34 +180,31 @@ function Contactinfo(props) {
                                                 </select>
                                             </div>
                                             <div className="name-input">
-                                                <input type="text" className="bg" name="fullname" id="FullName" placeholder="Full Name" required />
+                                                <input type="text" className="bg" name="fullname" id="FullName" placeholder="Full Name" value={Name} onChange={(e)=>{setName(e.target.value)}} required />
                                             </div>
                                         </div>
                                     </div>
                                     <div className="inputBox">
                                         <span className="text-span">Email Id <span style={{color:'red'}}>*</span></span>
-                                        <input type="email" className="bg" name="email" id="Email" placeholder="Please enter your email id"
+                                        <input type="email" className="bg" value={Email} onChange={(e)=>{setEmail(e.target.value)}} name="email" id="Email" placeholder="Please enter your email id"
                                             pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required />
 
                                     </div>
                                     <div className="inputBox mobile">
                                         <span className="text-span">Phone No. <span style={{color:'red'}}>*</span></span>
-                                        <input type="tel" className="bg" name="number" id="Number" required />
-                                    </div>
-
-                                    <div className="content_inner">
-                                        <span className="text-span">Country <span style={{color:'red'}}>*</span></span>
-                                        <select id="country" name="country" className="form-control form-country bg" required>
-                                            <option value="Country">Country</option>
-                                            <option value="India">India</option>
-
-                                        </select>
+                                        <input type="tel" className="bg" value={Phone} onChange={(e)=>{setPhone(e.target.value)}} name="number" id="Number" required />
                                     </div>
 
                                     <div className="inputBox inputBox-city">
                                         <span className="text-span">City <span style={{color:'red'}}>*</span></span>
-                                        <input type="text" id="user_city" className="bg" name="city" required />
+                                        <input value={City} onChange={(e)=>{setCity(e.target.value)}} type="text" id="user_city" className="bg" name="city" required />
                                     </div>
+
+                                    <div className="inputBox content_inner">
+                                        <span className="text-span">Country <span style={{color:'red'}}>*</span></span>
+                                        <input type="text" value={Country} onChange={(e)=>{setCountry(e.target.value)}} />
+                                    </div>
+
                                     <div className="content_inner">
                                         <span className="text-span">Special Requests</span>
                                         <textarea className="bg" name="text" id="request" placeholder="ADDITIONAL REQUEST"></textarea>
@@ -278,12 +305,13 @@ function Contactinfo(props) {
 
 
                         </div>
-                        {!OrderId?
+                        {(Name&&Phone&&Email&&Country&&City)&&!OrderId?
                         <div className="button_s">
                             <button className="submitbtn" onClick={GetOrderId}>Request Payment</button>
-                        </div> :
+                        </div>:""}
 
-                        <div className="bookingbtn">
+
+                        {!OrderId?"" :<div className="bookingbtn">
                             <button className="cmplt pay_button" id="rzp-button1" onClick={handlePayment} style={{ backgroundColor: props.color }}>{props.Paymentbutton}</button>
                         </div>}
                     </div>

@@ -300,7 +300,7 @@ export default function Landing(props) {
                 })}
 
 
-                <SuccessPage />
+               
             </div>
         </>
     )
