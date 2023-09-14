@@ -6,6 +6,7 @@ import FullCalendar1 from './FullCalendar1';
 import Spinner from './Spinner';
 import { useTranslation } from 'react-i18next';
 import './i18n'; // Import your i18n configuration
+import SuccessPage from './SuccessPage';
 
 
 
@@ -36,7 +37,7 @@ export default function Landing(props) {
 
         if (json.Status === true) {
             document.getElementById("No_rooms").style.display = "none"
-            document.getElementById("id_filters").style.display="block"
+            document.getElementById("id_filters").style.display = "block"
             setHeadlines((json.Details));
             console.log(json)
 
@@ -60,7 +61,7 @@ export default function Landing(props) {
 
     return (
         <>
-            <div  style={{width:"100%",objectFit:"cover",backgroundImage:`url(${props.Bg_image})`,backgroundRepeat:"no-repeat",backgroundSize:"cover" }}>
+            <div style={{ width: "100%", objectFit: "cover", backgroundImage: `url(${props.Bg_image})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }}>
                 <section classNameName={`section`}>
                     {/* style={{width:"100%",objectFit:"cover",backgroundImage:`url(${props.Bg_image})`,backgroundRepeat:"no-repeat" }} */}
                     <div className={`container form-main ${props.display}`} >
@@ -181,8 +182,8 @@ export default function Landing(props) {
                 <div className='' id="No_rooms" style={{ textAlign: "center", color: "grey", display: "none" }}>
                     <h3>{t('No rooms Available')}</h3>
                 </div>
-                <div className='container' id="id_filters" style={{display: "none" }}>
-                    <div class="filters" style={{backgroundColor:props.color}}>
+                <div className='container' id="id_filters" style={{ display: "none" }}>
+                    <div class="filters" style={{ backgroundColor: props.color }}>
                         <div class="inner_filter">
                             <label>Show by</label>
                             <div class="roomBtn">
@@ -275,26 +276,29 @@ export default function Landing(props) {
                     </div>
                 </div>
                 {Headlines.map((element) => {
-                    
-                    return <div key={element.url}>
+
+                    return <div key={element.url} style={{ padding: '20px 0' }}>
                         <Cards
                             name={element.roomName ? element.roomName.slice(0, 80) : ""}
                             description={element.roomDescription ? element.roomDescription.slice(0, 80) : ""}
                             available={element.noOfRooms}
                             price={element.price ? element.price : ""}
-                            type = {element.roomTypeName}
+                            type={element.roomTypeName}
                             facilities={element.roomFacilities}
                             images={element.roomImage}
                             color={props.color}
                             FinalConfirmButton={props.FinalConfirmButton}
                             Paymentbutton={props.Paymentbutton}
-                            Bg_color = {props.Bg_color}
-                            HotelName = {props.HotelName}
-                            HotelLogo = {props.HotelLogo}
+                            Bg_color={props.Bg_color}
+                            HotelName={props.HotelName}
+                            HotelLogo={props.HotelLogo}
                         />
 
                     </div>
                 })}
+
+
+                <SuccessPage />
             </div>
         </>
     )

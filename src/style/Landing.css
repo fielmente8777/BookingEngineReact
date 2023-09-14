@@ -170,7 +170,7 @@
     cursor: pointer;
     background-color: #9BCFF0;
     box-shadow: 0px 1px 0px 0px #519ACB;
-    margin-top:5px;
+    margin-top: 5px;
 }
 
 .submit {
@@ -191,7 +191,7 @@
     border: 0;
     border-radius: 0 0 15px 15px;
     /* font-family: Arial; */
-    font-size: 30px;
+    font-size: 28px;
     font-weight: 700;
     line-height: 30px;
     text-align: center;
@@ -426,7 +426,7 @@
     width: 33%;
 }
 
-.room-last{
+.room-last {
     padding: 5px;
 }
 
@@ -501,11 +501,9 @@
 .carousel-inner {
     width: 400px;
     height: 100%;
-    /* border: 2px solid goldenrod; */
 }
 
 .carousel-item {
-    /* display: block; */
     width: 400px;
     height: 300px;
 }
@@ -521,6 +519,7 @@
     /* border: 1px solid green; */
     margin: 0 10px;
     border-radius: 12px;
+    width: 100%;
 }
 
 .room-name {
@@ -560,6 +559,7 @@
 
 .aminities-block {
     display: flex;
+    height: 73%;
     /* border: 1px solid black; */
 }
 
@@ -713,10 +713,9 @@
     display: block;
     background: #fff;
     border-radius: 28px;
-    /* margin: 3rem 0;
-  }
-  
-  .heading {
+}
+
+.heading {
     display: flex;
     padding-left: 10px;
     /* border: 1px solid red; */
@@ -725,7 +724,7 @@
     background: #1D619C;
     color: #ffff;
     border-radius: 24.4841px 24.4841px 0px 0px;
-    padding: 12px 0;
+    padding: 20px 0;
 
 }
 
@@ -734,7 +733,7 @@
     height: auto;
     /* width: 100%; */
     border: 1px solid #B3B3B3;
-    border-radius: 0 0 16px 16px;
+    /* border-radius: 0 0 16px 16px; */
 }
 
 .inner-contact-left {
@@ -802,11 +801,16 @@
     font-weight: 400;
 }
 
-.bg {
+.prefix .form-control {
+    border-radius: 0;
+    height: 40px;
+}
+
+/* .bg {
     background: #FFFFFF;
     border: 0.67463px solid #519ACB;
     box-shadow: 1.34926px 1.34926px 4.04778px #519ACB;
-}
+} */
 
 #FullName {
     width: 100%;
@@ -860,8 +864,8 @@
     display: inline-block;
     border: 1px solid rgb(192, 202, 213);
     border-radius: 0 0 24px 24px;
-    margin-top: 10px;
-    padding: 8px 10px;
+    /* margin-top: 10px; */
+    padding: 10px;
     font-size: 17px;
     font-weight: 600;
     align-self: end;
@@ -945,8 +949,7 @@
 .bookingbtn {
     display: block;
     text-align: center;
-    padding-right: 30px;
-    margin: 20px;
+    padding: 20px;
 }
 
 .cmplt {
@@ -1046,7 +1049,8 @@
 
     .room_price {
         width: auto;
-        padding-top: 10px;
+        /* padding-top: 10px; */
+        padding: 10px 10px 0px 0;
     }
 
     .inner-contact-left {
@@ -1055,8 +1059,11 @@
         border-bottom: 1px solid #B3B3B3;
     }
 
+    .reser .reserve_btn {
+        width: 120px;
+        height: 50px;
+    }
 
-    
 
     .contact-main {
         flex-direction: column;
@@ -1101,9 +1108,6 @@
         width: 100%;
     }
 
-    .bookingbtn {
-        padding-right: 0px;
-    }
 
 
     .rndClndr {
@@ -1125,9 +1129,10 @@
         padding: 0;
     }
 
-    .main_description{
+    .main_description {
         margin: 0;
     }
+
     .card_details {
         padding: 0;
     }
@@ -1162,7 +1167,7 @@
     }
 
     .room-last {
-        padding: 10px 0;
+        padding: 10px 10px 10px 0;
     }
 
     .land-aminit li {
@@ -1186,6 +1191,7 @@
         flex-direction: column;
         align-items: end;
         justify-content: end;
+        padding: 0px 10px 0px 0;
     }
 
     .no-rooms span {
@@ -1204,7 +1210,7 @@
 
     .inner-contact-left {
         width: 100%;
-        padding: 2rem 1rem;
+        padding: 2rem 3rem;
         border-top: 1px solid #B3B3B3;
         border-right: 0;
     }
@@ -1233,7 +1239,8 @@
     }
 
     .room-last {
-        padding: 10px 0;
+        padding: 10px 10px 10px 0;
+
     }
 
     .land-aminit li {
@@ -1257,6 +1264,7 @@
         flex-direction: column;
         align-items: end;
         justify-content: end;
+        padding: 0px 10px 0px 0;
     }
 
     .no-rooms span {
@@ -1275,7 +1283,7 @@
 
     .inner-contact-left {
         width: 100%;
-        padding: 2rem 1rem;
+        padding: 2rem 3rem;
         border-top: 1px solid #B3B3B3;
         border-right: 0;
     }
