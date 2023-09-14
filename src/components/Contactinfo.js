@@ -138,7 +138,7 @@ function Contactinfo(props) {
                             <div className="inner-contact-left">
                                 <div className="code">
                                     <div className="inputBox">
-                                        <span className="text-span">Full Name*</span>
+                                        <span className="text-span">Full Name <span style={{color:'red'}}>*</span></span>
                                         <div className="names">
                                             <div className="prefix">
                                                 <select id="prefix" name="prefix" className="form-control form-prefix bg" required>
@@ -155,18 +155,18 @@ function Contactinfo(props) {
                                         </div>
                                     </div>
                                     <div className="inputBox">
-                                        <span className="text-span">Email Id*</span>
+                                        <span className="text-span">Email Id <span style={{color:'red'}}>*</span></span>
                                         <input type="email" className="bg" name="email" id="Email" placeholder="Please enter your email id"
                                             pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required />
 
                                     </div>
                                     <div className="inputBox mobile">
-                                        <span className="text-span">Phone no.*</span>
+                                        <span className="text-span">Phone No. <span style={{color:'red'}}>*</span></span>
                                         <input type="tel" className="bg" name="number" id="Number" required />
                                     </div>
 
                                     <div className="content_inner">
-                                        <span className="text-span">Country*</span>
+                                        <span className="text-span">Country <span style={{color:'red'}}>*</span></span>
                                         <select id="country" name="country" className="form-control form-country bg" required>
                                             <option value="Country">Country</option>
                                             <option value="India">India</option>
@@ -175,7 +175,7 @@ function Contactinfo(props) {
                                     </div>
 
                                     <div className="inputBox inputBox-city">
-                                        <span className="text-span">City*</span>
+                                        <span className="text-span">City <span style={{color:'red'}}>*</span></span>
                                         <input type="text" id="user_city" className="bg" name="city" required />
                                     </div>
                                     <div className="content_inner">
