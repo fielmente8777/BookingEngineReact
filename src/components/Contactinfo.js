@@ -1,5 +1,15 @@
-import { useCallback, useState } from "react";
+import axios from "axios";
+import { useCallback, useEffect, useState } from "react";
 import useRazorpay from "react-razorpay";
+import "../style/Reserve.css"
+
+
+import { getCountries, getCountryCallingCode } from 'react-phone-number-input/input';
+import en from 'react-phone-number-input/locale/en.json';
+import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css';
+
+
 
 function Contactinfo(props) {
     let tax = 0
@@ -18,35 +28,69 @@ function Contactinfo(props) {
 
     const [Razorpay, createOrder] = useRazorpay(); // Destructure 'Razorpay' and 'createOrder' from the hook
 
-    const [amount, setAmount] = useState(tax*(props.price * props.nights)+(props.price * props.nights));
-    const [OrderId,setOrderId] = useState('')
-    const [Type,setType] = useState(props.type)
-    const [BookingId,setBookingId] = useState("1")
-    const [Name,setName] = useState('')
-    const [Phone,setPhone] = useState('')
-    const [Email,setEmail] = useState('')
-    const [Country,setCountry] = useState('')
-    const [City,setCity] = useState('')
+    const [amount, setAmount] = useState(tax * (props.price * props.nights) + (props.price * props.nights));
+    const [OrderId, setOrderId] = useState('')
+    const [Type, setType] = useState(props.type)
+    const [BookingId, setBookingId] = useState("1")
+    const [Name, setName] = useState('')
+    const [Email, setEmail] = useState('')
+    const [Phone, setPhone] = useState('')
+    const [Country, setCountry] = useState('')
+    const [City, setCity] = useState('')
 
-    const GetOrderId = async()=>{
+    // location api
+
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`;
+                    try {
+                        const result = await axios.get(url);
+                        const { locality, city, country, principalSubdivision } = result.data;
+                        // console.log(result.data);
+
+
+
+                        setCity(result.data.city)
+                        setCountry(result.data.countryName)
+                    } catch (err) {
+                        console.log(err);
+                        // Handle the error as needed
+                    }
+                },
+                (error) => {
+                    console.log(error);
+                    // Handle geolocation error
+                }
+            );
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+            // Handle geolocation not supported
+        }
+    }, []);
+
+
+
+    const GetOrderId = async () => {
         const response = await fetch(`http://127.0.0.1:5000/payment/create_order`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
                 "Content-Type": "application/json",
             },
-            body : JSON.stringify({
-                "ndid":localStorage.getItem('hotelid'),
-                "amount":amount,
-                "currency":"INR",
+            body: JSON.stringify({
+                "ndid": localStorage.getItem('hotelid'),
+                "amount": amount,
+                "currency": "INR",
                 "guestName": Name,
-                "guestInfo":{
-                    "EmailId":Email,
-                    "Phone":Phone,
-                    "City":City,
-                    "Country":Country
+                "guestInfo": {
+                    "EmailId": Email,
+                    "Phone": Phone,
+                    "City": City,
+                    "Country": Country
                 },
-                "roomType":Type ,
+                "roomType": Type,
                 "payment": {
                     "Status": "PENDING",
                     "RefNo": "",
@@ -55,15 +99,15 @@ function Contactinfo(props) {
                 },
                 "checkIn": localStorage.getItem('Checkin'),
                 "checkOut": localStorage.getItem('Checkout'),
-                "bookedRooms":props.room ,
+                "bookedRooms": props.room,
                 "price": {
-                    "Principal":props.price * props.nights ,
-                    "Tax": tax*(props.price * props.nights),
+                    "Principal": props.price * props.nights,
+                    "Tax": tax * (props.price * props.nights),
                     "Total": amount
                 },
                 "isCheckedIn": false,
                 "isCheckedOut": false
-                        })
+            })
         });
 
         const json = await response.json();
@@ -76,27 +120,27 @@ function Contactinfo(props) {
         }
     }
 
-    const PaymentSuccessFull = async(payid)=>{
+    const PaymentSuccessFull = async (payid) => {
         const response = await fetch(`http://127.0.0.1:5000/booking/update`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
                 "Content-Type": "application/json",
             },
-            body : JSON.stringify({
-                "ndid":localStorage.getItem('hotelid'),
-                "orderid":OrderId,
-                "paymentid":payid
+            body: JSON.stringify({
+                "ndid": localStorage.getItem('hotelid'),
+                "orderid": OrderId,
+                "paymentid": payid
             })
         })
 
-        
+
 
     }
 
     const handlePayment = async () => {
         try {
-            
+
             const mockOrderData = {
                 amount: parseInt(amount) * 100, // Convert amount to paise (assuming INR)
                 orderId: OrderId, // Generate a unique order ID
@@ -114,24 +158,24 @@ function Contactinfo(props) {
                     setOrderId(response.razorpay_order_id);
                     await PaymentSuccessFull(response.razorpay_payment_id)
                     props.setPayment({
-                        "Status":true,
-                        "Order":response.razorpay_order_id,
-                        "Payment":response.razorpay_payment_id,
-                        "Name":Name,
-                        "Phone":Email,
-                        "Email":Phone,
-                        "City":City,
-                        "Country":Country,
-                        "Checkin":localStorage.getItem('Checkin'),
-                        "Checkout":localStorage.getItem('Checkout'),
-                        "Adult":localStorage.getItem('Adult'),
-                        "Kid":localStorage.getItem('Kid'),
-                        "Tax": tax*(props.price * props.nights),
-                        "Amount":amount
-                    
-                      })
+                        "Status": true,
+                        "Order": response.razorpay_order_id,
+                        "Payment": response.razorpay_payment_id,
+                        "Name": Name,
+                        "Phone": Email,
+                        "Email": Phone,
+                        "City": City,
+                        "Country": Country,
+                        "Checkin": localStorage.getItem('Checkin'),
+                        "Checkout": localStorage.getItem('Checkout'),
+                        "Adult": localStorage.getItem('Adult'),
+                        "Kid": localStorage.getItem('Kid'),
+                        "Tax": tax * (props.price * props.nights),
+                        "Amount": amount
+
+                    })
                 },
-                
+
                 theme: {
                     color: props.Bg_color,
                 },
@@ -155,7 +199,6 @@ function Contactinfo(props) {
         }
     };
 
-
     return (
         <>
             <div className="container">
@@ -168,7 +211,7 @@ function Contactinfo(props) {
                             <div className="inner-contact-left">
                                 <div className="code">
                                     <div className="inputBox">
-                                        <span className="text-span">Full Name <span style={{color:'red'}}>*</span></span>
+                                        <span className="text-span">Full Name <span style={{ color: 'red' }}>*</span></span>
                                         <div className="names">
                                             <div className="prefix">
                                                 <select id="prefix" name="prefix" className="form-control form-prefix bg" required>
@@ -180,31 +223,50 @@ function Contactinfo(props) {
                                                 </select>
                                             </div>
                                             <div className="name-input">
-                                                <input type="text" className="bg" name="fullname" id="FullName" placeholder="Full Name" value={Name} onChange={(e)=>{setName(e.target.value)}} required />
+                                                <input type="text" className="bg" name="fullname" id="FullName" placeholder="Full Name" value={Name} onChange={(e) => { setName(e.target.value) }} required />
                                             </div>
                                         </div>
                                     </div>
                                     <div className="inputBox">
-                                        <span className="text-span">Email Id <span style={{color:'red'}}>*</span></span>
-                                        <input type="email" className="bg" value={Email} onChange={(e)=>{setEmail(e.target.value)}} name="email" id="Email" placeholder="Please enter your email id"
+                                        <span className="text-span">Email Id <span style={{ color: 'red' }}>*</span></span>
+                                        <input type="email" className="bg" value={Email} onChange={(e) => { setEmail(e.target.value) }} name="email" id="Email" placeholder="Please enter your email id"
                                             pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required />
 
                                     </div>
                                     <div className="inputBox mobile">
-                                        <span className="text-span">Phone No. <span style={{color:'red'}}>*</span></span>
-                                        <input type="tel" className="bg" value={Phone} onChange={(e)=>{setPhone(e.target.value)}} name="number" id="Number" required />
+                                        <span className="text-span">Phone No. <span style={{ color: 'red' }}>*</span></span>
+                                        <div className="phone-input-container">
+                                            <PhoneInput
+                                                className="phone-input-field"
+                                                defaultCountry="IN"
+                                                placeholder="Enter phone number"
+                                                value={Phone}
+                                                onChange={(newPhone) => setPhone(newPhone)}
+                                            />
+                                        </div>
                                     </div>
 
                                     <div className="inputBox inputBox-city">
-                                        <span className="text-span">City <span style={{color:'red'}}>*</span></span>
-                                        <input value={City} onChange={(e)=>{setCity(e.target.value)}} type="text" id="user_city" className="bg" name="city" required />
+                                        <span className="text-span">City <span style={{ color: 'red' }}>*</span></span>
+                                        <input
+                                            value={City}
+                                            onChange={(e) => setCity(e.target.value)}
+                                            type="text"
+                                            id="user_city"
+                                            className="bg"
+                                            name="city"
+                                            required
+                                        />
                                     </div>
 
                                     <div className="inputBox content_inner">
-                                        <span className="text-span">Country <span style={{color:'red'}}>*</span></span>
-                                        <input type="text" value={Country} onChange={(e)=>{setCountry(e.target.value)}} />
+                                        <span className="text-span">Country <span style={{ color: 'red' }}>*</span></span>
+                                        <input
+                                            type="text"
+                                            value={Country}
+                                            onChange={(e) => setCountry(e.target.value)}
+                                        />
                                     </div>
-
                                     <div className="content_inner">
                                         <span className="text-span">Special Requests</span>
                                         <textarea className="bg" name="text" id="request" placeholder="ADDITIONAL REQUEST"></textarea>
@@ -305,20 +367,20 @@ function Contactinfo(props) {
 
 
                         </div>
-                        {(Name&&Phone&&Email&&Country&&City)&&!OrderId?
-                        <div className="button_s">
-                            <button className="submitbtn" onClick={GetOrderId}>Request Payment</button>
-                        </div>:""}
+                        {(Name && Phone && Email && Country && City) && !OrderId ?
+                            <div className="button_s">
+                                <button className="submitbtn" onClick={GetOrderId}>Request Payment</button>
+                            </div> : ""}
 
 
-                        {!OrderId?"" :<div className="bookingbtn">
+                        {!OrderId ? "" : <div className="bookingbtn">
                             <button className="cmplt pay_button" id="rzp-button1" onClick={handlePayment} style={{ backgroundColor: props.color }}>{props.Paymentbutton}</button>
                         </div>}
                     </div>
 
                     {/* contact information end  */}
                 </div>
-            </div>
+            </div >
 
             {/* {isOpen && (
                 <Payment />
