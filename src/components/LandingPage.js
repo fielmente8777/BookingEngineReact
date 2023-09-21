@@ -13,6 +13,12 @@ import SuccessPage from './SuccessPage';
 export default function Landing(props) {
     let [Headlines, setHeadlines] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
+    const [Available,setAvailable]=useState({
+        "DELUX": 0,
+        "PREMIUM": 0,
+        "SUITE": 0,
+        "SUPERDELUX": 0
+    })
 
 
 
@@ -33,6 +39,7 @@ export default function Landing(props) {
             },
         });
 
+
         const json = await response.json();
 
         if (json.Status === true) {
@@ -45,6 +52,20 @@ export default function Landing(props) {
             document.getElementById("No_rooms").style.display = "block"
         }
 
+        const response1 = await fetch(`${props.baseUrl}/booking/availablity`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, /",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "ndid":localStorage.getItem('hotelid'),
+                "checkin":checkin_date,
+                "checkout":checkout_date
+            })
+        });
+        const json1 = await response1.json();
+        setAvailable(json1.Avaiblity)
 
 
 
@@ -281,7 +302,7 @@ export default function Landing(props) {
                         <Cards
                             name={element.roomName ? element.roomName.slice(0, 80) : ""}
                             description={element.roomDescription ? element.roomDescription.slice(0, 80) : ""}
-                            available={element.noOfRooms}
+                            available={Available[element.roomTypeName]}
                             price={element.price ? element.price : ""}
                             roomtype={element.roomType}
                             type = {element.roomTypeName}
