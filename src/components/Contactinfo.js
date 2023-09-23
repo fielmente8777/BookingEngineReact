@@ -81,7 +81,7 @@ function Contactinfo(props) {
             },
             body: JSON.stringify({
                 "ndid": localStorage.getItem('hotelid'),
-                "amount": amount,
+                "amount": props.room*props.BookingTotalPrice,
                 "currency": "INR",
                 "guestName": Name,
                 "guestInfo": {
@@ -101,9 +101,9 @@ function Contactinfo(props) {
                 "checkOut": localStorage.getItem('Checkout'),
                 "bookedRooms": props.room,
                 "price": {
-                    "Principal": props.price * props.nights,
-                    "Tax": tax * (props.price * props.nights),
-                    "Total": amount
+                    "Principal":props.room*props.BookingPrice,
+                    "Tax": props.room*props.BookingTax,
+                    "Total": props.room*props.BookingTotalPrice
                 },
                 "isCheckedIn": false,
                 "isCheckedOut": false
@@ -142,7 +142,7 @@ function Contactinfo(props) {
         try {
 
             const mockOrderData = {
-                amount: parseInt(amount) * 100, // Convert amount to paise (assuming INR)
+                amount: parseInt(props.room*props.BookingTotalPrice) * 100, // Convert amount to paise (assuming INR)
                 orderId: OrderId, // Generate a unique order ID
             };
 
@@ -170,8 +170,8 @@ function Contactinfo(props) {
                         "Checkout": localStorage.getItem('Checkout'),
                         "Adult": localStorage.getItem('Adult'),
                         "Kid": localStorage.getItem('Kid'),
-                        "Tax": tax * (props.price * props.nights),
-                        "Amount": amount
+                        "Tax": props.room*props.BookingTax,
+                        "Amount": props.room*props.BookingTotalPrice
 
                     })
                 },
@@ -348,8 +348,8 @@ function Contactinfo(props) {
                                             <span className="left-span">Taxes and fees</span>
                                         </div>
                                         <div className="cust-sub d-flex flex-column py-2">
-                                            <span style={{ fontWeight: 550 }} ><span className="right-span" id="Final_price">{props.price * props.nights}</span> INR</span>
-                                            <span style={{ fontWeight: 550 }} ><span className="right-span" id="Final_tax">{tax * (props.price * props.nights)}</span> INR</span>
+                                            <span style={{ fontWeight: 550 }} ><span className="right-span" id="Final_price">{props.room*props.BookingPrice}</span> INR</span>
+                                            <span style={{ fontWeight: 550 }} ><span className="right-span" id="Final_tax">{props.room*props.BookingTax}</span> INR</span>
                                         </div>
                                     </div>
                                 </div>
@@ -359,7 +359,7 @@ function Contactinfo(props) {
                                             <span className="left-span">GRAND TOTAL</span>
                                         </div>
                                         <div className="py-2">
-                                            <span className="right-span"><span id="Final_payable_price">{tax * (props.price * props.nights) + (props.price * props.nights)}</span> INR</span>
+                                            <span className="right-span"><span id="Final_payable_price">{props.room*props.BookingTotalPrice}</span> INR</span>
                                         </div>
                                     </div>
                                 </div>

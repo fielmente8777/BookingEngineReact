@@ -6,7 +6,10 @@ import Carousel from 'react-bootstrap/Carousel';
 
 
 export default function Cards(props) {
-    const [TotalPrice, setTotalPrice] = useState(props.price)
+    const [BookingTax,setBookingTax] = useState(0)
+    const [BookingTotalPrice,setBookingTotalPrice] = useState(0)
+    const [BookingPrice,setBookingPrice] = useState(0)
+
     const [Original_Price, setOriginal_Price] = useState(props.price)
     const [Price, setPrice] = useState(props.price)
     const [Nights, setNights] = useState(0)
@@ -46,11 +49,26 @@ export default function Cards(props) {
         var Difference_In_Time = date2.getTime() - date1.getTime();
         var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
         setNights(Difference_In_Days);
-        let total = await (Number(Nights) * Number(Price));
-        setTotalPrice(total)
-
-
-
+        //Price API
+        const FetchPrice = async () => {
+            const response = await fetch(`http://127.0.0.1:5000/booking/total/${localStorage.getItem('hotelid')}`, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json, text/plain, /",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                        "checkIn":localStorage.getItem("Checkin"),
+                        "checkOut":localStorage.getItem("Checkout"),
+                        "roomType":props.roomtype
+                })
+            })
+            const json = await response.json();
+            setBookingPrice(json.Price)
+            setBookingTax(json.Tax)
+            setBookingTotalPrice(json.TotalPrice)
+        }
+        FetchPrice()
         setIsOpen(!isOpen);
     };
 
@@ -190,8 +208,10 @@ export default function Cards(props) {
 
             {isOpen && (
                 <Contactinfo Bg_color={props.Bg_color} setPayment={props.setPayment}
-                HotelName={props.HotelName}
-                HotelLogo={props.HotelLogo} Paymentbutton = {props.Paymentbutton} nights={Nights} room={Rooms} color={props.color} price={Price}  grandtotal={Grandtotal} type={props.roomtype}  />
+                HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={BookingTax}
+                BookingTotalPrice={BookingTotalPrice} BookingPrice={BookingPrice} 
+                Paymentbutton = {props.Paymentbutton} nights={Nights} room={Rooms} 
+                color={props.color} price={Price}  grandtotal={Grandtotal} type={props.roomtype}  />
             )}
 
 
