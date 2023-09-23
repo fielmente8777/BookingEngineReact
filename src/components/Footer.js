@@ -90,14 +90,14 @@ export default function Footer(props) {
               <h6 className='footHeading'>Policies</h6>
               <ul>
                 <li>
-                  <Link to="/#" onClick={() => settermsShow(true)}>Terms & Conditions</Link>
+                  <p style={{'cursor':"pointer"}} onClick={() => settermsShow(true)}>Terms & Conditions</p>
                 </li>
                 <li>
-                  <Link to="/#" onClick={() => setpaymentShow(true)}>Payment Terms</Link>
+                  <p style={{'cursor':"pointer"}} onClick={() => setpaymentShow(true)}>Payment Terms</p>
                 </li>
                 <li>
-                  <Link to="/#" onClick={() => setcancellationShow(true)}>Cancellation & Refund
-                    Policy</Link>
+                  <p style={{'cursor':"pointer"}} onClick={() => setcancellationShow(true)}>Cancellation & Refund
+                    Policy</p>
                 </li>
                 {/* <li>
                   <Link to="/#">FAQs</Link>
