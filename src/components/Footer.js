@@ -5,8 +5,8 @@ import Modal from 'react-bootstrap/Modal';
 import { FaTripadvisor, FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
-// import { FaYoutube } from "react-icons/fa";
-// import { FaLinkedinIn } from "react-icons/fa";
+import { FaYoutube } from "react-icons/fa";
+import { FaLinkedinIn } from "react-icons/fa";
 import { Link } from "react-router-dom";
 // import FooterLogo from '../Images/backgroundimge.jpeg'
 import FooterLogo from '../Images/img1.jpg'
@@ -45,9 +45,12 @@ export default function Footer(props) {
               <div className="social-media">
                 <h6 className='footHeading'>Follow Us</h6>
                 <div className='Social_foot_icon'>
-                  <Link className='fa-social' to={props.twitter} target="_blank" rel='noreferrer'><FaTwitter className='footsocialicon' /></Link>
                   <Link className='fa-social' to={props.facebook} target="_blank" rel='noreferrer'><FaFacebookF className='footsocialicon' /></Link>
                   <Link className='fa-social' to={props.instagram} target="_blank" rel='noreferrer'><FaInstagram className='footsocialicon' /></Link>
+                  <Link className='fa-social' to={props.twitter} target="_blank" rel='noreferrer'><FaTwitter className='footsocialicon' /></Link>
+                  <Link className='fa-social' to={props.Tripadvisors} target="_blank" rel='noreferrer'><FaTripadvisor className='footsocialicon' /></Link>
+                  <Link className='fa-social' to={props.Linkedin} target="_blank" rel='noreferrer'><FaLinkedinIn className='footsocialicon' /></Link>
+                  <Link className='fa-social' to={props.Youtube} target="_blank" rel='noreferrer'><FaYoutube className='footsocialicon' /></Link>
                 </div>
 
 
@@ -71,7 +74,7 @@ export default function Footer(props) {
 
             </div>
 
-            <div className="footeuseful_links col-12 col-sm-4 col-md-4 col-lg-2 col-xl-2">
+            {/* <div className="footeuseful_links col-12 col-sm-4 col-md-4 col-lg-2 col-xl-2">
               <h6 className='footHeading'>Links</h6>
               <ul>
                 <li>
@@ -84,7 +87,7 @@ export default function Footer(props) {
                   <Link to="/#">Contact</Link>
                 </li>
               </ul>
-            </div>
+            </div> */}
 
             <div className="foot_policies col-12 col-sm-4 col-md-4 col-lg-2 col-xl-2">
               <h6 className='footHeading'>Policies</h6>
@@ -106,9 +109,9 @@ export default function Footer(props) {
             </div>
 
 
-            <div className="map col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3"><iframe
+            <div className="map col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3"><iframe title='map'
               src={props.Location}
-              width="600" height="450" allowfullscreen="" loading="lazy"
+              width="800" height="600" allowfullscreen="" loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"></iframe></div>
 
 
@@ -140,7 +143,7 @@ export default function Footer(props) {
             Terms & Conditions
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>...</Modal.Body>
+        <Modal.Body>{props.Termsconditions}</Modal.Body>
       </Modal>
 
       <Modal
@@ -154,7 +157,7 @@ export default function Footer(props) {
             Payment Terms
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>...</Modal.Body>
+        <Modal.Body>{props.Privacypolicy}</Modal.Body>
       </Modal>
 
       <Modal
@@ -168,7 +171,7 @@ export default function Footer(props) {
             Cancellation & Refund Policy
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>...</Modal.Body>
+        <Modal.Body>{props.Cancellation}</Modal.Body>
       </Modal>
 
     </>

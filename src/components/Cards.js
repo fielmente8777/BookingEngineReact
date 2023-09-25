@@ -5,6 +5,7 @@ import Carousel from 'react-bootstrap/Carousel';
 
 
 
+
 export default function Cards(props) {
     const [BookingTax,setBookingTax] = useState(0)
     const [BookingTotalPrice,setBookingTotalPrice] = useState(0)

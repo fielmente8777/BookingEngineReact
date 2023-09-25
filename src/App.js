@@ -35,6 +35,9 @@ function App() {
   const [Facebook, setFacebook] = useState("https://facebook.com/")
   const [Instagram, setInstagram] = useState("https://instagram.com/")
   const [Twitter, setTwitter] = useState("https://twitter.com/")
+  const [Tripadvisors, setTripadvisors] = useState("https://facebook.com/")
+  const [Linkedin, setLinkedin] = useState("https://instagram.com/")
+  const [Youtube, setYoutube] = useState("https://twitter.com/")
 
 
   const [Reservation_button, setReservation_button] = useState("Reservations");
@@ -46,6 +49,10 @@ function App() {
   const [Spinner_spin, setSpinner_spin] = useState("d-none")
   const [Spinner_spin1, setSpinner_spin1] = useState("d-none")
   const [Spinner_spin2, setSpinner_spin2] = useState("d-none")
+
+  const [Privacypolicy, setPrivacypolicy] = useState("Privacy policy")
+  const [Cancellation, setCancellation] = useState("Cancellation policy")
+  const [Termsconditions, setTermsconditions] = useState("Terms and conditions")
 
   const [Payment,setPayment]=useState({
     "Status":false,
@@ -85,9 +92,20 @@ function App() {
       setHotelAddress(json.Details.Footer.Address)
       setHotelNumber(json.Details.Footer.Phone)
       setHotelName(json.Details.HotelName)
+
+
+
       setFacebook(json.Details.Links.Facebook)
       setInstagram(json.Details.Links.Instagram)
       setTwitter(json.Details.Links.Twitter)
+      setTripadvisors(json.Details.Links.Tripadvisors)
+      setLinkedin(json.Details.Links.Linkedin)
+      setYoutube(json.Details.Links.Youtube)
+
+
+      setPrivacypolicy(json.Details.PrivacyPolicy)
+      setCancellation(json.Details.CancellationPolicy)
+      setTermsconditions(json.Details.TermsConditions)
 
       setSpinner_spin1('')
     } else {
@@ -117,7 +135,8 @@ function App() {
     <>
       <BrowserRouter>
 
-        <Navbar hotelname={HotelName} logo={HotelLogo} display={Spinner_spin1} color={Bg_color} />
+        <Navbar hotelname={HotelName} logo={HotelLogo} display={Spinner_spin1} color={Bg_color} HotelNumber={HotelNumber}
+email={HotelEmail} />
 
         {!Payment.Status?<LandingPage Bg_color={Bg_color} HotelName={HotelName} HotelLogo={HotelLogo} baseUrl={baseUrl}
                    Bg_image={HotelImage} color={Box_color} display={Spinner_spin1} bt_color={Button_color} 
@@ -127,7 +146,10 @@ function App() {
 
         <Footer color={Bg_color} Logo={HotelLogo} HotelAddress={HotelAddress} HotelNumber={HotelNumber} 
                 aboutus={HotelAbout} display={Spinner_spin1} email={HotelEmail} facebook={Facebook} 
-                instagram={Instagram} twitter={Twitter} Location={HotelLocation} />
+                instagram={Instagram} twitter={Twitter} Tripadvisors={Tripadvisors}
+                Linkedin={Linkedin}
+                Youtube={Youtube} Location={HotelLocation}
+                Privacypolicy={Privacypolicy} Cancellation={Cancellation} Termsconditions={Termsconditions} />
 
         <NotFoundPage display={Spinner_spin2} />
       </BrowserRouter>

@@ -20,6 +20,12 @@ export default function Landing(props) {
         "SUPERDELUX": 0
     })
 
+    const [date, setDate] = useState(new Date());
+
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const [tomorrowdate, setTomorrowDate] = useState(tomorrow);
+
 
 
 
@@ -113,8 +119,8 @@ export default function Landing(props) {
                                         </div>
 
                                         <div className="calendarDiv">
-                                            <FullCalendar bg_color={props.bt_color} />
-                                            <FullCalendar1 bg_color={props.bt_color} />
+                                            <FullCalendar bg_color={props.bt_color} checkinDate={date} setcheckinDate={setDate} setcheckoutDate={setTomorrowDate} />
+                                            <FullCalendar1 bg_color={props.bt_color} checkoutDate={tomorrowdate} setcheckoutDate={setTomorrowDate} checkinDate={date} />
                                         </div>
                                     </div>
                                 </div>

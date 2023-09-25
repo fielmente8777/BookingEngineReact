@@ -79,11 +79,11 @@ export default function Navbar(props) {
                         </li>
 
                         <li class="nav-item">
-                            <a href="tel:9582897050" class="nav-link nav-icon" aria-current="page" target="_blank"><FaPhoneAlt /></a>
+                            <a href={`tel:${props.HotelNumber}`} class="nav-link nav-icon" aria-current="page"><FaPhoneAlt /></a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="https://mail.google.com/" class="nav-link nav-icon" aria-current="page" target="_blank"><FaEnvelope /></a>
+                            <a href={`mailto:${props.email}`} class="nav-link nav-icon" aria-current="page"><FaEnvelope /></a>
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link" aria-current="page" href="#" data-bs-toggle="modal"

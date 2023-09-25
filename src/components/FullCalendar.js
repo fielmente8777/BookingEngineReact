@@ -3,6 +3,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 const FullCalendar = (props) => {
+    const {checkinDate,setcheckinDate,setcheckoutDate} = props
     function formatDate(date) {
         var d = new Date(date),
             month = '' + (d.getMonth() + 1),
@@ -16,7 +17,7 @@ const FullCalendar = (props) => {
 
         return [year, month, day].join('-');
     }
-    const [date, setDate] = useState(new Date());
+    
     const [isOpen, setIsOpen] = useState(false);
 
     const isDateDisabled = date => {
@@ -31,29 +32,35 @@ const FullCalendar = (props) => {
     const handleDateChange = (selectedDate) => {
         checkin_date = formatDate(selectedDate);
         localStorage.setItem("Checkin", checkin_date)
-        setDate(selectedDate);
+        setcheckinDate(selectedDate);
+
+        const nextDay = new Date(selectedDate);
+        nextDay.setDate(selectedDate.getDate() + 1);
+        const checkout_date = formatDate(nextDay);
+        localStorage.setItem("Checkout", checkout_date);
+        setcheckoutDate(nextDay)
         setIsOpen(false); // Close the calendar after selecting a date
     };
 
     // Extracting date, day, month, and year from the selected date
-    const selectedDay = date.getDate();
-    const selectedMonth = date.toLocaleString('default', { month: 'long' });
-    const selectedYear = date.getFullYear();
-    let checkin_date = formatDate(date)
+    const selectedDay = checkinDate.getDate();
+    const selectedMonth = checkinDate.toLocaleString('default', { month: 'long' });
+    const selectedYear = checkinDate.getFullYear();
+    let checkin_date = formatDate(checkinDate)
     localStorage.setItem("Checkin", checkin_date)
 
     return (
         <div className='caldiv'>
             <button className='datebtn' onClick={handleClick} style={{ background: props.bg_color }}>
                 {/* We have to customize this color, this color will come form backend */}
-                <span className='text-light'>{date.toLocaleDateString('en-US', { weekday: 'long' })}</span>
+                <span className='text-light'>{checkinDate.toLocaleDateString('en-US', { weekday: 'long' })}</span>
                 <span className='date text-light'>{selectedDay}</span>
                 <span className='text-light'>{selectedMonth}</span>
                 <span className='text-light'>{selectedYear}</span>
             </button>
             {isOpen && (
                 <div className='rndClndr'>
-                    <Calendar onChange={handleDateChange} value={date} tileDisabled={({ date }) => isDateDisabled(date)} />
+                    <Calendar onChange={handleDateChange} value={checkinDate} tileDisabled={({ date }) => isDateDisabled(date)} />
                 </div>
             )}
 

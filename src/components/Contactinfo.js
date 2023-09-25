@@ -147,7 +147,7 @@ function Contactinfo(props) {
             };
 
             const options = {
-                key: "rzp_test_UZ0V9jh3jMC0C9", // Enter the Key ID generated from the Dashboard
+                key: "rzp_live_5uaIIwZcxLC70j", // Enter the Key ID generated from the Dashboard
                 amount: mockOrderData.amount.toString(), // Use the amount from the order data
                 currency: "INR",
                 name: props.HotelName,
