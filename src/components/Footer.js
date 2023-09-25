@@ -34,17 +34,17 @@ export default function Footer(props) {
       <footer className={`${props.display}`} style={{ background: props.color }}>
         <div className="container footer_top">
           <div className="footer-outer row">
-            <div className="footer-main footAdd col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
+            <div className="footer-main footAdd col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 w-100">
               <div className="FootAddrs">
-                <div className="footLogo">
+                <div className="footLogo" style={{ marginTop: "-1rem", marginBottom: "1rem" }}>
                   <img src={props.Logo} alt="" />
                 </div>
                 <p className='my-2'>{props.aboutus}</p>
               </div>
 
               <div className="social-media">
-                <h6 className='footHeading'>Follow Us</h6>
-                <div className='Social_foot_icon'>
+                <h6 className='footHeading ' style={{ marginLeft: "-5px" }}>Follow Us</h6>
+                <div className='Social_foot_icon' style={{ marginLeft: "-10px" }}>
                   <Link className='fa-social' to={props.facebook} target="_blank" rel='noreferrer'><FaFacebookF className='footsocialicon' /></Link>
                   <Link className='fa-social' to={props.instagram} target="_blank" rel='noreferrer'><FaInstagram className='footsocialicon' /></Link>
                   <Link className='fa-social' to={props.twitter} target="_blank" rel='noreferrer'><FaTwitter className='footsocialicon' /></Link>
@@ -58,16 +58,16 @@ export default function Footer(props) {
 
             </div>
 
-            <div className="reachUs col-12 col-sm-4 col-md-4 col-lg-2 col-xl-2">
-              <h6 className='footHeading'>Reach us at</h6>
-              <p className="Contact-item"><i className="fa-solid fa-location-dot foot-icons"></i>
+            <div className="reachUs col-12 col-sm-4 col-md-4 col-lg-2 col-xl-2 w-100" style={{ marginLeft: "3rem" }}>
+              <h6 className='footHeading' style={{ marginLeft: "6px" }}>Reach us at</h6>
+              <p className="Contact-item" style={{ marginTop: "15px" }}><i className="fa-solid fa-location-dot foot-icons"></i>
                 {props.HotelAddress}
               </p>
               <ul className="contact-inner">
-                <li><Link className="Contact-item" to="#"><i className="fa-regular fa-envelope foot-icons"></i>{props.email}</Link>
+                <li style={{ marginTop: "15px" }}><Link className="Contact-item" to="#" ><i className="fa-regular fa-envelope foot-icons"></i>{props.email}</Link>
 
                 </li>
-                <li><Link className="Contact-item" to="#"><i
+                <li style={{ marginTop: "15px" }}><Link className="Contact-item" to="#" style={{ marginTop: "15px" }}><i
                   className="fa-sharp fa-solid fa-phone foot-icons"></i> {props.HotelNumber}</Link></li>
 
               </ul>
@@ -89,17 +89,17 @@ export default function Footer(props) {
               </ul>
             </div> */}
 
-            <div className="foot_policies col-12 col-sm-4 col-md-4 col-lg-2 col-xl-2">
-              <h6 className='footHeading'>Policies</h6>
+            <div className="foot_policies col-12 col-sm-4 col-md-4 col-lg-2 col-xl-2 w-100">
+              <h6 className='footHeading '>Policies</h6>
               <ul>
-                <li>
-                  <p style={{'cursor':"pointer"}} onClick={() => settermsShow(true)}>Terms & Conditions</p>
+                <li >
+                  <p style={{ 'cursor': "pointer", marginTop: "15px" }} onClick={() => settermsShow(true)}>Terms & Conditions</p>
                 </li>
                 <li>
-                  <p style={{'cursor':"pointer"}} onClick={() => setpaymentShow(true)}>Payment Terms</p>
+                  <p style={{ 'cursor': "pointer", marginTop: "15px" }} onClick={() => setpaymentShow(true)}>Payment Terms</p>
                 </li>
                 <li>
-                  <p style={{'cursor':"pointer"}} onClick={() => setcancellationShow(true)}>Cancellation & Refund
+                  <p style={{ 'cursor': "pointer", marginTop: "15px" }} onClick={() => setcancellationShow(true)}>Cancellation & Refund
                     Policy</p>
                 </li>
                 {/* <li>
@@ -109,7 +109,7 @@ export default function Footer(props) {
             </div>
 
 
-            <div className="map col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3"><iframe title='map'
+            <div className="map col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 w-100"><iframe title='map'
               src={props.Location}
               width="800" height="600" allowfullscreen="" loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"></iframe></div>

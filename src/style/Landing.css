@@ -163,9 +163,9 @@
 }
 
 .options {
-    width: 60px;
+    width: auto;
     overflow: hidden;
-    padding: 5px 15px 5px 10px !important;
+    padding: .5rem 1rem !important;
     border-radius: 4px;
     cursor: pointer;
     background-color: #9BCFF0;

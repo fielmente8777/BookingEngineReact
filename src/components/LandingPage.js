@@ -13,7 +13,7 @@ import SuccessPage from './SuccessPage';
 export default function Landing(props) {
     let [Headlines, setHeadlines] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
-    const [Available,setAvailable]=useState({
+    const [Available, setAvailable] = useState({
         "DELUX": 0,
         "PREMIUM": 0,
         "SUITE": 0,
@@ -65,9 +65,9 @@ export default function Landing(props) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                "ndid":localStorage.getItem('hotelid'),
-                "checkin":checkin_date,
-                "checkout":checkout_date
+                "ndid": localStorage.getItem('hotelid'),
+                "checkin": checkin_date,
+                "checkout": checkout_date
             })
         });
         const json1 = await response1.json();
@@ -135,7 +135,7 @@ export default function Landing(props) {
                                             <div className="details ">
                                                 <label for="#">{t("Adult's")}</label>
 
-                                                <select name="#" id="adult" className="options text-light" style={{ background: props.bt_color }}>
+                                                <select name="#" id="adult" className="options text-light " style={{ background: props.bt_color }}>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
                                                     <option value="3">3</option>
@@ -311,15 +311,15 @@ export default function Landing(props) {
                             available={Available[element.roomTypeName]}
                             price={element.price ? element.price : ""}
                             roomtype={element.roomType}
-                            type = {element.roomTypeName}
+                            type={element.roomTypeName}
                             facilities={element.roomFacilities}
                             images={element.roomImage}
                             color={props.color}
                             FinalConfirmButton={props.FinalConfirmButton}
                             Paymentbutton={props.Paymentbutton}
-                            Bg_color = {props.Bg_color}
-                            HotelName = {props.HotelName}
-                            HotelLogo = {props.HotelLogo}
+                            Bg_color={props.Bg_color}
+                            HotelName={props.HotelName}
+                            HotelLogo={props.HotelLogo}
                             setPayment={props.setPayment}
                         />
 
@@ -327,7 +327,7 @@ export default function Landing(props) {
                 })}
 
 
-               
+
             </div>
         </>
     )

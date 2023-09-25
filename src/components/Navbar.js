@@ -38,14 +38,14 @@ export default function Navbar(props) {
                 </div>
 
 
-                <a class="navbar-brand" href="#" style={{ color: '#fff', fontWeight: '500' }} >{props.hotelname}</a>
+                {/* <a class="navbar-brand" href="#" style={{ color: '#fff', fontWeight: '500' }} >{props.hotelname}</a> */}
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
                     aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                     <span style={{ color: "#fff" }}><i class="fa-solid fa-bars"></i></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                     <ul class="navbar-nav mb-2 mb-lg-0" >
-                    {/* style={{ background: props.color }} */}
+                        {/* style={{ background: props.color }} */}
                         {/* <li class="nav-item ">
                             <a class="nav-link " aria-current="page" href="#">
                                 <select id="currency" onchange="convertCurrency()">
@@ -61,7 +61,8 @@ export default function Navbar(props) {
                                 <FaGlobe />
                             </a> */}
                             <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {/* dropdown-toggle */}
+                                <button class="btn btn-secondary " type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <FaGlobe />
                                 </button>
                                 <ul class="dropdown-menu p-0">
@@ -85,14 +86,14 @@ export default function Navbar(props) {
                         <li class="nav-item">
                             <a href={`mailto:${props.email}`} class="nav-link nav-icon" aria-current="page"><FaEnvelope /></a>
                         </li>
-                        <li class="nav-item ">
+                        {/* <li class="nav-item ">
                             <a class="nav-link" aria-current="page" href="#" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal1">{t('Login')}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal2">{t('Sign up')}</a>
-                        </li>
+                        </li> */}
 
                         {/* <li class="nav-item">
                             <div class="form-check form-switch">
