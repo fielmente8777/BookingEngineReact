@@ -7,6 +7,7 @@ import Carousel from 'react-bootstrap/Carousel';
 
 
 export default function Cards(props) {
+    const baseURL = "http://127.0.0.1:5000"
     const [BookingTax,setBookingTax] = useState(0)
     const [BookingTotalPrice,setBookingTotalPrice] = useState(0)
     const [BookingPrice,setBookingPrice] = useState(0)
@@ -14,35 +15,70 @@ export default function Cards(props) {
     const [Original_Price, setOriginal_Price] = useState(props.price)
     const [Price, setPrice] = useState(props.price)
     const [Nights, setNights] = useState(0)
-    const [Rooms, setRooms] = useState(1);
+    const [Rooms, setRooms] = useState(0);
     const [Grandtotal, setGrandtotal] = useState(0)
     let Available_rooms = props.available;
 
     const [isOpen, setIsOpen] = useState(false);
     let Features = props.facilities;
     let images = props.images;
-    console.log(images)
+    // console.log(images)
+
+    if(props.roomtype==="1"){props.setDeluxAdult(props.Adult)}
+    if(props.roomtype==="2"){props.setSuperDeluxAdult(props.Adult)}
+    if(props.roomtype==="3"){props.setSuiteAdult(props.Adult)}
+    if(props.roomtype==="4"){props.setPremiumAdult(props.Adult)}
 
 
     const DelCount = (id) => {
+        setIsOpen(false)
         let number = Number(document.getElementById(id).innerHTML);
-        if (number > 1) {
+        if (number > 0) {
             number -= 1;
+            if(id==="DELUX"){
+                props.setDelux(number)
+            }
+            if(id==="SUPER DELUX"){
+                props.setSuperDelux(number)
+            }
+            if(id==="SUITE"){
+                props.setSuite(number)
+            }
+            if(id==="PREMIUM"){
+                props.setPremium(number)
+            }
             let price = number * Number(Original_Price)
             setPrice(price)
             setRooms(number)
         }
+        props.setisOpen(false)
     }
 
     const AddCount = (id) => {
+        setIsOpen(false)
         let number = Number(document.getElementById(id).innerHTML);
         if (number < Available_rooms) {
             number += 1;
+            if(id==="DELUX"){
+                props.setDelux(number)
+    
+            }
+            if(id==="SUPER DELUX"){
+                props.setSuperDelux(number)
+            }
+            if(id==="SUITE"){
+                props.setSuite(number)
+            }
+            if(id==="PREMIUM"){
+                props.setPremium(number)
+            }
             let price = number * Number(Original_Price)
             setPrice(price)
             setRooms(number)
         }
+        props.setisOpen(false)
     }
+    
 
     const toggleDiv = async () => {
         var date1 = new Date(localStorage.getItem("Checkin"));
@@ -52,7 +88,7 @@ export default function Cards(props) {
         setNights(Difference_In_Days);
         //Price API
         const FetchPrice = async () => {
-            const response = await fetch(`http://127.0.0.1:5000/booking/total/${localStorage.getItem('hotelid')}`, {
+            const response = await fetch(`${baseURL}/booking/total/${localStorage.getItem('hotelid')}`, {
                 method: "POST",
                 headers: {
                     Accept: "application/json, text/plain, /",
@@ -143,7 +179,7 @@ export default function Cards(props) {
                             <div className="room-last d-flex justify-content-between align-items-end">
                                 <div className="room-name">
                                     <h3>{props.name}</h3>
-                                    <span className="dec-sqr">{props.type}</span>
+                                    {/* <span className="dec-sqr">{props.type}</span> */}
                                 </div>
                                 <div className="last-rooms">
                                     <p className="dec-lst">*Last {props.available} Rooms available<i
@@ -179,23 +215,29 @@ export default function Cards(props) {
                                 </div>
                                 <div className="room_price w-30">
                                     {/* <label>From</label>  */}
-                                    <h3><span id="total_price" style={{ fontSize: "24px" }}> {Price}/- </span> INR</h3>
+                                    <h3><span id="total_price" style={{ fontSize: "24px" }}> {props.ratechange[props.roomtype].Price}/- </span> INR</h3>
                                     <span>Per Night</span>
 
                                     {/* <span style="color:red" className="span m-1">Last {{ Available }} Rooms</span>  */}
                                     <div className="no-rooms d-flex">
                                         <span>Room(s)</span>
+                                        {Available_rooms!=0?
                                         <div className="room">
                                             <button className="btn-minus" onClick={() => { DelCount(props.type) }}>-</button>
                                             <button className="btn-total"
                                                 id={`${props.type}`}>{Rooms}</button>
                                             <button className="btn-plus" onClick={() => { AddCount(props.type) }}>+</button>
-                                        </div>
+                                        </div>:
+                                        <div className='soldBtn'>
+                                            <span class="badge text-bg-danger">SOLD OUT</span>
+                                        </div>}
                                     </div>
 
                                     <div className="reser">
+                                        <p>Adults Allowed: {props.Adult}</p>
+                                        
                                         {/* <button className="reserve_btn d-none" id="reserve_button" onclick="Redirect_Book()">RESERVE</button> */}
-                                        <button className="reserve_btn" id="reserve_button" style={{ backgroundColor: props.color }} onClick={toggleDiv}>{props.FinalConfirmButton}</button>
+                                        {/* {Rooms!==0?<button className="reserve_btn" id="reserve_button" style={{ backgroundColor: props.color }} onClick={toggleDiv}>{props.FinalConfirmButton}</button>:""} */}
                                     </div>
                                 </div>
                             </div>
@@ -208,7 +250,7 @@ export default function Cards(props) {
             {/* Contact informtion start  */}
 
             {isOpen && (
-                <Contactinfo Bg_color={props.Bg_color} setPayment={props.setPayment}
+                <Contactinfo setIsOpen={setIsOpen} Bg_color={props.Bg_color} setPayment={props.setPayment}
                 HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={BookingTax}
                 BookingTotalPrice={BookingTotalPrice} BookingPrice={BookingPrice} 
                 Paymentbutton = {props.Paymentbutton} nights={Nights} room={Rooms} 

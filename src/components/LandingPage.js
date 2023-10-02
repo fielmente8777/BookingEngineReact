@@ -7,12 +7,31 @@ import Spinner from './Spinner';
 import { useTranslation } from 'react-i18next';
 import './i18n'; // Import your i18n configuration
 import SuccessPage from './SuccessPage';
+import Contactinfo from './CnfrmPay'
 
 
 
 export default function Landing(props) {
+    const [Adult,setAdult] = useState(0)
     let [Headlines, setHeadlines] = useState([]);
-    const [isOpen, setIsOpen] = useState(false);
+    let [Reservebtn, setReservebtn] = useState(false);
+    let [ratesChange, setratesChange] = useState({});
+    const [Delux,setDelux]=useState(0)
+    const [SuperDelux,setSuperDelux]=useState(0)
+    const [Suite,setSuite]=useState(0)
+    const [Premium,setPremium]=useState(0)
+
+
+    const [DeluxAdult,setDeluxAdult] = useState(0)
+    const [SuperDeluxAdult,setSuperDeluxAdult] = useState(0)
+    const [SuiteAdult,setSuiteAdult] = useState(0)
+    const [PremiumAdult,setPremiumAdult] = useState(0)
+
+    const [Night , setNights] = useState(0)
+    let [maxAdult,setmaxAdult] = useState(0)
+
+    const [CradisOpen, setCardsIsOpen] = useState(false);
+    const [isOpen,setisOpen] = useState(false)
     const [Available, setAvailable] = useState({
         "DELUX": 0,
         "PREMIUM": 0,
@@ -26,23 +45,37 @@ export default function Landing(props) {
     tomorrow.setDate(tomorrow.getDate() + 1);
     const [tomorrowdate, setTomorrowDate] = useState(tomorrow);
 
-
+    const adultKidChange=()=>{
+        let adult = document.getElementById("adult").value;
+        let kid = document.getElementById("kid").value;
+        setAdult(adult)
+        localStorage.setItem("Adult", adult);
+        localStorage.setItem("Kid", kid);
+    }
 
 
     async function toggleDiv() {
         let checkin_date = localStorage.getItem("Checkin")
         let checkout_date = localStorage.getItem("Checkout")
+
+        var date1 = new Date(localStorage.getItem("Checkin"));
+        var date2 = new Date(localStorage.getItem("Checkout"));
+        var Difference_In_Time = date2.getTime() - date1.getTime();
+        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+        setNights(Difference_In_Days);
         let adult = document.getElementById("adult").value;
+        setAdult(adult)
         let kid = document.getElementById("kid").value;
         localStorage.setItem("Adult", adult);
         localStorage.setItem("Kid", kid);
 
         const response = await fetch(`${props.baseUrl}/room/${localStorage.getItem('hotelid')}`, {
-            method: "GET",
+            method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
                 "Content-Type": "application/json",
             },
+            body: JSON.stringify({"Checkin": checkin_date,"Checkout":checkout_date})
         });
 
 
@@ -51,7 +84,9 @@ export default function Landing(props) {
         if (json.Status === true) {
             document.getElementById("No_rooms").style.display = "none"
             document.getElementById("id_filters").style.display = "block"
+            setReservebtn(true)
             setHeadlines((json.Details));
+            setratesChange(json.Price)
             console.log(json)
 
         } else {
@@ -75,7 +110,7 @@ export default function Landing(props) {
 
 
 
-        setIsOpen(!isOpen);
+        setCardsIsOpen(true);
     };
     const { t, i18n } = useTranslation();
 
@@ -84,6 +119,22 @@ export default function Landing(props) {
         i18n.changeLanguage(lng);
     };
 
+   
+
+    function BookingFinalize(){
+        maxAdult=0
+        if(Delux>0){setmaxAdult(maxAdult+=Delux*DeluxAdult)}
+        if(SuperDelux>0){setmaxAdult(maxAdult+=SuperDelux*SuperDeluxAdult)}
+        if(Suite>0){setmaxAdult(maxAdult+=Suite*SuiteAdult)}
+        if(Premium>0){setmaxAdult(maxAdult+=Premium*PremiumAdult)}
+        if(Adult<=maxAdult){
+            setisOpen(true)
+            setReservebtn(false)
+        }
+        else{
+            setisOpen(false)
+        }
+    }
 
 
     return (
@@ -119,8 +170,8 @@ export default function Landing(props) {
                                         </div>
 
                                         <div className="calendarDiv">
-                                            <FullCalendar bg_color={props.bt_color} checkinDate={date} setcheckinDate={setDate} setcheckoutDate={setTomorrowDate} />
-                                            <FullCalendar1 bg_color={props.bt_color} checkoutDate={tomorrowdate} setcheckoutDate={setTomorrowDate} checkinDate={date} />
+                                            <FullCalendar bg_color={props.bt_color} checkinDate={date} setcheckinDate={setDate} setcheckoutDate={setTomorrowDate} toggleDiv={toggleDiv} />
+                                            <FullCalendar1 bg_color={props.bt_color} checkoutDate={tomorrowdate} setcheckoutDate={setTomorrowDate} checkinDate={date} toggleDiv={toggleDiv} />
                                         </div>
                                     </div>
                                 </div>
@@ -135,11 +186,18 @@ export default function Landing(props) {
                                             <div className="details ">
                                                 <label for="#">{t("Adult's")}</label>
 
-                                                <select name="#" id="adult" className="options text-light " style={{ background: props.bt_color }}>
+                                                <select name="#" id="adult" onChange={adultKidChange} className="options text-light " style={{ background: props.bt_color }}>
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
                                                     <option value="3">3</option>
                                                     <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                    <option value="9">9</option>
+                                                    <option value="10">10</option>
+                                                    <option value="11">11</option>
                                                 </select>
                                             </div>
 
@@ -155,6 +213,9 @@ export default function Landing(props) {
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>
                                                         <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
                                                     </select>
                                                 </div>
 
@@ -304,13 +365,15 @@ export default function Landing(props) {
                 </div>
                 {Headlines.map((element) => {
 
-                    return <div key={element.url} style={{ padding: '20px 0' }}>
+                    return <div key={element.url} >
                         <Cards
                             name={element.roomName ? element.roomName.slice(0, 80) : ""}
                             description={element.roomDescription ? element.roomDescription.slice(0, 80) : ""}
                             available={Available[element.roomTypeName]}
                             price={element.price ? element.price : ""}
+                            ratechange={ratesChange}
                             roomtype={element.roomType}
+                            Adult = {element.adult}
                             type={element.roomTypeName}
                             facilities={element.roomFacilities}
                             images={element.roomImage}
@@ -321,10 +384,41 @@ export default function Landing(props) {
                             HotelName={props.HotelName}
                             HotelLogo={props.HotelLogo}
                             setPayment={props.setPayment}
+                            setDelux = {setDelux}
+                            setSuperDelux = {setSuperDelux}
+                            setSuite = {setSuite}
+                            setPremium = {setPremium}
+                            setDeluxAdult={setDeluxAdult}
+                            setSuperDeluxAdult={setSuperDeluxAdult}
+                            setSuiteAdult={setSuiteAdult}
+                            setPremiumAdult={setPremiumAdult}
+                            setisOpen={setisOpen}
                         />
-
+                        
                     </div>
                 })}
+                <div className='container'>
+                {(Reservebtn)&&(Delux!==0||SuperDelux!==0||Suite!==0||Premium!==0)
+                ?<button className='ReserveButtonForPayment' onClick={BookingFinalize}>Reserve</button>:""}
+                </div>
+                
+
+                {isOpen&&(Delux!==0||SuperDelux!==0||Suite!==0||Premium!==0) &&Adult<=maxAdult?(
+                <Contactinfo setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
+                HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={1200}
+                BookingTotalPrice={1200} BookingPrice={1200} 
+                Paymentbutton = {props.Paymentbutton} nights={Night} room={1} 
+                color={props.color} price={1}  grandtotal={1} type={props.roomtype} 
+                Delux={Delux}
+                SuperDelux={SuperDelux}
+                Suite={Suite}
+                Premium={Premium}
+                ratesChange={ratesChange} />
+            ):""}
+            {!isOpen&&(Delux!==0||SuperDelux!==0||Suite!==0||Premium!==0) &&Adult>maxAdult?
+            <div class="alert alert-danger" role="alert">
+            Please Select More Rooms
+        </div>:""}
 
 
 

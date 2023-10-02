@@ -40,6 +40,7 @@ const FullCalendar = (props) => {
         localStorage.setItem("Checkout", checkout_date);
         setcheckoutDate(nextDay)
         setIsOpen(false); // Close the calendar after selecting a date
+        props.toggleDiv()
     };
 
     // Extracting date, day, month, and year from the selected date

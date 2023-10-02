@@ -43,7 +43,7 @@ function App() {
   const [Reservation_button, setReservation_button] = useState("Reservations");
   const [Room_searchButton, setRoom_searchButton] = useState("Look For Rooms");
   const [RoomFinal_searchButton, setRoomFinal_searchButton] = useState("Reserve");
-  const [PaymentButton, setPaymentButton] = useState("Submit")
+  const [PaymentButton, setPaymentButton] = useState("Pay Now")
 
 
   const [Spinner_spin, setSpinner_spin] = useState("d-none")
@@ -68,11 +68,12 @@ function App() {
     "Adult":"8",
     "Kid":"1",
     "Tax":"2",
-    "Amount":"3"
+    "Amount":"3",
+    "PayStatus":"Paid"
 
   })
   async function Get_Hotel_status_exists() {
-    const response = await fetch(`${baseUrl}/booking/getengine/${localStorage.getItem("hotelid")}`, {
+    const response = await fetch(`${baseUrl}/booking/getenginedetails/${localStorage.getItem("hotelid")}`, {
       method: "GET",
       headers: {
         Accept: "application/json, text/plain, /",
@@ -85,13 +86,19 @@ function App() {
     // const json = await response1.json();
 
     if (json.Status === true) {
+      document.title = document.title.replace("<!-- HOTELNAME -->", json.Details.HotelName);
+      const faviconLink = document.querySelector('link[rel="icon"]');
+      if (faviconLink) {
+        faviconLink.href = json.Details.Footer.Logo;
+      }
       setHotelLogo(json.Details.Footer.Logo)
       setHotelLocation(json.Details.Location)
       setHotelEmail(json.Details.Footer.Email)
-      setHotelAbout(json.Details.Footer.AboutText)
+      setHotelAbout(json.Details.AboutUs)
       setHotelAddress(json.Details.Footer.Address)
       setHotelNumber(json.Details.Footer.Phone)
       setHotelName(json.Details.HotelName)
+      setHotelImage(json.Details.BgImage)
 
 
 
@@ -114,10 +121,12 @@ function App() {
     }
   }
 
-  const baseUrl = "https://nexon.eazotel.com"
+  const baseUrl = "http://127.0.0.1:5000"
+  // const baseUrl = "http://127.0.0.1:5000"
   const urlParams = new URLSearchParams(window.location.search);
   const hotelid = urlParams.get("id");
   localStorage.setItem('hotelid', hotelid)
+  
   Get_Hotel_status_exists()
 
   const { t, i18n } = useTranslation();

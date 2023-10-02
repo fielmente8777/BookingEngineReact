@@ -21,7 +21,8 @@ function SuccessPage(props) {
                         <label htmlFor="/">Adult</label>
                         <label htmlFor="/">Kid</label>
                         <label htmlFor="/">Tax</label>
-                        <label htmlFor="/">Amount Paid</label>
+                        <label htmlFor="/">Amount</label>
+                        <label htmlFor="/">Payment Status</label>
                         
                     </div>
                     <div className='succuss_detailDiv align-items-end'>
@@ -31,13 +32,14 @@ function SuccessPage(props) {
                         <label htmlFor="/">{props.Payment.Name}</label>
                         <label htmlFor="/">{props.Payment.Phone}</label>
                         <label htmlFor="/">{props.Payment.Email}</label>
-                        <label htmlFor="/">{props.Payment.Country}</label>
+                        <label htmlFor="/">{props.Payment.Rooms}</label>
                         <label htmlFor="/">{props.Payment.Checkin}</label>
                         <label htmlFor="/">{props.Payment.Checkout}</label>
                         <label htmlFor="/">{props.Payment.Adult}</label>
                         <label htmlFor="/">{props.Payment.Kid}</label>
                         <label htmlFor="/">{props.Payment.Tax}</label>
                         <label htmlFor="/">{props.Payment.Amount}</label>
+                        <label htmlFor="/">{props.Payment.PayStatus}</label>
                     </div>
                 </div>
                 <div className='d-flex justify-content-center gap-4 m-4'>

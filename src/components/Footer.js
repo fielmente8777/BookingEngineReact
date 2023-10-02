@@ -10,7 +10,7 @@ import { FaLinkedinIn } from "react-icons/fa";
 import { Link } from "react-router-dom";
 // import FooterLogo from '../Images/backgroundimge.jpeg'
 import FooterLogo from '../Images/img1.jpg'
-
+import HTMLReactParser from 'html-react-parser'
 import { useTranslation } from 'react-i18next';
 import './i18n'; // Import your i18n configuration
 
@@ -58,16 +58,16 @@ export default function Footer(props) {
 
             </div>
 
-            <div className="reachUs col-12 col-sm-4 col-md-4 col-lg-2 col-xl-2 w-100" style={{ marginLeft: "3rem" }}>
+            <div className="reachUs col-12 col-sm-4 col-md-4 col-lg-2 col-xl-2 w-100">
               <h6 className='footHeading' style={{ marginLeft: "6px" }}>Reach us at</h6>
               <p className="Contact-item" style={{ marginTop: "15px" }}><i className="fa-solid fa-location-dot foot-icons"></i>
                 {props.HotelAddress}
               </p>
               <ul className="contact-inner">
-                <li style={{ marginTop: "15px" }}><Link className="Contact-item" to="#" ><i className="fa-regular fa-envelope foot-icons"></i>{props.email}</Link>
+                <li style={{ marginTop: "15px" }}><Link className="Contact-item" to={`mailto:${props.email}`} ><i className="fa-regular fa-envelope foot-icons"></i>{props.email}</Link>
 
                 </li>
-                <li style={{ marginTop: "15px" }}><Link className="Contact-item" to="#" style={{ marginTop: "15px" }}><i
+                <li style={{ marginTop: "15px" }}><Link className="Contact-item" to={`tel:${props.HotelNumber}`} style={{ marginTop: "15px" }}><i
                   className="fa-sharp fa-solid fa-phone foot-icons"></i> {props.HotelNumber}</Link></li>
 
               </ul>
@@ -118,7 +118,7 @@ export default function Footer(props) {
           </div>
           <div className="copyright">
             <div className="copyright-inner">
-              <p>&#169; {t('Copyright 2023 Hotel Taj, Udaipur, India')}
+              <p>&#169; {t('Copyright 2023')}
               </p>
             </div>
             <div className="copyright-inner copy-right">
@@ -143,7 +143,7 @@ export default function Footer(props) {
             Terms & Conditions
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>{props.Termsconditions}</Modal.Body>
+        <Modal.Body>{HTMLReactParser(props.Termsconditions)}</Modal.Body>
       </Modal>
 
       <Modal
@@ -157,7 +157,7 @@ export default function Footer(props) {
             Payment Terms
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>{props.Privacypolicy}</Modal.Body>
+        <Modal.Body>{HTMLReactParser(props.Privacypolicy)}</Modal.Body>
       </Modal>
 
       <Modal
@@ -171,7 +171,7 @@ export default function Footer(props) {
             Cancellation & Refund Policy
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>{props.Cancellation}</Modal.Body>
+        <Modal.Body>{HTMLReactParser(props.Cancellation)}</Modal.Body>
       </Modal>
 
     </>

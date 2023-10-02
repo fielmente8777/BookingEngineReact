@@ -11,20 +11,37 @@ import 'react-phone-number-input/style.css';
 
 
 
-function Contactinfo(props) {
-    let tax = 0
-    if (props.price * props.nights <= 1000) {
-        tax = 0
+function CnfrmPay(props) {
+    try{
+        var deluxcost =props.Delux*Number(props.ratesChange['1']["Price"])
     }
-    else if (props.price * props.nights > 1000 && props.price * props.nights < 2499) {
-        tax = 0.12;
+    catch{
+        deluxcost = 0;
     }
-    else if (props.price * props.nights > 2500 && props.price * props.nights < 7499) {
-        tax = 0.18;
+    try{
+        var sdcost =props.SuperDelux*Number(props.ratesChange['2']["Price"])
     }
-    else {
-        tax = 0.28;
+    catch{
+        sdcost = 0;
     }
+    try{
+        var suitecost =props.Suite*Number(props.ratesChange['3']["Price"])
+    }
+    catch{
+        suitecost = 0;
+    }
+    try{
+        var premiumcost =props.Premium*Number(props.ratesChange['4']["Price"])
+    }
+    catch{
+        premiumcost = 0;
+    }
+
+
+    let cost = Number(deluxcost)+Number(sdcost)+Number(suitecost)+Number(premiumcost)
+    let tax = 0.18*Number(cost)
+    let totoalcost = Number(cost)+Number(tax)
+    
 
     const [Razorpay, createOrder] = useRazorpay(); // Destructure 'Razorpay' and 'createOrder' from the hook
 
@@ -37,6 +54,10 @@ function Contactinfo(props) {
     const [Phone, setPhone] = useState('')
     const [Country, setCountry] = useState('')
     const [City, setCity] = useState('')
+    const [RoomCost,setRoomCost] = useState(cost)
+    const [RoomTax,setRoomTax] = useState(tax)
+    const [PaymentStatus , setPaymentStatus] = useState("PENDING")
+    const [PayStatus , setPayStatus] = useState("PAID")
 
     // location api
 
@@ -69,10 +90,8 @@ function Contactinfo(props) {
             // Handle geolocation not supported
         }
     }, []);
-
-
-
-    const GetOrderId = async () => {
+    //PAY AT HOTEL
+    const GetPayLaterOrderId = async () => {
         const response = await fetch(`http://127.0.0.1:5000/payment/create_order`, {
             method: "POST",
             headers: {
@@ -81,7 +100,7 @@ function Contactinfo(props) {
             },
             body: JSON.stringify({
                 "ndid": localStorage.getItem('hotelid'),
-                "amount": props.room*props.BookingTotalPrice,
+                "amount": totoalcost,
                 "currency": "INR",
                 "guestName": Name,
                 "guestInfo": {
@@ -90,7 +109,14 @@ function Contactinfo(props) {
                     "City": City,
                     "Country": Country
                 },
-                "roomType": Type,
+                "Adults":localStorage.getItem("Adult"),
+                "Kids":localStorage.getItem("Kid"),
+                "Bookings":[
+                            {"RoomType":"1","Qty":props.Delux},
+                            {"RoomType":"2","Qty":props.SuperDelux},
+                            {"RoomType":"3","Qty":props.Suite},
+                            {"RoomType":"4","Qty":props.Premium}   
+                            ],
                 "payment": {
                     "Status": "PENDING",
                     "RefNo": "",
@@ -99,11 +125,140 @@ function Contactinfo(props) {
                 },
                 "checkIn": localStorage.getItem('Checkin'),
                 "checkOut": localStorage.getItem('Checkout'),
-                "bookedRooms": props.room,
                 "price": {
-                    "Principal":props.room*props.BookingPrice,
-                    "Tax": props.room*props.BookingTax,
-                    "Total": props.room*props.BookingTotalPrice
+                    "AmountPay":0,
+                    "Principal":cost,
+                    "Tax": tax,
+                    "Total":totoalcost
+                },
+                "isCheckedIn": false,
+                "isCheckedOut": false
+            })
+        });
+
+        const json = await response.json();
+
+        if (json.Status === true) {
+            props.setPayment({
+                "Status": true,
+                "Order": json.order_id,  // Order ID from the payment gateway
+                "Name": Name,
+                "Phone": Email,
+                "Email": Phone,
+                "City": City,
+                "Country": Country,
+                "Checkin": localStorage.getItem('Checkin'),
+                "Checkout": localStorage.getItem('Checkout'),
+                "Adult": localStorage.getItem('Adult'),
+                "Kid": localStorage.getItem('Kid'),
+                "Tax": tax,
+                "Amount": totoalcost,
+                "PayStatus":"Pay At Hotel",
+
+            })
+
+        } else {
+            document.getElementById("No_rooms").style.display = "block"
+        }
+    }
+    //HALF PAYMENT OPTION
+    const GetHalfOrderId = async () => {
+        setPaymentStatus("ADVANCED")
+        setPayStatus("HALF PAID")
+        let halfcost = 0.5*totoalcost
+        const response = await fetch(`http://127.0.0.1:5000/payment/create_order`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, /",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "ndid": localStorage.getItem('hotelid'),
+                "amount": halfcost,
+                "currency": "INR",
+                "guestName": Name,
+                "guestInfo": {
+                    "EmailId": Email,
+                    "Phone": Phone,
+                    "City": City,
+                    "Country": Country
+                },
+                "Adults":localStorage.getItem("Adult"),
+                "Kids":localStorage.getItem("Kid"),
+                "Bookings":[
+                            {"RoomType":"1","Qty":props.Delux},
+                            {"RoomType":"2","Qty":props.SuperDelux},
+                            {"RoomType":"3","Qty":props.Suite},
+                            {"RoomType":"4","Qty":props.Premium}   
+                            ],
+                "payment": {
+                    "Status": "PENDING",
+                    "RefNo": "",
+                    "PaymentProvider": "RazorPay",
+                    "Mode": "Online"
+                },
+                "checkIn": localStorage.getItem('Checkin'),
+                "checkOut": localStorage.getItem('Checkout'),
+                "price": {
+                    "AmountPay":halfcost,
+                    "Principal":cost,
+                    "Tax": tax,
+                    "Total":totoalcost
+                },
+                "isCheckedIn": false,
+                "isCheckedOut": false
+            })
+        });
+
+        const json = await response.json();
+
+        if (json.Status === true) {
+            setOrderId(json.order_id)
+
+        } else {
+            document.getElementById("No_rooms").style.display = "block"
+        }
+    }
+    //FULL PAYMENT BUTTON
+    const GetOrderId = async () => {
+        setPaymentStatus("SUCCESS")
+        const response = await fetch(`http://127.0.0.1:5000/payment/create_order`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, /",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "ndid": localStorage.getItem('hotelid'),
+                "amount": totoalcost,
+                "currency": "INR",
+                "guestInfo": {
+                    "guestName": Name,
+                    "EmailId": Email,
+                    "Phone": Phone,
+                    "City": City,
+                    "Country": Country
+                },
+                "Adults":localStorage.getItem("Adult"),
+                "Kids":localStorage.getItem("Kid"),
+                "bookingItems":[
+                            {"RoomType":"1","Qty":props.Delux},
+                            {"RoomType":"2","Qty":props.SuperDelux},
+                            {"RoomType":"3","Qty":props.Suite},
+                            {"RoomType":"4","Qty":props.Premium}   
+                            ],
+                "payment": {
+                    "Status": "PENDING",
+                    "RefNo": "",
+                    "PaymentProvider": "RazorPay",
+                    "Mode": "Online"
+                },
+                "checkIn": localStorage.getItem('Checkin'),
+                "checkOut": localStorage.getItem('Checkout'),
+                "price": {
+                    "Principal":cost,
+                    "Tax": tax,
+                    "Total":totoalcost
                 },
                 "isCheckedIn": false,
                 "isCheckedOut": false
@@ -130,7 +285,8 @@ function Contactinfo(props) {
             body: JSON.stringify({
                 "ndid": localStorage.getItem('hotelid'),
                 "orderid": OrderId,
-                "paymentid": payid
+                "paymentid": payid,
+                "Status":PaymentStatus
             })
         })
 
@@ -169,8 +325,9 @@ function Contactinfo(props) {
                         "Checkout": localStorage.getItem('Checkout'),
                         "Adult": localStorage.getItem('Adult'),
                         "Kid": localStorage.getItem('Kid'),
-                        "Tax": props.room*props.BookingTax,
-                        "Amount": props.room*props.BookingTotalPrice
+                        "Tax": tax,
+                        "Amount": totoalcost,
+                        "PayStatus":PayStatus,
 
                     })
                 },
@@ -323,18 +480,18 @@ function Contactinfo(props) {
                                 <div className="cust-detail">
                                     <div className="cust-inner">
                                         <div>
-                                            <span className="left-span">Category Selected</span>
+                                            <span className="left-span">Rooms</span>
                                         </div>
                                         <div style={{display:"flex",flexDirection:"column"}}>
-                                            {props.Delux!==0?<span className="right-span" id="Final_checkout">{props.Delux} x Delux</span>:""}
-                                            {props.SuperDelux!==0?<span className="right-span" id="Final_checkout">{props.SuperDelux} x SuperDelux</span>:""}
-                                            {props.Suite!==0?<span className="right-span" id="Final_checkout">{props.Suite} x Suite</span>:""}
-                                            {props.Premium!==0?<span className="right-span" id="Final_checkout">{props.Premium} x Premium</span>:""}
+                                            {props.Delux!==0?<span className="right-span" id="Final_checkout">Delux:- {props.Delux} x {props.ratesChange['1']["Price"]}</span>:""}
+                                            {props.SuperDelux!==0?<span className="right-span" id="Final_checkout">Super Delux:- {props.SuperDelux} x {props.ratesChange['2']["Price"]}</span>:""}
+                                            {props.Suite!==0?<span className="right-span" id="Final_checkout">Suite:- {props.Suite} x {props.ratesChange['3']["Price"]}</span>:""}
+                                            {props.Premium!==0?<span className="right-span" id="Final_checkout">Premium:- {props.Premium} x {props.ratesChange['4']["Price"]}</span>:""}
                                         </div>
                                     </div>
                                 </div>
                                 
-                                <div className="cust-detail">
+                                {/* <div className="cust-detail">
                                     <div className="cust-inner">
                                         <div>
                                             <span className="left-span">Rooms</span>
@@ -343,7 +500,7 @@ function Contactinfo(props) {
                                             <p className="right-span"><span id="Final_room">{props.room}</span> Room</p>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="cust-detail">
                                     <div className="cust-inner">
                                         <div>
@@ -361,8 +518,8 @@ function Contactinfo(props) {
                                             <span className="left-span">Taxes and fees</span>
                                         </div>
                                         <div className="cust-sub d-flex flex-column py-2">
-                                            <span style={{ fontWeight: 550 }} ><span className="right-span" id="Final_price">{props.room*props.BookingPrice}</span> INR</span>
-                                            <span style={{ fontWeight: 550 }} ><span className="right-span" id="Final_tax">{props.room*props.BookingTax}</span> INR</span>
+                                            <span style={{ fontWeight: 550 }} ><span className="right-span" id="Final_price">{cost}</span> INR</span>
+                                            <span style={{ fontWeight: 550 }} ><span className="right-span" id="Final_tax">{tax}</span> INR</span>
                                         </div>
                                     </div>
                                 </div>
@@ -372,7 +529,7 @@ function Contactinfo(props) {
                                             <span className="left-span">GRAND TOTAL</span>
                                         </div>
                                         <div className="py-2">
-                                            <span className="right-span"><span id="Final_payable_price">{props.room*props.BookingTotalPrice}</span> INR</span>
+                                            <span className="right-span"><span id="Final_payable_price">{cost + tax}</span> INR</span>
                                         </div>
                                     </div>
                                 </div>
@@ -382,8 +539,11 @@ function Contactinfo(props) {
                         </div>
                         {(Name && Phone && Email && Country && City) && !OrderId ?
                             <div className="button_s">
-                                <button className="submitbtn" onClick={GetOrderId}>Request Payment</button>
-                            </div> : ""}
+                                <button className="submitbtn" onClick={GetPayLaterOrderId} >PAY AT HOTEL</button>
+                                <button className="submitbtn" onClick={GetHalfOrderId}>PAY 50% AMOUNT</button>
+                                <button className="submitbtn" onClick={GetOrderId}>PAY FULL AMOUNT</button>
+                            </div>
+                             : ""}
 
 
                         {!OrderId ? "" : <div className="bookingbtn">
@@ -403,4 +563,4 @@ function Contactinfo(props) {
     )
 }
 
-export default Contactinfo;
+export default CnfrmPay;

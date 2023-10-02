@@ -38,6 +38,7 @@ const FullCalendar1 = (props) => {
             checkout_date = formatDate(selectedDate);
             localStorage.setItem("Checkout", checkout_date)
             setcheckoutDate(selectedDate);
+            props.toggleDiv()
             
         }
         setIsOpen(false);
