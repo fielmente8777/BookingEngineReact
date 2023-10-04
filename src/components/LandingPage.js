@@ -12,26 +12,26 @@ import Contactinfo from './CnfrmPay'
 
 
 export default function Landing(props) {
-    const [Adult,setAdult] = useState(0)
+    const [Adult, setAdult] = useState(0)
     let [Headlines, setHeadlines] = useState([]);
     let [Reservebtn, setReservebtn] = useState(false);
     let [ratesChange, setratesChange] = useState({});
-    const [Delux,setDelux]=useState(0)
-    const [SuperDelux,setSuperDelux]=useState(0)
-    const [Suite,setSuite]=useState(0)
-    const [Premium,setPremium]=useState(0)
+    const [Delux, setDelux] = useState(0)
+    const [SuperDelux, setSuperDelux] = useState(0)
+    const [Suite, setSuite] = useState(0)
+    const [Premium, setPremium] = useState(0)
 
 
-    const [DeluxAdult,setDeluxAdult] = useState(0)
-    const [SuperDeluxAdult,setSuperDeluxAdult] = useState(0)
-    const [SuiteAdult,setSuiteAdult] = useState(0)
-    const [PremiumAdult,setPremiumAdult] = useState(0)
+    const [DeluxAdult, setDeluxAdult] = useState(0)
+    const [SuperDeluxAdult, setSuperDeluxAdult] = useState(0)
+    const [SuiteAdult, setSuiteAdult] = useState(0)
+    const [PremiumAdult, setPremiumAdult] = useState(0)
 
-    const [Night , setNights] = useState(0)
-    let [maxAdult,setmaxAdult] = useState(0)
+    const [Night, setNights] = useState(0)
+    let [maxAdult, setmaxAdult] = useState(0)
 
     const [CradisOpen, setCardsIsOpen] = useState(false);
-    const [isOpen,setisOpen] = useState(false)
+    const [isOpen, setisOpen] = useState(false)
     const [Available, setAvailable] = useState({
         "DELUX": 0,
         "PREMIUM": 0,
@@ -45,7 +45,7 @@ export default function Landing(props) {
     tomorrow.setDate(tomorrow.getDate() + 1);
     const [tomorrowdate, setTomorrowDate] = useState(tomorrow);
 
-    const adultKidChange=()=>{
+    const adultKidChange = () => {
         let adult = document.getElementById("adult").value;
         let kid = document.getElementById("kid").value;
         setAdult(adult)
@@ -75,7 +75,7 @@ export default function Landing(props) {
                 Accept: "application/json, text/plain, /",
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({"Checkin": checkin_date,"Checkout":checkout_date})
+            body: JSON.stringify({ "Checkin": checkin_date, "Checkout": checkout_date })
         });
 
 
@@ -119,19 +119,19 @@ export default function Landing(props) {
         i18n.changeLanguage(lng);
     };
 
-   
 
-    function BookingFinalize(){
-        maxAdult=0
-        if(Delux>0){setmaxAdult(maxAdult+=Delux*DeluxAdult)}
-        if(SuperDelux>0){setmaxAdult(maxAdult+=SuperDelux*SuperDeluxAdult)}
-        if(Suite>0){setmaxAdult(maxAdult+=Suite*SuiteAdult)}
-        if(Premium>0){setmaxAdult(maxAdult+=Premium*PremiumAdult)}
-        if(Adult<=maxAdult){
+
+    function BookingFinalize() {
+        maxAdult = 0
+        if (Delux > 0) { setmaxAdult(maxAdult += Delux * DeluxAdult) }
+        if (SuperDelux > 0) { setmaxAdult(maxAdult += SuperDelux * SuperDeluxAdult) }
+        if (Suite > 0) { setmaxAdult(maxAdult += Suite * SuiteAdult) }
+        if (Premium > 0) { setmaxAdult(maxAdult += Premium * PremiumAdult) }
+        if (Adult <= maxAdult) {
             setisOpen(true)
             setReservebtn(false)
         }
-        else{
+        else {
             setisOpen(false)
         }
     }
@@ -139,8 +139,9 @@ export default function Landing(props) {
 
     return (
         <>
-            <div style={{ width: "100%", objectFit: "cover", backgroundImage: `url(${props.Bg_image})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }}>
-                <section classNameName={`section`}>
+            {/* backgroundImage: `url(${props.Bg_image})`, */}
+            <div className='LandinMain' style={{ width: "100%", objectFit: "cover", background: "#20527E", backgroundRepeat: "no-repeat", backgroundSize: "cover" }}>
+                <section className={`section`}>
                     {/* style={{width:"100%",objectFit:"cover",backgroundImage:`url(${props.Bg_image})`,backgroundRepeat:"no-repeat" }} */}
                     <div className={`container form-main ${props.display}`} >
                         <div className="form">
@@ -267,24 +268,24 @@ export default function Landing(props) {
                     <Cards />
                     
                 )} */}
-                <div className='' id="No_rooms" style={{ textAlign: "center", color: "grey", display: "none" }}>
+                <div className='cardDiv' id="No_rooms" style={{ textAlign: "center", color: "grey", display: "none" }}>
                     <h3>{t('No rooms Available')}</h3>
                 </div>
                 <div className='container' id="id_filters" style={{ display: "none" }}>
                     <div class="filters" style={{ backgroundColor: props.color }}>
-                        <div class="inner_filter">
+                        {/* <div class="inner_filter">
                             <label>Show by</label>
                             <div class="roomBtn">
                                 <buttton class="btn btn-secondary btn-fc">Rooms</buttton>
                                 <buttton class="btn btn-secondary btn-fc">Rates</buttton>
                             </div>
+                        </div> */}
+
+                        <div className="crd-head w-100">
+                            <h3 style={{ textAlign: 'center' }}>select rooms</h3>
                         </div>
 
-                        <div className="crd-head">
-                            <h3>select rooms</h3>
-                        </div>
-
-                        <div class="inner_filter rgt-flt">
+                        {/* <div class="inner_filter rgt-flt">
                             <div class="dropdown">
                                 <button class="btn btn-secondary btn-fc" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
@@ -360,7 +361,7 @@ export default function Landing(props) {
                                     </div>
                                 </ul>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 {Headlines.map((element) => {
@@ -368,12 +369,12 @@ export default function Landing(props) {
                     return <div key={element.url} >
                         <Cards
                             name={element.roomName ? element.roomName.slice(0, 80) : ""}
-                            description={element.roomDescription ? element.roomDescription.slice(0, 80) : ""}
+                            description={element.roomDescription ? element.roomDescription: ""}
                             available={Available[element.roomTypeName]}
                             price={element.price ? element.price : ""}
                             ratechange={ratesChange}
                             roomtype={element.roomType}
-                            Adult = {element.adult}
+                            Adult={element.adult}
                             type={element.roomTypeName}
                             facilities={element.roomFacilities}
                             images={element.roomImage}
@@ -384,41 +385,41 @@ export default function Landing(props) {
                             HotelName={props.HotelName}
                             HotelLogo={props.HotelLogo}
                             setPayment={props.setPayment}
-                            setDelux = {setDelux}
-                            setSuperDelux = {setSuperDelux}
-                            setSuite = {setSuite}
-                            setPremium = {setPremium}
+                            setDelux={setDelux}
+                            setSuperDelux={setSuperDelux}
+                            setSuite={setSuite}
+                            setPremium={setPremium}
                             setDeluxAdult={setDeluxAdult}
                             setSuperDeluxAdult={setSuperDeluxAdult}
                             setSuiteAdult={setSuiteAdult}
                             setPremiumAdult={setPremiumAdult}
                             setisOpen={setisOpen}
                         />
-                        
+
                     </div>
                 })}
                 <div className='container'>
                 {(Delux!==0||SuperDelux!==0||Suite!==0||Premium!==0)
                 ?<button className='ReserveButtonForPayment' onClick={BookingFinalize}>Reserve</button>:""}
                 </div>
-                
 
-                {isOpen&&(Delux!==0||SuperDelux!==0||Suite!==0||Premium!==0) &&Adult<=maxAdult?(
-                <Contactinfo baseUrl={props.baseUrl} setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
-                HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={1200}
-                BookingTotalPrice={1200} BookingPrice={1200} 
-                Paymentbutton = {props.Paymentbutton} nights={Night} room={1} 
-                color={props.color} price={1}  grandtotal={1} type={props.roomtype} 
-                Delux={Delux}
-                SuperDelux={SuperDelux}
-                Suite={Suite}
-                Premium={Premium}
-                ratesChange={ratesChange} />
-            ):""}
-            {Adult>maxAdult?
-            <div class="alert alert-danger" role="alert">
-            Please Select More Rooms
-        </div>:""}
+
+                {isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0) && Adult <= maxAdult ? (
+                    <Contactinfo setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
+                        HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={1200}
+                        BookingTotalPrice={1200} BookingPrice={1200}
+                        Paymentbutton={props.Paymentbutton} nights={Night} room={1}
+                        color={props.color} price={1} grandtotal={1} type={props.roomtype}
+                        Delux={Delux}
+                        SuperDelux={SuperDelux}
+                        Suite={Suite}
+                        Premium={Premium}
+                        ratesChange={ratesChange} />
+                ) : ""}
+                {!isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0) && Adult > maxAdult ?
+                    <div class="alert alert-danger alertDiv" role="alert">
+                        Please Select More Rooms
+                    </div> : ""}
 
 
 
