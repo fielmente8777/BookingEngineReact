@@ -284,7 +284,7 @@ function Contactinfo(props) {
                                 <div className="cust-detail">
                                     <div className="cust-inner">
                                         <div>
-                                            <span><a onclick="toggleAccordion1(1);">Edit<i
+                                            <span><a onclick="toggleAccordion1(1);">Edit form<i
                                                 className='fas fa-edit mx-2'></i></a></span>
                                         </div>
                                     </div>

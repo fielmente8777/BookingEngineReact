@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import useRazorpay from "react-razorpay";
 import "../style/Reserve.css"
 
@@ -9,39 +9,42 @@ import en from 'react-phone-number-input/locale/en.json';
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css';
 
+import Select from 'react-select'
+import countryList from 'react-select-country-list'
+
 
 
 function CnfrmPay(props) {
-    try{
-        var deluxcost =props.Delux*Number(props.ratesChange['1']["Price"])
+    try {
+        var deluxcost = props.Delux * Number(props.ratesChange['1']["Price"])
     }
-    catch{
+    catch {
         deluxcost = 0;
     }
-    try{
-        var sdcost =props.SuperDelux*Number(props.ratesChange['2']["Price"])
+    try {
+        var sdcost = props.SuperDelux * Number(props.ratesChange['2']["Price"])
     }
-    catch{
+    catch {
         sdcost = 0;
     }
-    try{
-        var suitecost =props.Suite*Number(props.ratesChange['3']["Price"])
+    try {
+        var suitecost = props.Suite * Number(props.ratesChange['3']["Price"])
     }
-    catch{
+    catch {
         suitecost = 0;
     }
-    try{
-        var premiumcost =props.Premium*Number(props.ratesChange['4']["Price"])
+    try {
+        var premiumcost = props.Premium * Number(props.ratesChange['4']["Price"])
     }
-    catch{
+    catch {
         premiumcost = 0;
     }
 
 
-    let cost = Number(deluxcost)+Number(sdcost)+Number(suitecost)+Number(premiumcost)
-    let tax = 0.18*Number(cost)
-    let totoalcost = Number(cost)+Number(tax)
-    
+    let cost = Number(deluxcost) + Number(sdcost) + Number(suitecost) + Number(premiumcost)
+    let tax = 0.18 * Number(cost)
+    let totoalcost = Number(cost) + Number(tax)
+
 
     const [Razorpay, createOrder] = useRazorpay(); // Destructure 'Razorpay' and 'createOrder' from the hook
 
@@ -54,10 +57,10 @@ function CnfrmPay(props) {
     const [Phone, setPhone] = useState('')
     const [Country, setCountry] = useState('')
     const [City, setCity] = useState('')
-    const [RoomCost,setRoomCost] = useState(cost)
-    const [RoomTax,setRoomTax] = useState(tax)
-    const [PaymentStatus , setPaymentStatus] = useState("PENDING")
-    const [PayStatus , setPayStatus] = useState("PAID")
+    const [RoomCost, setRoomCost] = useState(cost)
+    const [RoomTax, setRoomTax] = useState(tax)
+    const [PaymentStatus, setPaymentStatus] = useState("PENDING")
+    const [PayStatus, setPayStatus] = useState("PAID")
 
     // location api
 
@@ -109,14 +112,14 @@ function CnfrmPay(props) {
                     "City": City,
                     "Country": Country
                 },
-                "Adults":localStorage.getItem("Adult"),
-                "Kids":localStorage.getItem("Kid"),
-                "Bookings":[
-                            {"RoomType":"1","Qty":props.Delux},
-                            {"RoomType":"2","Qty":props.SuperDelux},
-                            {"RoomType":"3","Qty":props.Suite},
-                            {"RoomType":"4","Qty":props.Premium}   
-                            ],
+                "Adults": localStorage.getItem("Adult"),
+                "Kids": localStorage.getItem("Kid"),
+                "Bookings": [
+                    { "RoomType": "1", "Qty": props.Delux },
+                    { "RoomType": "2", "Qty": props.SuperDelux },
+                    { "RoomType": "3", "Qty": props.Suite },
+                    { "RoomType": "4", "Qty": props.Premium }
+                ],
                 "payment": {
                     "Status": "PENDING",
                     "RefNo": "",
@@ -126,10 +129,10 @@ function CnfrmPay(props) {
                 "checkIn": localStorage.getItem('Checkin'),
                 "checkOut": localStorage.getItem('Checkout'),
                 "price": {
-                    "AmountPay":0,
-                    "Principal":cost,
+                    "AmountPay": 0,
+                    "Principal": cost,
                     "Tax": tax,
-                    "Total":totoalcost
+                    "Total": totoalcost
                 },
                 "isCheckedIn": false,
                 "isCheckedOut": false
@@ -153,7 +156,7 @@ function CnfrmPay(props) {
                 "Kid": localStorage.getItem('Kid'),
                 "Tax": tax,
                 "Amount": totoalcost,
-                "PayStatus":"Pay At Hotel",
+                "PayStatus": "Pay At Hotel",
 
             })
 
@@ -165,7 +168,7 @@ function CnfrmPay(props) {
     const GetHalfOrderId = async () => {
         setPaymentStatus("ADVANCED")
         setPayStatus("HALF PAID")
-        let halfcost = 0.5*totoalcost
+        let halfcost = 0.5 * totoalcost
         const response = await fetch(`http://127.0.0.1:5000/payment/create_order`, {
             method: "POST",
             headers: {
@@ -183,14 +186,14 @@ function CnfrmPay(props) {
                     "City": City,
                     "Country": Country
                 },
-                "Adults":localStorage.getItem("Adult"),
-                "Kids":localStorage.getItem("Kid"),
-                "Bookings":[
-                            {"RoomType":"1","Qty":props.Delux},
-                            {"RoomType":"2","Qty":props.SuperDelux},
-                            {"RoomType":"3","Qty":props.Suite},
-                            {"RoomType":"4","Qty":props.Premium}   
-                            ],
+                "Adults": localStorage.getItem("Adult"),
+                "Kids": localStorage.getItem("Kid"),
+                "Bookings": [
+                    { "RoomType": "1", "Qty": props.Delux },
+                    { "RoomType": "2", "Qty": props.SuperDelux },
+                    { "RoomType": "3", "Qty": props.Suite },
+                    { "RoomType": "4", "Qty": props.Premium }
+                ],
                 "payment": {
                     "Status": "PENDING",
                     "RefNo": "",
@@ -200,10 +203,10 @@ function CnfrmPay(props) {
                 "checkIn": localStorage.getItem('Checkin'),
                 "checkOut": localStorage.getItem('Checkout'),
                 "price": {
-                    "AmountPay":halfcost,
-                    "Principal":cost,
+                    "AmountPay": halfcost,
+                    "Principal": cost,
                     "Tax": tax,
-                    "Total":totoalcost
+                    "Total": totoalcost
                 },
                 "isCheckedIn": false,
                 "isCheckedOut": false
@@ -239,14 +242,14 @@ function CnfrmPay(props) {
                     "City": City,
                     "Country": Country
                 },
-                "Adults":localStorage.getItem("Adult"),
-                "Kids":localStorage.getItem("Kid"),
-                "bookingItems":[
-                            {"RoomType":"1","Qty":props.Delux},
-                            {"RoomType":"2","Qty":props.SuperDelux},
-                            {"RoomType":"3","Qty":props.Suite},
-                            {"RoomType":"4","Qty":props.Premium}   
-                            ],
+                "Adults": localStorage.getItem("Adult"),
+                "Kids": localStorage.getItem("Kid"),
+                "bookingItems": [
+                    { "RoomType": "1", "Qty": props.Delux },
+                    { "RoomType": "2", "Qty": props.SuperDelux },
+                    { "RoomType": "3", "Qty": props.Suite },
+                    { "RoomType": "4", "Qty": props.Premium }
+                ],
                 "payment": {
                     "Status": "PENDING",
                     "RefNo": "",
@@ -256,9 +259,9 @@ function CnfrmPay(props) {
                 "checkIn": localStorage.getItem('Checkin'),
                 "checkOut": localStorage.getItem('Checkout'),
                 "price": {
-                    "Principal":cost,
+                    "Principal": cost,
                     "Tax": tax,
-                    "Total":totoalcost
+                    "Total": totoalcost
                 },
                 "isCheckedIn": false,
                 "isCheckedOut": false
@@ -286,7 +289,7 @@ function CnfrmPay(props) {
                 "ndid": localStorage.getItem('hotelid'),
                 "orderid": OrderId,
                 "paymentid": payid,
-                "Status":PaymentStatus
+                "Status": PaymentStatus
             })
         })
 
@@ -298,7 +301,7 @@ function CnfrmPay(props) {
         try {
 
             const mockOrderData = {
-                amount: parseInt(Number(props.room)*Number(props.BookingTotalPrice)) * 100, // Convert amount to paise (assuming INR)
+                amount: parseInt(Number(props.room) * Number(props.BookingTotalPrice)) * 100, // Convert amount to paise (assuming INR)
                 orderId: OrderId, // Generate a unique order ID
             };
             const options = {
@@ -327,7 +330,7 @@ function CnfrmPay(props) {
                         "Kid": localStorage.getItem('Kid'),
                         "Tax": tax,
                         "Amount": totoalcost,
-                        "PayStatus":PayStatus,
+                        "PayStatus": PayStatus,
 
                     })
                 },
@@ -354,6 +357,17 @@ function CnfrmPay(props) {
             console.log("Payment Error:", error);
         }
     };
+
+
+    // for country selector 
+
+
+    const [value, setValue] = useState('')
+    const options = useMemo(() => countryList().getData(), [])
+
+    const changeHandler = value => {
+        setValue(value)
+    }
 
     return (
         <>
@@ -391,7 +405,7 @@ function CnfrmPay(props) {
                                     </div>
                                     <div className="inputBox mobile">
                                         <span className="text-span">Phone No. <span style={{ color: 'red' }}>*</span></span>
-                                        <div className="phone-input-container">
+                                        <div className="phone-input-container ">
                                             <PhoneInput
                                                 className="phone-input-field"
                                                 defaultCountry="IN"
@@ -417,18 +431,38 @@ function CnfrmPay(props) {
 
                                     <div className="inputBox content_inner">
                                         <span className="text-span">Country <span style={{ color: 'red' }}>*</span></span>
-                                        <input
+                                        <div className="country_select">
+                                            <Select options={options} value={value} onChange={changeHandler} />
+                                        </div>
+
+                                        {/* <input
                                             type="text"
                                             value={Country}
                                             onChange={(e) => setCountry(e.target.value)}
-                                        />
+                                        /> */}
+
+
                                     </div>
                                     <div className="content_inner">
                                         <span className="text-span">Special Requests</span>
                                         <textarea className="bg" name="text" id="request" placeholder="ADDITIONAL REQUEST"></textarea>
                                     </div>
 
+
+
+
                                 </div>
+
+                                {(Name && Phone && Email && Country && City) && !OrderId ?
+                                <div className="button_s">
+                                    <button className="submitbtn" onClick={GetPayLaterOrderId} >PAY AT HOTEL </button>
+                                    <button className="submitbtn" onClick={GetHalfOrderId}>PAY 50% AMOUNT <span>00.00 INR</span></button>
+                                    <button className="submitbtn" onClick={GetOrderId}>PAY FULL AMOUNT <span>00.00 INR</span></button>
+                                    <p className="button_s_p">By making this booking, you are accepting our terms and conditions***</p>
+
+                                </div>
+                                : ""}
+
 
                                 {/* <div className="button_s">
                                     <button className="submitbtn" onClick={toggleDiv}>Submit</button>
@@ -437,15 +471,15 @@ function CnfrmPay(props) {
 
 
                             <div className="inner-contact-right">
-                                <h4 className="m-2 text-center">Reservation details</h4>
-                                <div className="cust-detail">
+                                <h4 className="m-4 text-center">Reservation details</h4>
+                                {/* <div className="cust-detail">
                                     <div className="cust-inner">
                                         <div>
                                             <span><a onclick="toggleAccordion1(1);">Edit<i
                                                 className='fas fa-edit mx-2'></i></a></span>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="cust-detail">
 
                                     <div className="cust-inner">
@@ -482,15 +516,15 @@ function CnfrmPay(props) {
                                         <div>
                                             <span className="left-span">Rooms</span>
                                         </div>
-                                        <div style={{display:"flex",flexDirection:"column"}}>
-                                            {props.Delux!==0?<span className="right-span" id="Final_checkout">Delux:- {props.Delux} x {props.ratesChange['1']["Price"]}</span>:""}
-                                            {props.SuperDelux!==0?<span className="right-span" id="Final_checkout">Super Delux:- {props.SuperDelux} x {props.ratesChange['2']["Price"]}</span>:""}
-                                            {props.Suite!==0?<span className="right-span" id="Final_checkout">Suite:- {props.Suite} x {props.ratesChange['3']["Price"]}</span>:""}
-                                            {props.Premium!==0?<span className="right-span" id="Final_checkout">Premium:- {props.Premium} x {props.ratesChange['4']["Price"]}</span>:""}
+                                        <div style={{ display: "flex", flexDirection: "column" }}>
+                                            {props.Delux !== 0 ? <span className="right-span" id="Final_checkout">Delux:- {props.Delux} x {props.ratesChange['1']["Price"]}</span> : ""}
+                                            {props.SuperDelux !== 0 ? <span className="right-span" id="Final_checkout">Super Delux:- {props.SuperDelux} x {props.ratesChange['2']["Price"]}</span> : ""}
+                                            {props.Suite !== 0 ? <span className="right-span" id="Final_checkout">Suite:- {props.Suite} x {props.ratesChange['3']["Price"]}</span> : ""}
+                                            {props.Premium !== 0 ? <span className="right-span" id="Final_checkout">Premium:- {props.Premium} x {props.ratesChange['4']["Price"]}</span> : ""}
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 {/* <div className="cust-detail">
                                     <div className="cust-inner">
                                         <div>
@@ -511,22 +545,22 @@ function CnfrmPay(props) {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="cust-detail">
+                                <div className="cust-detail sub-price">
                                     <div className="cust-inner">
                                         <div className="cust-sub d-flex flex-column py-2">
                                             <span className="left-span">Sub total</span>
                                             <span className="left-span">Taxes and fees</span>
                                         </div>
                                         <div className="cust-sub d-flex flex-column py-2">
-                                            <span style={{ fontWeight: 550 }} ><span className="right-span" id="Final_price">{cost}</span> INR</span>
-                                            <span style={{ fontWeight: 550 }} ><span className="right-span" id="Final_tax">{tax}</span> INR</span>
+                                            <span><span id="Final_price">{cost}</span> INR</span>
+                                            <span><span id="Final_tax">{tax}</span> INR</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="cust-detail">
+                                <div className="cust-detail" style={{borderBottom:'1px solid #9BCFF0'}}>
                                     <div className="cust-inner">
                                         <div className="py-2">
-                                            <span className="left-span">GRAND TOTAL</span>
+                                            <span className="left-span" style={{ color: '#153B5B', fontWeight: '700' }}>GRAND TOTAL</span>
                                         </div>
                                         <div className="py-2">
                                             <span className="right-span"><span id="Final_payable_price">{cost + tax}</span> INR</span>
@@ -537,13 +571,13 @@ function CnfrmPay(props) {
 
 
                         </div>
-                        {(Name && Phone && Email && Country && City) && !OrderId ?
+                        {/* {(Name && Phone && Email && Country && City) && !OrderId ?
                             <div className="button_s">
                                 <button className="submitbtn" onClick={GetPayLaterOrderId} >PAY AT HOTEL</button>
                                 <button className="submitbtn" onClick={GetHalfOrderId}>PAY 50% AMOUNT</button>
                                 <button className="submitbtn" onClick={GetOrderId}>PAY FULL AMOUNT</button>
                             </div>
-                             : ""}
+                            : ""} */}
 
 
                         {!OrderId ? "" : <div className="bookingbtn">

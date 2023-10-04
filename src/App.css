@@ -49,10 +49,10 @@ a {
 
 .ReserveButtonForPayment{
   display: inline-block;
-    border: 1px solid rgb(192, 202, 213);
-    border-radius: 24px 24px 24px 24px;
+    border: 2px solid rgb(192, 202, 213);
+    border-radius: 0px 0px 15px 15px;
     /* margin-top: 10px; */
-    padding: 10px;
+    padding: 15px;
     font-size: 17px;
     font-weight: 600;
     align-self: end;

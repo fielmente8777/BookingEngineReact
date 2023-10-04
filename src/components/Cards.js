@@ -178,7 +178,7 @@ export default function Cards(props) {
                         <div className="main_description">
                             <div className="room-last d-flex justify-content-between align-items-end">
                                 <div className="room-name">
-                                    <h3>{props.name}</h3>
+                                    <h3 style={{fontWeight:'600'}}>{props.name}</h3>
                                     {/* <span className="dec-sqr">{props.type}</span> */}
                                 </div>
                                 <div className="last-rooms">
@@ -192,7 +192,7 @@ export default function Cards(props) {
                             </div>
                             <div className="aminities-block">
                                 <div className="aminities w-100">
-                                    <h3>Amenities</h3>
+                                    <h5>Amenities</h5>
                                     <div className="land-aminit">
 
                                         <ul>
@@ -215,7 +215,7 @@ export default function Cards(props) {
                                 </div>
                                 <div className="room_price w-30">
                                     {/* <label>From</label>  */}
-                                    <h3><span id="total_price" style={{ fontSize: "24px" }}> {props.ratechange[props.roomtype].Price}/- </span> INR</h3>
+                                    <h4 style={{fontWeight:'600'}}><span id="total_price" style={{ fontSize: "22px" }}> {props.ratechange[props.roomtype].Price}/- </span> INR</h4>
                                     <span>Per Night</span>
 
                                     {/* <span style="color:red" className="span m-1">Last {{ Available }} Rooms</span>  */}

@@ -258,13 +258,29 @@ footer {
     /* padding: 50px 0; */
 }
 
+
+@media screen and (max-width:480px) {
+    .footer-outer {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+
+@media screen and (max-width:768px) and (min-width:480px) {
+    .footer-outer {
+        grid-template-columns: repeat(2, 1fr);
+        padding-bottom: 5px;
+    }
+}
+
+
 .footLogo {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100px;
     width: 100px;
-    border: 1px solid white;
+    /* border: 1px solid white; */
     border-radius: 50%;
     overflow: auto;
 }
