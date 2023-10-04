@@ -73,7 +73,7 @@ function Contactinfo(props) {
 
 
     const GetOrderId = async () => {
-        const response = await fetch(`http://127.0.0.1:5000/payment/create_order`, {
+        const response = await fetch(`https://nexon.eazotel.com/payment/create_order`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
@@ -121,7 +121,7 @@ function Contactinfo(props) {
     }
 
     const PaymentSuccessFull = async (payid) => {
-        const response = await fetch(`http://127.0.0.1:5000/booking/update`, {
+        const response = await fetch(`https://nexon.eazotel.com/booking/update`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",

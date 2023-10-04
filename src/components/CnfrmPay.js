@@ -92,7 +92,7 @@ function CnfrmPay(props) {
     }, []);
     //PAY AT HOTEL
     const GetPayLaterOrderId = async () => {
-        const response = await fetch(`http://127.0.0.1:5000/payment/create_order`, {
+        const response = await fetch(`${props.baseUrl}/payment/create_order`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
@@ -166,7 +166,7 @@ function CnfrmPay(props) {
         setPaymentStatus("ADVANCED")
         setPayStatus("HALF PAID")
         let halfcost = 0.5*totoalcost
-        const response = await fetch(`http://127.0.0.1:5000/payment/create_order`, {
+        const response = await fetch(`${props.baseUrl}/payment/create_order`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
@@ -222,7 +222,7 @@ function CnfrmPay(props) {
     //FULL PAYMENT BUTTON
     const GetOrderId = async () => {
         setPaymentStatus("SUCCESS")
-        const response = await fetch(`http://127.0.0.1:5000/payment/create_order`, {
+        const response = await fetch(`${props.baseUrl}/payment/create_order`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
@@ -241,7 +241,7 @@ function CnfrmPay(props) {
                 },
                 "Adults":localStorage.getItem("Adult"),
                 "Kids":localStorage.getItem("Kid"),
-                "bookingItems":[
+                "Bookings":[
                             {"RoomType":"1","Qty":props.Delux},
                             {"RoomType":"2","Qty":props.SuperDelux},
                             {"RoomType":"3","Qty":props.Suite},
@@ -276,7 +276,7 @@ function CnfrmPay(props) {
     }
 
     const PaymentSuccessFull = async (payid) => {
-        const response = await fetch(`http://127.0.0.1:5000/booking/update`, {
+        const response = await fetch(`${props.baseUrl}/booking/update`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",

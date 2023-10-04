@@ -7,7 +7,7 @@ import Carousel from 'react-bootstrap/Carousel';
 
 
 export default function Cards(props) {
-    const baseURL = "http://127.0.0.1:5000"
+    const baseURL = "https://nexon.eazotel.com"
     const [BookingTax,setBookingTax] = useState(0)
     const [BookingTotalPrice,setBookingTotalPrice] = useState(0)
     const [BookingPrice,setBookingPrice] = useState(0)
@@ -77,6 +77,7 @@ export default function Cards(props) {
             setRooms(number)
         }
         props.setisOpen(false)
+
     }
     
 

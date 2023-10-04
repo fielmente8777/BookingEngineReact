@@ -398,13 +398,13 @@ export default function Landing(props) {
                     </div>
                 })}
                 <div className='container'>
-                {(Reservebtn)&&(Delux!==0||SuperDelux!==0||Suite!==0||Premium!==0)
+                {(Delux!==0||SuperDelux!==0||Suite!==0||Premium!==0)
                 ?<button className='ReserveButtonForPayment' onClick={BookingFinalize}>Reserve</button>:""}
                 </div>
                 
 
                 {isOpen&&(Delux!==0||SuperDelux!==0||Suite!==0||Premium!==0) &&Adult<=maxAdult?(
-                <Contactinfo setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
+                <Contactinfo baseUrl={props.baseUrl} setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
                 HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={1200}
                 BookingTotalPrice={1200} BookingPrice={1200} 
                 Paymentbutton = {props.Paymentbutton} nights={Night} room={1} 
@@ -415,7 +415,7 @@ export default function Landing(props) {
                 Premium={Premium}
                 ratesChange={ratesChange} />
             ):""}
-            {!isOpen&&(Delux!==0||SuperDelux!==0||Suite!==0||Premium!==0) &&Adult>maxAdult?
+            {Adult>maxAdult?
             <div class="alert alert-danger" role="alert">
             Please Select More Rooms
         </div>:""}
