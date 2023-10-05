@@ -261,7 +261,7 @@ export default function Landing(props) {
                         </div>
 
                     </div>
-                    {/* <div className="container">
+                    <div className="container">
                         <div className="middle-div">
 
                             <div className="why-book-us">
@@ -282,7 +282,7 @@ export default function Landing(props) {
                                 </div>
                             </div>
                         </div>
-                    </div> */}
+                    </div>
                 </section>
 
 
@@ -392,7 +392,7 @@ export default function Landing(props) {
                     return <div key={element.url} >
                         <Cards
                             name={element.roomName ? element.roomName.slice(0, 80) : ""}
-                            description={element.roomDescription ? element.roomDescription: ""}
+                            description={element.roomDescription ? element.roomDescription : ""}
                             available={Available[element.roomTypeName]}
                             price={element.price ? element.price : ""}
                             ratechange={ratesChange}
@@ -422,8 +422,8 @@ export default function Landing(props) {
                     </div>
                 })}
                 <div className='container'>
-                {(Delux!==0||SuperDelux!==0||Suite!==0||Premium!==0)
-                ?<button className='ReserveButtonForPayment' onClick={BookingFinalize}>Reserve</button>:""}
+                    {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0)
+                        ? <button className='ReserveButtonForPayment' onClick={BookingFinalize}>Reserve</button> : ""}
                 </div>
 
 

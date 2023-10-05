@@ -18,7 +18,7 @@ import SuccessPage from './components/SuccessPage';
 
 
 function App() {
-  const [Bg_color, setBg_color] = useState("#0A3A75")        //background for header and footer
+  const [Bg_color, setBg_color] = useState("#153B5B")        //background for header and footer
   const [Box_color, setBox_color] = useState("#0A3A75")       //Box color for reservation
   const [Button_color, setButton_color] = useState("#0A3A75")  //Button color of checkin and out
 

@@ -21,7 +21,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 90vh;
+    min-height: 420px;
     flex-direction: column;
     /* border: 2px solid red; */
 }
@@ -237,6 +237,7 @@
     justify-content: center;
     /* padding: 0px 50px; */
     position: relative;
+    margin-bottom: 4rem;
 }
 
 .mng-booking {
@@ -268,6 +269,16 @@
     width: 510px;
     border-radius: 0px;
     background-color: #1D619C;
+}
+
+@media screen and (max-width: 480px) {
+    .why-book-us {
+        height: auto;
+    }
+
+    .why-land-aminit li {
+        font-size: 13px;
+    }
 }
 
 .why-book-us h3 {
@@ -448,6 +459,15 @@
 
 .room-last {
     padding: 5px;
+    align-items: end;
+}
+
+@media screen and (max-width: 480px) {
+    .room-last {
+        flex-direction: column;
+        align-items: start;
+
+    }
 }
 
 .roomBtn {
@@ -501,6 +521,7 @@
     /* border: 2px solid darkcyan; */
     padding: 10px;
     background: #fff;
+    padding: 15px;
     /* box-shadow: rgba(0, 0, 0, 0.03) 0px -1px 0px 0px, rgba(0, 0, 0, 0.16) 0px 2px 8px 0px, rgba(0, 0, 0, 0.16) 0px 10px 8px -5px, rgba(0, 0, 0, 0.16) 0px 12px 32px -2px;
     border-radius: 12px; */
     /* margin-bottom:1rem; */
@@ -525,7 +546,7 @@
 
 .carousel-item {
     width: 400px;
-    height: 300px;
+    height: 230px;
 }
 
 .carousel-item img {
@@ -585,14 +606,14 @@
 
 .aminities-block {
     display: flex;
-    height: 66%;
+    height: auto;
     /* border: 1px solid black; */
 }
 
 .aminities {
     width: auto;
     height: auto;
-    background: #D5EFFF;
+    /* background: #D5EFFF; */
     padding: 10px;
 }
 
@@ -605,6 +626,11 @@
     margin: 0;
 }
 
+
+.aminities .card_inr_icon {
+    display: flex;
+    gap: 10px;
+}
 
 .land-aminit {
     width: auto;
@@ -660,6 +686,38 @@
     border-bottom: 1.63227px solid #519ACB;
     border-radius: 8.33021px;
     width: 70px;
+}
+
+
+.card_tab .nav-link {
+    color: #000000;
+}
+
+
+.card_tab .nav-link:hover {
+    color: #ffff;
+    background-color: #1D619C;
+}
+
+.room_card_img {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+
+.room_card_img img {
+    width: 228px;
+    height: 200px;
+}
+
+@media screen and (max-width: 480px) {
+    .room_card_img img {
+        width: 100%;
+    }
 }
 
 .soldBtn span {
@@ -762,6 +820,7 @@
 .contact-main {
     display: flex;
     height: auto;
+    padding-bottom: 8px;
     /* width: 100%; */
     /* border: 1px solid #B3B3B3; */
     /* border-radius: 0 0 16px 16px; */
@@ -925,6 +984,24 @@
 }
 
 
+.phone-input-field .PhoneInputCountry {
+    position: relative;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    width: auto;
+    border: 1px solid rgb(192, 202, 213);
+    height: 40px;
+    padding: 0 12px;
+}
+
+.PhoneInput {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+
 .button_s {
     display: flex;
     flex-direction: column;
@@ -943,7 +1020,7 @@
 }
 
 .submitbtn {
-    
+
     display: flex;
     border: 1px solid rgb(192, 202, 213);
     border-radius: 10px;
@@ -1008,6 +1085,8 @@
     margin-bottom: 5px;
     /* border: 1px solid green; */
 }
+
+@media screen {}
 
 .cust-inner {
     display: flex;
@@ -1249,6 +1328,7 @@
 
     .main_description {
         margin: 0;
+        padding: 10px;
     }
 
     .card_details {

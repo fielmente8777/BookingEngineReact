@@ -505,7 +505,7 @@ function CnfrmPay(props) {
 
                                     <div className="cust-inner">
                                         <div>
-                                            <span className="left-span">Check</span>
+                                            <span className="left-span">Check In</span>
                                         </div>
                                         <div>
                                             <span className="right-span" id="Final_checkin">{localStorage.getItem("Checkin")}</span>
@@ -573,7 +573,7 @@ function CnfrmPay(props) {
                                             <span className="left-span">Taxes and fees</span>
                                         </div>
                                         <div className="cust-sub d-flex flex-column py-2">
-                                            <span><span id="Final_price">{cost}</span> INR</span>
+                                            <span style={{padding:'5px 0'}}><span id="Final_price">{cost}</span> INR</span>
                                             <span><span id="Final_tax">{tax}</span> INR</span>
                                         </div>
                                     </div>
