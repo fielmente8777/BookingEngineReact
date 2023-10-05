@@ -93,14 +93,14 @@ export default function Footer(props) {
               <h6 className='footHeading '>Policies</h6>
               <ul>
                 <li >
-                  <p style={{ 'cursor': "pointer", marginTop: "15px" }} onClick={() => settermsShow(true)}>Terms & Conditions</p>
+                  <Link style={{ 'cursor': "pointer", marginTop: "15px" }} onClick={() => settermsShow(true)}>Terms & Conditions</Link>
                 </li>
                 <li>
-                  <p style={{ 'cursor': "pointer", marginTop: "15px" }} onClick={() => setpaymentShow(true)}>Payment Terms</p>
+                  <Link style={{ 'cursor': "pointer", marginTop: "15px" }} onClick={() => setpaymentShow(true)}>Payment Terms</Link>
                 </li>
                 <li>
-                  <p style={{ 'cursor': "pointer", marginTop: "15px" }} onClick={() => setcancellationShow(true)}>Cancellation & Refund
-                    Policy</p>
+                  <Link style={{ 'cursor': "pointer", marginTop: "15px" }} onClick={() => setcancellationShow(true)}>Cancellation & Refund
+                    Policy</Link>
                 </li>
                 {/* <li>
                   <Link to="/#">FAQs</Link>

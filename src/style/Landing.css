@@ -691,12 +691,12 @@
 
 .card_tab .nav-link {
     color: #000000;
+    background: none !important;
 }
 
 
 .card_tab .nav-link:hover {
-    color: #ffff;
-    background-color: #1D619C;
+    background: none !important;
 }
 
 .room_card_img {

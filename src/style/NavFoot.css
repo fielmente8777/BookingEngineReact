@@ -146,6 +146,7 @@ nav {
     color: #fff;
     outline: 0;
     width: 100%;
+    display: flex;
 }
 
 .login {
