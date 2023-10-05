@@ -61,7 +61,9 @@ function CnfrmPay(props) {
     const [RoomTax, setRoomTax] = useState(tax)
     const [PaymentStatus, setPaymentStatus] = useState("PENDING")
     const [PayStatus, setPayStatus] = useState("PAID")
-
+    
+    const baseUrl = "https://nexon.eazotel.com"
+    // const baseUrl = "http://127.0.0.1:5000"
     // location api
 
     useEffect(() => {
@@ -95,7 +97,7 @@ function CnfrmPay(props) {
     }, []);
     //PAY AT HOTEL
     const GetPayLaterOrderId = async () => {
-        const response = await fetch(`${props.baseUrl}/payment/create_order`, {
+        const response = await fetch(`${baseUrl}/payment/create_order`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
@@ -169,7 +171,7 @@ function CnfrmPay(props) {
         setPaymentStatus("ADVANCED")
         setPayStatus("HALF PAID")
         let halfcost = 0.5*totoalcost
-        const response = await fetch(`${props.baseUrl}/payment/create_order`, {
+        const response = await fetch(`${baseUrl}/payment/create_order`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
@@ -225,7 +227,7 @@ function CnfrmPay(props) {
     //FULL PAYMENT BUTTON
     const GetOrderId = async () => {
         setPaymentStatus("SUCCESS")
-        const response = await fetch(`${props.baseUrl}/payment/create_order`, {
+        const response = await fetch(`${baseUrl}/payment/create_order`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
@@ -279,7 +281,7 @@ function CnfrmPay(props) {
     }
 
     const PaymentSuccessFull = async (payid) => {
-        const response = await fetch(`${props.baseUrl}/booking/update`, {
+        const response = await fetch(`${baseUrl}/booking/update`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
@@ -295,6 +297,10 @@ function CnfrmPay(props) {
 
 
 
+    }
+
+    const PopupFillFields=()=>{
+        alert("Please Complete User details form")
     }
 
     const handlePayment = async () => {
@@ -362,11 +368,13 @@ function CnfrmPay(props) {
     // for country selector 
 
 
-    const [value, setValue] = useState('')
-    const options = useMemo(() => countryList().getData(), [])
-
-    const changeHandler = value => {
-        setValue(value)
+    const options = useMemo(() => {
+        const countryData = countryList().getData();
+        const defaultOption = { label: Country, value: Country };
+        return [defaultOption, ...countryData];
+      }, []);
+    const changeHandler = Country => {
+        setCountry(Country)
     }
 
     return (
@@ -432,7 +440,7 @@ function CnfrmPay(props) {
                                     <div className="inputBox content_inner">
                                         <span className="text-span">Country <span style={{ color: 'red' }}>*</span></span>
                                         <div className="country_select">
-                                            <Select options={options} value={value} onChange={changeHandler} />
+                                            <Select options={options} value={Country}onChange={changeHandler} />
                                         </div>
 
                                         {/* <input
@@ -452,16 +460,29 @@ function CnfrmPay(props) {
 
 
                                 </div>
-
-                                {(Name && Phone && Email && Country && City) && !OrderId ?
-                                <div className="button_s">
-                                    <button className="submitbtn" onClick={GetPayLaterOrderId} >PAY AT HOTEL </button>
-                                    <button className="submitbtn" onClick={GetHalfOrderId}>PAY 50% AMOUNT <span>00.00 INR</span></button>
-                                    <button className="submitbtn" onClick={GetOrderId}>PAY FULL AMOUNT <span>00.00 INR</span></button>
-                                    <p className="button_s_p">By making this booking, you are accepting our terms and conditions***</p>
-
-                                </div>
-                                : ""}
+                                {!OrderId ? (
+                                    <div className="button_s">
+                                        {Name && Phone && Email && Country && City &&!OrderId ? (
+                                        <>
+                                            <button className="submitbtn" onClick={GetPayLaterOrderId}>PAY AT HOTEL</button>
+                                            <button className="submitbtn" onClick={GetHalfOrderId}>PAY 50% AMOUNT <span>{0.5 * (cost + tax)}</span></button>
+                                            <button className="submitbtn" onClick={GetOrderId}>PAY FULL AMOUNT <span>{cost + tax}</span></button>
+                                            <p className="button_s_p">By making this booking, you are accepting our terms and conditions***</p>
+                                        </>
+                                        ) : (
+                                        <>
+                                            <button className="submitbtn" onClick={PopupFillFields}>PAY AT HOTEL</button>
+                                            <button className="submitbtn" onClick={PopupFillFields}>PAY 50% AMOUNT <span>{0.5 * (cost + tax)}</span></button>
+                                            <button className="submitbtn" onClick={PopupFillFields}>PAY FULL AMOUNT <span>{cost + tax}</span></button>
+                                            <p className="button_s_p">By making this booking, you are accepting our terms and conditions***</p>
+                                        </>
+                                        )}
+                                    </div>
+                                    ) : (
+                                        <div className="bookingbtn">
+                                        <button className="cmplt pay_button" id="rzp-button1" onClick={handlePayment} style={{ backgroundColor: props.color }}>{props.Paymentbutton}</button>
+                                    </div>
+                                    )}
 
 
                                 {/* <div className="button_s">
@@ -571,18 +592,9 @@ function CnfrmPay(props) {
 
 
                         </div>
-                        {/* {(Name && Phone && Email && Country && City) && !OrderId ?
-                            <div className="button_s">
-                                <button className="submitbtn" onClick={GetPayLaterOrderId} >PAY AT HOTEL</button>
-                                <button className="submitbtn" onClick={GetHalfOrderId}>PAY 50% AMOUNT</button>
-                                <button className="submitbtn" onClick={GetOrderId}>PAY FULL AMOUNT</button>
-                            </div>
-                            : ""} */}
+                        
 
 
-                        {!OrderId ? "" : <div className="bookingbtn">
-                            <button className="cmplt pay_button" id="rzp-button1" onClick={handlePayment} style={{ backgroundColor: props.color }}>{props.Paymentbutton}</button>
-                        </div>}
                     </div>
 
                     {/* contact information end  */}

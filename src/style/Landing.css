@@ -11,7 +11,7 @@
 .alertDiv {
     display: block;
     top: 0;
-    position: absolute;
+    position: fixed;
     width: 100%;
 }
 

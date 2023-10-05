@@ -216,13 +216,13 @@ export default function Cards(props) {
                                 </div>
                                 <div className="room_price w-30">
                                     {/* <label>From</label>  */}
-                                    <h4 style={{fontWeight:'600'}}><span id="total_price" style={{ fontSize: "22px" }}> {props.ratechange[props.roomtype].Price}/- </span> INR</h4>
+                                    {Rooms*(props.ratechange[props.roomtype].Price)!==0?<h4 style={{fontWeight:'600'}}><span id="total_price" style={{ fontSize: "22px" }}> {Rooms*(props.ratechange[props.roomtype].Price)}/- </span> INR</h4>:<h4 style={{fontWeight:'600'}}><span id="total_price" style={{ fontSize: "22px" }}> {(props.ratechange[props.roomtype].Price)}/- </span> INR</h4>}
                                     <span>Per Night</span>
 
                                     {/* <span style="color:red" className="span m-1">Last {{ Available }} Rooms</span>  */}
                                     <div className="no-rooms d-flex">
                                         <span>Room(s)</span>
-                                        {Available_rooms!=0?
+                                        {Available_rooms!==0?
                                         <div className="room">
                                             <button className="btn-minus" onClick={() => { DelCount(props.type) }}>-</button>
                                             <button className="btn-total"

@@ -1,5 +1,5 @@
 // import React from 'react'
-import React, { useState } from 'react';
+import React, { useState,useEffect  } from 'react';
 import Cards from './Cards';
 import FullCalendar from './FullCalendar';
 import FullCalendar1 from './FullCalendar1';
@@ -38,7 +38,14 @@ export default function Landing(props) {
         "SUITE": 0,
         "SUPERDELUX": 0
     })
+    const [dataLoaded, setDataLoaded] = useState(false);
 
+    useEffect(() => {
+        if (dataLoaded) {
+            scrollToRoomsSection();
+        }
+    }, [dataLoaded]);
+    const [openAlert,setopenAlert] = useState(false)
     const [date, setDate] = useState(new Date());
 
     const tomorrow = new Date();
@@ -51,6 +58,14 @@ export default function Landing(props) {
         setAdult(adult)
         localStorage.setItem("Adult", adult);
         localStorage.setItem("Kid", kid);
+    }
+
+    function scrollToRoomsSection() {
+        const roomsSection = document.getElementById("id_filters");
+        if (roomsSection) {
+            const yOffset = roomsSection.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({ top: yOffset, behavior: 'smooth' }); // You can use 'smooth' for smooth scrolling
+        }
     }
 
 
@@ -87,7 +102,10 @@ export default function Landing(props) {
             setReservebtn(true)
             setHeadlines((json.Details));
             setratesChange(json.Price)
-            console.log(json)
+            setDataLoaded(true);
+
+            // Scroll to the rooms section
+            scrollToRoomsSection();
 
         } else {
             document.getElementById("No_rooms").style.display = "block"
@@ -130,9 +148,14 @@ export default function Landing(props) {
         if (Adult <= maxAdult) {
             setisOpen(true)
             setReservebtn(false)
+            setopenAlert(false)
         }
         else {
             setisOpen(false)
+            setopenAlert(true)
+            setInterval(()=>{
+                setopenAlert(false)
+            },4000)
         }
     }
 
@@ -405,7 +428,7 @@ export default function Landing(props) {
 
 
                 {isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0) && Adult <= maxAdult ? (
-                    <Contactinfo setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
+                    <Contactinfo  setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
                         HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={1200}
                         BookingTotalPrice={1200} BookingPrice={1200}
                         Paymentbutton={props.Paymentbutton} nights={Night} room={1}
@@ -416,8 +439,9 @@ export default function Landing(props) {
                         Premium={Premium}
                         ratesChange={ratesChange} />
                 ) : ""}
-                {!isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0) && Adult > maxAdult ?
+                {openAlert?
                     <div class="alert alert-danger alertDiv" role="alert">
+                        
                         Please Select More Rooms
                     </div> : ""}
 
