@@ -63,7 +63,7 @@ export default function Navbar(props) {
                             <div class="dropdown">
                                 {/* dropdown-toggle */}
                                 <button class="btn btn-secondary " type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <FaGlobe />
+                                    <i class="fa-solid fa-language" style={{fontSize:'18px'}}></i>
                                 </button>
                                 <ul class="dropdown-menu p-0">
                                     {languages.map((language) => (
