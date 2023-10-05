@@ -630,6 +630,7 @@
 .aminities .card_inr_icon {
     display: flex;
     gap: 10px;
+    align-items: center;
 }
 
 .land-aminit {

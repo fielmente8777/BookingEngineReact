@@ -62,7 +62,6 @@ export default function Cards(props) {
             number += 1;
             if (id === "DELUX") {
                 props.setDelux(number)
-
             }
             if (id === "SUPER DELUX") {
                 props.setSuperDelux(number)
@@ -77,7 +76,6 @@ export default function Cards(props) {
             setPrice(price)
             setRooms(number)
         }
-        props.setisOpen(false)
 
     }
 
@@ -195,10 +193,7 @@ export default function Cards(props) {
                             <div className="aminities-block">
                                 <div className="aminities w-100">
                                     <div className="card_inr_icon">
-                                        <i class="fa-solid fa-user"></i>
-                                        <i class="fa-solid fa-user"></i>
-                                        <i class="fa-solid fa-user"></i>
-                                        <i class="fa-solid fa-user"></i>
+                                        <i class="fa-solid fa-user"></i>X {props.Adult}
                                     </div>
 
                                     {/* <h5>Amenities</h5>
@@ -243,7 +238,7 @@ export default function Cards(props) {
                                     </div>
 
                                     <div className="reser">
-                                        <p>Adults Allowed: {props.Adult}</p>
+                                        {/* <p>Adults Allowed: {props.Adult}</p> */}
 
                                         {/* <button className="reserve_btn d-none" id="reserve_button" onclick="Redirect_Book()">RESERVE</button> */}
                                         {/* {Rooms!==0?<button className="reserve_btn" id="reserve_button" style={{ backgroundColor: props.color }} onClick={toggleDiv}>{props.FinalConfirmButton}</button>:""} */}
