@@ -1,5 +1,5 @@
 // import React from 'react'
-import React, { useState,useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import Cards from './Cards';
 import FullCalendar from './FullCalendar';
 import FullCalendar1 from './FullCalendar1';
@@ -45,7 +45,7 @@ export default function Landing(props) {
             scrollToRoomsSection();
         }
     }, [dataLoaded]);
-    const [openAlert,setopenAlert] = useState(false)
+    const [openAlert, setopenAlert] = useState(false)
     const [date, setDate] = useState(new Date());
 
     const tomorrow = new Date();
@@ -153,17 +153,49 @@ export default function Landing(props) {
         else {
             setisOpen(false)
             setopenAlert(true)
-            setInterval(()=>{
+            setInterval(() => {
                 setopenAlert(false)
-            },4000)
+            }, 4000)
         }
     }
+
+
+
+    // for right side get price popup 
+
+    const [isOpen1, setIsOpen1] = useState(false);
+
+    const openPopup = () => {
+        setIsOpen1(true);
+    };
+
+    const closePopup = () => {
+        setIsOpen1(false);
+    };
+
+    const popupStyle = {
+        right: isOpen1 ? '0' : '-300px',
+    };
 
 
     return (
         <>
             {/* backgroundImage: `url(${props.Bg_image})`, */}
             <div className='LandinMain' style={{ width: "100%", objectFit: "cover", background: "#20527E", backgroundRepeat: "no-repeat", backgroundSize: "cover" }}>
+
+                <div class="right-email">
+                    <button id="open-popupRight" onClick={openPopup}><i class="fa-regular fa-envelope"></i></button>
+                    <div class="popupRight" id="popupRight" style={popupStyle}>
+                        <div class="popupRight-content">
+                            <button id="close-popupRight" onClick={closePopup}><i class="fa-solid fa-xmark"></i></button>
+                            <p style={{ textAlign: 'center' }}><strong>Get these prices emailed to you!.</strong></p>
+                            <input type="email" name="email" id="offerEmail" />
+                            <button class="sendPrice" onClick={closePopup} style={{ border: '0' }}>Send me the price</button>
+                            <p style={{ textAlign: 'center' }}>No spam ever, promise!</p>
+                        </div>
+                    </div>
+                </div>
+
                 <section className={`section`}>
                     {/* style={{width:"100%",objectFit:"cover",backgroundImage:`url(${props.Bg_image})`,backgroundRepeat:"no-repeat" }} */}
                     <div className={`container form-main ${props.display}`} >
@@ -418,7 +450,7 @@ export default function Landing(props) {
                             setSuiteAdult={setSuiteAdult}
                             setPremiumAdult={setPremiumAdult}
                             setisOpen={setisOpen}
-                            BookingFinalize ={BookingFinalize}
+                            BookingFinalize={BookingFinalize}
                         />
 
                     </div>
@@ -429,8 +461,8 @@ export default function Landing(props) {
                 </div>
 
 
-                {isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0)  ? (
-                    <Contactinfo  setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
+                {isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0) ? (
+                    <Contactinfo setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
                         HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={1200}
                         BookingTotalPrice={1200} BookingPrice={1200}
                         Paymentbutton={props.Paymentbutton} nights={Night} room={1}
@@ -447,11 +479,11 @@ export default function Landing(props) {
                         SuperDeluxAdult={SuperDeluxAdult}
                         SuiteAdult={SuiteAdult}
                         PremiumAdult={PremiumAdult}
-                         />
+                    />
                 ) : ""}
-                {openAlert?
+                {openAlert ?
                     <div class="alert alert-danger alertDiv" role="alert">
-                        
+
                         Please Select More Rooms
                     </div> : ""}
 

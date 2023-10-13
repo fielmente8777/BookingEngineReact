@@ -4,6 +4,87 @@
     font-family: Arial;
 }
 
+
+/* for get price icon  */
+
+.right-email {
+    position: fixed;
+    right: 0;
+    top: 250px;
+    width: 45px;
+    margin-right: 0;
+    z-index: 205;
+}
+
+#open-popupRight {
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+}
+
+
+.popupRight {
+    position: fixed;
+    top: 250px;
+    right: -300px;
+    width: 300px;
+    height: auto;
+    background-color: #f0f0f0;
+    /* box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5); */
+    transition: right 0.3s ease;
+}
+
+.popupRight-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#close-popupRight {
+    cursor: pointer;
+    background-color: transparent;
+    color: #000;
+    border: none;
+    /* padding: 10px 15px; */
+    font-size: 16px;
+    /* margin-top: 10px; */
+    text-align: end;
+    width: 100%;
+}
+
+#offerEmail {
+    border: 0;
+    outline: 0;
+    padding: 5px 10px;
+    margin: 10px 0;
+}
+
+.sendPrice {
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    margin: 5px 0;
+    padding: 5px;
+    font-size: 16px;
+}
+
+
+@media screen and (max-width: 480px) {
+    .right-email {
+        width: 35px;
+    }
+
+    #open-popupRight {
+        padding: 5px 10px;
+    }
+}
+
+
 .LandinMain {
     padding-bottom: 30px;
 }
@@ -1310,6 +1391,10 @@
 
     .rndClndr {
         width: 85%;
+    }
+
+    .calright {
+        left: 25px;
     }
 
     .submit button {

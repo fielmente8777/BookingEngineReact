@@ -24,14 +24,14 @@ function App() {
 
   const [HotelEmail, setHotelEmail] = useState("test@gmail.com")
   const [HotelAbout, setHotelAbout] = useState("About Us")
-  const [HotelAddress , setHotelAddress] = useState("Address")
-  const [HotelNumber , setHotelNumber] = useState("Number")
+  const [HotelAddress, setHotelAddress] = useState("Address")
+  const [HotelNumber, setHotelNumber] = useState("Number")
   const [HotelName, setHotelName] = useState("Hotelname")
   const [HotelImage, setHotelImage] = useState("https://images-platform.99static.com//G6t6CKODhWtwJt03cAKyRsMuv5U=/654x0:1299x645/fit-in/590x590/99designs-contests-attachments/115/115901/attachment_115901077")
   const [HotelLogo, setHotelLogo] = useState("https://images-platform.99static.com//G6t6CKODhWtwJt03cAKyRsMuv5U=/654x0:1299x645/fit-in/590x590/99designs-contests-attachments/115/115901/attachment_115901077")
-  const [HotelLocation,setHotelLocation] = useState("")
-  
-  
+  const [HotelLocation, setHotelLocation] = useState("")
+
+
   const [Facebook, setFacebook] = useState("https://facebook.com/")
   const [Instagram, setInstagram] = useState("https://instagram.com/")
   const [Twitter, setTwitter] = useState("https://twitter.com/")
@@ -54,22 +54,22 @@ function App() {
   const [Cancellation, setCancellation] = useState("Cancellation policy")
   const [Termsconditions, setTermsconditions] = useState("Terms and conditions")
 
-  const [Payment,setPayment]=useState({
-    "Status":false,
-    "Booking":"1",
-    "Payment":"2",
-    "Order":"3",
-    "Name":"4",
-    "Phone":"5",
-    "Email":"6",
-    "Country":"6",
-    "Checkin":"7",
-    "Checkout":"8",
-    "Adult":"8",
-    "Kid":"1",
-    "Tax":"2",
-    "Amount":"3",
-    "PayStatus":"Paid"
+  const [Payment, setPayment] = useState({
+    "Status": false,
+    "Booking": "1",
+    "Payment": "2",
+    "Order": "3",
+    "Name": "4",
+    "Phone": "5",
+    "Email": "6",
+    "Country": "6",
+    "Checkin": "7",
+    "Checkout": "8",
+    "Adult": "8",
+    "Kid": "1",
+    "Tax": "2",
+    "Amount": "3",
+    "PayStatus": "Paid"
 
   })
   async function Get_Hotel_status_exists() {
@@ -137,7 +137,7 @@ function App() {
   const urlParams = new URLSearchParams(window.location.search);
   const hotelid = urlParams.get("id");
   localStorage.setItem('hotelid', hotelid)
-  
+
   Get_Hotel_status_exists()
 
   const { t, i18n } = useTranslation();
@@ -156,20 +156,20 @@ function App() {
       <BrowserRouter>
 
         <Navbar hotelname={HotelName} logo={HotelLogo} display={Spinner_spin1} color={Bg_color} HotelNumber={HotelNumber}
-email={HotelEmail} />
+          email={HotelEmail} />
 
-        {!Payment.Status?<LandingPage Bg_color={Bg_color} HotelName={HotelName} HotelLogo={HotelLogo} baseUrl={baseUrl}
-                   Bg_image={HotelImage} color={Box_color} display={Spinner_spin1} bt_color={Button_color} 
-                   ReservationLabel={Reservation_button} ReservationButton={Room_searchButton} 
-                   FinalConfirmButton={RoomFinal_searchButton} Paymentbutton={PaymentButton} setPayment={setPayment} />
-                   : <SuccessPage Payment={Payment} />}
+        {!Payment.Status ? <LandingPage Bg_color={Bg_color} HotelName={HotelName} HotelLogo={HotelLogo} baseUrl={baseUrl}
+          Bg_image={HotelImage} color={Box_color} display={Spinner_spin1} bt_color={Button_color}
+          ReservationLabel={Reservation_button} ReservationButton={Room_searchButton}
+          FinalConfirmButton={RoomFinal_searchButton} Paymentbutton={PaymentButton} setPayment={setPayment} />
+          : <SuccessPage Payment={Payment} />}
 
-        <Footer color={Bg_color} Logo={HotelLogo} HotelAddress={HotelAddress} HotelNumber={HotelNumber} 
-                aboutus={HotelAbout} display={Spinner_spin1} email={HotelEmail} facebook={Facebook} 
-                instagram={Instagram} twitter={Twitter} Tripadvisors={Tripadvisors}
-                Linkedin={Linkedin}
-                Youtube={Youtube} Location={HotelLocation}
-                Privacypolicy={Privacypolicy} Cancellation={Cancellation} Termsconditions={Termsconditions} />
+        <Footer color={Bg_color} Logo={HotelLogo} HotelAddress={HotelAddress} HotelNumber={HotelNumber}
+          aboutus={HotelAbout} display={Spinner_spin1} email={HotelEmail} facebook={Facebook}
+          instagram={Instagram} twitter={Twitter} Tripadvisors={Tripadvisors}
+          Linkedin={Linkedin}
+          Youtube={Youtube} Location={HotelLocation}
+          Privacypolicy={Privacypolicy} Cancellation={Cancellation} Termsconditions={Termsconditions} />
 
         <NotFoundPage display={Spinner_spin2} />
       </BrowserRouter>

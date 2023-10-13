@@ -61,7 +61,7 @@ const FullCalendar1 = (props) => {
                 <span className='text-light'>{selectedYear}</span>
             </button>
             {isOpen && (
-                <div className='rndClndr '>
+                <div className='rndClndr calright'>
                     <Calendar onChange={handleDateChange} value={checkoutDate}
                         tileDisabled={({ date }) => isDateDisabled(date)} />
                 </div>
