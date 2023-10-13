@@ -107,8 +107,8 @@ function CnfrmPay(props) {
                 "ndid": localStorage.getItem('hotelid'),
                 "amount": totoalcost,
                 "currency": "INR",
-                "guestName": Name,
                 "guestInfo": {
+                    "guestName": Name,
                     "EmailId": Email,
                     "Phone": Phone,
                     "City": City,
@@ -181,8 +181,8 @@ function CnfrmPay(props) {
                 "ndid": localStorage.getItem('hotelid'),
                 "amount": halfcost,
                 "currency": "INR",
-                "guestName": Name,
                 "guestInfo": {
+                    "guestName": Name,
                     "EmailId": Email,
                     "Phone": Phone,
                     "City": City,
@@ -299,6 +299,20 @@ function CnfrmPay(props) {
 
     }
 
+    function BookingFinalize() {
+        let maxAdult = 0
+        if (props.Delux > 0) { props.setmaxAdult(maxAdult += props.Delux * props.DeluxAdult) }
+        if (props.SuperDelux > 0) { props.setmaxAdult(maxAdult += props.SuperDelux * props.SuperDeluxAdult) }
+        if (props.Suite > 0) { props.setmaxAdult(maxAdult += props.Suite * props.SuiteAdult) }
+        if (props.Premium > 0) { props.setmaxAdult(maxAdult += props.Premium * props.PremiumAdult) }
+        if (props.Adult <= props.maxAdult) {
+            return false
+        }
+        else {
+            return true
+        }
+    }
+
     const PopupFillFields=()=>{
         alert("Please Complete User details form")
     }
@@ -310,8 +324,9 @@ function CnfrmPay(props) {
                 amount: parseInt(Number(props.room) * Number(props.BookingTotalPrice)) * 100, // Convert amount to paise (assuming INR)
                 orderId: OrderId, // Generate a unique order ID
             };
+            
             const options = {
-                key: "rzp_live_5uaIIwZcxLC70j", // Enter the Key ID generated from the Dashboard
+                key: "rzp_live_5uaIIwZcxLC70j", // Enter the Key ID generated from the Dashboard rzp_test_UZ0V9jh3jMC0C9
                 amount: mockOrderData.amount.toString(), // Use the amount from the order data
                 currency: "INR",
                 name: props.HotelName,
@@ -460,28 +475,34 @@ function CnfrmPay(props) {
 
 
                                 </div>
-                                {!OrderId ? (
-                                    <div className="button_s">
-                                        {Name && Phone && Email && Country && City &&!OrderId ? (
-                                        <>
+                                {BookingFinalize() ? (
+                                    <div className="alert alert-danger" role="alert">
+                                        Please Select More Rooms
+                                    </div>
+                                    ) : (
+                                    !OrderId ? (
+                                        <div className="button_s">
+                                        {Name && Phone && Email && Country && City && !OrderId ? (
+                                            <>
                                             <button className="submitbtn" onClick={GetPayLaterOrderId}>PAY AT HOTEL</button>
                                             <button className="submitbtn" onClick={GetHalfOrderId}>PAY 50% AMOUNT <span>{0.5 * (cost + tax)}</span></button>
                                             <button className="submitbtn" onClick={GetOrderId}>PAY FULL AMOUNT <span>{cost + tax}</span></button>
                                             <p className="button_s_p">By making this booking, you are accepting our terms and conditions***</p>
-                                        </>
+                                            </>
                                         ) : (
-                                        <>
+                                            <>
                                             <button className="submitbtn" onClick={PopupFillFields}>PAY AT HOTEL</button>
                                             <button className="submitbtn" onClick={PopupFillFields}>PAY 50% AMOUNT <span>{0.5 * (cost + tax)}</span></button>
                                             <button className="submitbtn" onClick={PopupFillFields}>PAY FULL AMOUNT <span>{cost + tax}</span></button>
                                             <p className="button_s_p">By making this booking, you are accepting our terms and conditions***</p>
-                                        </>
+                                            </>
                                         )}
-                                    </div>
+                                        </div>
                                     ) : (
                                         <div className="bookingbtn">
                                         <button className="cmplt pay_button" id="rzp-button1" onClick={handlePayment} style={{ backgroundColor: props.color }}>{props.Paymentbutton}</button>
-                                    </div>
+                                        </div>
+                                    )
                                     )}
 
 

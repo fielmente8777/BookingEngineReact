@@ -52,7 +52,6 @@ export default function Cards(props) {
             setPrice(price)
             setRooms(number)
         }
-        props.setisOpen(false)
     }
 
     const AddCount = (id) => {
@@ -268,7 +267,7 @@ export default function Cards(props) {
                                             <ul>
                                                 {props.facilities.wifi ? <li><i className='fa fa-wifi'></i> Wi-fi</li> : ""}
                                                 {props.facilities.television ? <li><i className='fa-solid fa-tv'></i> Television</li> : ""}
-                                                {props.facilities.airConditonar ? <li><i className='fa fa-coffee'></i> Air Conditioner</li> : ""}
+                                                {props.facilities.airConditonar ? <li><i class="fa-regular fa-air-conditioner"></i> Air Conditioner</li> : ""}
                                                 {props.facilities.hairdryers ? <li><i className='fas fa-baby'></i> Hairdryers</li> : ""}
                                                 {props.facilities.coffeeMakers ? <li><i className='fa fa-coffee'></i> Coffee Makers</li> : ""}
                                                 {props.facilities.directDial ? <li><i className='fa fa-phone'></i> Direct Calling</li> : ""}

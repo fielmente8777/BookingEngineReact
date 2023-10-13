@@ -170,7 +170,7 @@ export default function Landing(props) {
                         <div className="form">
                             <div className="reservation" style={{ background: props.color }}>
                                 {/* <h4 >{props.ReservationLabel}</h4> */}
-                                <h4>{t('Reservation')}</h4>
+                                <h4>{t(props.ReservationLabel)}</h4>
                                 {/* style="font-weight: 700; margin-bottom: 0;" */}
                             </div>
 
@@ -255,26 +255,27 @@ export default function Landing(props) {
                                 {/* <input onclick="logPostData()" type="button" value="Look for Beds!" /> */}
                                 {/* <input onClick={toggleContent()} type="button" value="Look for Beds!" /> */}
                                 {/* <button onClick={toggleDiv} style={{ background: props.color }}>{props.ReservationButton} </button> */}
-                                <button onClick={toggleDiv} style={{ background: props.color }}>{t('Looks For Rooms')} </button>
+                                <button onClick={toggleDiv} style={{ background: props.color }}>{t(props.ReservationButton)} </button>
 
                             </div>
                         </div>
 
                     </div>
-                    <div className="container">
+                    <div className={`container ${props.display}`}>
                         <div className="middle-div">
 
                             <div className="why-book-us">
                                 <h3>Why book with us?</h3>
                                 <div className="why-land-aminit">
                                     <ul>
-                                        <li><i className="fa-sharp fa-solid fa-dumbbell land-icons"></i>Fitnesss center</li>
-                                        <li><i className="fa-solid fa-wheelchair land-icons"></i>Wheelchair Access</li>
+                                        <li><i className="fa-sharp fa-solid fa-tree-city land-icons"></i>Backyard Park</li>
+                                        {/* <li><i className="fa-sharp fa-solid fa-dumbbell land-icons"></i>Fitnesss center</li>
+                                        <li><i className="fa-solid fa-wheelchair land-icons"></i>Wheelchair Access</li> */}
                                         <li><i className="fa-solid fa-car land-icons"></i>Parking Access</li>
                                         <li><i className="fa-solid fa-utensils land-icons"></i>Well maintained Restaurant</li>
                                     </ul>
                                     <ul>
-                                        <li><i className="fa-sharp fa-solid fa-tree-city land-icons"></i>Backyard Park</li>
+                                        {/* <li><i className="fa-sharp fa-solid fa-tree-city land-icons"></i>Backyard Park</li> */}
                                         <li><i className="fa-solid fa-land-mine-on land-icons"></i>Danger Alarm</li>
                                         <li><i className="fa-solid fa-smoking land-icons"></i>Smoking Rooms</li>
                                         <li><i className="fa-solid fa-fire-extinguisher land-icons"></i>Fire Extiguisher</li>
@@ -417,17 +418,18 @@ export default function Landing(props) {
                             setSuiteAdult={setSuiteAdult}
                             setPremiumAdult={setPremiumAdult}
                             setisOpen={setisOpen}
+                            BookingFinalize ={BookingFinalize}
                         />
 
                     </div>
                 })}
                 <div className='container'>
                     {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0)
-                        ? <button className='ReserveButtonForPayment' onClick={BookingFinalize}>Reserve</button> : ""}
+                        ? <button className='ReserveButtonForPayment' onClick={BookingFinalize}>{props.FinalConfirmButton}</button> : ""}
                 </div>
 
 
-                {isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0) && Adult <= maxAdult ? (
+                {isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0)  ? (
                     <Contactinfo  setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
                         HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={1200}
                         BookingTotalPrice={1200} BookingPrice={1200}
@@ -437,7 +439,15 @@ export default function Landing(props) {
                         SuperDelux={SuperDelux}
                         Suite={Suite}
                         Premium={Premium}
-                        ratesChange={ratesChange} />
+                        ratesChange={ratesChange}
+                        Adult={Adult}
+                        maxAdult={maxAdult}
+                        setmaxAdult={setmaxAdult}
+                        DeluxAdult={DeluxAdult}
+                        SuperDeluxAdult={SuperDeluxAdult}
+                        SuiteAdult={SuiteAdult}
+                        PremiumAdult={PremiumAdult}
+                         />
                 ) : ""}
                 {openAlert?
                     <div class="alert alert-danger alertDiv" role="alert">

@@ -114,6 +114,17 @@ function App() {
       setCancellation(json.Details.CancellationPolicy)
       setTermsconditions(json.Details.TermsConditions)
 
+      //colors
+      setBg_color(json.Details.Colors.BackgroundColor)
+      setBox_color(json.Details.Colors.BoardColor)
+      setButton_color(json.Details.Colors.ButtonColor)
+
+      //buttons
+      setReservation_button(json.Details.Labels.ReserveBoard)
+      setRoom_searchButton(json.Details.Labels.ReserveButton)
+      setRoomFinal_searchButton(json.Details.Labels.ConfirmButton)
+      setPaymentButton(json.Details.Labels.PayButton)
+
       setSpinner_spin1('')
     } else {
       setSpinner_spin2('')
