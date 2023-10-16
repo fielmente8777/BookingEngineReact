@@ -38,6 +38,12 @@ export default function Landing(props) {
         "SUITE": 0,
         "SUPERDELUX": 0
     })
+    const [RoomNameAvailable, setRoomNameAvailable] = useState({
+        "DELUX": "DELUX",
+        "PREMIUM": "PREMIUM",
+        "SUITE": "SUITE",
+        "SUPER DELUX": "SUPERDELUX"
+    })
     const [dataLoaded, setDataLoaded] = useState(false);
 
     useEffect(() => {
@@ -421,12 +427,11 @@ export default function Landing(props) {
                     </div>
                 </div>
                 {Headlines.map((element) => {
-
                     return <div key={element.url} >
                         <Cards
                             name={element.roomName ? element.roomName.slice(0, 80) : ""}
                             description={element.roomDescription ? element.roomDescription : ""}
-                            available={Available[element.roomTypeName]}
+                            available={Available[RoomNameAvailable[element.roomTypeName]]}
                             price={element.price ? element.price : ""}
                             ratechange={ratesChange}
                             roomtype={element.roomType}
