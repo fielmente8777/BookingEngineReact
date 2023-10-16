@@ -4,7 +4,8 @@ import Contactinfo from '../components/Contactinfo';
 import Carousel from 'react-bootstrap/Carousel';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-
+import Table from 'react-bootstrap/Table';
+import Form from 'react-bootstrap/Form';
 
 
 export default function Cards(props) {
@@ -218,22 +219,22 @@ export default function Cards(props) {
                                 </div>
                                 <div className="room_price w-30">
                                     {/* <label>From</label>  */}
-                                    {Rooms*(props.ratechange[props.roomtype].Price)!==0?<h4 style={{fontWeight:'600'}}><span id="total_price" style={{ fontSize: "22px" }}> {Rooms*(props.ratechange[props.roomtype].Price)}/- </span> INR</h4>:<h4 style={{fontWeight:'600'}}><span id="total_price" style={{ fontSize: "22px" }}> {(props.ratechange[props.roomtype].Price)}/- </span> INR</h4>}
+                                    {Rooms * (props.ratechange[props.roomtype].Price) !== 0 ? <h4 style={{ fontWeight: '600' }}><span id="total_price" style={{ fontSize: "22px" }}> {Rooms * (props.ratechange[props.roomtype].Price)}/- </span> INR</h4> : <h4 style={{ fontWeight: '600' }}><span id="total_price" style={{ fontSize: "22px" }}> {(props.ratechange[props.roomtype].Price)}/- </span> INR</h4>}
                                     <span>Per Night</span>
 
                                     {/* <span style="color:red" className="span m-1">Last {{ Available }} Rooms</span>  */}
                                     <div className="no-rooms d-flex">
                                         <span>Room(s)</span>
-                                        {Available_rooms!==0?
-                                        <div className="room">
-                                            <button className="btn-minus" onClick={() => { DelCount(props.type) }}>-</button>
-                                            <button className="btn-total"
-                                                id={`${props.type}`}>{Rooms}</button>
-                                            <button className="btn-plus" onClick={() => { AddCount(props.type) }}>+</button>
-                                        </div>:
-                                        <div className='soldBtn'>
-                                            <span class="badge text-bg-danger">SOLD OUT</span>
-                                        </div>}
+                                        {Available_rooms !== 0 ?
+                                            <div className="room">
+                                                <button className="btn-minus" onClick={() => { DelCount(props.type) }}>-</button>
+                                                <button className="btn-total"
+                                                    id={`${props.type}`}>{Rooms}</button>
+                                                <button className="btn-plus" onClick={() => { AddCount(props.type) }}>+</button>
+                                            </div> :
+                                            <div className='soldBtn'>
+                                                <span class="badge text-bg-danger">SOLD OUT</span>
+                                            </div>}
                                     </div>
 
                                     <div className="reser">
@@ -258,6 +259,75 @@ export default function Cards(props) {
                             className="mb-3"
                             fill
                         >
+                            <Tab eventKey="plans" title="Plans">
+                                <div className="plansDiv">
+                                    <div class="container plansinr text-decoration-none">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <span class='plnshead' >Breakfast</span>
+                                            </div>
+                                            <div class="col text-center">
+                                                <span>₹ 350.00</span>
+                                            </div>
+                                            <div class="col text-center">
+                                                <Form>
+                                                    {['radio'].map((type) => (
+                                                        <div key={`default-${type}`} className="mb-3">
+                                                            <Form.Check // prettier-ignore
+                                                                type={type}
+                                                                id={`default-${type}`}
+                                                            // label={`default ${type}`}
+                                                            />
+                                                        </div>
+                                                    ))}
+                                                </Form>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <span class='plnshead' >Breakfast with Lunch or Dinner</span>
+                                            </div>
+                                            <div class="col text-center">
+                                                <span>₹ 1100.00</span>
+                                            </div>
+                                            <div class="col text-center">
+                                                <Form>
+                                                    {['radio'].map((type) => (
+                                                        <div key={`default-${type}`} className="mb-3">
+                                                            <Form.Check // prettier-ignore
+                                                                type={type}
+                                                                id={`default-${type}`}
+                                                            // label={`default ${type}`}
+                                                            />
+                                                        </div>
+                                                    ))}
+                                                </Form>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <span class='plnshead' >Breakfast with Lunch And Dinner</span>
+                                            </div>
+                                            <div class="col text-center">
+                                                <span>₹ 1850.00</span>
+                                            </div>
+                                            <div class="col text-center">
+                                                <Form>
+                                                    {['radio'].map((type) => (
+                                                        <div key={`default-${type}`} className="mb-3">
+                                                            <Form.Check // prettier-ignore
+                                                                type={type}
+                                                                id={`default-${type}`}
+                                                            // label={`default ${type}`}
+                                                            />
+                                                        </div>
+                                                    ))}
+                                                </Form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Tab>
                             <Tab eventKey="amenities" title="Amenities">
                                 <div className="aminities-block">
                                     <div className="aminities w-100">
@@ -319,17 +389,6 @@ export default function Cards(props) {
 
 
 
-
-
-
-                                    {/* <img src="https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?cs=srgb&dl=pexels-pixabay-164595.jpg&fm=jpg" alt="" />
-                                    <img src="https://images.moneycontrol.com/static-mcnews/2021/04/Roof-top-pool-2-taj-goa-770x433.jpg?impolicy=website&width=770&height=431" alt="" />
-                                    <img src="https://images.unsplash.com/photo-1625244724120-1fd1d34d00f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG90ZWxzfGVufDB8fDB8fHww&w=1000&q=80" alt="" />
-                                    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/22/a1/9c/80/essentia-luxury-hotel.jpg?w=700&h=-1&s=1" alt="" />
-                                    <img src="https://images.bubbleup.com/width1920/quality35/mville2017/1-brand/1-margaritaville.com/gallery-media/220803-compasshotel-medford-pool-73868-1677873697.jpg" alt="" />
-                                    <img src="https://assets.graydientcreative.com/files/outlets/platinum/images/marquis-3-min.jpg" alt="" /> */}
-
-
                                 </div>
                                 {/* {images.map((element) => {
 
@@ -345,11 +404,9 @@ export default function Cards(props) {
                             )} */}
                             </Tab>
                             {/* <Tab eventKey="longer-tab" title="Loooonger Tab">
-                            Tab content for Loooonger Tab
-                        </Tab>
-                        <Tab eventKey="contact" title="Contact">
-                            Tab content for Contact
-                        </Tab> */}
+                                Tab content for Loooonger Tab
+                            </Tab> */}
+
                         </Tabs>
 
                     </div>

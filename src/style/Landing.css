@@ -781,6 +781,47 @@
     background: none !important;
 }
 
+
+.plansDiv {
+    display: block;
+    padding-bottom: 20px;
+}
+
+.plansinr {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+@media screen and (max-width:480px) {
+    .plansinr span {
+        font-size: 14px;
+    }
+}
+
+.plnshead {
+    font-weight: 600;
+}
+
+.plansDiv .table {
+    display: flex;
+}
+
+.plansDiv .table thead tr {
+    display: flex;
+    flex-direction: column;
+}
+
+.plansDiv .table tbody {
+    display: flex;
+    /* flex-direction: column; */
+}
+
+.plansDiv .table tbody tr {
+    display: flex;
+    flex-direction: column;
+}
+
 .room_card_img {
     width: 100%;
     height: auto;
@@ -1157,10 +1198,10 @@
     padding: 0 20px;
 }
 
-.text-center {
+/* .text-center {
     color: #1D619C;
     text-decoration: underline;
-}
+} */
 
 .cust-detail {
     display: block;
@@ -1168,7 +1209,6 @@
     /* border: 1px solid green; */
 }
 
-@media screen {}
 
 .cust-inner {
     display: flex;
