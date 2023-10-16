@@ -56,7 +56,6 @@ function App() {
 
   const [Payment, setPayment] = useState({
     "Status": false,
-    "Booking": "1",
     "Payment": "2",
     "Order": "3",
     "Name": "4",
@@ -69,7 +68,11 @@ function App() {
     "Kid": "1",
     "Tax": "2",
     "Amount": "3",
-    "PayStatus": "Paid"
+    "PayStatus": "Paid",
+    "Delux":"4",
+    "Sd":"4",
+    "Suite":"4",
+    "Premium":"4"
 
   })
   async function Get_Hotel_status_exists() {

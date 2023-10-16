@@ -102,10 +102,10 @@ function SuccessPage(props) {
                         </thead>
                         <tbody>
                             <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
+                                <td>{props.Payment.Delux}</td>
+                                <td>{props.Payment.Sd}</td>
+                                <td>{props.Payment.Suite}</td>
+                                <td>{props.Payment.Premium}</td>
                             </tr>
                         </tbody>
                     </Table>

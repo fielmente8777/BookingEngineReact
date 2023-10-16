@@ -151,7 +151,11 @@ function CnfrmPay(props) {
                 "Phone": Email,
                 "Email": Phone,
                 "City": City,
-                "Country": Country,
+                "Country": Country.label,
+                "Delux":props.Delux,
+                "Sd":props.SuperDelux,
+                "Suite":props.Suite,
+                "Premium":props.Premium,
                 "Checkin": localStorage.getItem('Checkin'),
                 "Checkout": localStorage.getItem('Checkout'),
                 "Adult": localStorage.getItem('Adult'),
@@ -344,7 +348,7 @@ function CnfrmPay(props) {
                         "Phone": Email,
                         "Email": Phone,
                         "City": City,
-                        "Country": Country,
+                        "Country": Country.label,
                         "Checkin": localStorage.getItem('Checkin'),
                         "Checkout": localStorage.getItem('Checkout'),
                         "Adult": localStorage.getItem('Adult'),
@@ -352,6 +356,10 @@ function CnfrmPay(props) {
                         "Tax": tax,
                         "Amount": totoalcost,
                         "PayStatus": PayStatus,
+                        "Delux":props.Delux,
+                        "Sd":props.SuperDelux,
+                        "Suite":props.Suite,
+                        "Premium":props.Premium
 
                     })
                 },
