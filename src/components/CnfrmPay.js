@@ -62,8 +62,8 @@ function CnfrmPay(props) {
     const [PaymentStatus, setPaymentStatus] = useState("PENDING")
     const [PayStatus, setPayStatus] = useState("PAID")
     
-    const baseUrl = "https://nexon.eazotel.com"
-    // const baseUrl = "http://127.0.0.1:5000"
+    // const baseUrl = "https://nexon.eazotel.com"
+    const baseUrl = "http://127.0.0.1:5000"
     // location api
 
     useEffect(() => {
@@ -144,6 +144,7 @@ function CnfrmPay(props) {
         const json = await response.json();
 
         if (json.Status === true) {
+            console.log(json)
             props.setPayment({
                 "Status": true,
                 "Order": json.order_id,  // Order ID from the payment gateway
