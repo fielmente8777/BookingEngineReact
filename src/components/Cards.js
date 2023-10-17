@@ -6,6 +6,9 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
+import { render } from '@testing-library/react';
+import './i18n'; // Import your i18n configuration
+import { useTranslation } from 'react-i18next';
 
 
 export default function Cards(props) {
@@ -109,17 +112,24 @@ export default function Cards(props) {
         setIsOpen(!isOpen);
     };
 
+    
+    const { t, i18n } = useTranslation();
 
-    return (
-        <>
-            <div className="container"  >
+    // Change the language
+    const changeLanguage = (lng) => {
+        i18n.changeLanguage(lng);
+    };
 
-                {/* filters start   */}
+        return (
+            <>
+                <div className="container"  >
 
-                {/* filters end  */}
-                <div className="card_details" style={{ background: '#fff' }}>
-                    <div className="card_inner">
-                        {/* <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                    {/* filters start   */}
+
+                    {/* filters end  */}
+                    <div className="card_details" style={{ background: '#fff' }}>
+                        <div className="card_inner">
+                            {/* <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 {images.map((element) => {
                                     return <div class="carousel-item active">
@@ -140,7 +150,7 @@ export default function Cards(props) {
 
 
 
-                        {/* <Carousel fade>
+                            {/* <Carousel fade>
                             <Carousel.Item>
                                 {images.map((element) => {
                                     return <div class="carousel-item active">
@@ -157,46 +167,46 @@ export default function Cards(props) {
                         </Carousel> */}
 
 
-                        <Carousel>
-                            {images.map((element) => {
+                            <Carousel>
+                                {images.map((element) => {
 
-                                return <Carousel.Item>
+                                    return <Carousel.Item>
 
-                                    <div class="carousel-item active">
-                                        <img src={element} class="d-block w-100" alt="..." />
+                                        <div class="carousel-item active">
+                                            <img src={element} class="d-block w-100" alt="..." />
+                                        </div>
+
+                                    </Carousel.Item>
+                                }
+
+                                )}
+                            </Carousel>
+
+
+
+
+                            <div className="main_description">
+                                <div className="room-last d-flex justify-content-between ">
+                                    <div className="room-name">
+                                        <h3 style={{ fontWeight: '600' }}>{t(props.name)}</h3>
+                                        {/* <span className="dec-sqr">{props.type}</span> */}
+                                    </div>
+                                    <div className="last-rooms">
+                                        <p className="dec-lst">*Last {props.available} Rooms available<i
+                                            className="fa-sharp fa-solid fa-circle-exclamation"></i></p>
                                     </div>
 
-                                </Carousel.Item>
-                            }
-
-                            )}
-                        </Carousel>
-
-
-
-
-                        <div className="main_description">
-                            <div className="room-last d-flex justify-content-between ">
-                                <div className="room-name">
-                                    <h3 style={{ fontWeight: '600' }}>{props.name}</h3>
-                                    {/* <span className="dec-sqr">{props.type}</span> */}
                                 </div>
-                                <div className="last-rooms">
-                                    <p className="dec-lst">*Last {props.available} Rooms available<i
-                                        className="fa-sharp fa-solid fa-circle-exclamation"></i></p>
+                                <div className="description">
+                                    <p>{t(props.description)}</p>
                                 </div>
+                                <div className="aminities-block">
+                                    <div className="aminities w-100">
+                                        <div className="card_inr_icon">
+                                            <i class="fa-solid fa-user"></i>X {props.Adult}
+                                        </div>
 
-                            </div>
-                            <div className="description">
-                                <p>{props.description}</p>
-                            </div>
-                            <div className="aminities-block">
-                                <div className="aminities w-100">
-                                    <div className="card_inr_icon">
-                                        <i class="fa-solid fa-user"></i>X {props.Adult}
-                                    </div>
-
-                                    {/* <h5>Amenities</h5>
+                                        {/* <h5>Amenities</h5>
                                     <div className="land-aminit">
 
                                         <ul>
@@ -216,143 +226,148 @@ export default function Cards(props) {
                                         </ul>
                                     </div> */}
 
-                                </div>
-                                <div className="room_price w-30">
-                                    {/* <label>From</label>  */}
-                                    {Rooms * (props.ratechange[props.roomtype].Price) !== 0 ? <h4 style={{ fontWeight: '600' }}><span id="total_price" style={{ fontSize: "22px" }}> {Rooms * (props.ratechange[props.roomtype].Price)}/- </span> INR</h4> : <h4 style={{ fontWeight: '600' }}><span id="total_price" style={{ fontSize: "22px" }}> {(props.ratechange[props.roomtype].Price)}/- </span> INR</h4>}
-                                    <span>Per Night</span>
-
-                                    {/* <span style="color:red" className="span m-1">Last {{ Available }} Rooms</span>  */}
-                                    <div className="no-rooms d-flex">
-                                        <span>Room(s)</span>
-                                        {Available_rooms !== 0 ?
-                                            <div className="room">
-                                                <button className="btn-minus" onClick={() => { DelCount(props.type) }}>-</button>
-                                                <button className="btn-total"
-                                                    id={`${props.type}`}>{Rooms}</button>
-                                                <button className="btn-plus" onClick={() => { AddCount(props.type) }}>+</button>
-                                            </div> :
-                                            <div className='soldBtn'>
-                                                <span class="badge text-bg-danger">SOLD OUT</span>
-                                            </div>}
                                     </div>
+                                    <div className="room_price w-30">
+                                        {/* <label>From</label>  */}
+                                        {Rooms * (props.ratechange[props.roomtype].Price) !== 0 ? <h4 style={{ fontWeight: '600' }}><span id="total_price" style={{ fontSize: "22px" }}> {Rooms * (props.ratechange[props.roomtype].Price)}/- </span> INR</h4> : <h4 style={{ fontWeight: '600' }}><span id="total_price" style={{ fontSize: "22px" }}> {(props.ratechange[props.roomtype].Price)}/- </span> INR</h4>}
+                                        <span>Per Night</span>
 
-                                    <div className="reser">
-                                        {/* <p>Adults Allowed: {props.Adult}</p> */}
+                                        {/* <span style="color:red" className="span m-1">Last {{ Available }} Rooms</span>  */}
+                                        <div className="no-rooms d-flex">
+                                            <span>Room(s)</span>
+                                            {Available_rooms !== 0 ?
+                                                <div className="room">
+                                                    <button className="btn-minus" onClick={() => { DelCount(props.type) }}>-</button>
+                                                    <button className="btn-total"
+                                                        id={`${props.type}`}>{Rooms}</button>
+                                                    <button className="btn-plus" onClick={() => { AddCount(props.type) }}>+</button>
+                                                </div> :
+                                                <div className='soldBtn'>
+                                                    <span class="badge text-bg-danger">SOLD OUT</span>
+                                                </div>}
+                                        </div>
 
-                                        {/* <button className="reserve_btn d-none" id="reserve_button" onclick="Redirect_Book()">RESERVE</button> */}
-                                        {/* {Rooms!==0?<button className="reserve_btn" id="reserve_button" style={{ backgroundColor: props.color }} onClick={toggleDiv}>{props.FinalConfirmButton}</button>:""} */}
+                                        <div className="reser">
+                                            {/* <p>Adults Allowed: {props.Adult}</p> */}
+
+                                            {/* <button className="reserve_btn d-none" id="reserve_button" onclick="Redirect_Book()">RESERVE</button> */}
+                                            {/* {Rooms!==0?<button className="reserve_btn" id="reserve_button" style={{ backgroundColor: props.color }} onClick={toggleDiv}>{props.FinalConfirmButton}</button>:""} */}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+
+
+
                         </div>
 
+                        <div className='card_tab'>
+                            <Tabs
+                                defaultActiveKey="amenities"
+                                id="fill-tab-example"
+                                className="mb-3"
+                                fill
+                            >
+                                <Tab eventKey="plans" title="Plans">
+                                    <div className="plansDiv">
+                                        <div class="container plansinr text-decoration-none">
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <span class='plnshead' >Breakfast</span>
+                                                </div>
+                                                <div class="col text-center">
+                                                    <span>₹ 350.00</span>
+                                                </div>
+                                                <div class="col text-center">
+                                                    <Form>
+                                                        {['radio'].map((type) => (
+                                                            <div key={`default-${type}`} className="mb-3">
+                                                                <Form.Check // prettier-ignore
+                                                                    type={type}
+                                                                    id={`default-${type}`}
+                                                                    value={1}
 
+                                                                // label={`default ${type}`}
+                                                                />
+                                                            </div>
+                                                        ))}
+                                                    </Form>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <span class='plnshead' >Breakfast with Lunch or Dinner</span>
+                                                </div>
+                                                <div class="col text-center">
+                                                    <span>₹ 1100.00</span>
+                                                </div>
+                                                <div class="col text-center">
+                                                    <Form>
+                                                        {['radio'].map((type) => (
+                                                            <div key={`default-${type}`} className="mb-3">
+                                                                <Form.Check // prettier-ignore
+                                                                    type={type}
+                                                                    id={`default-${type}`}
+                                                                    // label={`default ${type}`}
+                                                                    value={2}
+                                                                />
+                                                            </div>
+                                                        ))}
+                                                    </Form>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    <span class='plnshead' >Breakfast with Lunch And Dinner</span>
+                                                </div>
+                                                <div class="col text-center">
+                                                    <span>₹ 1850.00</span>
+                                                </div>
+                                                <div class="col text-center">
+                                                    <Form>
+                                                        {['radio'].map((type) => (
+                                                            <div key={`default-${type}`} className="mb-3">
+                                                                <Form.Check // prettier-ignore
+                                                                    type={type}
+                                                                    id={`default-${type}`}
+                                                                    // label={`default ${type}`}
+                                                                    value={3}
 
-
-                    </div>
-
-                    <div className='card_tab'>
-                        <Tabs
-                            defaultActiveKey="amenities"
-                            id="fill-tab-example"
-                            className="mb-3"
-                            fill
-                        >
-                            <Tab eventKey="plans" title="Plans">
-                                <div className="plansDiv">
-                                    <div class="container plansinr text-decoration-none">
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <span class='plnshead' >Breakfast</span>
-                                            </div>
-                                            <div class="col text-center">
-                                                <span>₹ 350.00</span>
-                                            </div>
-                                            <div class="col text-center">
-                                                <Form>
-                                                    {['radio'].map((type) => (
-                                                        <div key={`default-${type}`} className="mb-3">
-                                                            <Form.Check // prettier-ignore
-                                                                type={type}
-                                                                id={`default-${type}`}
-                                                            // label={`default ${type}`}
-                                                            />
-                                                        </div>
-                                                    ))}
-                                                </Form>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <span class='plnshead' >Breakfast with Lunch or Dinner</span>
-                                            </div>
-                                            <div class="col text-center">
-                                                <span>₹ 1100.00</span>
-                                            </div>
-                                            <div class="col text-center">
-                                                <Form>
-                                                    {['radio'].map((type) => (
-                                                        <div key={`default-${type}`} className="mb-3">
-                                                            <Form.Check // prettier-ignore
-                                                                type={type}
-                                                                id={`default-${type}`}
-                                                            // label={`default ${type}`}
-                                                            />
-                                                        </div>
-                                                    ))}
-                                                </Form>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <span class='plnshead' >Breakfast with Lunch And Dinner</span>
-                                            </div>
-                                            <div class="col text-center">
-                                                <span>₹ 1850.00</span>
-                                            </div>
-                                            <div class="col text-center">
-                                                <Form>
-                                                    {['radio'].map((type) => (
-                                                        <div key={`default-${type}`} className="mb-3">
-                                                            <Form.Check // prettier-ignore
-                                                                type={type}
-                                                                id={`default-${type}`}
-                                                            // label={`default ${type}`}
-                                                            />
-                                                        </div>
-                                                    ))}
-                                                </Form>
+                                                                />
+                                                            </div>
+                                                        ))}
+                                                    </Form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </Tab>
-                            <Tab eventKey="amenities" title="Amenities">
-                                <div className="aminities-block">
-                                    <div className="aminities w-100">
-                                        {/* <h5>Amenities</h5> */}
-                                        <div className="land-aminit">
+                                </Tab>
+                                <Tab eventKey="amenities" title="Amenities">
+                                    <div className="aminities-block">
+                                        <div className="aminities w-100">
+                                            {/* <h5>Amenities</h5> */}
+                                            <div className="land-aminit">
 
-                                            <ul>
-                                                {props.facilities.wifi ? <li><i className='fa fa-wifi'></i> Wi-fi</li> : ""}
-                                                {props.facilities.television ? <li><i className='fa-solid fa-tv'></i> Television</li> : ""}
-                                                {props.facilities.airConditonar ? <li><i class="fa-regular fa-air-conditioner"></i> Air Conditioner</li> : ""}
-                                                {props.facilities.hairdryers ? <li><i className='fas fa-baby'></i> Hairdryers</li> : ""}
-                                                {props.facilities.coffeeMakers ? <li><i className='fa fa-coffee'></i> Coffee Makers</li> : ""}
-                                                {props.facilities.directDial ? <li><i className='fa fa-phone'></i> Direct Calling</li> : ""}
-                                                {props.facilities.tableWithChair ? <li><i className='fas fa-book-open'></i> Study Table</li> : ""}
-                                                {props.facilities.alarmclock ? <li><i className='fa fa-clock-o'></i> Alarm Clock</li> : ""}
-                                                {props.facilities.fridge ? <li><i className='fas fa-bath'></i> Small Fridge</li> : ""}
-                                                {props.facilities.bathroomWithShower ? <li><i className='fas fa-bath'></i> Amazing Shower</li> : ""}
-                                                {props.facilities.electronicLocker ? <li><i className='fa fa-lock'></i> Security Locker</li> : ""}
-                                                {props.facilities.freeBreakfast ? <li><i className='fa-solid fa-mug-saucer'></i> Free Breakfast </li> : ""}
-                                                {props.facilities.kidEquipment ? <li><i className='fas fa-baby'></i> Kids Toys</li> : ""}
-                                            </ul>
+                                                <ul>
+                                                    {props.facilities.wifi ? <li><i className='fa fa-wifi'></i> Wi-fi</li> : ""}
+                                                    {props.facilities.television ? <li><i className='fa-solid fa-tv'></i> Television</li> : ""}
+                                                    {props.facilities.airConditonar ? <li><i class="fa-regular fa-air-conditioner"></i> Air Conditioner</li> : ""}
+                                                    {props.facilities.hairdryers ? <li><i className='fas fa-baby'></i> Hairdryers</li> : ""}
+                                                    {props.facilities.coffeeMakers ? <li><i className='fa fa-coffee'></i> Coffee Makers</li> : ""}
+                                                    {props.facilities.directDial ? <li><i className='fa fa-phone'></i> Direct Calling</li> : ""}
+                                                    {props.facilities.tableWithChair ? <li><i className='fas fa-book-open'></i> Study Table</li> : ""}
+                                                    {props.facilities.alarmclock ? <li><i className='fa fa-clock-o'></i> Alarm Clock</li> : ""}
+                                                    {props.facilities.fridge ? <li><i className='fas fa-bath'></i> Small Fridge</li> : ""}
+                                                    {props.facilities.bathroomWithShower ? <li><i className='fas fa-bath'></i> Amazing Shower</li> : ""}
+                                                    {props.facilities.electronicLocker ? <li><i className='fa fa-lock'></i> Security Locker</li> : ""}
+                                                    {props.facilities.freeBreakfast ? <li><i className='fa-solid fa-mug-saucer'></i> Free Breakfast </li> : ""}
+                                                    {props.facilities.kidEquipment ? <li><i className='fas fa-baby'></i> Kids Toys</li> : ""}
+                                                </ul>
+                                            </div>
+
                                         </div>
-
-                                    </div>
-                                    {/* <div className="room_price w-30">
+                                        {/* <div className="room_price w-30">
                                     <h4 style={{ fontWeight: '600' }}><span id="total_price" style={{ fontSize: "22px" }}> {props.ratechange[props.roomtype].Price}/- </span> INR</h4>
                                     <span>Per Night</span>
 
@@ -374,23 +389,23 @@ export default function Cards(props) {
                                         <p>Adults Allowed: {props.Adult}</p>
                                     </div>
                                 </div> */}
-                                </div>
-                            </Tab>
-                            <Tab eventKey="gallery" title="Gallery" style={{ color: 'black' }}>
+                                    </div>
+                                </Tab>
+                                <Tab eventKey="gallery" title="Gallery" style={{ color: 'black' }}>
 
-                                <div className='room_card_img'>
+                                    <div className='room_card_img'>
 
-                                    {images.map((element) => {
+                                        {images.map((element) => {
 
-                                        return <img src={element} alt="" />
-                                    }
+                                            return <img src={element} alt="" />
+                                        }
 
-                                    )}
+                                        )}
 
 
 
-                                </div>
-                                {/* {images.map((element) => {
+                                    </div>
+                                    {/* {images.map((element) => {
 
                                 return <Carousel.Item>
 
@@ -402,29 +417,29 @@ export default function Cards(props) {
                             }
 
                             )} */}
-                            </Tab>
-                            {/* <Tab eventKey="longer-tab" title="Loooonger Tab">
+                                </Tab>
+                                {/* <Tab eventKey="longer-tab" title="Loooonger Tab">
                                 Tab content for Loooonger Tab
                             </Tab> */}
 
-                        </Tabs>
+                            </Tabs>
 
+                        </div>
                     </div>
+
                 </div>
 
-            </div>
+                {/* Contact informtion start  */}
 
-            {/* Contact informtion start  */}
-
-            {isOpen && (
-                <Contactinfo setIsOpen={setIsOpen} Bg_color={props.Bg_color} setPayment={props.setPayment}
-                    HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={BookingTax}
-                    BookingTotalPrice={BookingTotalPrice} BookingPrice={BookingPrice}
-                    Paymentbutton={props.Paymentbutton} nights={Nights} room={Rooms}
-                    color={props.color} price={Price} grandtotal={Grandtotal} type={props.roomtype} />
-            )}
+                {isOpen && (
+                    <Contactinfo setIsOpen={setIsOpen} Bg_color={props.Bg_color} setPayment={props.setPayment}
+                        HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={BookingTax}
+                        BookingTotalPrice={BookingTotalPrice} BookingPrice={BookingPrice}
+                        Paymentbutton={props.Paymentbutton} nights={Nights} room={Rooms}
+                        color={props.color} price={Price} grandtotal={Grandtotal} type={props.roomtype} />
+                )}
 
 
-        </>
-    )
-}
+            </>
+        )
+    }

@@ -15,6 +15,10 @@ export default function Navbar(props) {
         i18n.changeLanguage(lng);
     };
 
+
+    const [hotelwebsite, sethotelwebsite] = useState("")
+
+    
     const languages = [
         { code: 'en', label: 'English' },
         { code: 'es', label: 'Spanish' },
@@ -63,7 +67,7 @@ export default function Navbar(props) {
                             <div class="dropdown">
                                 {/* dropdown-toggle */}
                                 <button class="btn btn-secondary " type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-language" style={{fontSize:'18px'}}></i>
+                                    <i class="fa-solid fa-language" style={{ fontSize: '18px' }}></i>
                                 </button>
                                 <ul class="dropdown-menu p-0">
                                     {languages.map((language) => (

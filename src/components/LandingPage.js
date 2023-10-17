@@ -136,6 +136,7 @@ export default function Landing(props) {
 
         setCardsIsOpen(true);
     };
+    
     const { t, i18n } = useTranslation();
 
     // Change the language
@@ -303,7 +304,7 @@ export default function Landing(props) {
                         <div className="middle-div">
 
                             <div className="why-book-us">
-                                <h3>Why book with us?</h3>
+                                <h3>{t("Why book with us?")}</h3>
                                 <div className="why-land-aminit">
                                     <ul>
                                         <li><i className="fa-sharp fa-solid fa-tree-city land-icons"></i>Backyard Park</li>
