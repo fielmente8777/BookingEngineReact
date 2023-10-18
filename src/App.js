@@ -53,6 +53,7 @@ function App() {
   const [Privacypolicy, setPrivacypolicy] = useState("Privacy policy")
   const [Cancellation, setCancellation] = useState("Cancellation policy")
   const [Termsconditions, setTermsconditions] = useState("Terms and conditions")
+  const [hotelwebsite, sethotelwebsite] = useState("")
 
   const [Payment, setPayment] = useState({
     "Status": false,
@@ -102,6 +103,7 @@ function App() {
       setHotelNumber(json.Details.Footer.Phone)
       setHotelName(json.Details.HotelName)
       setHotelImage(json.Details.BgImage)
+      sethotelwebsite(json.website)
 
 
 
@@ -159,7 +161,7 @@ function App() {
       <BrowserRouter>
 
         <Navbar hotelname={HotelName} logo={HotelLogo} display={Spinner_spin1} color={Bg_color} HotelNumber={HotelNumber}
-          email={HotelEmail} />
+          email={HotelEmail} hotelwebsite={hotelwebsite} />
 
         {!Payment.Status ? <LandingPage Bg_color={Bg_color} HotelName={HotelName} HotelLogo={HotelLogo} baseUrl={baseUrl}
           Bg_image={HotelImage} color={Box_color} display={Spinner_spin1} bt_color={Button_color}
@@ -167,7 +169,7 @@ function App() {
           FinalConfirmButton={RoomFinal_searchButton} Paymentbutton={PaymentButton} setPayment={setPayment} />
           : <SuccessPage Payment={Payment} />}
 
-        <Footer color={Bg_color} Logo={HotelLogo} HotelAddress={HotelAddress} HotelNumber={HotelNumber}
+        <Footer hotelwebsite={hotelwebsite} color={Bg_color} Logo={HotelLogo} HotelAddress={HotelAddress} HotelNumber={HotelNumber}
           aboutus={HotelAbout} display={Spinner_spin1} email={HotelEmail} facebook={Facebook}
           instagram={Instagram} twitter={Twitter} Tripadvisors={Tripadvisors}
           Linkedin={Linkedin}

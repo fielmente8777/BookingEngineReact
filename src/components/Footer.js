@@ -37,7 +37,7 @@ export default function Footer(props) {
             <div className="footer-main footAdd col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 w-100">
               <div className="FootAddrs">
                 <div className="footLogo" style={{ marginTop: "-1rem", marginBottom: "1rem" }}>
-                  <img src={props.Logo} alt="" />
+                  <a href={props.hotelwebsite} target="_blank" ><img src={props.Logo} alt="" /></a>
                 </div>
                 <p className='my-2'>{props.aboutus}</p>
               </div>
@@ -93,14 +93,14 @@ export default function Footer(props) {
               <h6 className='footHeading '>Policies</h6>
               <ul>
                 <li >
-                  <Link style={{ 'cursor': "pointer", marginTop: "15px" }} onClick={() => settermsShow(true)}>Terms & Conditions</Link>
+                  <p style={{ 'cursor': "pointer", marginTop: "15px" }} onClick={() => settermsShow(true)}>Terms & Conditions</p>
                 </li>
                 <li>
-                  <Link style={{ 'cursor': "pointer", marginTop: "15px" }} onClick={() => setpaymentShow(true)}>Payment Terms</Link>
+                  <p style={{ 'cursor': "pointer", marginTop: "15px" }} onClick={() => setpaymentShow(true)}>Payment Terms</p>
                 </li>
                 <li>
-                  <Link style={{ 'cursor': "pointer", marginTop: "15px" }} onClick={() => setcancellationShow(true)}>Cancellation & Refund
-                    Policy</Link>
+                  <p style={{ 'cursor': "pointer", marginTop: "15px" }} onClick={() => setcancellationShow(true)}>Cancellation & Refund
+                    Policy</p>
                 </li>
                 {/* <li>
                   <Link to="/#">FAQs</Link>

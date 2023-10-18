@@ -264,7 +264,7 @@ export default function Cards(props) {
 
                         <div className='card_tab'>
                             <Tabs
-                                defaultActiveKey="amenities"
+                                defaultActiveKey="plans"
                                 id="fill-tab-example"
                                 className="mb-3"
                                 fill
