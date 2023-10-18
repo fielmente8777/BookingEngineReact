@@ -793,6 +793,12 @@
     gap: 10px;
 }
 
+.plansinr .form-check-input {
+    border: 1px solid;
+}
+
+
+
 @media screen and (max-width:480px) {
     .plansinr span {
         font-size: 14px;
@@ -1104,6 +1110,32 @@
     color: black;
     border: 0;
     border: 1px solid rgb(192, 202, 213);
+}
+
+
+.content_inner .promo_btn_div {
+    /* border: 2px solid; */
+    width: 70%;
+    display: flex;
+    gap: 10px;
+}
+
+.content_inner .promo_btn_div input {
+    width: 100%;
+    padding: 10px;
+    /* border: 1px solid red; */
+    background: transparent;
+    outline: none;
+    color: black;
+    font-size: 0.80em;
+    border: 1px solid rgb(192, 202, 213);
+    /* margin: 0 0 10px 0; */
+
+}
+.content_inner .promo_btn_div button {
+    font-size: 14px;
+    background: #1D619C;
+    
 }
 
 

@@ -1,15 +1,57 @@
-import React from 'react'
+import React, { useRef } from 'react';
 import '../style/SuccessPage.css'
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 
 
 
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 function SuccessPage(props) {
+
+    const componentRef = useRef(null);
+
+    const generatePDF = async () => {
+        // Get a reference to the component's DOM element
+        const component = componentRef.current;
+
+        // Use html2canvas to capture the component's content as an image
+        const canvas = await html2canvas(component);
+
+        // Create a new jsPDF instance
+        const doc = new jsPDF({
+            orientation: 'p', // 'p' for portrait, 'l' for landscape
+            unit: 'mm', // unit of measurement
+            format: 'a4', // page format
+        });
+
+        // Calculate the image's dimensions to fit the PDF page
+        const imgData = canvas.toDataURL('image/png');
+        const imgWidth = 200; // A4 width in mm
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        // Add the image to the PDF
+        doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+
+        // Save the PDF as a blob
+        const blob = doc.output('blob');
+
+        // Create a URL for the Blob and create a link to trigger the download
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'invoice.pdf'; // Set the desired filename for the invoice.
+
+        // Trigger a click event on the link to start the download
+        a.click();
+
+        // Clean up by revoking the Blob URL
+        URL.revokeObjectURL(url);
+    };
     return (
-        <div className='main_success'>
-            <div className="succespage">
+        <div className='main_success' >
+            <div className="succespage" ref={componentRef}>
                 <h3>Payment Successfull!</h3>
                 <div><i class="fa-regular fa-circle-check m-4" style={{ fontSize: '60px' }}></i></div>
                 <div className='w-100'>
@@ -111,8 +153,12 @@ function SuccessPage(props) {
                     </Table>
                 </div>
                 <div className='d-flex justify-content-center gap-4 m-4'>
-                    <Button onClick={() => { window.print() }}>Print</Button>
+                    {/* <Button onClick={() => { window.print() }}>Print</Button> */}
+                    <Button onClick={generatePDF}>Download Invoice (PDF)</Button>
+
                     <Button onClick={() => { window.location.reload() }}>Close</Button>
+                    {/* <button onClick={generatePDF}>Download Invoice (PDF)</button> */}
+
                 </div>
             </div>
 

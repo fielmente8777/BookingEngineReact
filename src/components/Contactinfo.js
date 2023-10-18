@@ -271,6 +271,11 @@ function Contactinfo(props) {
                                         <textarea className="bg" name="text" id="request" placeholder="ADDITIONAL REQUEST"></textarea>
                                     </div>
 
+                                    <div className="content_inner">
+                                        <span className="text-span">Promo Code</span>
+                                        <textarea className="bg" name="text" id="request" placeholder="ADDITIONAL REQUEST"></textarea>
+                                    </div>
+
                                 </div>
 
                                 {/* <div className="button_s">

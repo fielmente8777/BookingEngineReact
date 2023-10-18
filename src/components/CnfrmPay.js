@@ -2,6 +2,7 @@ import axios from "axios";
 import { useCallback, useEffect, useState, useMemo } from "react";
 import useRazorpay from "react-razorpay";
 import "../style/Reserve.css"
+import Button from 'react-bootstrap/Button';
 
 
 import { getCountries, getCountryCallingCode } from 'react-phone-number-input/input';
@@ -61,9 +62,9 @@ function CnfrmPay(props) {
     const [RoomTax, setRoomTax] = useState(tax)
     const [PaymentStatus, setPaymentStatus] = useState("PENDING")
     const [PayStatus, setPayStatus] = useState("PAID")
-    
-    // const baseUrl = "https://nexon.eazotel.com"
-    const baseUrl = "http://127.0.0.1:5000"
+
+    const baseUrl = "https://nexon.eazotel.com"
+    // const baseUrl = "http://127.0.0.1:5000"
     // location api
 
     useEffect(() => {
@@ -149,14 +150,14 @@ function CnfrmPay(props) {
                 "Status": true,
                 "Order": json.order_id,  // Order ID from the payment gateway
                 "Name": Name,
-                "Phone": Email,
-                "Email": Phone,
+                "Phone": Phone,
+                "Email": Email,
                 "City": City,
                 "Country": Country.label,
-                "Delux":props.Delux,
-                "Sd":props.SuperDelux,
-                "Suite":props.Suite,
-                "Premium":props.Premium,
+                "Delux": props.Delux,
+                "Sd": props.SuperDelux,
+                "Suite": props.Suite,
+                "Premium": props.Premium,
                 "Checkin": localStorage.getItem('Checkin'),
                 "Checkout": localStorage.getItem('Checkout'),
                 "Adult": localStorage.getItem('Adult'),
@@ -175,7 +176,7 @@ function CnfrmPay(props) {
     const GetHalfOrderId = async () => {
         setPaymentStatus("ADVANCED")
         setPayStatus("HALF PAID")
-        let halfcost = 0.5*totoalcost
+        let halfcost = 0.5 * totoalcost
         const response = await fetch(`${baseUrl}/payment/create_order`, {
             method: "POST",
             headers: {
@@ -249,14 +250,14 @@ function CnfrmPay(props) {
                     "City": City,
                     "Country": Country
                 },
-                "Adults":localStorage.getItem("Adult"),
-                "Kids":localStorage.getItem("Kid"),
-                "Bookings":[
-                            {"RoomType":"1","Qty":props.Delux},
-                            {"RoomType":"2","Qty":props.SuperDelux},
-                            {"RoomType":"3","Qty":props.Suite},
-                            {"RoomType":"4","Qty":props.Premium}   
-                            ],
+                "Adults": localStorage.getItem("Adult"),
+                "Kids": localStorage.getItem("Kid"),
+                "Bookings": [
+                    { "RoomType": "1", "Qty": props.Delux },
+                    { "RoomType": "2", "Qty": props.SuperDelux },
+                    { "RoomType": "3", "Qty": props.Suite },
+                    { "RoomType": "4", "Qty": props.Premium }
+                ],
                 "payment": {
                     "Status": "PENDING",
                     "RefNo": "",
@@ -318,7 +319,7 @@ function CnfrmPay(props) {
         }
     }
 
-    const PopupFillFields=()=>{
+    const PopupFillFields = () => {
         alert("Please Complete User details form")
     }
 
@@ -329,7 +330,7 @@ function CnfrmPay(props) {
                 amount: parseInt(Number(props.room) * Number(props.BookingTotalPrice)) * 100, // Convert amount to paise (assuming INR)
                 orderId: OrderId, // Generate a unique order ID
             };
-            
+
             const options = {
                 key: "rzp_live_5uaIIwZcxLC70j", // Enter the Key ID generated from the Dashboard rzp_test_UZ0V9jh3jMC0C9
                 amount: mockOrderData.amount.toString(), // Use the amount from the order data
@@ -346,8 +347,8 @@ function CnfrmPay(props) {
                         "Order": response.razorpay_order_id,
                         "Payment": response.razorpay_payment_id,
                         "Name": Name,
-                        "Phone": Email,
-                        "Email": Phone,
+                        "Phone": Phone,
+                        "Email": Email,
                         "City": City,
                         "Country": Country.label,
                         "Checkin": localStorage.getItem('Checkin'),
@@ -357,10 +358,10 @@ function CnfrmPay(props) {
                         "Tax": tax,
                         "Amount": totoalcost,
                         "PayStatus": PayStatus,
-                        "Delux":props.Delux,
-                        "Sd":props.SuperDelux,
-                        "Suite":props.Suite,
-                        "Premium":props.Premium
+                        "Delux": props.Delux,
+                        "Sd": props.SuperDelux,
+                        "Suite": props.Suite,
+                        "Premium": props.Premium
 
                     })
                 },
@@ -396,7 +397,7 @@ function CnfrmPay(props) {
         const countryData = countryList().getData();
         const defaultOption = { label: Country, value: Country };
         return [defaultOption, ...countryData];
-      }, []);
+    }, []);
     const changeHandler = Country => {
         setCountry(Country)
     }
@@ -464,7 +465,7 @@ function CnfrmPay(props) {
                                     <div className="inputBox content_inner">
                                         <span className="text-span">Country <span style={{ color: 'red' }}>*</span></span>
                                         <div className="country_select">
-                                            <Select options={options} value={Country}onChange={changeHandler} />
+                                            <Select options={options} value={Country} onChange={changeHandler} />
                                         </div>
 
                                         {/* <input
@@ -480,6 +481,14 @@ function CnfrmPay(props) {
                                         <textarea className="bg" name="text" id="request" placeholder="ADDITIONAL REQUEST"></textarea>
                                     </div>
 
+                                    <div className="content_inner">
+                                        <span className="text-span">Promo Code</span>
+                                        <div className="promo_btn_div">
+                                            <input type="text" placeholder="Enter Promo Code here" />
+                                            <Button>Apply</Button>
+                                        </div>
+                                    </div>
+
 
 
 
@@ -488,31 +497,31 @@ function CnfrmPay(props) {
                                     <div className="alert alert-danger" role="alert">
                                         Please Select More Rooms
                                     </div>
-                                    ) : (
+                                ) : (
                                     !OrderId ? (
                                         <div className="button_s">
-                                        {Name && Phone && Email && Country && City && !OrderId ? (
-                                            <>
-                                            <button className="submitbtn" onClick={GetPayLaterOrderId}>PAY AT HOTEL</button>
-                                            <button className="submitbtn" onClick={GetHalfOrderId}>PAY 50% AMOUNT <span>{0.5 * (cost + tax)}</span></button>
-                                            <button className="submitbtn" onClick={GetOrderId}>PAY FULL AMOUNT <span>{cost + tax}</span></button>
-                                            <p className="button_s_p">By making this booking, you are accepting our terms and conditions***</p>
-                                            </>
-                                        ) : (
-                                            <>
-                                            <button className="submitbtn" onClick={PopupFillFields}>PAY AT HOTEL</button>
-                                            <button className="submitbtn" onClick={PopupFillFields}>PAY 50% AMOUNT <span>{0.5 * (cost + tax)}</span></button>
-                                            <button className="submitbtn" onClick={PopupFillFields}>PAY FULL AMOUNT <span>{cost + tax}</span></button>
-                                            <p className="button_s_p">By making this booking, you are accepting our terms and conditions***</p>
-                                            </>
-                                        )}
+                                            {Name && Phone && Email && Country && City && !OrderId ? (
+                                                <>
+                                                    <button className="submitbtn" onClick={GetPayLaterOrderId}>PAY AT HOTEL</button>
+                                                    <button className="submitbtn" onClick={GetHalfOrderId}>PAY 50% AMOUNT <span>{0.5 * (cost + tax)}</span></button>
+                                                    <button className="submitbtn" onClick={GetOrderId}>PAY FULL AMOUNT <span>{cost + tax}</span></button>
+                                                    <p className="button_s_p">By making this booking, you are accepting our terms and conditions***</p>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <button className="submitbtn" onClick={PopupFillFields}>PAY AT HOTEL</button>
+                                                    <button className="submitbtn" onClick={PopupFillFields}>PAY 50% AMOUNT <span>{0.5 * (cost + tax)}</span></button>
+                                                    <button className="submitbtn" onClick={PopupFillFields}>PAY FULL AMOUNT <span>{cost + tax}</span></button>
+                                                    <p className="button_s_p">By making this booking, you are accepting our terms and conditions***</p>
+                                                </>
+                                            )}
                                         </div>
                                     ) : (
                                         <div className="bookingbtn">
-                                        <button className="cmplt pay_button" id="rzp-button1" onClick={handlePayment} style={{ backgroundColor: props.color }}>{props.Paymentbutton}</button>
+                                            <button className="cmplt pay_button" id="rzp-button1" onClick={handlePayment} style={{ backgroundColor: props.color }}>{props.Paymentbutton}</button>
                                         </div>
                                     )
-                                    )}
+                                )}
 
 
                                 {/* <div className="button_s">
@@ -603,12 +612,12 @@ function CnfrmPay(props) {
                                             <span className="left-span">Taxes and fees</span>
                                         </div>
                                         <div className="cust-sub d-flex flex-column py-2">
-                                            <span style={{padding:'5px 0'}}><span id="Final_price">{cost}</span> INR</span>
+                                            <span style={{ padding: '5px 0' }}><span id="Final_price">{cost}</span> INR</span>
                                             <span><span id="Final_tax">{tax}</span> INR</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="cust-detail" style={{borderBottom:'1px solid #9BCFF0'}}>
+                                <div className="cust-detail" style={{ borderBottom: '1px solid #9BCFF0' }}>
                                     <div className="cust-inner">
                                         <div className="py-2">
                                             <span className="left-span" style={{ color: '#153B5B', fontWeight: '700' }}>GRAND TOTAL</span>
@@ -622,7 +631,7 @@ function CnfrmPay(props) {
 
 
                         </div>
-                        
+
 
 
                     </div>
