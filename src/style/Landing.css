@@ -782,51 +782,6 @@
 }
 
 
-.plansDiv {
-    display: block;
-    padding-bottom: 20px;
-}
-
-.plansinr {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.plansinr .form-check-input {
-    border: 1px solid;
-}
-
-
-
-@media screen and (max-width:480px) {
-    .plansinr span {
-        font-size: 14px;
-    }
-}
-
-.plnshead {
-    font-weight: 600;
-}
-
-.plansDiv .table {
-    display: flex;
-}
-
-.plansDiv .table thead tr {
-    display: flex;
-    flex-direction: column;
-}
-
-.plansDiv .table tbody {
-    display: flex;
-    /* flex-direction: column; */
-}
-
-.plansDiv .table tbody tr {
-    display: flex;
-    flex-direction: column;
-}
 
 .room_card_img {
     width: 100%;
@@ -1648,3 +1603,72 @@
         width: 100%;
     }
 }
+
+
+/* Meal plan component start  */
+
+.mealplanDiv{
+    margin-top: 20px;
+}
+
+.plansDiv {
+    display: block;
+    padding: 20px;
+    background-color: #fff;
+
+}
+
+.plnansheading {
+    display: flex;
+    align-items: center;
+    justify-content: center;width: 100%;
+    background-color: rgb(10, 58, 117);
+    color: #fff;
+    padding: 15px;
+    border-radius: 24.4841px 24.4841px 0px 0px;
+}
+
+.plansinr {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.plansinr .form-check-input {
+    border: 1px solid;
+}
+
+
+
+@media screen and (max-width:480px) {
+    .plansinr span {
+        font-size: 14px;
+    }
+}
+
+.plnshead {
+    font-weight: 600;
+}
+
+.plansDiv .table {
+    display: flex;
+}
+
+.plansDiv .table thead tr {
+    display: flex;
+    flex-direction: column;
+}
+
+.plansDiv .table tbody {
+    display: flex;
+    /* flex-direction: column; */
+}
+
+.plansDiv .table tbody tr {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+/* Meal plan component end  */

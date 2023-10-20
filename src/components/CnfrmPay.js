@@ -95,6 +95,8 @@ function CnfrmPay(props) {
             // Handle geolocation not supported
         }
     }, []);
+
+    
     //PAY AT HOTEL
     const GetPayLaterOrderId = async () => {
         const response = await fetch(`${baseUrl}/payment/create_order`, {
@@ -439,6 +441,7 @@ function CnfrmPay(props) {
                                         <span className="text-span">Phone No. <span style={{ color: 'red' }}>*</span></span>
                                         <div className="phone-input-container ">
                                             <PhoneInput
+                                                international
                                                 className="phone-input-field"
                                                 defaultCountry="IN"
                                                 placeholder="Enter phone number"

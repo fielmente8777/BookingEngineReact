@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import './i18n'; // Import your i18n configuration
 import SuccessPage from './SuccessPage';
 import Contactinfo from './CnfrmPay'
+import Mealplan from './Mealplan';
 
 
 
@@ -136,7 +137,7 @@ export default function Landing(props) {
 
         setCardsIsOpen(true);
     };
-    
+
     const { t, i18n } = useTranslation();
 
     // Change the language
@@ -459,9 +460,19 @@ export default function Landing(props) {
                             BookingFinalize={BookingFinalize}
                         />
 
+                        
+
+
                     </div>
+
+
+
                 })}
+                <Mealplan />
+
                 <div className='container'>
+
+
                     {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0)
                         ? <button className='ReserveButtonForPayment' onClick={BookingFinalize}>{props.FinalConfirmButton}</button> : ""}
                 </div>
@@ -492,7 +503,6 @@ export default function Landing(props) {
 
                         Please Select More Rooms
                     </div> : ""}
-
 
 
             </div>

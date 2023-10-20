@@ -272,13 +272,13 @@ export default function Cards(props) {
 
                     <div className='card_tab'>
                         <Tabs
-                            defaultActiveKey="plans"
+                            defaultActiveKey="amenities"
                             id="fill-tab-example"
                             className="mb-3"
                             fill
                         >
-                            
-                            <Tab eventKey="plans" title="Plans">
+
+                            {/* <Tab eventKey="plans" title="Plans">
                                 <div className="plansDiv">
                                     <div class="container plansinr text-decoration-none">
                                         <div class="row">
@@ -289,7 +289,7 @@ export default function Cards(props) {
                                                 <span>₹ 350.00</span>
                                             </div>
                                             <div class="col text-center">
-                                            <Form>
+                                                <Form>
                                                     {['radio'].map((type) => (
                                                         <div key={`default-${type}`} className="mb-3">
                                                             <Form.Check
@@ -358,7 +358,7 @@ export default function Cards(props) {
                                         </div>
                                     </div>
                                 </div>
-                            </Tab>
+                            </Tab> */}
                             <Tab eventKey="amenities" title="Amenities">
                                 <div className="aminities-block">
                                     <div className="aminities w-100">
@@ -444,6 +444,7 @@ export default function Cards(props) {
                 </div>
 
             </div>
+
 
             {/* Contact informtion start  */}
 
