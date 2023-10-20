@@ -39,7 +39,7 @@ export default function Footer(props) {
                 <div className="footLogo" style={{ marginTop: "-1rem", marginBottom: "1rem" }}>
                   <a href={props.hotelwebsite} target="_blank" ><img src={props.Logo} alt="" /></a>
                 </div>
-                <p className='my-2'>{props.aboutus}</p>
+                <p className='my-2'>{HTMLReactParser(props.aboutus)}</p>
               </div>
 
               <div className="social-media">

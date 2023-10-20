@@ -32,6 +32,15 @@ export default function Landing(props) {
     let [maxAdult, setmaxAdult] = useState(0)
 
     const [CradisOpen, setCardsIsOpen] = useState(false);
+
+    const [isperRoom,setisperRoom] = useState(false)
+    const [mealplan, setMealPlan] = useState([]);
+    const [mealplanId,setmealplanId] = useState('')
+    const [selectedMealPlan,setselectedMealPlan] = useState('')
+    const [selectedMealPlanPrice,setselectedMealPlanPrice] = useState('0')
+    const [Mealprice,setMealprice] = useState(0)
+
+
     const [isOpen, setisOpen] = useState(false)
     const [Available, setAvailable] = useState({
         "DELUX": 0,
@@ -39,6 +48,7 @@ export default function Landing(props) {
         "SUITE": 0,
         "SUPERDELUX": 0
     })
+
     const [RoomNameAvailable, setRoomNameAvailable] = useState({
         "DELUX": "DELUX",
         "PREMIUM": "PREMIUM",
@@ -74,7 +84,6 @@ export default function Landing(props) {
             window.scrollTo({ top: yOffset, behavior: 'smooth' }); // You can use 'smooth' for smooth scrolling
         }
     }
-
 
     async function toggleDiv() {
         let checkin_date = localStorage.getItem("Checkin")
@@ -468,17 +477,30 @@ export default function Landing(props) {
 
 
                 })}
-                <Mealplan />
+
+                {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0)?
+                <Mealplan setisperRoom={setisperRoom} 
+                setmealplanId={setmealplanId}
+                mealplan={mealplan}
+                setMealPlan={setMealPlan} 
+                setselectedMealPlan={setselectedMealPlan} 
+                setselectedMealPlanPrice={setselectedMealPlanPrice} 
+                Mealprice={Mealprice} 
+                setMealprice={setMealprice}
+                Delux={Delux}
+                SuperDelux={SuperDelux}
+                Suite={Suite}
+                Premium={Premium}
+                Adult={Adult} />:""}
 
                 <div className='container'>
-
-
                     {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0)
                         ? <button className='ReserveButtonForPayment' onClick={BookingFinalize}>{props.FinalConfirmButton}</button> : ""}
                 </div>
 
 
                 {isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0) ? (
+                    
                     <Contactinfo setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
                         HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={1200}
                         BookingTotalPrice={1200} BookingPrice={1200}
@@ -496,6 +518,12 @@ export default function Landing(props) {
                         SuperDeluxAdult={SuperDeluxAdult}
                         SuiteAdult={SuiteAdult}
                         PremiumAdult={PremiumAdult}
+                        selectedMealPlan={selectedMealPlan}
+                        selectedMealPlanPrice={selectedMealPlanPrice}
+                        isperRoom={isperRoom}
+                        Mealprice={Mealprice}
+                        mealplanId={mealplanId}
+                        
                     />
                 ) : ""}
                 {openAlert ?

@@ -28,7 +28,7 @@ function SuccessPage(props) {
 
         // Calculate the image's dimensions to fit the PDF page
         const imgData = canvas.toDataURL('image/png');
-        const imgWidth = 200; // A4 width in mm
+        const imgWidth = 175; // A4 width in mm
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
         // Add the image to the PDF
@@ -128,6 +128,8 @@ function SuccessPage(props) {
                             </tr>
                         </tbody>
                     </Table>
+
+                    
                 </div>
 
                 <div className="succesDataTable">
@@ -151,10 +153,28 @@ function SuccessPage(props) {
                             </tr>
                         </tbody>
                     </Table>
+
+                    <h6><strong>Meal Plan and Packages Information</strong></h6>
+
+                    <Table striped bordered hover variant="light">
+                        <thead>
+                            <tr>
+                                <th>Plan Name</th>
+                                <th>Plan Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{props.Payment.MealPlan}</td>
+                                <td>{props.Payment.Mealprice}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
                 </div>
+
                 <div className='d-flex justify-content-center gap-4 m-4'>
                     {/* <Button onClick={() => { window.print() }}>Print</Button> */}
-                    <Button onClick={generatePDF}>Download Invoice (PDF)</Button>
+                    <Button onClick={generatePDF}>Download (PDF)</Button>
 
                     <Button onClick={() => { window.location.reload() }}>Close</Button>
                     {/* <button onClick={generatePDF}>Download Invoice (PDF)</button> */}

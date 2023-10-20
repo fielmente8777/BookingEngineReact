@@ -41,8 +41,11 @@ function CnfrmPay(props) {
         premiumcost = 0;
     }
 
+    
+    
 
-    let cost = Number(deluxcost) + Number(sdcost) + Number(suitecost) + Number(premiumcost)
+
+    let cost = Number(deluxcost) + Number(sdcost) + Number(suitecost) + Number(premiumcost) + Number(props.Mealprice)
     let tax = 0.18 * Number(cost)
     let totoalcost = Number(cost) + Number(tax)
 
@@ -130,6 +133,12 @@ function CnfrmPay(props) {
                     "PaymentProvider": "RazorPay",
                     "Mode": "Online"
                 },
+                "mealPlan":{
+                    "PackageId":props.mealplanId,
+                    "PackageName":props.selectedMealPlan,
+                    "PackagePrice":props.Mealprice,
+                    "PackageperRoom":props.isperRoom
+                },
                 "checkIn": localStorage.getItem('Checkin'),
                 "checkOut": localStorage.getItem('Checkout'),
                 "price": {
@@ -166,6 +175,8 @@ function CnfrmPay(props) {
                 "Tax": tax,
                 "Amount": totoalcost,
                 "PayStatus": "Pay At Hotel",
+                "MealPlan":props.selectedMealPlan,
+                "Mealprice":props.selectedMealPlanPrice
 
             })
 
@@ -208,6 +219,12 @@ function CnfrmPay(props) {
                     "RefNo": "",
                     "PaymentProvider": "RazorPay",
                     "Mode": "Online"
+                },
+                "mealPlan":{
+                    "PackageId":props.mealplanId,
+                    "PackageName":props.selectedMealPlan,
+                    "PackagePrice":props.Mealprice,
+                    "PackageperRoom":props.isperRoom
                 },
                 "checkIn": localStorage.getItem('Checkin'),
                 "checkOut": localStorage.getItem('Checkout'),
@@ -264,6 +281,12 @@ function CnfrmPay(props) {
                     "RefNo": "",
                     "PaymentProvider": "RazorPay",
                     "Mode": "Online"
+                },
+                "mealPlan":{
+                    "PackageId":props.mealplanId,
+                    "PackageName":props.selectedMealPlan,
+                    "PackagePrice":props.Mealprice,
+                    "PackageperRoom":props.isperRoom
                 },
                 "checkIn": localStorage.getItem('Checkin'),
                 "checkOut": localStorage.getItem('Checkout'),
@@ -362,8 +385,9 @@ function CnfrmPay(props) {
                         "Delux": props.Delux,
                         "Sd": props.SuperDelux,
                         "Suite": props.Suite,
-                        "Premium": props.Premium
-
+                        "Premium": props.Premium,
+                        "MealPlan":props.selectedMealPlan,
+                        "Mealprice":props.selectedMealPlanPrice
                     })
                 },
 
@@ -534,14 +558,6 @@ function CnfrmPay(props) {
 
                             <div className="inner-contact-right">
                                 <h4 className="m-4 text-center">Reservation details</h4>
-                                {/* <div className="cust-detail">
-                                    <div className="cust-inner">
-                                        <div>
-                                            <span><a onclick="toggleAccordion1(1);">Edit<i
-                                                className='fas fa-edit mx-2'></i></a></span>
-                                        </div>
-                                    </div>
-                                </div> */}
                                 <div className="cust-detail">
 
                                     <div className="cust-inner">
@@ -587,16 +603,36 @@ function CnfrmPay(props) {
                                     </div>
                                 </div>
 
-                                {/* <div className="cust-detail">
+                                <div className="cust-detail">
                                     <div className="cust-inner">
                                         <div>
-                                            <span className="left-span">Rooms</span>
+                                            <span className="left-span">Meal Selected</span>
                                         </div>
                                         <div>
-                                            <p className="right-span"><span id="Final_room">{props.room}</span> Room</p>
+                                            <p className="right-span"><span id="Final_room">{props.selectedMealPlan?props.selectedMealPlan:"-"}</span></p>
                                         </div>
                                     </div>
-                                </div> */}
+                                </div>
+                                <div className="cust-detail">
+                                    <div className="cust-inner">
+                                        <div>
+                                            <span className="left-span">Meal Price</span>
+                                        </div>
+                                        <div>
+                                            <p className="right-span"><span id="Final_room">{props.selectedMealPlanPrice?props.selectedMealPlanPrice:"-"} {props.isperRoom?"per room":"per adult"}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="cust-detail">
+                                    <div className="cust-inner">
+                                        <div>
+                                            <span className="left-span">Total Meal Price</span>
+                                        </div>
+                                        <div>
+                                            <p className="right-span"><span id="Final_room">{props.Mealprice}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="cust-detail">
                                     <div className="cust-inner">
                                         <div>

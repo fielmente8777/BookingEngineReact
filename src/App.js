@@ -73,7 +73,9 @@ function App() {
     "Delux":"4",
     "Sd":"4",
     "Suite":"4",
-    "Premium":"4"
+    "Premium":"4",
+    "MealPlan":"Meal",
+    "Mealprice":"200"
 
   })
   async function Get_Hotel_status_exists() {

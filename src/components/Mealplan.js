@@ -2,27 +2,45 @@ import React, { useState, useEffect } from 'react';
 
 import Form from 'react-bootstrap/Form';
 
-function Mealplan() {
+function Mealplan({mealplan,setMealPlan,setselectedMealPlan,setselectedMealPlanPrice,setisperRoom,Mealprice
+    ,setMealprice,Delux,SuperDelux,Suite,Premium,Adult,setmealplanId}) {
 
-    const [mealplan, setMealPlan] = useState([]);
+    
     // Fetches meal plan data on component mount and sets it to the state.
+    const FetchMeals=async ()=>{
+        const response = await fetch(`https://nexon.eazotel.com/room/packages/engine/${localStorage.getItem('hotelid')}`, {
+            method: "GET",
+            headers: {
+              Accept: "application/json, text/plain, /",
+              "Content-Type": "application/json"
+            },
+      
+          });
+      
+        const json = await response.json();
+        setMealPlan(json.Packages)
+    }
     useEffect(() => {
-        fetch('https://nexon.eazotel.com/room/packages/engine/d76a7d3b-f063-4872-b424-c3d1c6ef223e')
-        .then((response) => response.json())
-        .then((data) => setMealPlan(data));
-        }, []);
-
-
-
-    const plan = [
-
-    ]
+        FetchMeals()
+    }, [])
+    
 
 
     const [selectedOption, setSelectedOption] = useState(null);
 
-    const handleRadioChange = (option) => {
+    const handleRadioChange = (option,price,plan,isperroom,planid) => {
         setSelectedOption(option);
+        setselectedMealPlanPrice(price)
+        setselectedMealPlan(plan)
+        setisperRoom(isperroom)
+        setmealplanId(planid)
+        if(isperroom){
+            let cost = (Number(Delux)+Number(SuperDelux)+Number(Suite)+Number(Premium))*Number(price)
+            setMealprice(cost)
+        }
+        else{
+            setMealprice(Number(Adult)*Number(price))
+        }
     };
 
 
@@ -42,13 +60,13 @@ function Mealplan() {
                         </div>
                     ))} */}
 
-                    {plan.map((planItem, index) => (
+                    {mealplan.map((planItem, index) => (
                         <div class="row" key={index}>
                             <div class="col-5">
                                 <span class='plnshead'>{planItem.packageName}</span>
                             </div>
                             <div class="col text-center">
-                                <span>₹ {planItem.packagePrice}.00</span>
+                                <span>₹ {planItem.packagePrice}</span>
                             </div>
                             <div class="col text-center">
                                 <Form>
@@ -60,7 +78,7 @@ function Mealplan() {
                                                 type={type}
                                                 id={`inline-${type}-${index}`}
                                                 checked={selectedOption === `Option${index}`}
-                                                onChange={() => handleRadioChange(`Option${index}`)}
+                                                onChange={() => handleRadioChange(`Option${index}`,planItem.packagePrice,planItem.packageName,planItem.isPerRoom,planItem.planId)}
 
                                             />
                                         </div>
@@ -69,81 +87,7 @@ function Mealplan() {
                             </div>
                         </div>
                     ))}
-                    {/* <div class="row">
-                        <div class="col-5">
-                        <span class='plnshead'>Breakfast</span>
-                        </div>
-                        <div class="col text-center">
-                            <span>₹ 350.00</span>
-                        </div>
-                        <div class="col text-center">
-                            <Form>
-                                {['radio'].map((type) => (
-                                    <div key={`default-${type}`} className="mb-3">
-                                        <Form.Check
-                                            inline
-                                            name="group1"
-                                            type={type}
-                                            id={`inline-${type}-3`}
-                                            checked={selectedOption === 'Option1'}
-                                            onChange={() => handleRadioChange('Option1')}
-
-                                        />
-                                    </div>
-                                ))}
-                            </Form>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-5">
-                            <span class='plnshead' >Breakfast with Lunch or Dinner</span>
-                        </div>
-                        <div class="col text-center">
-                            <span>₹ 1100.00</span>
-                        </div>
-                        <div class="col text-center">
-                            <Form>
-                                {['radio'].map((type) => (
-                                    <div key={`default-${type}`} className="mb-3">
-                                        <Form.Check
-                                            inline
-                                            name="group1"
-                                            type={type}
-                                            id={`inline-${type}-2`}
-                                            checked={selectedOption === 'Option2'}
-                                            onChange={() => handleRadioChange('Option2')}
-
-                                        />
-                                    </div>
-                                ))}
-                            </Form>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-5">
-                            <span class='plnshead' >Breakfast with Lunch And Dinner</span>
-                        </div>
-                        <div class="col text-center">
-                            <span>₹ 1850.00</span>
-                        </div>
-                        <div class="col text-center">
-                            <Form>
-                                {['radio'].map((type) => (
-                                    <div key={`default-${type}`} className="mb-3">
-                                        <Form.Check
-                                            inline
-                                            name="group1"
-                                            type={type}
-                                            id={`inline-${type}-3`}
-                                            checked={selectedOption === 'Option3'}
-                                            onChange={() => handleRadioChange('Option3')}
-
-                                        />
-                                    </div>
-                                ))}
-                            </Form>
-                        </div>
-                    </div> */}
+                    
                 </div>
             </div>
         </div>
