@@ -263,7 +263,7 @@
 }
 
 .options {
-    width: auto;
+    width: 70px;
     overflow: hidden;
     padding: .5rem 1rem !important;
     border-radius: 4px;
@@ -767,7 +767,7 @@
     background: #9BCFF0;
     border-bottom: 1.63227px solid #519ACB;
     border-radius: 8.33021px;
-    width: 70px;
+    width: 80px;
 }
 
 
@@ -951,7 +951,7 @@
 
 .inputBox .country_select {
     width: 70%;
-    height: 40px;
+    height: auto;
     /* border: 1px solid red; */
     background: transparent;
     outline: none;
@@ -960,6 +960,12 @@
     border: 1px solid rgb(192, 202, 213);
     margin: 0 0 10px 0;
     /* overflow: hidden; */
+}
+
+
+.inputBox .country_select .css-qbdosj-Input {
+    margin: 0;
+    padding-bottom: 0;
 }
 
 @media screen and (max-width:767px) {
@@ -1091,6 +1097,12 @@
     font-size: 14px;
     background: #1D619C;
     
+}
+
+@media screen and (max-width: 480px) { 
+    .content_inner .promo_btn_div {
+        width: 100%;
+    }
 }
 
 
@@ -1425,8 +1437,8 @@
     }
 
     .submit button {
-        font-size: 18px;
-        line-height: 15px;
+        font-size: 17px;
+        /* line-height: 15px; */
     }
 
 
