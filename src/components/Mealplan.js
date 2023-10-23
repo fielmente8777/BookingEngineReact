@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 import Form from 'react-bootstrap/Form';
 
-function Mealplan({mealplan,setMealPlan,setselectedMealPlan,setselectedMealPlanPrice,setisperRoom,Mealprice
+function Mealplan({isperRoom,mealplan,setMealPlan,setselectedMealPlan,setselectedMealPlanPrice,setisperRoom,Mealprice
     ,setMealprice,Delux,SuperDelux,Suite,Premium,Adult,setmealplanId}) {
 
-    
+    const [price,setprice]=useState('')
     // Fetches meal plan data on component mount and sets it to the state.
     const FetchMeals=async ()=>{
         const response = await fetch(`https://nexon.eazotel.com/room/packages/engine/${localStorage.getItem('hotelid')}`, {
@@ -25,6 +25,13 @@ function Mealplan({mealplan,setMealPlan,setselectedMealPlan,setselectedMealPlanP
     }, [])
     
 
+    if(isperRoom){
+        let cost = (Number(Delux)+Number(SuperDelux)+Number(Suite)+Number(Premium))*Number(price)
+        setMealprice(cost)
+    }
+    else{
+        setMealprice(Number(Adult)*Number(price))
+    }
 
     const [selectedOption, setSelectedOption] = useState(null);
 
@@ -34,6 +41,7 @@ function Mealplan({mealplan,setMealPlan,setselectedMealPlan,setselectedMealPlanP
         setselectedMealPlan(plan)
         setisperRoom(isperroom)
         setmealplanId(planid)
+        setprice(price)
         if(isperroom){
             let cost = (Number(Delux)+Number(SuperDelux)+Number(Suite)+Number(Premium))*Number(price)
             setMealprice(cost)

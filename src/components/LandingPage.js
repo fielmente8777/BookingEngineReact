@@ -491,7 +491,8 @@ export default function Landing(props) {
                 SuperDelux={SuperDelux}
                 Suite={Suite}
                 Premium={Premium}
-                Adult={Adult} />:""}
+                Adult={Adult}
+                isperRoom={isperRoom} />:""}
 
                 <div className='container'>
                     {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0)
