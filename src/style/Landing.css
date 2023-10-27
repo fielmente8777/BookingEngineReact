@@ -346,19 +346,22 @@
     border: 10px solid #9BCFF0;
     color: #FFFFFF;
     text-align: center;
-    height: 220px;
-    width: 510px;
+    height: auto;
+    width: auto;
     border-radius: 0px;
     background-color: #1D619C;
+    padding: 10px 20px;
 }
 
 @media screen and (max-width: 480px) {
     .why-book-us {
         height: auto;
+        padding: 5px;
     }
 
     .why-land-aminit li {
-        font-size: 13px;
+        font-size: 12px;
+        width: 134px;
     }
 }
 
@@ -381,7 +384,7 @@
 }
 
 .why-land-aminit ul {
-    width: 50%;
+    width: auto;
     display: block;
     /* border: 1px solid black; */
     text-align: start;
@@ -729,7 +732,7 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     flex-wrap: wrap;
 }
 
@@ -1093,13 +1096,14 @@
     /* margin: 0 0 10px 0; */
 
 }
+
 .content_inner .promo_btn_div button {
     font-size: 14px;
     background: #1D619C;
-    
+
 }
 
-@media screen and (max-width: 480px) { 
+@media screen and (max-width: 480px) {
     .content_inner .promo_btn_div {
         width: 100%;
     }
@@ -1619,7 +1623,7 @@
 
 /* Meal plan component start  */
 
-.mealplanDiv{
+.mealplanDiv {
     margin-top: 20px;
 }
 
@@ -1633,7 +1637,8 @@
 .plnansheading {
     display: flex;
     align-items: center;
-    justify-content: center;width: 100%;
+    justify-content: center;
+    width: 100%;
     background-color: rgb(10, 58, 117);
     color: #fff;
     padding: 15px;

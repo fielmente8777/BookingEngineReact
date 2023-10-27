@@ -33,12 +33,12 @@ export default function Landing(props) {
 
     const [CradisOpen, setCardsIsOpen] = useState(false);
 
-    const [isperRoom,setisperRoom] = useState(false)
+    const [isperRoom, setisperRoom] = useState(false)
     const [mealplan, setMealPlan] = useState([]);
-    const [mealplanId,setmealplanId] = useState('')
-    const [selectedMealPlan,setselectedMealPlan] = useState('')
-    const [selectedMealPlanPrice,setselectedMealPlanPrice] = useState('0')
-    const [Mealprice,setMealprice] = useState(0)
+    const [mealplanId, setmealplanId] = useState('')
+    const [selectedMealPlan, setselectedMealPlan] = useState('')
+    const [selectedMealPlanPrice, setselectedMealPlanPrice] = useState('0')
+    const [Mealprice, setMealprice] = useState(0)
 
 
     const [isOpen, setisOpen] = useState(false)
@@ -353,10 +353,15 @@ export default function Landing(props) {
                                 <buttton class="btn btn-secondary btn-fc">Rates</buttton>
                             </div>
                         </div> */}
+                        {Headlines.length!==0 ?
+                            <div className="crd-head w-100">
+                                <h3 style={{ textAlign: 'center' }}>select rooms</h3>
+                            </div> :
+                            <div className="crd-head w-100">
+                                <h3 style={{ textAlign: 'center' }}>No Rooms Available</h3>
+                            </div>
+                        }
 
-                        <div className="crd-head w-100">
-                            <h3 style={{ textAlign: 'center' }}>select rooms</h3>
-                        </div>
 
                         {/* <div class="inner_filter rgt-flt">
                             <div class="dropdown">
@@ -468,31 +473,27 @@ export default function Landing(props) {
                             setisOpen={setisOpen}
                             BookingFinalize={BookingFinalize}
                         />
-
-                        
-
-
                     </div>
 
 
 
                 })}
 
-                {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0)?
-                <Mealplan setisperRoom={setisperRoom} 
-                setmealplanId={setmealplanId}
-                mealplan={mealplan}
-                setMealPlan={setMealPlan} 
-                setselectedMealPlan={setselectedMealPlan} 
-                setselectedMealPlanPrice={setselectedMealPlanPrice} 
-                Mealprice={Mealprice} 
-                setMealprice={setMealprice}
-                Delux={Delux}
-                SuperDelux={SuperDelux}
-                Suite={Suite}
-                Premium={Premium}
-                Adult={Adult}
-                isperRoom={isperRoom} />:""}
+                {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0) ?
+                    <Mealplan setisperRoom={setisperRoom}
+                        setmealplanId={setmealplanId}
+                        mealplan={mealplan}
+                        setMealPlan={setMealPlan}
+                        setselectedMealPlan={setselectedMealPlan}
+                        setselectedMealPlanPrice={setselectedMealPlanPrice}
+                        Mealprice={Mealprice}
+                        setMealprice={setMealprice}
+                        Delux={Delux}
+                        SuperDelux={SuperDelux}
+                        Suite={Suite}
+                        Premium={Premium}
+                        Adult={Adult}
+                        isperRoom={isperRoom} /> : ""}
 
                 <div className='container'>
                     {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0)
@@ -501,7 +502,7 @@ export default function Landing(props) {
 
 
                 {isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0) ? (
-                    
+
                     <Contactinfo setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
                         HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={1200}
                         BookingTotalPrice={1200} BookingPrice={1200}
@@ -524,7 +525,7 @@ export default function Landing(props) {
                         isperRoom={isperRoom}
                         Mealprice={Mealprice}
                         mealplanId={mealplanId}
-                        
+
                     />
                 ) : ""}
                 {openAlert ?

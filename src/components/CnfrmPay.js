@@ -41,8 +41,8 @@ function CnfrmPay(props) {
         premiumcost = 0;
     }
 
-    
-    
+
+
 
 
     let cost = Number(deluxcost) + Number(sdcost) + Number(suitecost) + Number(premiumcost) + Number(props.Mealprice)
@@ -99,7 +99,7 @@ function CnfrmPay(props) {
         }
     }, []);
 
-    
+
     //PAY AT HOTEL
     const GetPayLaterOrderId = async () => {
         const response = await fetch(`${baseUrl}/payment/create_order`, {
@@ -133,11 +133,11 @@ function CnfrmPay(props) {
                     "PaymentProvider": "RazorPay",
                     "Mode": "Online"
                 },
-                "mealPlan":{
-                    "PackageId":props.mealplanId,
-                    "PackageName":props.selectedMealPlan,
-                    "PackagePrice":props.Mealprice,
-                    "PackageperRoom":props.isperRoom
+                "mealPlan": {
+                    "PackageId": props.mealplanId,
+                    "PackageName": props.selectedMealPlan,
+                    "PackagePrice": props.Mealprice,
+                    "PackageperRoom": props.isperRoom
                 },
                 "checkIn": localStorage.getItem('Checkin'),
                 "checkOut": localStorage.getItem('Checkout'),
@@ -175,8 +175,8 @@ function CnfrmPay(props) {
                 "Tax": tax,
                 "Amount": totoalcost,
                 "PayStatus": "Pay At Hotel",
-                "MealPlan":props.selectedMealPlan,
-                "Mealprice":props.selectedMealPlanPrice
+                "MealPlan": props.selectedMealPlan,
+                "Mealprice": props.selectedMealPlanPrice
 
             })
 
@@ -220,11 +220,11 @@ function CnfrmPay(props) {
                     "PaymentProvider": "RazorPay",
                     "Mode": "Online"
                 },
-                "mealPlan":{
-                    "PackageId":props.mealplanId,
-                    "PackageName":props.selectedMealPlan,
-                    "PackagePrice":props.Mealprice,
-                    "PackageperRoom":props.isperRoom
+                "mealPlan": {
+                    "PackageId": props.mealplanId,
+                    "PackageName": props.selectedMealPlan,
+                    "PackagePrice": props.Mealprice,
+                    "PackageperRoom": props.isperRoom
                 },
                 "checkIn": localStorage.getItem('Checkin'),
                 "checkOut": localStorage.getItem('Checkout'),
@@ -282,11 +282,11 @@ function CnfrmPay(props) {
                     "PaymentProvider": "RazorPay",
                     "Mode": "Online"
                 },
-                "mealPlan":{
-                    "PackageId":props.mealplanId,
-                    "PackageName":props.selectedMealPlan,
-                    "PackagePrice":props.Mealprice,
-                    "PackageperRoom":props.isperRoom
+                "mealPlan": {
+                    "PackageId": props.mealplanId,
+                    "PackageName": props.selectedMealPlan,
+                    "PackagePrice": props.Mealprice,
+                    "PackageperRoom": props.isperRoom
                 },
                 "checkIn": localStorage.getItem('Checkin'),
                 "checkOut": localStorage.getItem('Checkout'),
@@ -386,8 +386,8 @@ function CnfrmPay(props) {
                         "Sd": props.SuperDelux,
                         "Suite": props.Suite,
                         "Premium": props.Premium,
-                        "MealPlan":props.selectedMealPlan,
-                        "Mealprice":props.selectedMealPlanPrice
+                        "MealPlan": props.selectedMealPlan,
+                        "Mealprice": props.selectedMealPlanPrice
                     })
                 },
 
@@ -557,7 +557,7 @@ function CnfrmPay(props) {
 
 
                             <div className="inner-contact-right">
-                                <h4 className="m-4 text-center">Reservation details</h4>
+                                <h4 className="m-4 text-center" style={{ fontWeight: '600' }}>Reservation details</h4>
                                 <div className="cust-detail">
 
                                     <div className="cust-inner">
@@ -609,7 +609,7 @@ function CnfrmPay(props) {
                                             <span className="left-span">Meal Selected</span>
                                         </div>
                                         <div>
-                                            <p className="right-span"><span id="Final_room">{props.selectedMealPlan?props.selectedMealPlan:"-"}</span></p>
+                                            <p className="right-span"><span id="Final_room">{props.selectedMealPlan ? props.selectedMealPlan : "-"}</span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -619,7 +619,7 @@ function CnfrmPay(props) {
                                             <span className="left-span">Meal Price</span>
                                         </div>
                                         <div>
-                                            <p className="right-span"><span id="Final_room">{props.selectedMealPlanPrice?props.selectedMealPlanPrice:"-"} {props.isperRoom?"per room":"per adult"}</span></p>
+                                            <p className="right-span"><span id="Final_room">{props.selectedMealPlanPrice ? props.selectedMealPlanPrice : "-"} {props.isperRoom ? "per room" : "per adult"}</span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -650,8 +650,8 @@ function CnfrmPay(props) {
                                             <span className="left-span">Taxes and fees</span>
                                         </div>
                                         <div className="cust-sub d-flex flex-column py-2">
-                                            <span style={{ padding: '5px 0' }}><span id="Final_price">{cost}</span> INR</span>
-                                            <span><span id="Final_tax">{tax}</span> INR</span>
+                                            <span style={{ padding: '5px 0', fontWeight: '600' }}><span id="Final_price">{cost}</span> INR</span>
+                                            <span style={{ fontWeight: '600' }}><span id="Final_tax" style={{ fontWeight: '600' }}>{tax}</span> INR</span>
                                         </div>
                                     </div>
                                 </div>
