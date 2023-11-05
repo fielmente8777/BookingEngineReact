@@ -326,7 +326,7 @@ export default function Landing(props) {
                                     <ul>
                                         {/* <li><i className="fa-sharp fa-solid fa-tree-city land-icons"></i>Backyard Park</li> */}
                                         <li><i className="fa-solid fa-land-mine-on land-icons"></i>Danger Alarm</li>
-                                        <li><i className="fa-solid fa-smoking land-icons"></i>Smoking Rooms</li>
+                                        <li><i className="fa-solid fa-ban-smoking land-icons"></i>Non-Smoking Rooms</li>
                                         <li><i className="fa-solid fa-fire-extinguisher land-icons"></i>Fire Extiguisher</li>
                                     </ul>
                                 </div>
