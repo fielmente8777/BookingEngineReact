@@ -561,3 +561,12 @@ footer a:hover {
         font-size: 13px;
     }
 }
+
+.whatsapp_float{
+    position:fixed;
+    bottom:40px;
+    right:20px;
+}
+.whatsapp_float_btn{
+    width:50px;
+}
