@@ -570,3 +570,12 @@ footer a:hover {
 .whatsapp_float_btn{
     width:50px;
 }
+
+.call_float{
+    position:fixed;
+    bottom:40px;
+    left:20px;
+}
+.call_float_btn{
+    width:50px;
+}

@@ -10,6 +10,7 @@ import { FaLinkedinIn } from "react-icons/fa";
 import { Link } from "react-router-dom";
 // import FooterLogo from '../Images/backgroundimge.jpeg'
 import FooterLogo from '../Images/WhatsApp.svg.png'
+import FooterLogo1 from '../Images/call1.png'
 import HTMLReactParser from 'html-react-parser'
 import { useTranslation } from 'react-i18next';
 import './i18n'; // Import your i18n configuration
@@ -130,6 +131,9 @@ export default function Footer(props) {
       </footer >
       <div className='whatsapp_float'>
         <a href={`https://wa.me/${props.HotelNumber}`} target='_blank'><img src={FooterLogo} className='whatsapp_float_btn' /></a>
+      </div>
+      <div className='call_float'>
+        <a href={`tel:${props.HotelNumber}`}><img src={FooterLogo1} className='call_float_btn' /></a>
       </div>
 
 
