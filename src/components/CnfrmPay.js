@@ -44,9 +44,14 @@ function CnfrmPay(props) {
 
 
 
-
+    let tax=0
     let cost = Number(deluxcost) + Number(sdcost) + Number(suitecost) + Number(premiumcost) + Number(props.Mealprice)
-    let tax = 0.18 * Number(cost)
+    if(props.currency=="INR"){
+        tax = 0.18 * Number(cost)
+    }
+    else{
+        tax = 0
+    }
     let totoalcost = Number(cost) + Number(tax)
 
 
@@ -111,7 +116,7 @@ function CnfrmPay(props) {
             body: JSON.stringify({
                 "ndid": localStorage.getItem('hotelid'),
                 "amount": totoalcost,
-                "currency": "INR",
+                "currency": props.currency,
                 "guestInfo": {
                     "guestName": Name,
                     "EmailId": Email,
@@ -198,7 +203,7 @@ function CnfrmPay(props) {
             body: JSON.stringify({
                 "ndid": localStorage.getItem('hotelid'),
                 "amount": halfcost,
-                "currency": "INR",
+                "currency": props.currency,
                 "guestInfo": {
                     "guestName": Name,
                     "EmailId": Email,
@@ -260,7 +265,7 @@ function CnfrmPay(props) {
             body: JSON.stringify({
                 "ndid": localStorage.getItem('hotelid'),
                 "amount": totoalcost,
-                "currency": "INR",
+                "currency": props.currency,
                 "guestInfo": {
                     "guestName": Name,
                     "EmailId": Email,
@@ -349,16 +354,16 @@ function CnfrmPay(props) {
 
     const handlePayment = async () => {
         try {
-
+            // alert(props.currency)
             const mockOrderData = {
                 amount: parseInt(Number(props.room) * Number(props.BookingTotalPrice)) * 100, // Convert amount to paise (assuming INR)
                 orderId: OrderId, // Generate a unique order ID
             };
 
             const options = {
-                key: "rzp_live_5uaIIwZcxLC70j", // Enter the Key ID generated from the Dashboard rzp_test_UZ0V9jh3jMC0C9
+                key: "rzp_live_5uaIIwZcxLC70j", // Enter the Key ID generated from the Dashboard rzp_test_UZ0V9jh3jMC0C9,rzp_live_5uaIIwZcxLC70j
                 amount: mockOrderData.amount.toString(), // Use the amount from the order data
-                currency: "INR",
+                currency: props.currency,
                 name: props.HotelName,
                 description: "Test Transaction",
                 image: props.HotelLogo,
@@ -529,15 +534,15 @@ function CnfrmPay(props) {
                                             {Name && Phone && Email && Country && City && !OrderId ? (
                                                 <>
                                                     <button className="submitbtn" onClick={GetPayLaterOrderId}>PAY AT HOTEL</button>
-                                                    <button className="submitbtn" onClick={GetHalfOrderId}>PAY 50% AMOUNT <span>{0.5 * (cost + tax)}</span></button>
-                                                    <button className="submitbtn" onClick={GetOrderId}>PAY FULL AMOUNT <span>{cost + tax}</span></button>
+                                                    {props.isOnlinepay?<button className="submitbtn" onClick={GetHalfOrderId}>PAY 50% AMOUNT <span>{0.5 * (cost + tax)} {props.currency}</span></button>:""}
+                                                    {props.isOnlinepay?<button className="submitbtn" onClick={GetOrderId}>PAY FULL AMOUNT <span>{cost + tax} {props.currency}</span></button>:""}
                                                     <p className="button_s_p">By making this booking, you are accepting our terms and conditions***</p>
                                                 </>
                                             ) : (
                                                 <>
                                                     <button className="submitbtn" onClick={PopupFillFields}>PAY AT HOTEL</button>
-                                                    <button className="submitbtn" onClick={PopupFillFields}>PAY 50% AMOUNT <span>{0.5 * (cost + tax)}</span></button>
-                                                    <button className="submitbtn" onClick={PopupFillFields}>PAY FULL AMOUNT <span>{cost + tax}</span></button>
+                                                    {props.isOnlinepay?<button className="submitbtn" onClick={PopupFillFields}>PAY 50% AMOUNT <span>{0.5 * (cost + tax)} {props.currency}</span></button>:""}
+                                                    {props.isOnlinepay?<button className="submitbtn" onClick={PopupFillFields}>PAY FULL AMOUNT <span>{cost + tax} {props.currency}</span></button>:""}
                                                     <p className="button_s_p">By making this booking, you are accepting our terms and conditions***</p>
                                                 </>
                                             )}
@@ -650,8 +655,8 @@ function CnfrmPay(props) {
                                             <span className="left-span">Taxes and fees</span>
                                         </div>
                                         <div className="cust-sub d-flex flex-column py-2">
-                                            <span style={{ padding: '5px 0', fontWeight: '600' }}><span id="Final_price">{cost}</span> INR</span>
-                                            <span style={{ fontWeight: '600' }}><span id="Final_tax" style={{ fontWeight: '600' }}>{tax}</span> INR</span>
+                                            <span style={{ padding: '5px 0', fontWeight: '600' }}><span id="Final_price">{cost}</span> {props.currency}</span>
+                                            <span style={{ fontWeight: '600' }}><span id="Final_tax" style={{ fontWeight: '600' }}>{tax}</span> {props.currency}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -661,7 +666,7 @@ function CnfrmPay(props) {
                                             <span className="left-span" style={{ color: '#153B5B', fontWeight: '700' }}>GRAND TOTAL</span>
                                         </div>
                                         <div className="py-2">
-                                            <span className="right-span"><span id="Final_payable_price">{cost + tax}</span> INR</span>
+                                            <span className="right-span"><span id="Final_payable_price">{cost + tax}</span> {props.currency}</span>
                                         </div>
                                     </div>
                                 </div>

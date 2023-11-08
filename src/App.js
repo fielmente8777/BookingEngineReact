@@ -31,7 +31,9 @@ function App() {
   const [HotelLogo, setHotelLogo] = useState("https://images-platform.99static.com//G6t6CKODhWtwJt03cAKyRsMuv5U=/654x0:1299x645/fit-in/590x590/99designs-contests-attachments/115/115901/attachment_115901077")
   const [HotelLocation, setHotelLocation] = useState("")
 
-
+  const [Claritycode,setClarityCode] = useState("")
+  const [isOnlinepay,setisOnlinepay] = useState(false)
+  const [currency,setCurrency] = useState('INR')
   const [Facebook, setFacebook] = useState("https://facebook.com/")
   const [Instagram, setInstagram] = useState("https://instagram.com/")
   const [Twitter, setTwitter] = useState("https://twitter.com/")
@@ -132,6 +134,29 @@ function App() {
       setRoomFinal_searchButton(json.Details.Labels.ConfirmButton)
       setPaymentButton(json.Details.Labels.PayButton)
 
+      //currency
+      setCurrency(json.Profile.currency)
+      //pay online option
+      setisOnlinepay(json.Details.isOnlinePayment)
+
+      //Clarity code
+      setClarityCode(json.Details.Clarity)
+      const clarityScript = document.createElement('script');
+
+        // Replace the placeholder with the actual backend code value
+        const clarityScriptCode = `
+            (function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+          })(window, document, "clarity", "script", "${json.Details.Clarity}");
+        `;
+
+        clarityScript.innerHTML = clarityScriptCode;
+
+        // Append the Clarity script element to the head of the document
+        document.head.appendChild(clarityScript);
+
       setSpinner_spin1('')
     } else {
       setSpinner_spin2('')
@@ -165,11 +190,11 @@ function App() {
         <Navbar hotelname={HotelName} logo={HotelLogo} display={Spinner_spin1} color={Bg_color} HotelNumber={HotelNumber}
           email={HotelEmail} hotelwebsite={hotelwebsite} />
 
-        {!Payment.Status ? <LandingPage Bg_color={Bg_color} HotelName={HotelName} HotelLogo={HotelLogo} baseUrl={baseUrl}
+        {!Payment.Status ? <LandingPage isOnlinepay={isOnlinepay} currency={currency} Bg_color={Bg_color} HotelName={HotelName} HotelLogo={HotelLogo} baseUrl={baseUrl}
           Bg_image={HotelImage} color={Box_color} display={Spinner_spin1} bt_color={Button_color}
           ReservationLabel={Reservation_button} ReservationButton={Room_searchButton}
           FinalConfirmButton={RoomFinal_searchButton} Paymentbutton={PaymentButton} setPayment={setPayment} />
-          : <SuccessPage Payment={Payment} />}
+          : <SuccessPage Payment={Payment} currency={currency} />}
 
         <Footer hotelwebsite={hotelwebsite} color={Bg_color} Logo={HotelLogo} HotelAddress={HotelAddress} HotelNumber={HotelNumber}
           aboutus={HotelAbout} display={Spinner_spin1} email={HotelEmail} facebook={Facebook}

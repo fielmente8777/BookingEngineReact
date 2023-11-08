@@ -123,8 +123,8 @@ function SuccessPage(props) {
                         <tbody>
                             <tr>
                                 <td>{props.Payment.PayStatus}</td>
-                                <td>₹ {props.Payment.Tax}</td>
-                                <td>₹ {props.Payment.Amount}</td>
+                                <td>{props.currency} {props.Payment.Tax}</td>
+                                <td>{props.currency} {props.Payment.Amount}</td>
                             </tr>
                         </tbody>
                     </Table>

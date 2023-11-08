@@ -237,19 +237,26 @@ export default function Cards(props) {
                                 </div>
                                 <div className="room_price w-30">
                                     {/* <label>From</label>  */}
-                                    {Rooms * (props.ratechange[props.roomtype].Price) !== 0 ? <h4 style={{ fontWeight: '600' }}><span id="total_price" style={{ fontSize: "22px" }}> {Rooms * (props.ratechange[props.roomtype].Price)}/- </span> INR</h4> : <h4 style={{ fontWeight: '600' }}><span id="total_price" style={{ fontSize: "22px" }}> {(props.ratechange[props.roomtype].Price)}/- </span> INR</h4>}
+                                    {Rooms * (props.ratechange[props.roomtype].Price) !== 0 ? <h4 style={{ fontWeight: '600' }}><span id="total_price" style={{ fontSize: "22px" }}> {Rooms * (props.ratechange[props.roomtype].Price)}/- </span>{props.currency}</h4> : <h4 style={{ fontWeight: '600' }}><span id="total_price" style={{ fontSize: "22px" }}> {(props.ratechange[props.roomtype].Price)}/- </span>{props.currency}</h4>}
                                     <span>Per Night</span>
 
                                     {/* <span style="color:red" className="span m-1">Last {{ Available }} Rooms</span>  */}
                                     <div className="no-rooms d-flex">
                                         <span>Room(s)</span>
                                         {Available_rooms !== 0 ?
-                                            <div className="room">
-                                                <button className="btn-minus" onClick={() => { DelCount(props.type) }}>-</button>
-                                                <button className="btn-total"
+                                            Rooms===0?
+                                                <div className='soldBtn'>
+                                                    <span class="badge text-bg-primary" style={{cursor:"pointer"}} onClick={() => { AddCount(props.type) }}>Add room</span>
+                                                    <button className="btn-total d-none"
                                                     id={`${props.type}`}>{Rooms}</button>
-                                                <button className="btn-plus" onClick={() => { AddCount(props.type) }}>+</button>
-                                            </div> :
+                                                </div>
+                                                :
+                                                <div className="room">
+                                                    <button className="btn-minus" onClick={() => { DelCount(props.type) }}>-</button>
+                                                    <button className="btn-total"
+                                                        id={`${props.type}`}>{Rooms}</button>
+                                                    <button className="btn-plus" onClick={() => { AddCount(props.type) }}>+</button>
+                                                </div> :
                                             <div className='soldBtn'>
                                                 <span class="badge text-bg-danger">SOLD OUT</span>
                                             </div>}

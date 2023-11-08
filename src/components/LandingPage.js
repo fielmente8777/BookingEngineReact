@@ -445,6 +445,7 @@ export default function Landing(props) {
                 {Headlines.map((element) => {
                     return <div key={element.url} >
                         <Cards
+                            currency = {props.currency}
                             name={element.roomName ? element.roomName.slice(0, 80) : ""}
                             description={element.roomDescription ? element.roomDescription : ""}
                             available={Available[RoomNameAvailable[element.roomTypeName]]}
@@ -503,7 +504,7 @@ export default function Landing(props) {
 
                 {isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0) ? (
 
-                    <Contactinfo setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
+                    <Contactinfo isOnlinepay={props.isOnlinepay} currency={props.currency} setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
                         HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={1200}
                         BookingTotalPrice={1200} BookingPrice={1200}
                         Paymentbutton={props.Paymentbutton} nights={Night} room={1}
