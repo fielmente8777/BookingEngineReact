@@ -28,7 +28,7 @@ function SuccessPage(props) {
 
         // Calculate the image's dimensions to fit the PDF page
         const imgData = canvas.toDataURL('image/png');
-        const imgWidth = 175; // A4 width in mm
+        const imgWidth = 155; // A4 width in mm
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
         // Add the image to the PDF
@@ -154,7 +154,7 @@ function SuccessPage(props) {
                         </tbody>
                     </Table>
 
-                    <h6><strong>Meal Plan and Packages Information</strong></h6>
+                    <h6><strong>Meal Plan</strong></h6>
 
                     <Table striped bordered hover variant="light">
                         <thead>
@@ -167,6 +167,23 @@ function SuccessPage(props) {
                             <tr>
                                 <td>{props.Payment.MealPlan}</td>
                                 <td>{props.Payment.Mealprice}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
+
+                    <h6><strong>Packages Selected</strong></h6>
+
+                    <Table striped bordered hover variant="light">
+                        <thead>
+                            <tr>
+                                <th>Package Name</th>
+                                <th>Package Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{props.Payment.PackagePlan}</td>
+                                <td>{props.Payment.PackagePrice}</td>
                             </tr>
                         </tbody>
                     </Table>

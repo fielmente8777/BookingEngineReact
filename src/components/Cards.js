@@ -137,43 +137,7 @@ export default function Cards(props) {
                 {/* filters end  */}
                 <div className="card_details" style={{ background: '#fff' }}>
                     <div className="card_inner">
-                        {/* <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                                {images.map((element) => {
-                                    return <div class="carousel-item active">
-                                        <img src={element} class="d-block w-100" alt="..." />
-                                    </div>
-                                }
-                                )}
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
-                        </div> */}
-
-
-
-                        {/* <Carousel fade>
-                            <Carousel.Item>
-                                {images.map((element) => {
-                                    return <div class="carousel-item active">
-                                        <img src={element} class="d-block w-100" alt="..." />
-                                    </div>
-                                }
-                                )}
-                                <Carousel.Caption>
-                                    <h3>First slide label</h3>
-                                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                                </Carousel.Caption>
-                            </Carousel.Item>
-
-                        </Carousel> */}
-
+                        
 
                         <Carousel>
                             {images.map((element) => {
@@ -181,7 +145,7 @@ export default function Cards(props) {
                                 return <Carousel.Item>
 
                                     <div class="carousel-item active">
-                                        <img src={element} class="d-block w-100" alt="..." />
+                                        <img src={element} class="d-block w-100 h-auto" alt="..." />
                                     </div>
 
                                 </Carousel.Item>
@@ -199,14 +163,14 @@ export default function Cards(props) {
                                     <h3 style={{ fontWeight: '600' }}>{t(props.name)}</h3>
                                     {/* <span className="dec-sqr">{props.type}</span> */}
                                 </div>
-                                <div className="last-rooms">
+                                {/* <div className="last-rooms">
                                     <p className="dec-lst">*Last {props.available} Rooms available<i
                                         className="fa-sharp fa-solid fa-circle-exclamation"></i></p>
-                                </div>
+                                </div> */}
 
                             </div>
                             <div className="description">
-                                <p>{t(props.description)}</p>
+                                <p className='room_description_style'>{t(props.description)}</p>
                             </div>
                             <div className="aminities-block">
                                 <div className="aminities w-100">
@@ -214,31 +178,12 @@ export default function Cards(props) {
                                         <i class="fa-solid fa-user"></i>X {props.Adult}
                                     </div>
 
-                                    {/* <h5>Amenities</h5>
-                                    <div className="land-aminit">
-
-                                        <ul>
-                                            {props.facilities.wifi ? <li><i className='fa fa-wifi'></i> Wi-fi</li> : ""}
-                                            {props.facilities.television ? <li><i className='fa-solid fa-tv'></i> Television</li> : ""}
-                                            {props.facilities.airConditonar ? <li><i className='fa fa-coffee'></i> Air Conditioner</li> : ""}
-                                            {props.facilities.hairdryers ? <li><i className='fas fa-baby'></i> Hairdryers</li> : ""}
-                                            {props.facilities.coffeeMakers ? <li><i className='fa fa-coffee'></i> Coffee Makers</li> : ""}
-                                            {props.facilities.directDial ? <li><i className='fa fa-phone'></i> Direct Calling</li> : ""}
-                                            {props.facilities.tableWithChair ? <li><i className='fas fa-book-open'></i> Study Table</li> : ""}
-                                            {props.facilities.alarmclock ? <li><i className='fa fa-clock-o'></i> Alarm Clock</li> : ""}
-                                            {props.facilities.fridge ? <li><i className='fas fa-bath'></i> Small Fridge</li> : ""}
-                                            {props.facilities.bathroomWithShower ? <li><i className='fas fa-bath'></i> Amazing Shower</li> : ""}
-                                            {props.facilities.electronicLocker ? <li><i className='fa fa-lock'></i> Security Locker</li> : ""}
-                                            {props.facilities.freeBreakfast ? <li><i className='fa-solid fa-mug-saucer'></i> Free Breakfast </li> : ""}
-                                            {props.facilities.kidEquipment ? <li><i className='fas fa-baby'></i> Kids Toys</li> : ""}
-                                        </ul>
-                                    </div> */}
-
+                                    
                                 </div>
                                 <div className="room_price w-30">
                                     {/* <label>From</label>  */}
                                     {Rooms * (props.ratechange[props.roomtype].Price) !== 0 ? <h4 style={{ fontWeight: '600' }}><span id="total_price" style={{ fontSize: "22px" }}> {Rooms * (props.ratechange[props.roomtype].Price)}/- </span>{props.currency}</h4> : <h4 style={{ fontWeight: '600' }}><span id="total_price" style={{ fontSize: "22px" }}> {(props.ratechange[props.roomtype].Price)}/- </span>{props.currency}</h4>}
-                                    <span>Per Night</span>
+                                    {/* <span>Per Night</span> */}
 
                                     {/* <span style="color:red" className="span m-1">Last {{ Available }} Rooms</span>  */}
                                     <div className="no-rooms d-flex">
@@ -283,89 +228,9 @@ export default function Cards(props) {
                             id="fill-tab-example"
                             className="mb-3"
                             fill
-                        >
+                            >
 
-                            {/* <Tab eventKey="plans" title="Plans">
-                                <div className="plansDiv">
-                                    <div class="container plansinr text-decoration-none">
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <span class='plnshead'>Breakfast</span>
-                                            </div>
-                                            <div class="col text-center">
-                                                <span>₹ 350.00</span>
-                                            </div>
-                                            <div class="col text-center">
-                                                <Form>
-                                                    {['radio'].map((type) => (
-                                                        <div key={`default-${type}`} className="mb-3">
-                                                            <Form.Check
-                                                                inline
-                                                                name="group1"
-                                                                type={type}
-                                                                id={`inline-${type}-3`}
-                                                                checked={selectedOption === 'Option1'}
-                                                                onChange={() => handleRadioChange('Option1')}
-
-                                                            />
-                                                        </div>
-                                                    ))}
-                                                </Form>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <span class='plnshead' >Breakfast with Lunch or Dinner</span>
-                                            </div>
-                                            <div class="col text-center">
-                                                <span>₹ 1100.00</span>
-                                            </div>
-                                            <div class="col text-center">
-                                                <Form>
-                                                    {['radio'].map((type) => (
-                                                        <div key={`default-${type}`} className="mb-3">
-                                                            <Form.Check
-                                                                inline
-                                                                name="group1"
-                                                                type={type}
-                                                                id={`inline-${type}-2`}
-                                                                checked={selectedOption === 'Option2'}
-                                                                onChange={() => handleRadioChange('Option2')}
-
-                                                            />
-                                                        </div>
-                                                    ))}
-                                                </Form>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-5">
-                                                <span class='plnshead' >Breakfast with Lunch And Dinner</span>
-                                            </div>
-                                            <div class="col text-center">
-                                                <span>₹ 1850.00</span>
-                                            </div>
-                                            <div class="col text-center">
-                                                <Form>
-                                                    {['radio'].map((type) => (
-                                                        <div key={`default-${type}`} className="mb-3">
-                                                            <Form.Check
-                                                                inline
-                                                                name="group1"
-                                                                type={type}
-                                                                id={`inline-${type}-3`}
-                                                                checked={selectedOption === 'Option3'}
-                                                                onChange={() => handleRadioChange('Option3')}
-
-                                                            />
-                                                        </div>
-                                                    ))}
-                                                </Form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Tab> */}
+                            
                             <Tab eventKey="amenities" title="Amenities">
                                 <div className="aminities-block">
                                     <div className="aminities w-100">
@@ -386,6 +251,124 @@ export default function Cards(props) {
                                                 {props.facilities.electronicLocker ? <li><i className='fa fa-lock'></i> Security Locker</li> : ""}
                                                 {props.facilities.freeBreakfast ? <li><i className='fa-solid fa-mug-saucer'></i> Free Breakfast </li> : ""}
                                                 {props.facilities.kidEquipment ? <li><i className='fas fa-baby'></i> Kids Toys</li> : ""}
+                                                {props.facilities.Balcony ? <li>Balcony</li>:""}
+                                                {props.facilities.Bath ? <li>Bath</li>:""}
+                                                {props.facilities.View ? <li>View</li>:""}
+                                                {props.facilities.FlatscreenTV ? <li>Flatscreen TV</li>:""}
+                                                {props.facilities.Privatepool ? <li>Private Pool</li>:""}
+                                                {props.facilities.Electrickettle ? <li>Electric Kettle</li>:""}
+                                                {props.facilities.Spabath ? <li>Spa Bath</li>:""}
+                                                {props.facilities.RoomAmenities ? <li>Room Amenities</li>:""}
+                                                {props.facilities.Cots ? <li>Cots</li>:""}
+                                                {props.facilities.Clothesrack ? <li>Clothes rack</li>:""}
+                                                {props.facilities.FoldupBed ? <li>Foldup Bed</li>:""}
+                                                {props.facilities.SofaBed ? <li>Sofa Bed</li>:""}
+                                                {props.facilities.Trashcans ? <li>Trash Cans</li>:""}
+                                                {props.facilities.Heatedpool ? <li>Heated Pool</li>:""}
+                                                {props.facilities.Infinitypool ? <li>Infinity Pool</li>:""}
+                                                {props.facilities.Plungepool ? <li>Plunge Pool</li>:""}
+                                                {props.facilities.Poolcover ? <li>Pool Cover</li>:""}
+                                                {props.facilities.Pooltowels ? <li>Pool Towels</li>:""}
+                                                {props.facilities.Rooftoppool ? <li>Rooftop Pool</li>:""}
+                                                {props.facilities.Dressingroom ? <li>Dressing Room</li>:""}
+                                                {props.facilities.Fan ? <li>Fan</li>:""}
+                                                {props.facilities.Fireplace ? <li>Fire Place</li>:""}
+                                                {props.facilities.Heating ? <li>Heating</li>:""}
+                                                {props.facilities.Iron ? <li>Iron</li>:""}
+                                                {props.facilities.Ironingfacilities ? <li>Ironing Facilities</li>:""}
+                                                {props.facilities.Hottub ? <li>Hottub</li>:""}
+                                                {props.facilities.Mosquitonet ? <li>Mosquito Net</li>:""}
+                                                {props.facilities.PrivateEntrance ? <li>Private Entrance</li>:""}
+                                                {props.facilities.Sofa ? <li>Sofa</li>:""}
+                                                {props.facilities.Soundproofing ? <li>Soundp Roofing</li>:""}
+                                                {props.facilities.SeatingArea ? <li>Seating Area</li>:""}
+                                                {props.facilities.Pantspress ? <li>Pants Press</li>:""}
+                                                {props.facilities.Washingmachine ? <li>Washing Machine</li>:""}
+                                                {props.facilities.Desk ? <li>Desk</li>:""}
+                                                {props.facilities.Hypoallergenic ? <li>Hypoaller Genic</li>:""}
+                                                {props.facilities.Cleaningproducts ? <li>Cleaning Products</li>:""}
+                                                {props.facilities.Pajamas ? <li>Pajamas</li>:""}
+                                                {props.facilities.Yukata ? <li>Yukata</li>:""}
+                                                {props.facilities.Adapter ? <li>Adapter</li>:""}
+                                                {props.facilities.Featherpillow ? <li>Feather Pillow</li>:""}
+                                                {props.facilities.Non_feather_pillow ? <li>Non Feather Pillow</li>:""}
+                                                {props.facilities.Bathroom ? <li>Bathroom</li>:""}
+                                                {props.facilities.Privatebathroom ? <li>Private Bathroom</li>:""}
+                                                {props.facilities.Shared_bathroom ? <li>Shared Bathroom</li>:""}
+                                                {props.facilities.Toilet_paper ? <li>Toilet Paper</li>:""}
+                                                {props.facilities.Bidet ? <li>Bidet</li>:""}
+                                                {props.facilities.Bath_shower ? <li>Bath Shower</li>:""}
+                                                {props.facilities.Bathrobe ? <li>Bathrobe</li>:""}
+                                                {props.facilities.Free_toiletries ? <li>Free Toiletries</li>:""}
+                                                {props.facilities.Additional_toilet ? <li>Additional Toilet</li>:""}
+                                                {props.facilities.Hairdryer ? <li>Hairdryer</li>:""}
+                                                {props.facilities.Shared_toilet ? <li>Shared Toilet</li>:""}
+                                                {props.facilities.Sauna ? <li>Sauna</li>:""}
+                                                {props.facilities.Shower ? <li>Shower</li>:""}
+                                                {props.facilities.Slippers ? <li>Slippers</li>:""}
+                                                {props.facilities.Toilet ? <li>Toilet</li>:""}
+                                                {props.facilities.Additional_bathroom ? <li>Additional Bathroom</li>:""}
+                                                {props.facilities.Toothbrush ? <li>Toothbrush</li>:""}
+                                                {props.facilities.Shampoo ? <li>Shampoo</li>:""}
+                                                {props.facilities.Conditioner ? <li>Conditioner</li>:""}
+                                                {props.facilities.Cd_player ? <li>Cd Player</li>:""}
+                                                {props.facilities.Dvd_player ? <li>Dvd Player</li>:""}
+                                                {props.facilities.Fax ? <li>Fax</li>:""}
+                                                {props.facilities.SeatingArea ? <li>SeatingArea</li>:""}
+                                                {props.facilities.Pantspress ? <li>Pantspress</li>:""}
+                                                {props.facilities.Washingmachine ? <li>Washing Machine</li>:""}
+                                                {props.facilities.Radio ? <li>Radio</li>:""}
+                                                {props.facilities.Satellitechannels ? <li>Satellite Channels</li>:""}
+                                                {props.facilities.Telephone ? <li>Telephone</li>:""}
+                                                {props.facilities.Tv ? <li>Tv</li>:""}
+                                                {props.facilities.Smartphone ? <li>Smartphone</li>:""}
+                                                {props.facilities.Streamingservice_like_Netflix ? <li>Streaming Service Like Netflix</li>:""}
+                                                {props.facilities.Dining_table ? <li>Dining Table</li>:""}
+                                                {props.facilities.Bottle_of_water ? <li>Bottle of Water</li>:""}
+                                                {props.facilities.Chocolate_or_cookies ? <li>Chocolate or Cookies</li>:""}
+                                                {props.facilities.Fruits ? <li>Fruits</li>:""}
+                                                {props.facilities.Barbecue ? <li>Barbecue</li>:""}
+                                                {props.facilities.Oven ? <li>Oven</li>:""}
+                                                {props.facilities.Stovetop ? <li>Stovetop</li>:""}
+                                                {props.facilities.Toaster ? <li>Toaster</li>:""}
+                                                {props.facilities.Dishwasher ? <li>Dishwasher</li>:""}
+                                                {props.facilities.Outdoor_furniture ? <li>Outdoor Furniture</li>:""}
+                                                {props.facilities.Minibar ? <li>Minibar</li>:""}
+                                                {props.facilities.Kitchen ? <li>Kitchen</li>:""}
+                                                {props.facilities.Key_card_access ? <li>Key Card Access</li>:""}
+                                                {props.facilities.Lockers ? <li>Lockers</li>:""}
+                                                {props.facilities.Key_access ? <li>Key Access</li>:""}
+                                                {props.facilities.Alarm_clock ? <li>Alarm Clock</li>:""}
+                                                {props.facilities.Wake_up_service ? <li>Wake Up Service</li>:""}
+                                                {props.facilities.Linen ? <li>Linen</li>:""}
+                                                {props.facilities.Blanket ? <li>Blanket</li>:""}
+                                                {props.facilities.Extra_blankets ? <li>Extra Blankets</li>:""}
+                                                {props.facilities.Pillow ? <li>Pillow</li>:""}
+                                                {props.facilities.Towels ? <li>Towels</li>:""}
+                                                {props.facilities.Patio ? <li>Patio</li>:""}
+                                                {props.facilities.City_view ? <li>City View</li>:""}
+                                                {props.facilities.Garden_view ? <li>Garden View</li>:""}
+                                                {props.facilities.Lake_view ? <li>Lake View</li>:""}
+                                                {props.facilities.Landmark_view ? <li>Landmark View</li>:""}
+                                                {props.facilities.Mountain_view ? <li>Mountain View</li>:""}
+                                                {props.facilities.Pool_view ? <li>Pool View</li>:""}
+                                                {props.facilities.River_view ? <li>River View</li>:""}
+                                                {props.facilities.Sea_view ? <li>Sea View</li>:""}
+                                                {props.facilities.Hearingaccessible ? <li>Hearing Accessible</li>:""}
+                                                {props.facilities.Adaptedbath ? <li>Adapted Bath</li>:""}
+                                                {props.facilities.Raisedtoilet ? <li>Raised Toilet</li>:""}
+                                                {props.facilities.Loweredsink ? <li>Lowered Sink</li>:""}
+                                                {props.facilities.Showerchair ? <li>Shower Chair</li>:""}
+                                                {props.facilities.Entertainment_family_services ? <li>Entertainment Family Services</li>:""}
+                                                {props.facilities.Baby_safety_gates ? <li>Baby Safety Gates</li>:""}
+                                                {props.facilities.Books ? <li>Books</li>:""}
+                                                {props.facilities.DVDs ? <li>DVDs</li>:""}
+                                                {props.facilities.Smokealarm ? <li>Smoke Alarm</li>:""}
+                                                {props.facilities.Fire_extinguisher ? <li>Fire Extinguisher</li>:""}
+                                                {props.facilities.Safety_features ? <li>Safety Features</li>:""}
+                                                {props.facilities.Air_purifiers ? <li>Air Purifiers</li>:""}
+                                                {props.facilities.Physicaldistancing ? <li>Physical Distancing</li>:""}
+                                                {props.facilities.Handsanitiser ? <li>Hand Sanitiser</li>:""}
                                             </ul>
                                         </div>
 

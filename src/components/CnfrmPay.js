@@ -104,6 +104,23 @@ function CnfrmPay(props) {
         }
     }, []);
 
+    const changeDateFormat=(inputdate)=>{
+
+        var date = new Date(inputdate);
+        // Get day, month, and year
+        var day = date.getDate();
+        var month = date.getMonth() + 1; // Months are zero-based
+        var year = date.getFullYear();
+
+        // Pad day and month with leading zeros if needed
+        day = day < 10 ? '0' + day : day;
+        month = month < 10 ? '0' + month : month;
+
+        // Format the date as 'DD-MM-YYYY'
+        var formattedDate = day + '-' + month + '-' + year;
+
+        return formattedDate
+    }
 
     //PAY AT HOTEL
     const GetPayLaterOrderId = async () => {
@@ -437,7 +454,7 @@ function CnfrmPay(props) {
             <div className="container">
                 <div className="contact-info">
                     <div id="Contact" className="mt-4">
-                        <div className="heading" style={{ backgroundColor: props.color }}>
+                        <div className="heading" style={{ backgroundColor: props.Bg_color }}>
                             <h5>Guest Information</h5>
                         </div>
                         <div className="contact-main">
@@ -512,13 +529,13 @@ function CnfrmPay(props) {
                                         <textarea className="bg" name="text" id="request" placeholder="ADDITIONAL REQUEST"></textarea>
                                     </div>
 
-                                    <div className="content_inner">
+                                    {/* <div className="content_inner">
                                         <span className="text-span">Promo Code</span>
                                         <div className="promo_btn_div">
                                             <input type="text" placeholder="Enter Promo Code here" />
                                             <Button>Apply</Button>
                                         </div>
-                                    </div>
+                                    </div> */}
 
 
 
@@ -570,7 +587,7 @@ function CnfrmPay(props) {
                                             <span className="left-span">Check In</span>
                                         </div>
                                         <div>
-                                            <span className="right-span" id="Final_checkin">{localStorage.getItem("Checkin")}</span>
+                                            <span className="right-span" id="Final_checkin">{changeDateFormat(localStorage.getItem("Checkin"))}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -580,17 +597,27 @@ function CnfrmPay(props) {
                                             <span className="left-span">Check Out</span>
                                         </div>
                                         <div>
-                                            <span className="right-span" id="Final_checkout">{localStorage.getItem("Checkout")}</span>
+                                            <span className="right-span" id="Final_checkout">{changeDateFormat(localStorage.getItem("Checkout"))}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="cust-detail">
                                     <div className="cust-inner">
                                         <div>
-                                            <span className="left-span">No. of night</span>
+                                            <span className="left-span">No. of Nights</span>
                                         </div>
                                         <div>
-                                            <p className="right-span"><span id="Final_night">{props.nights}</span> Night</p>
+                                            <p className="right-span"><span id="Final_night">{props.nights}</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="cust-detail">
+                                    <div className="cust-inner">
+                                        <div>
+                                            <span className="left-span">No. of Guests</span>
+                                        </div>
+                                        <div>
+                                            <span className="right-span"><span id="Final_adult">{localStorage.getItem("Adult")}</span> adults, <span id="Final_kid">{localStorage.getItem("Kid")}</span> children</span>
                                         </div>
                                     </div>
                                 </div>
@@ -600,10 +627,10 @@ function CnfrmPay(props) {
                                             <span className="left-span">Rooms</span>
                                         </div>
                                         <div style={{ display: "flex", flexDirection: "column" }}>
-                                            {props.Delux !== 0 ? <span className="right-span" id="Final_checkout">Delux:- {props.Delux} x {props.ratesChange['1']["Price"]}</span> : ""}
-                                            {props.SuperDelux !== 0 ? <span className="right-span" id="Final_checkout">Super Delux:- {props.SuperDelux} x {props.ratesChange['2']["Price"]}</span> : ""}
-                                            {props.Suite !== 0 ? <span className="right-span" id="Final_checkout">Suite:- {props.Suite} x {props.ratesChange['3']["Price"]}</span> : ""}
-                                            {props.Premium !== 0 ? <span className="right-span" id="Final_checkout">Premium:- {props.Premium} x {props.ratesChange['4']["Price"]}</span> : ""}
+                                            {props.Delux !== 0 ? <span className="right-span" id="Final_checkout">Delux:- {props.Delux}</span> : ""}
+                                            {props.SuperDelux !== 0 ? <span className="right-span" id="Final_checkout">Super Delux:- {props.SuperDelux}</span> : ""}
+                                            {props.Suite !== 0 ? <span className="right-span" id="Final_checkout">Suite:- {props.Suite}</span> : ""}
+                                            {props.Premium !== 0 ? <span className="right-span" id="Final_checkout">Premium:- {props.Premium}</span> : ""}
                                         </div>
                                     </div>
                                 </div>
@@ -628,7 +655,7 @@ function CnfrmPay(props) {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="cust-detail">
+                                {/* <div className="cust-detail">
                                     <div className="cust-inner">
                                         <div>
                                             <span className="left-span">Total Meal Price</span>
@@ -637,17 +664,7 @@ function CnfrmPay(props) {
                                             <p className="right-span"><span id="Final_room">{props.Mealprice}</span></p>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="cust-detail">
-                                    <div className="cust-inner">
-                                        <div>
-                                            <span className="left-span">No. of guests</span>
-                                        </div>
-                                        <div>
-                                            <span className="right-span"><span id="Final_adult">{localStorage.getItem("Adult")}</span> adults, <span id="Final_kid">{localStorage.getItem("Kid")}</span> children</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                </div> */}
                                 <div className="cust-detail sub-price">
                                     <div className="cust-inner">
                                         <div className="cust-sub d-flex flex-column py-2">

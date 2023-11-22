@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 
 function Mealplan({isperRoom,mealplan,setMealPlan,setselectedMealPlan,setselectedMealPlanPrice,setisperRoom,Mealprice
-    ,setMealprice,Delux,SuperDelux,Suite,Premium,Adult,setmealplanId}) {
+    ,setMealprice,Delux,SuperDelux,Suite,Premium,Adult,setmealplanId,color,Bg_color}) {
 
     const [price,setprice]=useState('')
     // Fetches meal plan data on component mount and sets it to the state.
@@ -36,26 +36,36 @@ function Mealplan({isperRoom,mealplan,setMealPlan,setselectedMealPlan,setselecte
     const [selectedOption, setSelectedOption] = useState(null);
 
     const handleRadioChange = (option,price,plan,isperroom,planid) => {
-        setSelectedOption(option);
-        setselectedMealPlanPrice(price)
-        setselectedMealPlan(plan)
-        setisperRoom(isperroom)
-        setmealplanId(planid)
-        setprice(price)
-        if(isperroom){
-            let cost = (Number(Delux)+Number(SuperDelux)+Number(Suite)+Number(Premium))*Number(price)
-            setMealprice(cost)
+        if(option===selectedOption){
+            setSelectedOption(null)
+            setselectedMealPlanPrice(0)
+            setselectedMealPlan("-")
+            setmealplanId("")
+            setprice('')
+            setMealprice(0)
         }
         else{
-            setMealprice(Number(Adult)*Number(price))
+            setSelectedOption(option);
+            setselectedMealPlanPrice(price)
+            setselectedMealPlan(plan)
+            setisperRoom(isperroom)
+            setmealplanId(planid)
+            setprice(price)
+            if(isperroom){
+                let cost = (Number(Delux)+Number(SuperDelux)+Number(Suite)+Number(Premium))*Number(price)
+                setMealprice(cost)
+            }
+            else{
+                setMealprice(Number(Adult)*Number(price))
+            }
         }
     };
 
 
     return (
         <div className='mealplanDiv container'>
-            <div className="plnansheading">
-                <h5>Add-Ons</h5>
+            <div className="plnansheading" style={{background:Bg_color}}>
+                <h5><strong>Add-Ons</strong></h5>
             </div>
             <div className="plansDiv">
                 <div class="container plansinr text-decoration-none">
@@ -78,7 +88,7 @@ function Mealplan({isperRoom,mealplan,setMealPlan,setselectedMealPlan,setselecte
                             </div>
                             <div class="col text-center">
                                 <Form>
-                                    {['radio'].map((type) => (
+                                    {['checkbox'].map((type) => (
                                         <div key={`default-${type}`} className="mb-3">
                                             <Form.Check
                                                 inline

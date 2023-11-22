@@ -38,7 +38,7 @@ export default function Footer(props) {
             <div className="footer-main footAdd col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 w-100">
               <div className="FootAddrs">
                 <div className="footLogo">
-                  <a href={props.hotelwebsite} target="_blank" ><img src={props.Logo} alt="" /></a>
+                  <a href={props.hotelwebsite}  ><img src={props.Logo} alt="" /></a>
                 </div>
                 {/* <p className='my-2'>{HTMLReactParser(props.aboutus)}</p> */}
               </div>

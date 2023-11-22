@@ -77,7 +77,9 @@ function App() {
     "Suite":"4",
     "Premium":"4",
     "MealPlan":"Meal",
-    "Mealprice":"200"
+    "Mealprice":"200",
+    "PackagePlan":"Package",
+    "PackagePrice":"1200"
 
   })
   async function Get_Hotel_status_exists() {
@@ -156,6 +158,7 @@ function App() {
 
         // Append the Clarity script element to the head of the document
         document.head.appendChild(clarityScript);
+      
 
       setSpinner_spin1('')
     } else {
@@ -195,7 +198,7 @@ function App() {
           ReservationLabel={Reservation_button} ReservationButton={Room_searchButton}
           FinalConfirmButton={RoomFinal_searchButton} Paymentbutton={PaymentButton} setPayment={setPayment} />
           : <SuccessPage Payment={Payment} currency={currency} />}
-
+        
         <Footer hotelwebsite={hotelwebsite} color={Bg_color} Logo={HotelLogo} HotelAddress={HotelAddress} HotelNumber={HotelNumber}
           aboutus={HotelAbout} display={Spinner_spin1} email={HotelEmail} facebook={Facebook}
           instagram={Instagram} twitter={Twitter} Tripadvisors={Tripadvisors}

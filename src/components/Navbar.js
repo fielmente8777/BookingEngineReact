@@ -35,7 +35,7 @@ export default function Navbar(props) {
         <nav class={`navbar navbar-expand-lg ${props.display}`} style={{ background: props.color }}>
             <div class="container navbar">
                 <div class="nav-logo">
-                    <a href={props.hotelwebsite} target='_blank'><img src={props.logo}
+                    <a href={props.hotelwebsite}><img src={props.logo}
                         alt="logo" /></a>
                 </div>
 
