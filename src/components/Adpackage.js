@@ -13,7 +13,6 @@ import HTMLReactParser from 'html-react-parser'
 
 
 export default function Cards(props) {
-    const baseURL = "https://nexon.eazotel.com"
 
     const [selectedOption, setSelectedOption] = useState(null);
 
@@ -180,6 +179,7 @@ export default function Cards(props) {
                 </div>
                 {isOpen && (
                 <Contactinfo 
+                    baseUrl = {props.baseUrl}
                     isOnlinepay={props.isOnlinepay}
                     setIsOpen={setIsOpen} 
                     Bg_color={props.Bg_color} 

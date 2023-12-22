@@ -12,7 +12,6 @@ import { useTranslation } from 'react-i18next';
 
 
 export default function Cards(props) {
-    const baseURL = "https://nexon.eazotel.com"
     const [BookingTax, setBookingTax] = useState(0)
     const [BookingTotalPrice, setBookingTotalPrice] = useState(0)
     const [BookingPrice, setBookingPrice] = useState(0)
@@ -84,36 +83,6 @@ export default function Cards(props) {
         }
 
     }
-
-
-    const toggleDiv = async () => {
-        var date1 = new Date(localStorage.getItem("Checkin"));
-        var date2 = new Date(localStorage.getItem("Checkout"));
-        var Difference_In_Time = date2.getTime() - date1.getTime();
-        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-        setNights(Difference_In_Days);
-        //Price API
-        const FetchPrice = async () => {
-            const response = await fetch(`${baseURL}/booking/total/${localStorage.getItem('hotelid')}`, {
-                method: "POST",
-                headers: {
-                    Accept: "application/json, text/plain, /",
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    "checkIn": localStorage.getItem("Checkin"),
-                    "checkOut": localStorage.getItem("Checkout"),
-                    "roomType": props.roomtype
-                })
-            })
-            const json = await response.json();
-            setBookingPrice(json.Price)
-            setBookingTax(json.Tax)
-            setBookingTotalPrice(json.TotalPrice)
-        }
-        FetchPrice()
-        setIsOpen(!isOpen);
-    };
 
 
     const { t, i18n } = useTranslation();
@@ -373,28 +342,7 @@ export default function Cards(props) {
                                         </div>
 
                                     </div>
-                                    {/* <div className="room_price w-30">
-                                    <h4 style={{ fontWeight: '600' }}><span id="total_price" style={{ fontSize: "22px" }}> {props.ratechange[props.roomtype].Price}/- </span> INR</h4>
-                                    <span>Per Night</span>
-
-                                    <div className="no-rooms d-flex">
-                                        <span>Room(s)</span>
-                                        {Available_rooms != 0 ?
-                                            <div className="room">
-                                                <button className="btn-minus" onClick={() => { DelCount(props.type) }}>-</button>
-                                                <button className="btn-total"
-                                                    id={`${props.type}`}>{Rooms}</button>
-                                                <button className="btn-plus" onClick={() => { AddCount(props.type) }}>+</button>
-                                            </div> :
-                                            <div className='soldBtn'>
-                                                <span class="badge text-bg-danger">SOLD OUT</span>
-                                            </div>}
-                                    </div>
-
-                                    <div className="reser">
-                                        <p>Adults Allowed: {props.Adult}</p>
-                                    </div>
-                                </div> */}
+                                    
                                 </div>
                             </Tab>
                             <Tab eventKey="gallery" title="Gallery" style={{ color: 'black' }}>
@@ -411,22 +359,9 @@ export default function Cards(props) {
 
 
                                 </div>
-                                {/* {images.map((element) => {
-
-                                return <Carousel.Item>
-
-                                    <div class="carousel-item active">
-                                        <img src={element} class="d-block w-100" alt="..." />
-                                    </div>
-
-                                </Carousel.Item>
-                            }
-
-                            )} */}
+                                
                             </Tab>
-                            {/* <Tab eventKey="longer-tab" title="Loooonger Tab">
-                                Tab content for Loooonger Tab
-                            </Tab> */}
+                            
 
                         </Tabs>
 

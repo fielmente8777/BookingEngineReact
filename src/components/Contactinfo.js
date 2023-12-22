@@ -15,8 +15,6 @@ import countryList from 'react-select-country-list'
 
 
 function Contactinfo(props) {
-    const baseUrl = "https://nexon.eazotel.com"
-    // const baseUrl = "http://127.0.0.1:5000"
     let tax = 0
     if (props.price * props.nights <= 1000) {
         tax = 0
@@ -180,13 +178,14 @@ function Contactinfo(props) {
     const GetPayLaterOrderId = async () => {
         roomsetType()
         var checkout = Adddays_Dateformat(localStorage.getItem('Checkin'),props.PackageDays);
-        const response = await fetch(`${baseUrl}/payment/create_order`, {
+        const response = await fetch(`${props.baseUrl}/payment/create_order`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                "hId": localStorage.getItem('hid'),
                 "ndid": localStorage.getItem('hotelid'),
                 "amount": subTotal,
                 "currency": props.currency,
@@ -276,13 +275,14 @@ function Contactinfo(props) {
         var checkout = Adddays_Dateformat(localStorage.getItem('Checkin'),props.PackageDays);
         setpaymentstatus("ADVANCED")
         setPaystatus("HALF PAID")
-        const response = await fetch(`${baseUrl}/payment/create_order`, {
+        const response = await fetch(`${props.baseUrl}/payment/create_order`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                "hId": localStorage.getItem('hid'),
                 "ndid": localStorage.getItem('hotelid'),
                 "amount": 0.5*subTotal,
                 "currency": props.currency,
@@ -347,13 +347,14 @@ function Contactinfo(props) {
         var checkout = Adddays_Dateformat(localStorage.getItem('Checkin'),props.PackageDays);
         setpaymentstatus("SUCCESS")
         setPaystatus("PAID")
-        const response = await fetch(`${baseUrl}/payment/create_order`, {
+        const response = await fetch(`${props.baseUrl}/payment/create_order`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                "hId": localStorage.getItem('hid'),
                 "ndid": localStorage.getItem('hotelid'),
                 "amount": subTotal,
                 "currency": props.currency,
@@ -415,7 +416,7 @@ function Contactinfo(props) {
 
 
     const PaymentSuccessFull = async (payid) => {
-        const response = await fetch(`${baseUrl}/booking/update`, {
+        const response = await fetch(`${props.baseUrl}/booking/update`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
@@ -425,7 +426,8 @@ function Contactinfo(props) {
                 "ndid": localStorage.getItem('hotelid'),
                 "orderid": OrderId,
                 "paymentid": payid,
-                "Status": Paymentstatus
+                "Status": Paymentstatus,
+                "hId": localStorage.getItem('hid'),
             })
         })
 
@@ -441,7 +443,7 @@ function Contactinfo(props) {
             };
 
             const options = {
-                key: "rzp_live_5uaIIwZcxLC70j",         // Enter the Key ID generated from the Dashboard rzp_test_UZ0V9jh3jMC0C9,rzp_live_5uaIIwZcxLC70j
+                key: "rzp_test_UZ0V9jh3jMC0C9",         // Enter the Key ID generated from the Dashboard rzp_test_UZ0V9jh3jMC0C9,rzp_live_5uaIIwZcxLC70j
                 amount: mockOrderData.amount.toString(), // Use the amount from the order data
                 currency: props.currency,
                 name: props.HotelName,

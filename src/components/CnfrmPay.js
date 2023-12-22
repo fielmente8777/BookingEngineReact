@@ -70,8 +70,7 @@ function CnfrmPay(props) {
     const [RoomTax, setRoomTax] = useState(tax)
     const [PaymentStatus, setPaymentStatus] = useState("PENDING")
     const [PayStatus, setPayStatus] = useState("PAID")
-    const baseUrl = "https://nexon.eazotel.com"
-    // const baseUrl = "http://127.0.0.1:5000"
+    
     // location api
 
     useEffect(() => {
@@ -124,13 +123,14 @@ function CnfrmPay(props) {
 
     //PAY AT HOTEL
     const GetPayLaterOrderId = async () => {
-        const response = await fetch(`${baseUrl}/payment/create_order`, {
+        const response = await fetch(`${props.baseUrl}/payment/create_order`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                "hId":localStorage.getItem('hid'),
                 "ndid": localStorage.getItem('hotelid'),
                 "amount": totoalcost,
                 "currency": props.currency,
@@ -211,13 +211,14 @@ function CnfrmPay(props) {
         setPaymentStatus("ADVANCED")
         setPayStatus("HALF PAID")
         let halfcost = 0.5 * totoalcost
-        const response = await fetch(`${baseUrl}/payment/create_order`, {
+        const response = await fetch(`${props.baseUrl}/payment/create_order`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                "hId":localStorage.getItem('hid'),
                 "ndid": localStorage.getItem('hotelid'),
                 "amount": halfcost,
                 "currency": props.currency,
@@ -273,13 +274,14 @@ function CnfrmPay(props) {
     //FULL PAYMENT BUTTON
     const GetOrderId = async () => {
         setPaymentStatus("SUCCESS")
-        const response = await fetch(`${baseUrl}/payment/create_order`, {
+        const response = await fetch(`${props.baseUrl}/payment/create_order`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                "hId":localStorage.getItem('hid'),
                 "ndid": localStorage.getItem('hotelid'),
                 "amount": totoalcost,
                 "currency": props.currency,
@@ -333,7 +335,7 @@ function CnfrmPay(props) {
     }
 
     const PaymentSuccessFull = async (payid) => {
-        const response = await fetch(`${baseUrl}/booking/update`, {
+        const response = await fetch(`${props.baseUrl}/booking/update`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
@@ -343,7 +345,8 @@ function CnfrmPay(props) {
                 "ndid": localStorage.getItem('hotelid'),
                 "orderid": OrderId,
                 "paymentid": payid,
-                "Status": PaymentStatus
+                "Status": PaymentStatus,
+                "hId":localStorage.getItem('hid'),
             })
         })
 
@@ -378,7 +381,7 @@ function CnfrmPay(props) {
             };
 
             const options = {
-                key: "rzp_live_5uaIIwZcxLC70j", // Enter the Key ID generated from the Dashboard rzp_test_UZ0V9jh3jMC0C9,rzp_live_5uaIIwZcxLC70j
+                key: "rzp_test_UZ0V9jh3jMC0C9", // Enter the Key ID generated from the Dashboard rzp_test_UZ0V9jh3jMC0C9,rzp_live_5uaIIwZcxLC70j
                 amount: mockOrderData.amount.toString(), // Use the amount from the order data
                 currency: props.currency,
                 name: props.HotelName,

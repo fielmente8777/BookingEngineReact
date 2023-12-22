@@ -48,6 +48,8 @@ export default function Landing(props) {
     // Ads Packages
     const [Packages,setPackages] = useState([])
 
+    //Multi-Locations
+    const [HotelLocations,setHotelLocations] = useState([])
 
     const [isOpen, setisOpen] = useState(false)
     const [Available, setAvailable] = useState({
@@ -65,11 +67,14 @@ export default function Landing(props) {
     })
     const [dataLoaded, setDataLoaded] = useState(false);
 
+    
     useEffect(() => {
         if (dataLoaded) {
             scrollToRoomsSection();
         }
+        getallLocations()
     }, [dataLoaded]);
+
     const [openAlert, setopenAlert] = useState(false)
     const [date, setDate] = useState(new Date());
 
@@ -85,6 +90,42 @@ export default function Landing(props) {
         localStorage.setItem("Kid", kid);
     }
 
+    const HotelLocationChange=()=>{
+        let locationId = document.getElementById('hotelLocation').value;
+        let urlParams = new URLSearchParams(window.location.search);
+
+        // Set or update the 'locationId' parameter
+        urlParams.set('hid',locationId)
+
+        // Get the updated URL with the new parameters
+        let newUrl = window.location.pathname + '?' + urlParams.toString();
+
+        
+        // window.location.href = newUrl;
+        localStorage.setItem('hid',locationId)
+        toggleDiv()
+        window.history.replaceState({}, '', newUrl);
+
+    }
+
+    const getallLocations = async()=>{
+        const response = await fetch(`${props.baseUrl}/multilocation/findlocations/engine/${localStorage.getItem("hotelid")}`, {
+            method: "GET",
+            headers: {
+              Accept: "application/json, text/plain, /",
+              "Content-Type": "application/json"
+            },
+      
+          });
+      
+        const json = await response.json();
+        const resp = json.Locations
+        setHotelLocations(resp)
+
+        
+
+    }
+
     function scrollToRoomsSection() {
         const roomsSection = document.getElementById("id_filters");
         if (roomsSection) {
@@ -94,7 +135,7 @@ export default function Landing(props) {
     }
 
     const FetchMeals=async ()=>{
-        const response = await fetch(`${props.baseUrl}/room/packages/engine/${localStorage.getItem('hotelid')}`, {
+        const response = await fetch(`${props.baseUrl}/mpackage/packages/engine/${localStorage.getItem('hotelid')}/${localStorage.getItem('hid')}`, {
             method: "GET",
             headers: {
               Accept: "application/json, text/plain, /",
@@ -122,22 +163,22 @@ export default function Landing(props) {
         localStorage.setItem("Adult", adult);
         localStorage.setItem("Kid", kid);
 
-        const response = await fetch(`${props.baseUrl}/room/${localStorage.getItem('hotelid')}`, {
+        const response = await fetch(`${props.baseUrl}/room/engine/${localStorage.getItem('hotelid')}`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ "Checkin": checkin_date, "Checkout": checkout_date })
+            body: JSON.stringify({ "Checkin": checkin_date, "Checkout": checkout_date,"hId":localStorage.getItem("hid")})
         });
 
-        const response2 = await fetch(`${props.baseUrl}/room/ad/packages/engine/${localStorage.getItem('hotelid')}`, {
+        const response2 = await fetch(`${props.baseUrl}/rpackage/ad/packages/engine/${localStorage.getItem('hotelid')}`, {
             method: "POST",
             headers: {
                 Accept: "application/json, text/plain, /",
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ "checkin": checkin_date, "checkout": checkout_date })
+            body: JSON.stringify({"hId":localStorage.getItem("hid"),"checkin": checkin_date, "checkout": checkout_date })
         });
 
         FetchMeals()
@@ -233,7 +274,7 @@ export default function Landing(props) {
     return (
         <>
             {/* backgroundImage: `url(${props.Bg_image})`, */}
-            <div className='LandinMain' style={{ width: "100%", objectFit: "cover", background:props.color, backgroundRepeat: "no-repeat", backgroundSize: "cover" }}>
+            <div className='LandinMain' style={{ width: "100%", objectFit: "cover", backgroundImage: `url(${props.Bg_image})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }}>
                
                 <div class="right-email">
                     <button id="open-popupRight" onClick={openPopup}><i class="fa-regular fa-envelope"></i></button>
@@ -251,7 +292,7 @@ export default function Landing(props) {
                 <section className={`section`}>
                     {/* style={{width:"100%",objectFit:"cover",backgroundImage:`url(${props.Bg_image})`,backgroundRepeat:"no-repeat" }} */}
                     <div className={`container form-main ${props.display}`} >
-                        <div className="form">
+                        <div className="form" style={{width: HotelLocations.length>1?"1000px":"800px"}}>
                             <div className="reservation" style={{ background: props.Bg_color }}>
                                 {/* <h4 >{props.ReservationLabel}</h4> */}
                                 <h4><strong>{t(props.ReservationLabel)}</strong></h4>
@@ -259,19 +300,38 @@ export default function Landing(props) {
                             </div>
 
                             <div className="form_inner">
+                                {HotelLocations.length>1?
+                                <div className="fill_detail">
+                                    <div className="members">
+                                        {/* We have to customize this color, this color will come form backend */}
+
+                                        <div className="members_inner">
+                                            <div className="details ">
+                                                <label for="#">Locations</label>
+
+                                                <select name="#" id='hotelLocation' onChange={()=>{HotelLocationChange()}} className="options text-light " style={{ background: props.bt_color,width:"100%" }}>
+                                                {HotelLocations.map((area) => {
+                                                    const isSelected = area.hId === localStorage.getItem('hid');
+                                                    return (
+                                                        <option key={area.hId} value={area.hId} selected={isSelected}>
+                                                            {area.location}, {area.pinCode}
+                                                        </option>
+                                                    );
+                                                })}
+                                                    
+                                                    
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>:""}
 
 
                                 <div className="form-rsv">
 
                                     <div className="main-dates">
-                                        {/* <div className="checks d-flex">
-                                            <label>Check In</label>
-                                            <FullCalendar />
-                                        </div>
-                                        <div className="checks d-flex">
-                                            <label>Check Out</label>
-                                            <FullCalendar />
-                                        </div> */}
                                         <div className="cal-labl">
                                             <label style={{ fontWeight: "bold" }}>{t('Check In')}</label>
                                             <label style={{ fontWeight: "bold" }}>{t('Check Out')}</label>
@@ -283,8 +343,6 @@ export default function Landing(props) {
                                         </div>
                                     </div>
                                 </div>
-
-
 
                                 <div className="fill_detail">
                                     <div className="members">
@@ -487,6 +545,7 @@ export default function Landing(props) {
                     {Headlines.map((element) => {
                         return <div key={element.url} >
                             <Cards
+                                baseUrl = {props.baseUrl}
                                 currency = {props.currency}
                                 name={element.roomName ? element.roomName.slice(0, 80) : ""}
                                 description={element.roomDescription ? element.roomDescription : ""}
@@ -536,6 +595,7 @@ export default function Landing(props) {
                         {Packages.map((element) => {
                         return <div key={element.url} >
                         <Adpackage
+                            baseUrl = {props.baseUrl}
                             isOnlinepay={props.isOnlinepay}
                             currency = {props.currency}
                             packageId={element.packageId}
@@ -571,7 +631,9 @@ export default function Landing(props) {
                 </div>
 
                 {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0)&&mealplan.length!==0 ?
-                    <Mealplan setisperRoom={setisperRoom}
+                    <Mealplan 
+                        baseUrl = {props.baseUrl}
+                        setisperRoom={setisperRoom}
                         setmealplanId={setmealplanId}
                         mealplan={mealplan}
                         setMealPlan={setMealPlan}
@@ -593,7 +655,9 @@ export default function Landing(props) {
 
                 {isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0) ? (
 
-                    <Contactinfo isOnlinepay={props.isOnlinepay} currency={props.currency} setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
+                    <Contactinfo 
+                        baseUrl = {props.baseUrl}
+                        isOnlinepay={props.isOnlinepay} currency={props.currency} setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
                         HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={1200}
                         BookingTotalPrice={1200} BookingPrice={1200}
                         Paymentbutton={props.Paymentbutton} nights={Night} room={1}

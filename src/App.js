@@ -83,7 +83,7 @@ function App() {
 
   })
   async function Get_Hotel_status_exists() {
-    const response = await fetch(`${baseUrl}/booking/getenginedetails/${localStorage.getItem("hotelid")}`, {
+    const response = await fetch(`${baseUrl}/booking/getenginedetails/${localStorage.getItem("hotelid")}/${localStorage.getItem("hid")}`, {
       method: "GET",
       headers: {
         Accept: "application/json, text/plain, /",
@@ -167,11 +167,17 @@ function App() {
     }
   }
 
-  const baseUrl = "https://nexon.eazotel.com"
+  // const baseUrl = "https://nexon.eazotel.com"
   // const baseUrl = "http://127.0.0.1:5000"
+  const baseUrl = "https://testnexon.eazotel.com"
+
+
   const urlParams = new URLSearchParams(window.location.search);
   const hotelid = urlParams.get("id");
+  const hid = urlParams.get("hid");
   localStorage.setItem('hotelid', hotelid)
+  localStorage.setItem('hid', hid)
+
 
   Get_Hotel_status_exists()
 

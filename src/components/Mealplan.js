@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 
 import Form from 'react-bootstrap/Form';
 
-function Mealplan({isperRoom,mealplan,setMealPlan,setselectedMealPlan,setselectedMealPlanPrice,setisperRoom,Mealprice
+function Mealplan({baseUrl,isperRoom,mealplan,setMealPlan,setselectedMealPlan,setselectedMealPlanPrice,setisperRoom,Mealprice
     ,setMealprice,Delux,SuperDelux,Suite,Premium,Adult,setmealplanId,color,Bg_color}) {
+    
 
     const [price,setprice]=useState('')
+
     // Fetches meal plan data on component mount and sets it to the state.
     const FetchMeals=async ()=>{
-        const response = await fetch(`https://nexon.eazotel.com/room/packages/engine/${localStorage.getItem('hotelid')}`, {
+        const response = await fetch(`${baseUrl}/mpackage/packages/engine/${localStorage.getItem('hotelid')}/${localStorage.getItem('hid')}`, {
             method: "GET",
             headers: {
               Accept: "application/json, text/plain, /",
