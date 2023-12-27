@@ -68,15 +68,31 @@ export default function Cards(props) {
             number += 1;
             if (id === "DELUX") {
                 props.setDelux(number)
+                props.setRoomCategoryCombination((prevRoomcatname) => ({
+                    ...prevRoomcatname,
+                    ["DELUX"]: props.name,
+                  }));
             }
             if (id === "SUPER DELUX") {
                 props.setSuperDelux(number)
+                props.setRoomCategoryCombination((prevRoomcatname) => ({
+                    ...prevRoomcatname,
+                    ["SUPERDELUX"]: props.name,
+                  }));
             }
             if (id === "SUITE") {
                 props.setSuite(number)
+                props.setRoomCategoryCombination((prevRoomcatname) => ({
+                    ...prevRoomcatname,
+                    ["SUITE"]: props.name,
+                  }));
             }
             if (id === "PREMIUM") {
                 props.setPremium(number)
+                props.setRoomCategoryCombination((prevRoomcatname) => ({
+                    ...prevRoomcatname,
+                    ["PREMIUM"]: props.name,
+                  }));
             }
             let price = number * Number(Original_Price)
             setPrice(price)

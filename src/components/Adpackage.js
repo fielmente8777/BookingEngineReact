@@ -180,6 +180,7 @@ export default function Cards(props) {
                 </div>
                 {isOpen && (
                 <Contactinfo 
+                    isPayatHotel = {props.isPayatHotel}
                     isOnlinepay={props.isOnlinepay}
                     setIsOpen={setIsOpen} 
                     Bg_color={props.Bg_color} 

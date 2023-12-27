@@ -33,6 +33,7 @@ function App() {
 
   const [Claritycode,setClarityCode] = useState("")
   const [isOnlinepay,setisOnlinepay] = useState(false)
+  const [isPayatHotel,setisPayatHotel] = useState(false)
   const [currency,setCurrency] = useState('INR')
   const [Facebook, setFacebook] = useState("https://facebook.com/")
   const [Instagram, setInstagram] = useState("https://instagram.com/")
@@ -59,6 +60,8 @@ function App() {
 
   const [Payment, setPayment] = useState({
     "Status": false,
+    "Logo":"https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg?size=338&ext=jpg&ga=GA1.1.1546980028.1703548800&semt=sph",
+    "HotelName":"Peace at Peak",
     "Payment": "2",
     "Order": "3",
     "Name": "4",
@@ -79,7 +82,8 @@ function App() {
     "MealPlan":"Meal",
     "Mealprice":"200",
     "PackagePlan":"Package",
-    "PackagePrice":"1200"
+    "PackagePrice":"1200",
+    "Rooms":{"DELUX":"-","SUPERDELUX":"-","SUITE":"-","PREMIUM":"-"}
 
   })
   async function Get_Hotel_status_exists() {
@@ -140,6 +144,8 @@ function App() {
       setCurrency(json.Profile.currency)
       //pay online option
       setisOnlinepay(json.Details.isOnlinePayment)
+      //pay at hotel option
+      setisPayatHotel(json.Details.isPayatHotel)
 
       //Clarity code
       setClarityCode(json.Details.Clarity)
@@ -193,9 +199,9 @@ function App() {
         <Navbar hotelname={HotelName} logo={HotelLogo} display={Spinner_spin1} color={Bg_color} HotelNumber={HotelNumber}
           email={HotelEmail} hotelwebsite={hotelwebsite} />
 
-        {!Payment.Status ? <LandingPage isOnlinepay={isOnlinepay} currency={currency} Bg_color={Bg_color} HotelName={HotelName} HotelLogo={HotelLogo} baseUrl={baseUrl}
+        {!Payment.Status ? <LandingPage isPayatHotel={isPayatHotel} isOnlinepay={isOnlinepay} currency={currency} Bg_color={Bg_color} HotelName={HotelName} HotelLogo={HotelLogo} baseUrl={baseUrl}
           Bg_image={HotelImage} color={Box_color} display={Spinner_spin1} bt_color={Button_color}
-          ReservationLabel={Reservation_button} ReservationButton={Room_searchButton}
+          ReservationLabel={Reservation_button} ReservationButton={Room_searchButton} 
           FinalConfirmButton={RoomFinal_searchButton} Paymentbutton={PaymentButton} setPayment={setPayment} />
           : <SuccessPage Payment={Payment} currency={currency} />}
         
