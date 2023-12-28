@@ -70,9 +70,8 @@ function CnfrmPay(props) {
     const [RoomTax, setRoomTax] = useState(tax)
     const [PaymentStatus, setPaymentStatus] = useState("PENDING")
     const [PayStatus, setPayStatus] = useState("PAID")
-    const baseUrl = "https://nexon.eazotel.com"
-    // const baseUrl = "http://127.0.0.1:5000"
-    // location api
+    
+    const baseUrl = props.baseUrl
 
     useEffect(() => {
         if (navigator.geolocation) {

@@ -15,7 +15,7 @@ import countryList from 'react-select-country-list'
 
 
 function Contactinfo(props) {
-    const baseUrl = "https://nexon.eazotel.com"
+    const baseUrl = props.baseURL
     // const baseUrl = "http://127.0.0.1:5000"
     let tax = 0
     if (props.price * props.nights <= 1000) {
@@ -264,7 +264,8 @@ function Contactinfo(props) {
                 "MealPlan":"-",
                 "Mealprice":"-",
                 "PackagePlan":props.PackageName,
-                "PackagePrice":subTotal
+                "PackagePrice":subTotal,
+                "Rooms":props.RoomCategoryCombination
 
             })
 
@@ -478,7 +479,8 @@ function Contactinfo(props) {
                         "MealPlan":"-",
                         "Mealprice":"-",
                         "PackagePlan":props.PackageName,
-                        "PackagePrice":subTotal
+                        "PackagePrice":subTotal,
+                        "Rooms":props.RoomCategoryCombination
         
                     })
                 },

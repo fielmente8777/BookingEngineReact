@@ -466,6 +466,7 @@ export default function Landing(props) {
                         {Packages.map((element) => {
                         return <div key={element.url} >
                         <Adpackage
+                            baseUrl = {props.baseUrl}
                             isPayatHotel = {props.isPayatHotel}
                             isOnlinepay={props.isOnlinepay}
                             currency = {props.currency}
@@ -488,6 +489,8 @@ export default function Landing(props) {
                             setPayment={props.setPayment}
                             HotelName={props.HotelName} 
                             HotelLogo={props.HotelLogo}
+                            RoomCategoryCombination = {RoomCategoryCombination}
+                            setRoomCategoryCombination={setRoomCategoryCombination}
                         />
                     </div>
 
@@ -502,7 +505,9 @@ export default function Landing(props) {
                 </div>
 
                 {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0)&&mealplan.length!==0 ?
-                    <Mealplan setisperRoom={setisperRoom}
+                    <Mealplan 
+                        baseUrl = {props.baseUrl}
+                        setisperRoom={setisperRoom}
                         setmealplanId={setmealplanId}
                         mealplan={mealplan}
                         setMealPlan={setMealPlan}
@@ -524,7 +529,9 @@ export default function Landing(props) {
                     
                 {isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0) ? (
                     
-                    <Contactinfo isPayatHotel = {props.isPayatHotel} isOnlinepay={props.isOnlinepay} currency={props.currency} setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
+                    <Contactinfo 
+                        baseUrl = {props.baseUrl}
+                        isPayatHotel = {props.isPayatHotel} isOnlinepay={props.isOnlinepay} currency={props.currency} setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
                         HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={1200}
                         BookingTotalPrice={1200} BookingPrice={1200}
                         Paymentbutton={props.Paymentbutton} nights={Night} room={1}
@@ -552,7 +559,7 @@ export default function Landing(props) {
                     />
                 ) : ""}
                 <div className={`${props.display}`}>
-                    <Enquiryform color={props.color} bg_color={props.Bg_color} />
+                    <Enquiryform baseUrl={props.baseUrl} color={props.color} bg_color={props.Bg_color} />
                 </div>
 
                 {openAlert ?
