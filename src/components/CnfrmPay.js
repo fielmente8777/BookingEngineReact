@@ -71,7 +71,7 @@ function CnfrmPay(props) {
     const [PaymentStatus, setPaymentStatus] = useState("PENDING")
     const [PayStatus, setPayStatus] = useState("PAID")
     
-    // location api
+    const baseUrl = props.baseUrl
 
     useEffect(() => {
         if (navigator.geolocation) {
@@ -180,6 +180,8 @@ function CnfrmPay(props) {
             console.log(json)
             props.setPayment({
                 "Status": true,
+                "Logo":props.HotelLogo,
+                "HotelName": props.HotelName,
                 "Order": json.order_id,  // Order ID from the payment gateway
                 "Name": Name,
                 "Phone": Phone,
@@ -198,7 +200,8 @@ function CnfrmPay(props) {
                 "Amount": totoalcost,
                 "PayStatus": "Pay At Hotel",
                 "MealPlan": props.selectedMealPlan,
-                "Mealprice": props.selectedMealPlanPrice
+                "Mealprice": props.selectedMealPlanPrice,
+                "Rooms":props.RoomCategoryCombination
 
             })
 
@@ -393,6 +396,8 @@ function CnfrmPay(props) {
                     await PaymentSuccessFull(response.razorpay_payment_id)
                     props.setPayment({
                         "Status": true,
+                        "Logo":props.HotelLogo,
+                        "HotelName": props.HotelName,
                         "Order": response.razorpay_order_id,
                         "Payment": response.razorpay_payment_id,
                         "Name": Name,
@@ -412,7 +417,8 @@ function CnfrmPay(props) {
                         "Suite": props.Suite,
                         "Premium": props.Premium,
                         "MealPlan": props.selectedMealPlan,
-                        "Mealprice": props.selectedMealPlanPrice
+                        "Mealprice": props.selectedMealPlanPrice,
+                        "Rooms":props.RoomCategoryCombination
                     })
                 },
 
@@ -451,6 +457,9 @@ function CnfrmPay(props) {
     const changeHandler = Country => {
         setCountry(Country)
     }
+
+    
+
 
     return (
         <>
@@ -553,14 +562,14 @@ function CnfrmPay(props) {
                                         <div className="button_s">
                                             {Name && Phone && Email && Country && City && !OrderId ? (
                                                 <>
-                                                    <button className="submitbtn" onClick={GetPayLaterOrderId}>PAY AT HOTEL</button>
+                                                    {props.isPayatHotel?<button className="submitbtn" onClick={GetPayLaterOrderId}>PAY AT HOTEL</button>:""}
                                                     {props.isOnlinepay?<button className="submitbtn" onClick={GetHalfOrderId}>PAY 50% AMOUNT <span>{0.5 * (cost + tax)} {props.currency}</span></button>:""}
                                                     {props.isOnlinepay?<button className="submitbtn" onClick={GetOrderId}>PAY FULL AMOUNT <span>{cost + tax} {props.currency}</span></button>:""}
                                                     <p className="button_s_p">By making this booking, you are accepting our terms and conditions***</p>
                                                 </>
                                             ) : (
                                                 <>
-                                                    <button className="submitbtn" onClick={PopupFillFields}>PAY AT HOTEL</button>
+                                                    {props.isPayatHotel?<button className="submitbtn" onClick={PopupFillFields}>PAY AT HOTEL</button>:""}
                                                     {props.isOnlinepay?<button className="submitbtn" onClick={PopupFillFields}>PAY 50% AMOUNT <span>{0.5 * (cost + tax)} {props.currency}</span></button>:""}
                                                     {props.isOnlinepay?<button className="submitbtn" onClick={PopupFillFields}>PAY FULL AMOUNT <span>{cost + tax} {props.currency}</span></button>:""}
                                                     <p className="button_s_p">By making this booking, you are accepting our terms and conditions***</p>
@@ -630,10 +639,11 @@ function CnfrmPay(props) {
                                             <span className="left-span">Rooms</span>
                                         </div>
                                         <div style={{ display: "flex", flexDirection: "column" }}>
-                                            {props.Delux !== 0 ? <span className="right-span" id="Final_checkout">Delux:- {props.Delux}</span> : ""}
-                                            {props.SuperDelux !== 0 ? <span className="right-span" id="Final_checkout">Super Delux:- {props.SuperDelux}</span> : ""}
-                                            {props.Suite !== 0 ? <span className="right-span" id="Final_checkout">Suite:- {props.Suite}</span> : ""}
-                                            {props.Premium !== 0 ? <span className="right-span" id="Final_checkout">Premium:- {props.Premium}</span> : ""}
+                                            
+                                            {props.Delux !== 0 ? <span className="right-span" id="Final_checkout">{props.RoomCategoryCombination["DELUX"]}:- {props.Delux}</span> : ""}
+                                            {props.SuperDelux !== 0 ? <span className="right-span" id="Final_checkout">{props.RoomCategoryCombination["SUPERDELUX"]}:- {props.SuperDelux}</span> : ""}
+                                            {props.Suite !== 0 ? <span className="right-span" id="Final_checkout">{props.RoomCategoryCombination["SUITE"]}:- {props.Suite}</span> : ""}
+                                            {props.Premium !== 0 ? <span className="right-span" id="Final_checkout">{props.RoomCategoryCombination["PREMIUM"]}:- {props.Premium}</span> : ""}
                                         </div>
                                     </div>
                                 </div>

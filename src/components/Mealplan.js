@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import Form from 'react-bootstrap/Form';
 
-function Mealplan({baseUrl,isperRoom,mealplan,setMealPlan,setselectedMealPlan,setselectedMealPlanPrice,setisperRoom,Mealprice
-    ,setMealprice,Delux,SuperDelux,Suite,Premium,Adult,setmealplanId,color,Bg_color}) {
-    
+function Mealplan({isperRoom,mealplan,setMealPlan,setselectedMealPlan,setselectedMealPlanPrice,setisperRoom,Mealprice
+    ,setMealprice,Delux,SuperDelux,Suite,Premium,Adult,setmealplanId,color,Bg_color,baseUrl}) {
 
     const [price,setprice]=useState('')
 

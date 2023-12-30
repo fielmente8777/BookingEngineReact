@@ -15,6 +15,8 @@ import countryList from 'react-select-country-list'
 
 
 function Contactinfo(props) {
+    const baseUrl = props.baseURL
+    // const baseUrl = "http://127.0.0.1:5000"
     let tax = 0
     if (props.price * props.nights <= 1000) {
         tax = 0
@@ -241,6 +243,8 @@ function Contactinfo(props) {
             console.log(json)
             props.setPayment({
                 "Status": true,
+                "Logo":props.HotelLogo,
+                "HotelName": props.HotelName,
                 "Order": json.order_id,  // Order ID from the payment gateway
                 "Name": Name,
                 "Phone": Phone,
@@ -261,7 +265,8 @@ function Contactinfo(props) {
                 "MealPlan":"-",
                 "Mealprice":"-",
                 "PackagePlan":props.PackageName,
-                "PackagePrice":subTotal
+                "PackagePrice":subTotal,
+                "Rooms":props.RoomCategoryCombination
 
             })
 
@@ -455,6 +460,8 @@ function Contactinfo(props) {
                     await PaymentSuccessFull(response.razorpay_payment_id)
                     props.setPayment({
                         "Status": true,
+                        "Logo":props.HotelLogo,
+                        "HotelName": props.HotelName,
                         "Order": OrderId,  // Order ID from the payment gateway
                         "Payment": response.razorpay_payment_id,
                         "Name": Name,
@@ -476,7 +483,8 @@ function Contactinfo(props) {
                         "MealPlan":"-",
                         "Mealprice":"-",
                         "PackagePlan":props.PackageName,
-                        "PackagePrice":subTotal
+                        "PackagePrice":subTotal,
+                        "Rooms":props.RoomCategoryCombination
         
                     })
                 },
@@ -606,14 +614,14 @@ function Contactinfo(props) {
                                 (Name && Phone && Email && Country && City) && !OrderId ?
                                     <div className="button_s">
                                         <p className="button_s_p">By making this booking, you are accepting our terms and conditions***</p>
-                                        <button className="submitbtn" onClick={GetPayLaterOrderId}>PAY AT HOTEL</button>
+                                        {props.isPayatHotel?<button className="submitbtn" onClick={GetPayLaterOrderId}>PAY AT HOTEL</button>:""}
                                         {props.isOnlinepay?<button className="submitbtn" onClick={GetHalfOrderId}>PAY 50% AMOUNT <span>{0.5 * (GrandTotal)} {props.currency}</span></button>:""}
                                         {props.isOnlinepay?<button className="submitbtn" onClick={GetFullOrderId}>PAY FULL AMOUNT <span>{GrandTotal} {props.currency}</span></button>:""} 
                                         
                                     </div> :
                                     <div className="button_s">
                                         <p className="button_s_p">By making this booking, you are accepting our terms and conditions***</p>
-                                        <button className="submitbtn" onClick={PopupFillFields}>PAY AT HOTEL</button>
+                                        {props.isPayatHotel?<button className="submitbtn" onClick={PopupFillFields}>PAY AT HOTEL</button>:""}
                                         {props.isOnlinepay?<button className="submitbtn" onClick={PopupFillFields}>PAY 50% AMOUNT <span>{0.5 * (GrandTotal)} {props.currency}</span></button>:""}
                                         {props.isOnlinepay?<button className="submitbtn" onClick={PopupFillFields}>PAY FULL AMOUNT <span>{GrandTotal} {props.currency}</span></button>:""}
                                         

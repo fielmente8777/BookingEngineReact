@@ -15,44 +15,68 @@ function SuccessPage(props) {
     const generatePDF = async () => {
         // Get a reference to the component's DOM element
         const component = componentRef.current;
-
+      
         // Use html2canvas to capture the component's content as an image
         const canvas = await html2canvas(component);
-
+      
         // Create a new jsPDF instance
         const doc = new jsPDF({
-            orientation: 'p', // 'p' for portrait, 'l' for landscape
-            unit: 'mm', // unit of measurement
-            format: 'a4', // page format
+          orientation: 'p', // 'p' for portrait, 'l' for landscape
+          unit: 'mm', // unit of measurement
+          format: 'a4', // page format
         });
-
+      
         // Calculate the image's dimensions to fit the PDF page
         const imgData = canvas.toDataURL('image/png');
-        const imgWidth = 155; // A4 width in mm
+        const imgWidth = doc.internal.pageSize.getWidth();
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-        // Add the image to the PDF
-        doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-
+      
+        // Calculate the number of pages needed
+        const totalPages = Math.ceil(imgHeight / doc.internal.pageSize.getHeight());
+      
+        // Loop through each page and add a portion of the image
+        for (let i = 0; i < totalPages; i++) {
+          // Add a new page if not the first iteration
+          if (i > 0) {
+            doc.addPage();
+          }
+      
+          // Calculate the portion of the image for this page
+          const startY = i * doc.internal.pageSize.getHeight();
+          const portionHeight = Math.min(doc.internal.pageSize.getHeight(), imgHeight - startY);
+      
+          // Add the image portion to the PDF
+          doc.addImage(imgData, 'PNG', 0, -startY, imgWidth, imgHeight, null, 'SLOW');
+        }
+      
         // Save the PDF as a blob
         const blob = doc.output('blob');
-
+      
         // Create a URL for the Blob and create a link to trigger the download
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'invoice.pdf'; // Set the desired filename for the invoice.
-
+        a.download = 'invoice.pdf'; // Set the desired filename for the entire PDF
+      
         // Trigger a click event on the link to start the download
         a.click();
-
+      
         // Clean up by revoking the Blob URL
         URL.revokeObjectURL(url);
-    };
+      };
+      
+    
     return (
         <div className='main_success' >
             <div className="succespage" ref={componentRef}>
-                <h3>Payment Successfull!</h3>
+            <img
+                    src={props.Payment.Logo}
+                    alt="Your Logo"
+                    style={{ width: '100px', height: 'auto', marginBottom: '10px' }}
+                    />
+                <h3>Payment Receipt!</h3>
+                <p>for</p>
+                <h5>{props.Payment.HotelName}</h5>
                 <div><i class="fa-regular fa-circle-check m-4" style={{ fontSize: '60px' }}></i></div>
                 <div className='w-100'>
                     <h6><strong>Guest Information</strong></h6>
@@ -138,10 +162,10 @@ function SuccessPage(props) {
                     <Table striped bordered hover variant="light">
                         <thead>
                             <tr>
-                                <th>Delux</th>
-                                <th>Super Delux</th>
-                                <th>Suite</th>
-                                <th>Premium</th>
+                                <th>{props.Payment.Rooms.DELUX}</th>
+                                <th>{props.Payment.Rooms.SUPERDELUX}</th>
+                                <th>{props.Payment.Rooms.SUITE}</th>
+                                <th>{props.Payment.Rooms.PREMIUM}</th>
                             </tr>
                         </thead>
                         <tbody>

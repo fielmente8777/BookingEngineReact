@@ -13,6 +13,7 @@ import HTMLReactParser from 'html-react-parser'
 
 
 export default function Cards(props) {
+    const baseURL = props.baseUrl
 
     const [selectedOption, setSelectedOption] = useState(null);
 
@@ -179,7 +180,8 @@ export default function Cards(props) {
                 </div>
                 {isOpen && (
                 <Contactinfo 
-                    baseUrl = {props.baseUrl}
+                    baseURL = {baseURL}
+                    isPayatHotel = {props.isPayatHotel}
                     isOnlinepay={props.isOnlinepay}
                     setIsOpen={setIsOpen} 
                     Bg_color={props.Bg_color} 
@@ -196,6 +198,7 @@ export default function Cards(props) {
                     PackageGuest={props.packageguests}
                     Packageprice={props.price} 
                     roomtype = {props.roomType}
+                    RoomCategoryCombination={props.RoomCategoryCombination}
                      />
             )}
             </div>

@@ -30,6 +30,8 @@ export default function Landing(props) {
     const [SuiteAdult, setSuiteAdult] = useState(0)
     const [PremiumAdult, setPremiumAdult] = useState(0)
 
+
+    const [RoomCategoryCombination,setRoomCategoryCombination] = useState({"DELUX":"-","SUPERDELUX":"-","SUITE":"-","PREMIUM":"-"})
     const [Night, setNights] = useState(0)
     let [maxAdult, setmaxAdult] = useState(0)
 
@@ -460,89 +462,14 @@ export default function Landing(props) {
                             }
 
 
-                            {/* <div class="inner_filter rgt-flt">
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary btn-fc" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Room type
-                                    </button>
-                                    <ul class="dropdown-menu drp-lst">
-                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Havana Deluxe King
-                                            Room</a></li>
-                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Havana Deluxe Twin</a>
-                                        </li>
-                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Havana Premier King
-                                            Room</a></li>
-                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Havana Twin King
-                                            Room</a></li>
-                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Havana Connecting
-                                            Room</a></li>
-                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> El Presidente Suite</a>
-                                        </li>
-                                    </ul>
-
-                                </div>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle btn-fc" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Special Offers
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> FLEXIBLE 24-HOURS STAY
-                                            [Room Only]</a></li>
-                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Early Saver [Room with
-                                            Breakfast]</a></li>
-                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> FLEXIBLE 24-HOURS STAY
-                                            [Room with Breakfast]</a></li>
-                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Monthly Deal</a></li>
-                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Early Saver [Room
-                                            Only]</a></li>
-                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Staycation Offer [Room
-                                            with Breakfast]l</a></li>
-                                        <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Staycation Offer [Room
-                                            Only]</a></li>
-                                    </ul>
-                                </div>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle btn-fc" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Filters
-                                    </button>
-                                    <ul class="dropdown-menu rightopn">
-                                        <div class="fc-rt d-flex">
-                                            <div class="left-dropdown">
-                                                <div class="status">
-                                                    <h6 class="mx-3">Status</h6>
-                                                    <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Hide unable
-                                                        to book</a></li>
-                                                </div>
-                                                <div class="drop-feature">
-                                                    <h6 class="mx-3">Room Features</h6>
-                                                    <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Balcony</a>
-                                                    </li>
-                                                    <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Bathtub
-                                                    </a></li>
-                                                </div>
-                                            </div>
-                                            <div class="right-dropdown">
-                                                <h6 class="mx-3">Benefits</h6>
-                                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> No breakfast</a>
-                                                </li>
-                                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Internet
-                                                </a></li>
-                                                <li><a class="dropdown-item" href="#"><input type="checkbox" name="" id="" /> Pay later</a>
-                                                </li>
-                                            </div>
-                                        </div>
-                                    </ul>
-                                </div>
-                            </div> */}
+                            
                         </div>
                 </div>
                 {islookingroom?
                 <div>
                     
-                    {Headlines.map((element) => {
+                    {Headlines.sort((a, b) => (parseInt(a.price, 10) || 0) - (parseInt(b.price, 10) || 0)).map((element) => {
+                        
                         return <div key={element.url} >
                             <Cards
                                 baseUrl = {props.baseUrl}
@@ -574,6 +501,9 @@ export default function Landing(props) {
                                 setPremiumAdult={setPremiumAdult}
                                 setisOpen={setisOpen}
                                 BookingFinalize={BookingFinalize}
+                                RoomCategoryCombination = {RoomCategoryCombination}
+                                setRoomCategoryCombination={setRoomCategoryCombination}
+                                isPayatHotel = {props.isPayatHotel}
                             />
                         </div>
 
@@ -596,6 +526,7 @@ export default function Landing(props) {
                         return <div key={element.url} >
                         <Adpackage
                             baseUrl = {props.baseUrl}
+                            isPayatHotel = {props.isPayatHotel}
                             isOnlinepay={props.isOnlinepay}
                             currency = {props.currency}
                             packageId={element.packageId}
@@ -617,6 +548,8 @@ export default function Landing(props) {
                             setPayment={props.setPayment}
                             HotelName={props.HotelName} 
                             HotelLogo={props.HotelLogo}
+                            RoomCategoryCombination = {RoomCategoryCombination}
+                            setRoomCategoryCombination={setRoomCategoryCombination}
                         />
                     </div>
 
@@ -652,12 +585,12 @@ export default function Landing(props) {
 
                 
 
-
+                    
                 {isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0) ? (
-
+                    
                     <Contactinfo 
                         baseUrl = {props.baseUrl}
-                        isOnlinepay={props.isOnlinepay} currency={props.currency} setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
+                        isPayatHotel = {props.isPayatHotel} isOnlinepay={props.isOnlinepay} currency={props.currency} setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
                         HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={1200}
                         BookingTotalPrice={1200} BookingPrice={1200}
                         Paymentbutton={props.Paymentbutton} nights={Night} room={1}
@@ -679,11 +612,13 @@ export default function Landing(props) {
                         isperRoom={isperRoom}
                         Mealprice={Mealprice}
                         mealplanId={mealplanId}
+                        RoomCategoryCombination = {RoomCategoryCombination}
+                        setRoomCategoryCombination={setRoomCategoryCombination}
 
                     />
                 ) : ""}
                 <div className={`${props.display}`}>
-                    <Enquiryform color={props.color} bg_color={props.Bg_color} />
+                    <Enquiryform baseUrl={props.baseUrl} color={props.color} bg_color={props.Bg_color} />
                 </div>
 
                 {openAlert ?
