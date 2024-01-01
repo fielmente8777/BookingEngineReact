@@ -212,6 +212,7 @@ export default function Landing(props) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                "hId":localStorage.getItem('hid'),
                 "ndid": localStorage.getItem('hotelid'),
                 "checkin": checkin_date,
                 "checkout": checkout_date
