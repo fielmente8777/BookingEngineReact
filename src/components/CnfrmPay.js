@@ -139,7 +139,8 @@ function CnfrmPay(props) {
                     "EmailId": Email,
                     "Phone": Phone,
                     "City": City,
-                    "Country": Country
+                    "Country": Country,
+                    "address":City
                 },
                 "Adults": localStorage.getItem("Adult"),
                 "Kids": localStorage.getItem("Kid"),
@@ -160,6 +161,17 @@ function CnfrmPay(props) {
                     "PackageName": props.selectedMealPlan,
                     "PackagePrice": props.Mealprice,
                     "PackageperRoom": props.isperRoom
+                },
+                "promocode":{
+                    "PromoId":"NA",
+                    "Code":"NA",
+                    "Discount":"NA"
+                },
+                "packages":{
+                    "PackageId":"NA",
+                    "PackageName":"NA",
+                    "PackagePrice":"NA",
+                    "SpecialRequest":"NA"
                 },
                 "checkIn": localStorage.getItem('Checkin'),
                 "checkOut": localStorage.getItem('Checkout'),
@@ -230,7 +242,8 @@ function CnfrmPay(props) {
                     "EmailId": Email,
                     "Phone": Phone,
                     "City": City,
-                    "Country": Country
+                    "Country": Country,
+                    "address":City
                 },
                 "Adults": localStorage.getItem("Adult"),
                 "Kids": localStorage.getItem("Kid"),
@@ -252,10 +265,21 @@ function CnfrmPay(props) {
                     "PackagePrice": props.Mealprice,
                     "PackageperRoom": props.isperRoom
                 },
+                "promocode":{
+                    "PromoId":"NA",
+                    "Code":"NA",
+                    "Discount":"NA"
+                },
+                "packages":{
+                    "PackageId":"NA",
+                    "PackageName":"NA",
+                    "PackagePrice":"NA",
+                    "SpecialRequest":"NA"
+                },
                 "checkIn": localStorage.getItem('Checkin'),
                 "checkOut": localStorage.getItem('Checkout'),
                 "price": {
-                    "AmountPay": halfcost,
+                    "amountPay": halfcost,
                     "Principal": cost,
                     "Tax": tax,
                     "Total": totoalcost
@@ -293,7 +317,8 @@ function CnfrmPay(props) {
                     "EmailId": Email,
                     "Phone": Phone,
                     "City": City,
-                    "Country": Country
+                    "Country": Country,
+                    "address":City
                 },
                 "Adults": localStorage.getItem("Adult"),
                 "Kids": localStorage.getItem("Kid"),
@@ -314,6 +339,17 @@ function CnfrmPay(props) {
                     "PackageName": props.selectedMealPlan,
                     "PackagePrice": props.Mealprice,
                     "PackageperRoom": props.isperRoom
+                },
+                "promocode":{
+                    "PromoId":"NA",
+                    "Code":"NA",
+                    "Discount":"NA"
+                },
+                "packages":{
+                    "PackageId":"NA",
+                    "PackageName":"NA",
+                    "PackagePrice":"NA",
+                    "SpecialRequest":"NA"
                 },
                 "checkIn": localStorage.getItem('Checkin'),
                 "checkOut": localStorage.getItem('Checkout'),
