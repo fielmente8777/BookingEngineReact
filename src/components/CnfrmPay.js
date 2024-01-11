@@ -1,710 +1,872 @@
 import axios from "axios";
 import { useCallback, useEffect, useState, useMemo } from "react";
 import useRazorpay from "react-razorpay";
-import "../style/Reserve.css"
-import Button from 'react-bootstrap/Button';
+import "../style/Reserve.css";
+import Button from "react-bootstrap/Button";
 
+import {
+  getCountries,
+  getCountryCallingCode,
+} from "react-phone-number-input/input";
+import en from "react-phone-number-input/locale/en.json";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 
-import { getCountries, getCountryCallingCode } from 'react-phone-number-input/input';
-import en from 'react-phone-number-input/locale/en.json';
-import PhoneInput from 'react-phone-number-input'
-import 'react-phone-number-input/style.css';
-
-import Select from 'react-select'
-import countryList from 'react-select-country-list'
-
-
+import Select from "react-select";
+import countryList from "react-select-country-list";
 
 function CnfrmPay(props) {
+  try {
+    var deluxcost = props.Delux * Number(props.ratesChange["1"]["Price"]);
+  } catch {
+    deluxcost = 0;
+  }
+  try {
+    var sdcost = props.SuperDelux * Number(props.ratesChange["2"]["Price"]);
+  } catch {
+    sdcost = 0;
+  }
+  try {
+    var suitecost = props.Suite * Number(props.ratesChange["3"]["Price"]);
+  } catch {
+    suitecost = 0;
+  }
+  try {
+    var premiumcost = props.Premium * Number(props.ratesChange["4"]["Price"]);
+  } catch {
+    premiumcost = 0;
+  }
+
+  let tax = 0;
+  let cost =
+    Number(deluxcost) +
+    Number(sdcost) +
+    Number(suitecost) +
+    Number(premiumcost) +
+    Number(props.Mealprice);
+  if (props.currency == "INR") {
+    tax = 0.18 * Number(cost);
+  } else {
+    tax = 0;
+  }
+  let totoalcost = Number(cost) + Number(tax);
+
+  const [Razorpay, createOrder] = useRazorpay(); // Destructure 'Razorpay' and 'createOrder' from the hook
+
+  const [amount, setAmount] = useState(
+    tax * (props.price * props.nights) + props.price * props.nights
+  );
+  const [OrderId, setOrderId] = useState("");
+  const [Type, setType] = useState(props.type);
+  const [BookingId, setBookingId] = useState("1");
+  const [Name, setName] = useState("");
+  const [Email, setEmail] = useState("");
+  const [Phone, setPhone] = useState("");
+  const [Country, setCountry] = useState("");
+  const [City, setCity] = useState("");
+  const [RoomCost, setRoomCost] = useState(cost);
+  const [RoomTax, setRoomTax] = useState(tax);
+  const [PaymentStatus, setPaymentStatus] = useState("PENDING");
+  const [PayStatus, setPayStatus] = useState("PAID");
+
+  const baseUrl = props.baseUrl;
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`;
+          try {
+            const result = await axios.get(url);
+            const { locality, city, country, principalSubdivision } =
+              result.data;
+            // console.log(result.data);
+
+            setCity(result.data.city);
+            setCountry(result.data.countryName);
+          } catch (err) {
+            console.log(err);
+            // Handle the error as needed
+          }
+        },
+        (error) => {
+          console.log(error);
+          // Handle geolocation error
+        }
+      );
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+      // Handle geolocation not supported
+    }
+  }, []);
+
+  const changeDateFormat = (inputdate) => {
+    var date = new Date(inputdate);
+    // Get day, month, and year
+    var day = date.getDate();
+    var month = date.getMonth() + 1; // Months are zero-based
+    var year = date.getFullYear();
+
+    // Pad day and month with leading zeros if needed
+    day = day < 10 ? "0" + day : day;
+    month = month < 10 ? "0" + month : month;
+
+    // Format the date as 'DD-MM-YYYY'
+    var formattedDate = day + "-" + month + "-" + year;
+
+    return formattedDate;
+  };
+
+  //PAY AT HOTEL
+  const GetPayLaterOrderId = async () => {
+    const response = await fetch(`${props.baseUrl}/payment/create_order`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, /",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        hId: localStorage.getItem("hid"),
+        ndid: localStorage.getItem("hotelid"),
+        amount: totoalcost,
+        currency: props.currency,
+        guestInfo: {
+          guestName: Name,
+          EmailId: Email,
+          Phone: Phone,
+          City: City,
+          Country: Country,
+          address: City,
+        },
+        Adults: localStorage.getItem("Adult"),
+        Kids: localStorage.getItem("Kid"),
+        Bookings: [
+          { RoomType: "1", Qty: props.Delux },
+          { RoomType: "2", Qty: props.SuperDelux },
+          { RoomType: "3", Qty: props.Suite },
+          { RoomType: "4", Qty: props.Premium },
+        ],
+        payment: {
+          Status: "PENDING",
+          RefNo: "",
+          PaymentProvider: "RazorPay",
+          Mode: "Online",
+        },
+        mealPlan: {
+          PackageId: props.mealplanId,
+          PackageName: props.selectedMealPlan,
+          PackagePrice: props.Mealprice,
+          PackageperRoom: props.isperRoom,
+        },
+        promocode: {
+          PromoId: "NA",
+          Code: "NA",
+          Discount: "NA",
+        },
+        packages: {
+          packageId: "NA",
+          packageName: "NA",
+          packagePrice: "NA",
+          specialRequest: "NA",
+        },
+        checkIn: localStorage.getItem("Checkin"),
+        checkOut: localStorage.getItem("Checkout"),
+        price: {
+          AmountPay: 0,
+          Principal: cost,
+          Tax: tax,
+          Total: totoalcost,
+        },
+        isCheckedIn: false,
+        isCheckedOut: false,
+      }),
+    });
+
+    const json = await response.json();
+
+    if (json.Status === true) {
+      console.log(json);
+      props.setPayment({
+        Status: true,
+        Logo: props.HotelLogo,
+        HotelName: props.HotelName,
+        Order: json.order_id, // Order ID from the payment gateway
+        Name: Name,
+        Phone: Phone,
+        Email: Email,
+        City: City,
+        Country: Country.label,
+        Delux: props.Delux,
+        Sd: props.SuperDelux,
+        Suite: props.Suite,
+        Premium: props.Premium,
+        Checkin: localStorage.getItem("Checkin"),
+        Checkout: localStorage.getItem("Checkout"),
+        Adult: localStorage.getItem("Adult"),
+        Kid: localStorage.getItem("Kid"),
+        Tax: tax,
+        Amount: totoalcost,
+        PayStatus: "Pay At Hotel",
+        MealPlan: props.selectedMealPlan,
+        Mealprice: props.selectedMealPlanPrice,
+        Rooms: props.RoomCategoryCombination,
+      });
+    } else {
+      document.getElementById("No_rooms").style.display = "block";
+    }
+  };
+  //HALF PAYMENT OPTION
+  const GetHalfOrderId = async () => {
+    setPaymentStatus("ADVANCED");
+    setPayStatus("HALF PAID");
+    let halfcost = 0.5 * totoalcost;
+    const response = await fetch(`${props.baseUrl}/payment/create_order`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, /",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        hId: localStorage.getItem("hid"),
+        ndid: localStorage.getItem("hotelid"),
+        amount: halfcost,
+        currency: props.currency,
+        guestInfo: {
+          guestName: Name,
+          EmailId: Email,
+          Phone: Phone,
+          City: City,
+          Country: Country,
+          address: City,
+        },
+        Adults: localStorage.getItem("Adult"),
+        Kids: localStorage.getItem("Kid"),
+        Bookings: [
+          { RoomType: "1", Qty: props.Delux },
+          { RoomType: "2", Qty: props.SuperDelux },
+          { RoomType: "3", Qty: props.Suite },
+          { RoomType: "4", Qty: props.Premium },
+        ],
+        payment: {
+          Status: "PENDING",
+          RefNo: "",
+          PaymentProvider: "RazorPay",
+          Mode: "Online",
+        },
+        mealPlan: {
+          PackageId: props.mealplanId,
+          PackageName: props.selectedMealPlan,
+          PackagePrice: props.Mealprice,
+          PackageperRoom: props.isperRoom,
+        },
+        promocode: {
+          PromoId: "NA",
+          Code: "NA",
+          Discount: "NA",
+        },
+        packages: {
+          packageId: "NA",
+          packageName: "NA",
+          packagePrice: "NA",
+          specialRequest: "NA",
+        },
+        checkIn: localStorage.getItem("Checkin"),
+        checkOut: localStorage.getItem("Checkout"),
+        price: {
+          amountPay: halfcost,
+          Principal: cost,
+          Tax: tax,
+          Total: totoalcost,
+        },
+        isCheckedIn: false,
+        isCheckedOut: false,
+      }),
+    });
+
+    const json = await response.json();
+
+    if (json.Status === true) {
+      setOrderId(json.order_id);
+    } else {
+      document.getElementById("No_rooms").style.display = "block";
+    }
+  };
+  //FULL PAYMENT BUTTON
+  const GetOrderId = async () => {
+    setPaymentStatus("SUCCESS");
+    const response = await fetch(`${props.baseUrl}/payment/create_order`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, /",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        hId: localStorage.getItem("hid"),
+        ndid: localStorage.getItem("hotelid"),
+        amount: totoalcost,
+        currency: props.currency,
+        guestInfo: {
+          guestName: Name,
+          EmailId: Email,
+          Phone: Phone,
+          City: City,
+          Country: Country,
+          address: City,
+        },
+        Adults: localStorage.getItem("Adult"),
+        Kids: localStorage.getItem("Kid"),
+        Bookings: [
+          { RoomType: "1", Qty: props.Delux },
+          { RoomType: "2", Qty: props.SuperDelux },
+          { RoomType: "3", Qty: props.Suite },
+          { RoomType: "4", Qty: props.Premium },
+        ],
+        payment: {
+          Status: "PENDING",
+          RefNo: "",
+          PaymentProvider: "RazorPay",
+          Mode: "Online",
+        },
+        mealPlan: {
+          PackageId: props.mealplanId,
+          PackageName: props.selectedMealPlan,
+          PackagePrice: props.Mealprice,
+          PackageperRoom: props.isperRoom,
+        },
+        promocode: {
+          PromoId: "NA",
+          Code: "NA",
+          Discount: "NA",
+        },
+        packages: {
+          packageId: "NA",
+          packageName: "NA",
+          packagePrice: "NA",
+          specialRequest: "NA",
+        },
+        checkIn: localStorage.getItem("Checkin"),
+        checkOut: localStorage.getItem("Checkout"),
+        price: {
+          Principal: cost,
+          Tax: tax,
+          Total: totoalcost,
+        },
+        isCheckedIn: false,
+        isCheckedOut: false,
+      }),
+    });
+
+    const json = await response.json();
+
+    if (json.Status === true) {
+      setOrderId(json.order_id);
+    } else {
+      document.getElementById("No_rooms").style.display = "block";
+    }
+  };
+
+  const PaymentSuccessFull = async (payid) => {
+    const response = await fetch(`${props.baseUrl}/booking/update`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, /",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ndid: localStorage.getItem("hotelid"),
+        orderid: OrderId,
+        paymentid: payid,
+        Status: PaymentStatus,
+        hId: localStorage.getItem("hid"),
+      }),
+    });
+  };
+
+  function BookingFinalize() {
+    let maxAdult = 0;
+    if (props.Delux > 0) {
+      props.setmaxAdult((maxAdult += props.Delux * props.DeluxAdult));
+    }
+    if (props.SuperDelux > 0) {
+      props.setmaxAdult((maxAdult += props.SuperDelux * props.SuperDeluxAdult));
+    }
+    if (props.Suite > 0) {
+      props.setmaxAdult((maxAdult += props.Suite * props.SuiteAdult));
+    }
+    if (props.Premium > 0) {
+      props.setmaxAdult((maxAdult += props.Premium * props.PremiumAdult));
+    }
+    if (props.Adult <= props.maxAdult) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  const PopupFillFields = () => {
+    alert("Please Complete User details form");
+  };
+
+  const handlePayment = async () => {
     try {
-        var deluxcost = props.Delux * Number(props.ratesChange['1']["Price"])
+      // alert(props.currency)
+      const mockOrderData = {
+        amount:
+          parseInt(Number(props.room) * Number(props.BookingTotalPrice)) * 100, // Convert amount to paise (assuming INR)
+        orderId: OrderId, // Generate a unique order ID
+      };
+
+      const options = {
+        key: "rzp_test_UZ0V9jh3jMC0C9", // Enter the Key ID generated from the Dashboard rzp_test_UZ0V9jh3jMC0C9,rzp_live_5uaIIwZcxLC70j
+        amount: mockOrderData.amount.toString(), // Use the amount from the order data
+        currency: props.currency,
+        name: props.HotelName,
+        description: "Test Transaction",
+        image: props.HotelLogo,
+        order_id: OrderId, // Use the order ID from the order data
+        handler: async function (response) {
+          setOrderId(response.razorpay_order_id);
+          await PaymentSuccessFull(response.razorpay_payment_id);
+          props.setPayment({
+            Status: true,
+            Logo: props.HotelLogo,
+            HotelName: props.HotelName,
+            Order: response.razorpay_order_id,
+            Payment: response.razorpay_payment_id,
+            Name: Name,
+            Phone: Phone,
+            Email: Email,
+            City: City,
+            Country: Country.label,
+            Checkin: localStorage.getItem("Checkin"),
+            Checkout: localStorage.getItem("Checkout"),
+            Adult: localStorage.getItem("Adult"),
+            Kid: localStorage.getItem("Kid"),
+            Tax: tax,
+            Amount: totoalcost,
+            PayStatus: PayStatus,
+            Delux: props.Delux,
+            Sd: props.SuperDelux,
+            Suite: props.Suite,
+            Premium: props.Premium,
+            MealPlan: props.selectedMealPlan,
+            Mealprice: props.selectedMealPlanPrice,
+            Rooms: props.RoomCategoryCombination,
+          });
+        },
+
+        theme: {
+          color: props.Bg_color,
+        },
+      };
+
+      const rzp1 = new Razorpay(options);
+
+      rzp1.on("payment.failed", function (response) {
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+      });
+
+      rzp1.open();
+    } catch (error) {
+      console.log("Payment Error:", error);
     }
-    catch {
-        deluxcost = 0;
-    }
-    try {
-        var sdcost = props.SuperDelux * Number(props.ratesChange['2']["Price"])
-    }
-    catch {
-        sdcost = 0;
-    }
-    try {
-        var suitecost = props.Suite * Number(props.ratesChange['3']["Price"])
-    }
-    catch {
-        suitecost = 0;
-    }
-    try {
-        var premiumcost = props.Premium * Number(props.ratesChange['4']["Price"])
-    }
-    catch {
-        premiumcost = 0;
-    }
+  };
 
+  // for country selector
 
+  const options = useMemo(() => {
+    const countryData = countryList().getData();
+    const defaultOption = { label: Country, value: Country };
+    return [defaultOption, ...countryData];
+  }, []);
+  const changeHandler = (Country) => {
+    setCountry(Country);
+  };
 
+  return (
+    <>
+      <div className="container">
+        <div className="contact-info">
+          <div id="Contact" className="mt-4">
+            <div
+              className="heading"
+              style={{ backgroundColor: props.Bg_color }}
+            >
+              <h5>Guest Information</h5>
+            </div>
+            <div className="contact-main">
+              <div className="inner-contact-left">
+                <div className="code">
+                  <div className="inputBox">
+                    <span className="text-span">
+                      Full Name <span style={{ color: "red" }}>*</span>
+                    </span>
+                    <div className="names">
+                      <div className="prefix">
+                        <select
+                          id="prefix"
+                          name="prefix"
+                          className="form-control form-prefix bg"
+                          required
+                        >
+                          <option value="Mr.">Mr.</option>
+                          <option value="Mrs.">Mrs.</option>
+                          <option value="Mrs.">Miss.</option>
+                          <option value="Mrs.">Dr.</option>
+                          <option value="Mrs.">Prof.</option>
+                        </select>
+                      </div>
+                      <div className="name-input">
+                        <input
+                          type="text"
+                          className="bg"
+                          name="fullname"
+                          id="FullName"
+                          placeholder="Full Name"
+                          value={Name}
+                          onChange={(e) => {
+                            setName(e.target.value);
+                          }}
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="inputBox">
+                    <span className="text-span">
+                      Email Id <span style={{ color: "red" }}>*</span>
+                    </span>
+                    <input
+                      type="email"
+                      className="bg"
+                      value={Email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                      name="email"
+                      id="Email"
+                      placeholder="Please enter your email id"
+                      pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                      required
+                    />
+                  </div>
+                  <div className="inputBox mobile">
+                    <span className="text-span">
+                      Phone No. <span style={{ color: "red" }}>*</span>
+                    </span>
+                    <div className="phone-input-container ">
+                      <PhoneInput
+                        international
+                        className="phone-input-field"
+                        defaultCountry="IN"
+                        placeholder="Enter phone number"
+                        value={Phone}
+                        onChange={(newPhone) => setPhone(newPhone)}
+                      />
+                    </div>
+                  </div>
 
-    let tax=0
-    let cost = Number(deluxcost) + Number(sdcost) + Number(suitecost) + Number(premiumcost) + Number(props.Mealprice)
-    if(props.currency=="INR"){
-        tax = 0.18 * Number(cost)
-    }
-    else{
-        tax = 0
-    }
-    let totoalcost = Number(cost) + Number(tax)
+                  <div className="inputBox inputBox-city">
+                    <span className="text-span">
+                      City <span style={{ color: "red" }}>*</span>
+                    </span>
+                    <input
+                      value={City}
+                      onChange={(e) => setCity(e.target.value)}
+                      type="text"
+                      id="user_city"
+                      className="bg"
+                      name="city"
+                      required
+                    />
+                  </div>
 
+                  <div className="inputBox content_inner">
+                    <span className="text-span">
+                      Country <span style={{ color: "red" }}>*</span>
+                    </span>
+                    <div className="country_select">
+                      <Select
+                        options={options}
+                        value={Country}
+                        onChange={changeHandler}
+                      />
+                    </div>
 
-    const [Razorpay, createOrder] = useRazorpay(); // Destructure 'Razorpay' and 'createOrder' from the hook
-
-    const [amount, setAmount] = useState(tax * (props.price * props.nights) + (props.price * props.nights));
-    const [OrderId, setOrderId] = useState('')
-    const [Type, setType] = useState(props.type)
-    const [BookingId, setBookingId] = useState("1")
-    const [Name, setName] = useState('')
-    const [Email, setEmail] = useState('')
-    const [Phone, setPhone] = useState('')
-    const [Country, setCountry] = useState('')
-    const [City, setCity] = useState('')
-    const [RoomCost, setRoomCost] = useState(cost)
-    const [RoomTax, setRoomTax] = useState(tax)
-    const [PaymentStatus, setPaymentStatus] = useState("PENDING")
-    const [PayStatus, setPayStatus] = useState("PAID")
-    
-    const baseUrl = props.baseUrl
-
-    useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                async (position) => {
-                    const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=en`;
-                    try {
-                        const result = await axios.get(url);
-                        const { locality, city, country, principalSubdivision } = result.data;
-                        // console.log(result.data);
-
-
-
-                        setCity(result.data.city)
-                        setCountry(result.data.countryName)
-                    } catch (err) {
-                        console.log(err);
-                        // Handle the error as needed
-                    }
-                },
-                (error) => {
-                    console.log(error);
-                    // Handle geolocation error
-                }
-            );
-        } else {
-            console.log("Geolocation is not supported by this browser.");
-            // Handle geolocation not supported
-        }
-    }, []);
-
-    const changeDateFormat=(inputdate)=>{
-
-        var date = new Date(inputdate);
-        // Get day, month, and year
-        var day = date.getDate();
-        var month = date.getMonth() + 1; // Months are zero-based
-        var year = date.getFullYear();
-
-        // Pad day and month with leading zeros if needed
-        day = day < 10 ? '0' + day : day;
-        month = month < 10 ? '0' + month : month;
-
-        // Format the date as 'DD-MM-YYYY'
-        var formattedDate = day + '-' + month + '-' + year;
-
-        return formattedDate
-    }
-
-    //PAY AT HOTEL
-    const GetPayLaterOrderId = async () => {
-        const response = await fetch(`${props.baseUrl}/payment/create_order`, {
-            method: "POST",
-            headers: {
-                Accept: "application/json, text/plain, /",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                "hId":localStorage.getItem('hid'),
-                "ndid": localStorage.getItem('hotelid'),
-                "amount": totoalcost,
-                "currency": props.currency,
-                "guestInfo": {
-                    "guestName": Name,
-                    "EmailId": Email,
-                    "Phone": Phone,
-                    "City": City,
-                    "Country": Country,
-                    "address":City
-                },
-                "Adults": localStorage.getItem("Adult"),
-                "Kids": localStorage.getItem("Kid"),
-                "Bookings": [
-                    { "RoomType": "1", "Qty": props.Delux },
-                    { "RoomType": "2", "Qty": props.SuperDelux },
-                    { "RoomType": "3", "Qty": props.Suite },
-                    { "RoomType": "4", "Qty": props.Premium }
-                ],
-                "payment": {
-                    "Status": "PENDING",
-                    "RefNo": "",
-                    "PaymentProvider": "RazorPay",
-                    "Mode": "Online"
-                },
-                "mealPlan": {
-                    "PackageId": props.mealplanId,
-                    "PackageName": props.selectedMealPlan,
-                    "PackagePrice": props.Mealprice,
-                    "PackageperRoom": props.isperRoom
-                },
-                "promocode":{
-                    "PromoId":"NA",
-                    "Code":"NA",
-                    "Discount":"NA"
-                },
-                "packages":{
-                    "PackageId":"NA",
-                    "PackageName":"NA",
-                    "PackagePrice":"NA",
-                    "SpecialRequest":"NA"
-                },
-                "checkIn": localStorage.getItem('Checkin'),
-                "checkOut": localStorage.getItem('Checkout'),
-                "price": {
-                    "AmountPay": 0,
-                    "Principal": cost,
-                    "Tax": tax,
-                    "Total": totoalcost
-                },
-                "isCheckedIn": false,
-                "isCheckedOut": false
-            })
-        });
-
-        const json = await response.json();
-
-        if (json.Status === true) {
-            console.log(json)
-            props.setPayment({
-                "Status": true,
-                "Logo":props.HotelLogo,
-                "HotelName": props.HotelName,
-                "Order": json.order_id,  // Order ID from the payment gateway
-                "Name": Name,
-                "Phone": Phone,
-                "Email": Email,
-                "City": City,
-                "Country": Country.label,
-                "Delux": props.Delux,
-                "Sd": props.SuperDelux,
-                "Suite": props.Suite,
-                "Premium": props.Premium,
-                "Checkin": localStorage.getItem('Checkin'),
-                "Checkout": localStorage.getItem('Checkout'),
-                "Adult": localStorage.getItem('Adult'),
-                "Kid": localStorage.getItem('Kid'),
-                "Tax": tax,
-                "Amount": totoalcost,
-                "PayStatus": "Pay At Hotel",
-                "MealPlan": props.selectedMealPlan,
-                "Mealprice": props.selectedMealPlanPrice,
-                "Rooms":props.RoomCategoryCombination
-
-            })
-
-        } else {
-            document.getElementById("No_rooms").style.display = "block"
-        }
-    }
-    //HALF PAYMENT OPTION
-    const GetHalfOrderId = async () => {
-        setPaymentStatus("ADVANCED")
-        setPayStatus("HALF PAID")
-        let halfcost = 0.5 * totoalcost
-        const response = await fetch(`${props.baseUrl}/payment/create_order`, {
-            method: "POST",
-            headers: {
-                Accept: "application/json, text/plain, /",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                "hId":localStorage.getItem('hid'),
-                "ndid": localStorage.getItem('hotelid'),
-                "amount": halfcost,
-                "currency": props.currency,
-                "guestInfo": {
-                    "guestName": Name,
-                    "EmailId": Email,
-                    "Phone": Phone,
-                    "City": City,
-                    "Country": Country,
-                    "address":City
-                },
-                "Adults": localStorage.getItem("Adult"),
-                "Kids": localStorage.getItem("Kid"),
-                "Bookings": [
-                    { "RoomType": "1", "Qty": props.Delux },
-                    { "RoomType": "2", "Qty": props.SuperDelux },
-                    { "RoomType": "3", "Qty": props.Suite },
-                    { "RoomType": "4", "Qty": props.Premium }
-                ],
-                "payment": {
-                    "Status": "PENDING",
-                    "RefNo": "",
-                    "PaymentProvider": "RazorPay",
-                    "Mode": "Online"
-                },
-                "mealPlan": {
-                    "PackageId": props.mealplanId,
-                    "PackageName": props.selectedMealPlan,
-                    "PackagePrice": props.Mealprice,
-                    "PackageperRoom": props.isperRoom
-                },
-                "promocode":{
-                    "PromoId":"NA",
-                    "Code":"NA",
-                    "Discount":"NA"
-                },
-                "packages":{
-                    "PackageId":"NA",
-                    "PackageName":"NA",
-                    "PackagePrice":"NA",
-                    "SpecialRequest":"NA"
-                },
-                "checkIn": localStorage.getItem('Checkin'),
-                "checkOut": localStorage.getItem('Checkout'),
-                "price": {
-                    "amountPay": halfcost,
-                    "Principal": cost,
-                    "Tax": tax,
-                    "Total": totoalcost
-                },
-                "isCheckedIn": false,
-                "isCheckedOut": false
-            })
-        });
-
-        const json = await response.json();
-
-        if (json.Status === true) {
-            setOrderId(json.order_id)
-
-        } else {
-            document.getElementById("No_rooms").style.display = "block"
-        }
-    }
-    //FULL PAYMENT BUTTON
-    const GetOrderId = async () => {
-        setPaymentStatus("SUCCESS")
-        const response = await fetch(`${props.baseUrl}/payment/create_order`, {
-            method: "POST",
-            headers: {
-                Accept: "application/json, text/plain, /",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                "hId":localStorage.getItem('hid'),
-                "ndid": localStorage.getItem('hotelid'),
-                "amount": totoalcost,
-                "currency": props.currency,
-                "guestInfo": {
-                    "guestName": Name,
-                    "EmailId": Email,
-                    "Phone": Phone,
-                    "City": City,
-                    "Country": Country,
-                    "address":City
-                },
-                "Adults": localStorage.getItem("Adult"),
-                "Kids": localStorage.getItem("Kid"),
-                "Bookings": [
-                    { "RoomType": "1", "Qty": props.Delux },
-                    { "RoomType": "2", "Qty": props.SuperDelux },
-                    { "RoomType": "3", "Qty": props.Suite },
-                    { "RoomType": "4", "Qty": props.Premium }
-                ],
-                "payment": {
-                    "Status": "PENDING",
-                    "RefNo": "",
-                    "PaymentProvider": "RazorPay",
-                    "Mode": "Online"
-                },
-                "mealPlan": {
-                    "PackageId": props.mealplanId,
-                    "PackageName": props.selectedMealPlan,
-                    "PackagePrice": props.Mealprice,
-                    "PackageperRoom": props.isperRoom
-                },
-                "promocode":{
-                    "PromoId":"NA",
-                    "Code":"NA",
-                    "Discount":"NA"
-                },
-                "packages":{
-                    "PackageId":"NA",
-                    "PackageName":"NA",
-                    "PackagePrice":"NA",
-                    "SpecialRequest":"NA"
-                },
-                "checkIn": localStorage.getItem('Checkin'),
-                "checkOut": localStorage.getItem('Checkout'),
-                "price": {
-                    "Principal": cost,
-                    "Tax": tax,
-                    "Total": totoalcost
-                },
-                "isCheckedIn": false,
-                "isCheckedOut": false
-            })
-        });
-
-        const json = await response.json();
-
-        if (json.Status === true) {
-            setOrderId(json.order_id)
-
-        } else {
-            document.getElementById("No_rooms").style.display = "block"
-        }
-    }
-
-    const PaymentSuccessFull = async (payid) => {
-        const response = await fetch(`${props.baseUrl}/booking/update`, {
-            method: "POST",
-            headers: {
-                Accept: "application/json, text/plain, /",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                "ndid": localStorage.getItem('hotelid'),
-                "orderid": OrderId,
-                "paymentid": payid,
-                "Status": PaymentStatus,
-                "hId":localStorage.getItem('hid'),
-            })
-        })
-
-
-
-    }
-
-    function BookingFinalize() {
-        let maxAdult = 0
-        if (props.Delux > 0) { props.setmaxAdult(maxAdult += props.Delux * props.DeluxAdult) }
-        if (props.SuperDelux > 0) { props.setmaxAdult(maxAdult += props.SuperDelux * props.SuperDeluxAdult) }
-        if (props.Suite > 0) { props.setmaxAdult(maxAdult += props.Suite * props.SuiteAdult) }
-        if (props.Premium > 0) { props.setmaxAdult(maxAdult += props.Premium * props.PremiumAdult) }
-        if (props.Adult <= props.maxAdult) {
-            return false
-        }
-        else {
-            return true
-        }
-    }
-
-    const PopupFillFields = () => {
-        alert("Please Complete User details form")
-    }
-
-    const handlePayment = async () => {
-        try {
-            // alert(props.currency)
-            const mockOrderData = {
-                amount: parseInt(Number(props.room) * Number(props.BookingTotalPrice)) * 100, // Convert amount to paise (assuming INR)
-                orderId: OrderId, // Generate a unique order ID
-            };
-
-            const options = {
-                key: "rzp_test_UZ0V9jh3jMC0C9", // Enter the Key ID generated from the Dashboard rzp_test_UZ0V9jh3jMC0C9,rzp_live_5uaIIwZcxLC70j
-                amount: mockOrderData.amount.toString(), // Use the amount from the order data
-                currency: props.currency,
-                name: props.HotelName,
-                description: "Test Transaction",
-                image: props.HotelLogo,
-                order_id: OrderId, // Use the order ID from the order data
-                handler: async function (response) {
-                    setOrderId(response.razorpay_order_id);
-                    await PaymentSuccessFull(response.razorpay_payment_id)
-                    props.setPayment({
-                        "Status": true,
-                        "Logo":props.HotelLogo,
-                        "HotelName": props.HotelName,
-                        "Order": response.razorpay_order_id,
-                        "Payment": response.razorpay_payment_id,
-                        "Name": Name,
-                        "Phone": Phone,
-                        "Email": Email,
-                        "City": City,
-                        "Country": Country.label,
-                        "Checkin": localStorage.getItem('Checkin'),
-                        "Checkout": localStorage.getItem('Checkout'),
-                        "Adult": localStorage.getItem('Adult'),
-                        "Kid": localStorage.getItem('Kid'),
-                        "Tax": tax,
-                        "Amount": totoalcost,
-                        "PayStatus": PayStatus,
-                        "Delux": props.Delux,
-                        "Sd": props.SuperDelux,
-                        "Suite": props.Suite,
-                        "Premium": props.Premium,
-                        "MealPlan": props.selectedMealPlan,
-                        "Mealprice": props.selectedMealPlanPrice,
-                        "Rooms":props.RoomCategoryCombination
-                    })
-                },
-
-                theme: {
-                    color: props.Bg_color,
-                },
-            };
-
-            const rzp1 = new Razorpay(options);
-
-            rzp1.on("payment.failed", function (response) {
-                alert(response.error.code);
-                alert(response.error.description);
-                alert(response.error.source);
-                alert(response.error.step);
-                alert(response.error.reason);
-                alert(response.error.metadata.order_id);
-                alert(response.error.metadata.payment_id);
-            });
-
-            rzp1.open();
-        } catch (error) {
-            console.log("Payment Error:", error);
-        }
-    };
-
-
-    // for country selector 
-
-
-    const options = useMemo(() => {
-        const countryData = countryList().getData();
-        const defaultOption = { label: Country, value: Country };
-        return [defaultOption, ...countryData];
-    }, []);
-    const changeHandler = Country => {
-        setCountry(Country)
-    }
-
-    
-
-
-    return (
-        <>
-            <div className="container">
-                <div className="contact-info">
-                    <div id="Contact" className="mt-4">
-                        <div className="heading" style={{ backgroundColor: props.Bg_color }}>
-                            <h5>Guest Information</h5>
-                        </div>
-                        <div className="contact-main">
-                            <div className="inner-contact-left">
-                                <div className="code">
-                                    <div className="inputBox">
-                                        <span className="text-span">Full Name <span style={{ color: 'red' }}>*</span></span>
-                                        <div className="names">
-                                            <div className="prefix">
-                                                <select id="prefix" name="prefix" className="form-control form-prefix bg" required>
-                                                    <option value="Mr.">Mr.</option>
-                                                    <option value="Mrs.">Mrs.</option>
-                                                    <option value="Mrs.">Miss.</option>
-                                                    <option value="Mrs.">Dr.</option>
-                                                    <option value="Mrs.">Prof.</option>
-                                                </select>
-                                            </div>
-                                            <div className="name-input">
-                                                <input type="text" className="bg" name="fullname" id="FullName" placeholder="Full Name" value={Name} onChange={(e) => { setName(e.target.value) }} required />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="inputBox">
-                                        <span className="text-span">Email Id <span style={{ color: 'red' }}>*</span></span>
-                                        <input type="email" className="bg" value={Email} onChange={(e) => { setEmail(e.target.value) }} name="email" id="Email" placeholder="Please enter your email id"
-                                            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required />
-
-                                    </div>
-                                    <div className="inputBox mobile">
-                                        <span className="text-span">Phone No. <span style={{ color: 'red' }}>*</span></span>
-                                        <div className="phone-input-container ">
-                                            <PhoneInput
-                                                international
-                                                className="phone-input-field"
-                                                defaultCountry="IN"
-                                                placeholder="Enter phone number"
-                                                value={Phone}
-                                                onChange={(newPhone) => setPhone(newPhone)}
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="inputBox inputBox-city">
-                                        <span className="text-span">City <span style={{ color: 'red' }}>*</span></span>
-                                        <input
-                                            value={City}
-                                            onChange={(e) => setCity(e.target.value)}
-                                            type="text"
-                                            id="user_city"
-                                            className="bg"
-                                            name="city"
-                                            required
-                                        />
-                                    </div>
-
-                                    <div className="inputBox content_inner">
-                                        <span className="text-span">Country <span style={{ color: 'red' }}>*</span></span>
-                                        <div className="country_select">
-                                            <Select options={options} value={Country} onChange={changeHandler} />
-                                        </div>
-
-                                        {/* <input
+                    {/* <input
                                             type="text"
                                             value={Country}
                                             onChange={(e) => setCountry(e.target.value)}
                                         /> */}
+                  </div>
+                  <div className="content_inner">
+                    <span className="text-span">Special Requests</span>
+                    <textarea
+                      className="bg"
+                      name="text"
+                      id="request"
+                      placeholder="ADDITIONAL REQUEST"
+                    ></textarea>
+                  </div>
 
-
-                                    </div>
-                                    <div className="content_inner">
-                                        <span className="text-span">Special Requests</span>
-                                        <textarea className="bg" name="text" id="request" placeholder="ADDITIONAL REQUEST"></textarea>
-                                    </div>
-
-                                    {/* <div className="content_inner">
+                  {/* <div className="content_inner">
                                         <span className="text-span">Promo Code</span>
                                         <div className="promo_btn_div">
                                             <input type="text" placeholder="Enter Promo Code here" />
                                             <Button>Apply</Button>
                                         </div>
                                     </div> */}
+                </div>
+                {BookingFinalize() ? (
+                  <div className="alert alert-danger" role="alert">
+                    Please Select More Rooms
+                  </div>
+                ) : !OrderId ? (
+                  <div className="button_s">
+                    {Name && Phone && Email && Country && City && !OrderId ? (
+                      <>
+                        {props.isPayatHotel ? (
+                          <button
+                            className="submitbtn"
+                            onClick={GetPayLaterOrderId}
+                          >
+                            PAY AT HOTEL
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                        {props.isOnlinepay ? (
+                          <button
+                            className="submitbtn"
+                            onClick={GetHalfOrderId}
+                          >
+                            PAY 50% AMOUNT{" "}
+                            <span>
+                              {0.5 * (cost + tax)} {props.currency}
+                            </span>
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                        {props.isOnlinepay ? (
+                          <button className="submitbtn" onClick={GetOrderId}>
+                            PAY FULL AMOUNT{" "}
+                            <span>
+                              {cost + tax} {props.currency}
+                            </span>
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                        <p className="button_s_p">
+                          By making this booking, you are accepting our terms
+                          and conditions***
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        {props.isPayatHotel ? (
+                          <button
+                            className="submitbtn"
+                            onClick={PopupFillFields}
+                          >
+                            PAY AT HOTEL
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                        {props.isOnlinepay ? (
+                          <button
+                            className="submitbtn"
+                            onClick={PopupFillFields}
+                          >
+                            PAY 50% AMOUNT{" "}
+                            <span>
+                              {0.5 * (cost + tax)} {props.currency}
+                            </span>
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                        {props.isOnlinepay ? (
+                          <button
+                            className="submitbtn"
+                            onClick={PopupFillFields}
+                          >
+                            PAY FULL AMOUNT{" "}
+                            <span>
+                              {cost + tax} {props.currency}
+                            </span>
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                        <p className="button_s_p">
+                          By making this booking, you are accepting our terms
+                          and conditions***
+                        </p>
+                      </>
+                    )}
+                  </div>
+                ) : (
+                  <div className="bookingbtn">
+                    <button
+                      className="cmplt pay_button"
+                      id="rzp-button1"
+                      onClick={handlePayment}
+                      style={{ backgroundColor: props.color }}
+                    >
+                      {props.Paymentbutton}
+                    </button>
+                  </div>
+                )}
 
-
-
-
-                                </div>
-                                {BookingFinalize() ? (
-                                    <div className="alert alert-danger" role="alert">
-                                        Please Select More Rooms
-                                    </div>
-                                ) : (
-                                    !OrderId ? (
-                                        <div className="button_s">
-                                            {Name && Phone && Email && Country && City && !OrderId ? (
-                                                <>
-                                                    {props.isPayatHotel?<button className="submitbtn" onClick={GetPayLaterOrderId}>PAY AT HOTEL</button>:""}
-                                                    {props.isOnlinepay?<button className="submitbtn" onClick={GetHalfOrderId}>PAY 50% AMOUNT <span>{0.5 * (cost + tax)} {props.currency}</span></button>:""}
-                                                    {props.isOnlinepay?<button className="submitbtn" onClick={GetOrderId}>PAY FULL AMOUNT <span>{cost + tax} {props.currency}</span></button>:""}
-                                                    <p className="button_s_p">By making this booking, you are accepting our terms and conditions***</p>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    {props.isPayatHotel?<button className="submitbtn" onClick={PopupFillFields}>PAY AT HOTEL</button>:""}
-                                                    {props.isOnlinepay?<button className="submitbtn" onClick={PopupFillFields}>PAY 50% AMOUNT <span>{0.5 * (cost + tax)} {props.currency}</span></button>:""}
-                                                    {props.isOnlinepay?<button className="submitbtn" onClick={PopupFillFields}>PAY FULL AMOUNT <span>{cost + tax} {props.currency}</span></button>:""}
-                                                    <p className="button_s_p">By making this booking, you are accepting our terms and conditions***</p>
-                                                </>
-                                            )}
-                                        </div>
-                                    ) : (
-                                        <div className="bookingbtn">
-                                            <button className="cmplt pay_button" id="rzp-button1" onClick={handlePayment} style={{ backgroundColor: props.color }}>{props.Paymentbutton}</button>
-                                        </div>
-                                    )
-                                )}
-
-
-                                {/* <div className="button_s">
+                {/* <div className="button_s">
                                     <button className="submitbtn" onClick={toggleDiv}>Submit</button>
                                 </div> */}
-                            </div>
+              </div>
 
+              <div className="inner-contact-right">
+                <h4 className="m-4 text-center" style={{ fontWeight: "600" }}>
+                  Reservation details
+                </h4>
+                <div className="cust-detail">
+                  <div className="cust-inner">
+                    <div>
+                      <span className="left-span">Check In</span>
+                    </div>
+                    <div>
+                      <span className="right-span" id="Final_checkin">
+                        {changeDateFormat(localStorage.getItem("Checkin"))}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="cust-detail">
+                  <div className="cust-inner">
+                    <div>
+                      <span className="left-span">Check Out</span>
+                    </div>
+                    <div>
+                      <span className="right-span" id="Final_checkout">
+                        {changeDateFormat(localStorage.getItem("Checkout"))}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="cust-detail">
+                  <div className="cust-inner">
+                    <div>
+                      <span className="left-span">No. of Nights</span>
+                    </div>
+                    <div>
+                      <p className="right-span">
+                        <span id="Final_night">{props.nights}</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="cust-detail">
+                  <div className="cust-inner">
+                    <div>
+                      <span className="left-span">No. of Guests</span>
+                    </div>
+                    <div>
+                      <span className="right-span">
+                        <span id="Final_adult">
+                          {localStorage.getItem("Adult")}
+                        </span>{" "}
+                        adults,{" "}
+                        <span id="Final_kid">
+                          {localStorage.getItem("Kid")}
+                        </span>{" "}
+                        children
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div className="cust-detail">
+                  <div className="cust-inner">
+                    <div>
+                      <span className="left-span">Rooms</span>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      {props.Delux !== 0 ? (
+                        <span className="right-span" id="Final_checkout">
+                          {props.RoomCategoryCombination["DELUX"]}:-{" "}
+                          {props.Delux}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                      {props.SuperDelux !== 0 ? (
+                        <span className="right-span" id="Final_checkout">
+                          {props.RoomCategoryCombination["SUPERDELUX"]}:-{" "}
+                          {props.SuperDelux}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                      {props.Suite !== 0 ? (
+                        <span className="right-span" id="Final_checkout">
+                          {props.RoomCategoryCombination["SUITE"]}:-{" "}
+                          {props.Suite}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                      {props.Premium !== 0 ? (
+                        <span className="right-span" id="Final_checkout">
+                          {props.RoomCategoryCombination["PREMIUM"]}:-{" "}
+                          {props.Premium}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
+                </div>
 
-                            <div className="inner-contact-right">
-                                <h4 className="m-4 text-center" style={{ fontWeight: '600' }}>Reservation details</h4>
-                                <div className="cust-detail">
-
-                                    <div className="cust-inner">
-                                        <div>
-                                            <span className="left-span">Check In</span>
-                                        </div>
-                                        <div>
-                                            <span className="right-span" id="Final_checkin">{changeDateFormat(localStorage.getItem("Checkin"))}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="cust-detail">
-                                    <div className="cust-inner">
-                                        <div>
-                                            <span className="left-span">Check Out</span>
-                                        </div>
-                                        <div>
-                                            <span className="right-span" id="Final_checkout">{changeDateFormat(localStorage.getItem("Checkout"))}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="cust-detail">
-                                    <div className="cust-inner">
-                                        <div>
-                                            <span className="left-span">No. of Nights</span>
-                                        </div>
-                                        <div>
-                                            <p className="right-span"><span id="Final_night">{props.nights}</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="cust-detail">
-                                    <div className="cust-inner">
-                                        <div>
-                                            <span className="left-span">No. of Guests</span>
-                                        </div>
-                                        <div>
-                                            <span className="right-span"><span id="Final_adult">{localStorage.getItem("Adult")}</span> adults, <span id="Final_kid">{localStorage.getItem("Kid")}</span> children</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="cust-detail">
-                                    <div className="cust-inner">
-                                        <div>
-                                            <span className="left-span">Rooms</span>
-                                        </div>
-                                        <div style={{ display: "flex", flexDirection: "column" }}>
-                                            
-                                            {props.Delux !== 0 ? <span className="right-span" id="Final_checkout">{props.RoomCategoryCombination["DELUX"]}:- {props.Delux}</span> : ""}
-                                            {props.SuperDelux !== 0 ? <span className="right-span" id="Final_checkout">{props.RoomCategoryCombination["SUPERDELUX"]}:- {props.SuperDelux}</span> : ""}
-                                            {props.Suite !== 0 ? <span className="right-span" id="Final_checkout">{props.RoomCategoryCombination["SUITE"]}:- {props.Suite}</span> : ""}
-                                            {props.Premium !== 0 ? <span className="right-span" id="Final_checkout">{props.RoomCategoryCombination["PREMIUM"]}:- {props.Premium}</span> : ""}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="cust-detail">
-                                    <div className="cust-inner">
-                                        <div>
-                                            <span className="left-span">Meal Selected</span>
-                                        </div>
-                                        <div>
-                                            <p className="right-span"><span id="Final_room">{props.selectedMealPlan ? props.selectedMealPlan : "-"}</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="cust-detail">
-                                    <div className="cust-inner">
-                                        <div>
-                                            <span className="left-span">Meal Price</span>
-                                        </div>
-                                        <div>
-                                            <p className="right-span"><span id="Final_room">{props.selectedMealPlanPrice ? props.selectedMealPlanPrice : "-"} {props.isperRoom ? "per room" : "per adult"}</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* <div className="cust-detail">
+                <div className="cust-detail">
+                  <div className="cust-inner">
+                    <div>
+                      <span className="left-span">Meal Selected</span>
+                    </div>
+                    <div>
+                      <p className="right-span">
+                        <span id="Final_room">
+                          {props.selectedMealPlan
+                            ? props.selectedMealPlan
+                            : "-"}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="cust-detail">
+                  <div className="cust-inner">
+                    <div>
+                      <span className="left-span">Meal Price</span>
+                    </div>
+                    <div>
+                      <p className="right-span">
+                        <span id="Final_room">
+                          {props.selectedMealPlanPrice
+                            ? props.selectedMealPlanPrice
+                            : "-"}{" "}
+                          {props.isperRoom ? "per room" : "per adult"}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                {/* <div className="cust-detail">
                                     <div className="cust-inner">
                                         <div>
                                             <span className="left-span">Total Meal Price</span>
@@ -714,47 +876,59 @@ function CnfrmPay(props) {
                                         </div>
                                     </div>
                                 </div> */}
-                                <div className="cust-detail sub-price">
-                                    <div className="cust-inner">
-                                        <div className="cust-sub d-flex flex-column py-2">
-                                            <span className="left-span">Sub total</span>
-                                            <span className="left-span">Taxes and fees</span>
-                                        </div>
-                                        <div className="cust-sub d-flex flex-column py-2">
-                                            <span style={{ padding: '5px 0', fontWeight: '600' }}><span id="Final_price">{cost}</span> {props.currency}</span>
-                                            <span style={{ fontWeight: '600' }}><span id="Final_tax" style={{ fontWeight: '600' }}>{tax}</span> {props.currency}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="cust-detail" style={{ borderBottom: '1px solid #9BCFF0' }}>
-                                    <div className="cust-inner">
-                                        <div className="py-2">
-                                            <span className="left-span" style={{ color: '#153B5B', fontWeight: '700' }}>GRAND TOTAL</span>
-                                        </div>
-                                        <div className="py-2">
-                                            <span className="right-span"><span id="Final_payable_price">{cost + tax}</span> {props.currency}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-
-
-
+                <div className="cust-detail sub-price">
+                  <div className="cust-inner">
+                    <div className="cust-sub d-flex flex-column py-2">
+                      <span className="left-span">Sub total</span>
+                      <span className="left-span">Taxes and fees</span>
                     </div>
-
-                    {/* contact information end  */}
+                    <div className="cust-sub d-flex flex-column py-2">
+                      <span style={{ padding: "5px 0", fontWeight: "600" }}>
+                        <span id="Final_price">{cost}</span> {props.currency}
+                      </span>
+                      <span style={{ fontWeight: "600" }}>
+                        <span id="Final_tax" style={{ fontWeight: "600" }}>
+                          {tax}
+                        </span>{" "}
+                        {props.currency}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-            </div >
+                <div
+                  className="cust-detail"
+                  style={{ borderBottom: "1px solid #9BCFF0" }}
+                >
+                  <div className="cust-inner">
+                    <div className="py-2">
+                      <span
+                        className="left-span"
+                        style={{ color: "#153B5B", fontWeight: "700" }}
+                      >
+                        GRAND TOTAL
+                      </span>
+                    </div>
+                    <div className="py-2">
+                      <span className="right-span">
+                        <span id="Final_payable_price">{cost + tax}</span>{" "}
+                        {props.currency}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-            {/* {isOpen && (
+          {/* contact information end  */}
+        </div>
+      </div>
+
+      {/* {isOpen && (
                 <Payment />
             )} */}
-
-        </>
-    )
+    </>
+  );
 }
 
 export default CnfrmPay;
