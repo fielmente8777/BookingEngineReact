@@ -295,7 +295,7 @@ export default function Landing(props) {
                 <section className={`section`}>
                     {/* style={{width:"100%",objectFit:"cover",backgroundImage:`url(${props.Bg_image})`,backgroundRepeat:"no-repeat" }} */}
                     <div className={`container form-main ${props.display}`} >
-                        <div className="form" style={{width: HotelLocations.length>1?"1000px":"800px"}}>
+                        <div className="form" style={{width: HotelLocations.length>1?"100%":"100%"}}>
                             <div className="reservation" style={{ background: props.Bg_color }}>
                                 {/* <h4 >{props.ReservationLabel}</h4> */}
                                 <h4><strong>{t(props.ReservationLabel)}</strong></h4>
@@ -526,6 +526,7 @@ export default function Landing(props) {
                         {Packages.map((element) => {
                         return <div key={element.url} >
                         <Adpackage
+                            GatewayConnected={props.GatewayConnected}
                             baseUrl = {props.baseUrl}
                             isPayatHotel = {props.isPayatHotel}
                             isOnlinepay={props.isOnlinepay}
@@ -590,6 +591,7 @@ export default function Landing(props) {
                 {isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0) ? (
                     
                     <Contactinfo 
+                        GatewayConnected={props.GatewayConnected}
                         baseUrl = {props.baseUrl}
                         isPayatHotel = {props.isPayatHotel} isOnlinepay={props.isOnlinepay} currency={props.currency} setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
                         HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={1200}

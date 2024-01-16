@@ -180,6 +180,7 @@ export default function Cards(props) {
                 </div>
                 {isOpen && (
                 <Contactinfo 
+                    GatewayConnected={props.GatewayConnected}
                     baseUrl = {baseUrl}
                     isPayatHotel = {props.isPayatHotel}
                     isOnlinepay={props.isOnlinepay}

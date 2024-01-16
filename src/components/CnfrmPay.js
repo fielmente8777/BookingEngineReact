@@ -409,7 +409,7 @@ function CnfrmPay(props) {
 
   const handlePayment = async () => {
     try {
-      // alert(props.currency)
+      // alert(props.GatewayConnected)
       const mockOrderData = {
         amount:
           parseInt(Number(props.room) * Number(props.BookingTotalPrice)) * 100, // Convert amount to paise (assuming INR)
@@ -417,7 +417,7 @@ function CnfrmPay(props) {
       };
 
       const options = {
-        key: "rzp_test_UZ0V9jh3jMC0C9", // Enter the Key ID generated from the Dashboard rzp_test_UZ0V9jh3jMC0C9,rzp_live_5uaIIwZcxLC70j
+        key: props.GatewayConnected.API_KEY, // Enter the Key ID generated from the Dashboard rzp_test_UZ0V9jh3jMC0C9,rzp_live_5uaIIwZcxLC70j
         amount: mockOrderData.amount.toString(), // Use the amount from the order data
         currency: props.currency,
         name: props.HotelName,

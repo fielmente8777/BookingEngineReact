@@ -7,7 +7,7 @@ import Footer from './components/Footer';
 import * as React from 'react';
 import { Routes, Route, useParams } from 'react-router-dom';
 import FullCalendar from './components/FullCalendar';
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
 import Spinner from './components/Spinner';
 import NotFoundPage from './components/NotFoundPage';
 import { BrowserRouter } from 'react-router-dom'
@@ -34,6 +34,11 @@ function App() {
   const [Claritycode,setClarityCode] = useState("")
   const [isOnlinepay,setisOnlinepay] = useState(false)
   const [isPayatHotel,setisPayatHotel] = useState(false)
+  const [GatewayConnected,setGatewayConnected] = useState({
+    "Type":"Razorpay",
+    "API_KEY":"rzp_test_UZ0V9jh3jMC0C9",
+    "SECRET_KEY":"XHctZxmnMhzkkwcAlDtF0Xuc"
+  })
   const [currency,setCurrency] = useState('INR')
   const [Facebook, setFacebook] = useState("https://facebook.com/")
   const [Instagram, setInstagram] = useState("https://instagram.com/")
@@ -146,6 +151,8 @@ function App() {
       setisOnlinepay(json.Details.isOnlinePayment)
       //pay at hotel option
       setisPayatHotel(json.Details.isPayatHotel)
+      //Gateway
+      setGatewayConnected(json.Details.Gateway)
 
       //Clarity code
       setClarityCode(json.Details.Clarity)
@@ -173,8 +180,8 @@ function App() {
     }
   }
 
-  // const baseUrl = "https://nexon.eazotel.com"
-  const baseUrl = "http://127.0.0.1:5000"
+  const baseUrl = "https://nexon.eazotel.com"
+  // const baseUrl = "http://127.0.0.1:5000"
   // const baseUrl = "https://testnexon.eazotel.com"
 
 
@@ -185,7 +192,9 @@ function App() {
   localStorage.setItem('hid', hid)
 
 
-  Get_Hotel_status_exists()
+  useEffect(() => {
+    Get_Hotel_status_exists()
+  },[]);
 
   const { t, i18n } = useTranslation();
 
@@ -205,7 +214,7 @@ function App() {
         <Navbar hotelname={HotelName} logo={HotelLogo} display={Spinner_spin1} color={Bg_color} HotelNumber={HotelNumber}
           email={HotelEmail} hotelwebsite={hotelwebsite} />
 
-        {!Payment.Status ? <LandingPage isPayatHotel={isPayatHotel} isOnlinepay={isOnlinepay} currency={currency} Bg_color={Bg_color} HotelName={HotelName} HotelLogo={HotelLogo} baseUrl={baseUrl}
+        {!Payment.Status ? <LandingPage GatewayConnected={GatewayConnected} isPayatHotel={isPayatHotel} isOnlinepay={isOnlinepay} currency={currency} Bg_color={Bg_color} HotelName={HotelName} HotelLogo={HotelLogo} baseUrl={baseUrl}
           Bg_image={HotelImage} color={Box_color} display={Spinner_spin1} bt_color={Button_color}
           ReservationLabel={Reservation_button} ReservationButton={Room_searchButton} 
           FinalConfirmButton={RoomFinal_searchButton} Paymentbutton={PaymentButton} setPayment={setPayment} />
