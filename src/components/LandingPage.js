@@ -1,16 +1,14 @@
 // import React from 'react'
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import Adpackage from './Adpackage';
 import Cards from './Cards';
-import Adpackage from './Adpackage'
+import Contactinfo from './CnfrmPay';
+import Enquiryform from './Enquiry';
 import FullCalendar from './FullCalendar';
 import FullCalendar1 from './FullCalendar1';
-import Spinner from './Spinner';
-import { useTranslation } from 'react-i18next';
-import './i18n'; // Import your i18n configuration
-import SuccessPage from './SuccessPage';
-import Contactinfo from './CnfrmPay'
 import Mealplan from './Mealplan';
-import Enquiryform from './Enquiry';
+import './i18n'; // Import your i18n configuration
 
 
 
@@ -171,7 +169,7 @@ export default function Landing(props) {
                 Accept: "application/json, text/plain, /",
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ "Checkin": checkin_date, "Checkout": checkout_date,"hId":localStorage.getItem("hid")})
+            body: JSON.stringify({ "checkIn": checkin_date, "checkOut": checkout_date,"hId":localStorage.getItem("hid")})
         });
 
         const response2 = await fetch(`${props.baseUrl}/rpackage/ad/packages/engine/${localStorage.getItem('hotelid')}`, {

@@ -1,19 +1,16 @@
-import './App.css';
-import './style/NavFoot.css'
-import './style/Landing.css'
-import Navbar from './components/Navbar';
-import LandingPage from './components/LandingPage';
-import Footer from './components/Footer';
 import * as React from 'react';
-import { Routes, Route, useParams } from 'react-router-dom';
-import FullCalendar from './components/FullCalendar';
-import { useState ,useEffect} from 'react';
-import Spinner from './components/Spinner';
-import NotFoundPage from './components/NotFoundPage';
-import { BrowserRouter } from 'react-router-dom'
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import './components/i18n'; // Import your i18n configuration
+import { BrowserRouter } from 'react-router-dom';
+import './App.css';
+import Footer from './components/Footer';
+import LandingPage from './components/LandingPage';
+import Navbar from './components/Navbar';
+import NotFoundPage from './components/NotFoundPage';
 import SuccessPage from './components/SuccessPage';
+import './components/i18n'; // Import your i18n configuration
+import './style/Landing.css';
+import './style/NavFoot.css';
 
 
 
