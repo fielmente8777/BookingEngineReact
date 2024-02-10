@@ -1,14 +1,8 @@
 import axios from "axios";
-import { useCallback, useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useRazorpay from "react-razorpay";
 import "../style/Reserve.css";
-import Button from "react-bootstrap/Button";
 
-import {
-  getCountries,
-  getCountryCallingCode,
-} from "react-phone-number-input/input";
-import en from "react-phone-number-input/locale/en.json";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 
@@ -36,6 +30,46 @@ function CnfrmPay(props) {
   } catch {
     premiumcost = 0;
   }
+  try {
+    var premiereretreatcost = props.PremiereRetreat * Number(props.ratesChange["5"]["Price"]);
+  } catch {
+    premiereretreatcost = 0;
+  }
+  try {
+    var elitesuitecost = props.EliteSuite * Number(props.ratesChange["6"]["Price"]);
+  } catch {
+    elitesuitecost = 0;
+  }
+  try {
+    var granddeluxecost = props.GrandDeluxe * Number(props.ratesChange["7"]["Price"]);
+  } catch {
+    granddeluxecost = 0;
+  }
+  try {
+    var imperialsuitecost = props.ImperialSuite * Number(props.ratesChange["8"]["Price"]);
+  } catch {
+    imperialsuitecost = 0;
+  }
+  try {
+    var supremeretreatcost = props.SupremeRetreat * Number(props.ratesChange["9"]["Price"]);
+  } catch {
+    supremeretreatcost = 0;
+  }
+  try {
+    var royaldeluxecost = props.RoyalDeluxe * Number(props.ratesChange["10"]["Price"]);
+  } catch {
+    royaldeluxecost = 0;
+  }
+  try {
+    var prestigesuitecost = props.PrestigeSuite * Number(props.ratesChange["11"]["Price"]);
+  } catch {
+    prestigesuitecost = 0;
+  }
+  try {
+    var exclusiveretreatcost = props.ExclusiveRetreat * Number(props.ratesChange["12"]["Price"]);
+  } catch {
+    exclusiveretreatcost = 0;
+  }
 
   let tax = 0;
   let cost =
@@ -43,9 +77,19 @@ function CnfrmPay(props) {
     Number(sdcost) +
     Number(suitecost) +
     Number(premiumcost) +
+    Number(premiereretreatcost)+
+    Number(elitesuitecost)+
+    Number(granddeluxecost)+
+    Number(imperialsuitecost)+
+    Number(supremeretreatcost)+
+    Number(royaldeluxecost)+
+    Number(prestigesuitecost)+
+    Number(exclusiveretreatcost)+
     Number(props.Mealprice);
   if (props.currency == "INR") {
-    tax = 0.18 * Number(cost);
+    if(props.addTax){
+      tax = 0.18 * Number(cost);
+    }
   } else {
     tax = 0;
   }
@@ -126,6 +170,7 @@ function CnfrmPay(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        roomNumbers:[],
         hId: localStorage.getItem("hid"),
         ndid: localStorage.getItem("hotelid"),
         amount: totoalcost,
@@ -145,6 +190,14 @@ function CnfrmPay(props) {
           { RoomType: "2", Qty: props.SuperDelux },
           { RoomType: "3", Qty: props.Suite },
           { RoomType: "4", Qty: props.Premium },
+          { RoomType: "5", Qty: props.PremiereRetreat },
+          { RoomType: "6", Qty: props.EliteSuite },
+          { RoomType: "7", Qty: props.GrandDeluxe },
+          { RoomType: "8", Qty: props.ImperialSuite },
+          { RoomType: "9", Qty: props.SupremeRetreat },
+          { RoomType: "10", Qty: props.RoyalDeluxe },
+          { RoomType: "11", Qty: props.PrestigeSuite },
+          { RoomType: "12", Qty: props.ExclusiveRetreat }
         ],
         payment: {
           Status: "PENDING",
@@ -200,6 +253,14 @@ function CnfrmPay(props) {
         Sd: props.SuperDelux,
         Suite: props.Suite,
         Premium: props.Premium,
+        PremiereRetreat:props.PremiereRetreat,
+        EliteSuite:props.EliteSuite,
+        GrandDeluxe:props.GrandDeluxe,
+        ImperialSuite:props.ImperialSuite,
+        SupremeRetreat:props.SupremeRetreat,
+        RoyalDeluxe:props.RoyalDeluxe,
+        PrestigeSuite:props.PrestigeSuite,
+        ExclusiveRetreat:props.ExclusiveRetreat,
         Checkin: localStorage.getItem("Checkin"),
         Checkout: localStorage.getItem("Checkout"),
         Adult: localStorage.getItem("Adult"),
@@ -227,6 +288,7 @@ function CnfrmPay(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        roomNumbers:[],
         hId: localStorage.getItem("hid"),
         ndid: localStorage.getItem("hotelid"),
         amount: halfcost,
@@ -246,6 +308,14 @@ function CnfrmPay(props) {
           { RoomType: "2", Qty: props.SuperDelux },
           { RoomType: "3", Qty: props.Suite },
           { RoomType: "4", Qty: props.Premium },
+          { RoomType: "5", Qty: props.PremiereRetreat },
+          { RoomType: "6", Qty: props.EliteSuite },
+          { RoomType: "7", Qty: props.GrandDeluxe },
+          { RoomType: "8", Qty: props.ImperialSuite },
+          { RoomType: "9", Qty: props.SupremeRetreat },
+          { RoomType: "10", Qty: props.RoyalDeluxe },
+          { RoomType: "11", Qty: props.PrestigeSuite },
+          { RoomType: "12", Qty: props.ExclusiveRetreat }
         ],
         payment: {
           Status: "PENDING",
@@ -301,6 +371,7 @@ function CnfrmPay(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        roomNumbers:[],
         hId: localStorage.getItem("hid"),
         ndid: localStorage.getItem("hotelid"),
         amount: totoalcost,
@@ -320,6 +391,14 @@ function CnfrmPay(props) {
           { RoomType: "2", Qty: props.SuperDelux },
           { RoomType: "3", Qty: props.Suite },
           { RoomType: "4", Qty: props.Premium },
+          { RoomType: "5", Qty: props.PremiereRetreat },
+          { RoomType: "6", Qty: props.EliteSuite },
+          { RoomType: "7", Qty: props.GrandDeluxe },
+          { RoomType: "8", Qty: props.ImperialSuite },
+          { RoomType: "9", Qty: props.SupremeRetreat },
+          { RoomType: "10", Qty: props.RoyalDeluxe },
+          { RoomType: "11", Qty: props.PrestigeSuite },
+          { RoomType: "12", Qty: props.ExclusiveRetreat }
         ],
         payment: {
           Status: "PENDING",
@@ -396,6 +475,30 @@ function CnfrmPay(props) {
     if (props.Premium > 0) {
       props.setmaxAdult((maxAdult += props.Premium * props.PremiumAdult));
     }
+    if (props.PremiereRetreat > 0) {
+      props.setmaxAdult((maxAdult += props.PremiereRetreat * props.PremiereRetreatAdult));
+    }
+    if (props.EliteSuite > 0) {
+      props.setmaxAdult((maxAdult += props.EliteSuite * props.EliteSuiteAdult));
+    }
+    if (props.GrandDeluxe > 0) {
+      props.setmaxAdult((maxAdult += props.GrandDeluxe * props.GrandDeluxeAdult));
+    }
+    if (props.ImperialSuite > 0) {
+      props.setmaxAdult((maxAdult += props.ImperialSuite * props.ImperialSuiteAdult));
+    }
+    if (props.SupremeRetreat > 0) {
+      props.setmaxAdult((maxAdult += props.SupremeRetreat * props.SupremeRetreatAdult));
+    }
+    if (props.RoyalDeluxe > 0) {
+      props.setmaxAdult((maxAdult += props.RoyalDeluxe * props.RoyalDeluxeAdult));
+    }
+    if (props.PrestigeSuite > 0) {
+      props.setmaxAdult((maxAdult += props.PrestigeSuite * props.PrestigeSuiteAdult));
+    }
+    if (props.ExclusiveRetreat > 0) {
+      props.setmaxAdult((maxAdult += props.ExclusiveRetreat * props.ExclusiveRetreatAdult));
+    }
     if (props.Adult <= props.maxAdult) {
       return false;
     } else {
@@ -449,6 +552,14 @@ function CnfrmPay(props) {
             Sd: props.SuperDelux,
             Suite: props.Suite,
             Premium: props.Premium,
+            PremiereRetreat:props.PremiereRetreat,
+            EliteSuite:props.EliteSuite,
+            GrandDeluxe:props.GrandDeluxe,
+            ImperialSuite:props.ImperialSuite,
+            SupremeRetreat:props.SupremeRetreat,
+            RoyalDeluxe:props.RoyalDeluxe,
+            PrestigeSuite:props.PrestigeSuite,
+            ExclusiveRetreat:props.ExclusiveRetreat,
             MealPlan: props.selectedMealPlan,
             Mealprice: props.selectedMealPlanPrice,
             Rooms: props.RoomCategoryCombination,
@@ -825,6 +936,70 @@ function CnfrmPay(props) {
                         <span className="right-span" id="Final_checkout">
                           {props.RoomCategoryCombination["PREMIUM"]}:-{" "}
                           {props.Premium}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                      {props.PremiereRetreat !== 0 ? (
+                        <span className="right-span" id="Final_checkout">
+                          {props.RoomCategoryCombination["PremiereRetreat"]}:-{" "}
+                          {props.PremiereRetreat}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                      {props.EliteSuite !== 0 ? (
+                        <span className="right-span" id="Final_checkout">
+                          {props.RoomCategoryCombination["EliteSuite"]}:-{" "}
+                          {props.EliteSuite}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                      {props.GrandDeluxe !== 0 ? (
+                        <span className="right-span" id="Final_checkout">
+                          {props.RoomCategoryCombination["GrandDeluxe"]}:-{" "}
+                          {props.GrandDeluxe}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                      {props.ImperialSuite !== 0 ? (
+                        <span className="right-span" id="Final_checkout">
+                          {props.RoomCategoryCombination["ImperialSuite"]}:-{" "}
+                          {props.ImperialSuite}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                      {props.SupremeRetreat !== 0 ? (
+                        <span className="right-span" id="Final_checkout">
+                          {props.RoomCategoryCombination["SupremeRetreat"]}:-{" "}
+                          {props.SupremeRetreat}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                      {props.RoyalDeluxe !== 0 ? (
+                        <span className="right-span" id="Final_checkout">
+                          {props.RoomCategoryCombination["RoyalDeluxe"]}:-{" "}
+                          {props.RoyalDeluxe}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                      {props.PrestigeSuite !== 0 ? (
+                        <span className="right-span" id="Final_checkout">
+                          {props.RoomCategoryCombination["PrestigeSuite"]}:-{" "}
+                          {props.PrestigeSuite}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                      {props.ExclusiveRetreat !== 0 ? (
+                        <span className="right-span" id="Final_checkout">
+                          {props.RoomCategoryCombination["ExclusiveRetreat"]}:-{" "}
+                          {props.ExclusiveRetreat}
                         </span>
                       ) : (
                         ""

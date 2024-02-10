@@ -21,15 +21,46 @@ export default function Landing(props) {
     const [SuperDelux, setSuperDelux] = useState(0)
     const [Suite, setSuite] = useState(0)
     const [Premium, setPremium] = useState(0)
+    const [PremiereRetreat, setPremiereRetreat] = useState(0)
+    const [EliteSuite, setEliteSuite] = useState(0)
+    const [GrandDeluxe, setGrandDeluxe] = useState(0)
+    const [ImperialSuite, setImperialSuite] = useState(0)
+    const [SupremeRetreat, setSupremeRetreat] = useState(0)
+    const [RoyalDeluxe, setRoyalDeluxe] = useState(0)
+    const [PrestigeSuite, setPrestigeSuite] = useState(0)
+    const [ExclusiveRetreat, setExclusiveRetreat] = useState(0)
 
 
     const [DeluxAdult, setDeluxAdult] = useState(0)
     const [SuperDeluxAdult, setSuperDeluxAdult] = useState(0)
     const [SuiteAdult, setSuiteAdult] = useState(0)
     const [PremiumAdult, setPremiumAdult] = useState(0)
+    const [PremiereRetreatAdult, setPremiereRetreatAdult] = useState(0)
+    const [EliteSuiteAdult, setEliteSuiteAdult] = useState(0)
+    const [GrandDeluxeAdult, setGrandDeluxeAdult] = useState(0)
+    const [ImperialSuiteAdult, setImperialSuiteAdult] = useState(0)
+    const [SupremeRetreatAdult, setSupremeRetreatAdult] = useState(0)
+    const [RoyalDeluxeAdult, setRoyalDeluxeAdult] = useState(0)
+    const [PrestigeSuiteAdult, setPrestigeSuiteAdult] = useState(0)
+    const [ExclusiveRetreatAdult, setExclusiveRetreatAdult] = useState(0)
 
 
-    const [RoomCategoryCombination,setRoomCategoryCombination] = useState({"DELUX":"-","SUPERDELUX":"-","SUITE":"-","PREMIUM":"-"})
+    const [RoomCategoryCombination,setRoomCategoryCombination] = useState({
+        "DELUX":"-",
+        "SUPERDELUX":"-",
+        "SUITE":"-",
+        "PREMIUM":"-",
+        "PremiereRetreat":"-",
+        "EliteSuite":"-",
+        "GrandDeluxe":"-",
+        "ImperialSuite":"-",
+        "SupremeRetreat":"-",
+        "RoyalDeluxe":"-",
+        "PrestigeSuite":"-",
+        "ExclusiveRetreat":"-"
+        
+    
+    })
     const [Night, setNights] = useState(0)
     let [maxAdult, setmaxAdult] = useState(0)
 
@@ -56,14 +87,30 @@ export default function Landing(props) {
         "DELUX": 0,
         "PREMIUM": 0,
         "SUITE": 0,
-        "SUPERDELUX": 0
+        "SUPERDELUX": 0,
+        "PremiereRetreat": 0,
+        "EliteSuite": 0,
+        "GrandDeluxe": 0,
+        "ImperialSuite": 0,
+        "SupremeRetreat": 0,
+        "RoyalDeluxe": 0,
+        "PrestigeSuite": 0,
+        "ExclusiveRetreat": 0
     })
 
     const [RoomNameAvailable, setRoomNameAvailable] = useState({
         "DELUX": "DELUX",
         "PREMIUM": "PREMIUM",
         "SUITE": "SUITE",
-        "SUPER DELUX": "SUPERDELUX"
+        "SUPER DELUX": "SUPERDELUX",
+        "Premiere Retreat":"PremiereRetreat", 
+        "Elite Suite":"EliteSuite",
+        "Grand Deluxe":"GrandDeluxe",
+        "Imperial Suite":"ImperialSuite",
+        "Supreme Retreat":"SupremeRetreat",
+        "Royal Deluxe":"RoyalDeluxe",
+        "Prestige Suite":"PrestigeSuite",
+        "Exclusive Retreat":"ExclusiveRetreat"
     })
     const [dataLoaded, setDataLoaded] = useState(false);
 
@@ -239,6 +286,14 @@ export default function Landing(props) {
         if (SuperDelux > 0) { setmaxAdult(maxAdult += SuperDelux * SuperDeluxAdult) }
         if (Suite > 0) { setmaxAdult(maxAdult += Suite * SuiteAdult) }
         if (Premium > 0) { setmaxAdult(maxAdult += Premium * PremiumAdult) }
+        if (PremiereRetreat > 0) { setmaxAdult(maxAdult += PremiereRetreat * PremiereRetreatAdult) }
+        if (EliteSuite > 0) { setmaxAdult(maxAdult += EliteSuite * EliteSuiteAdult) }
+        if (GrandDeluxe > 0) { setmaxAdult(maxAdult += GrandDeluxe * GrandDeluxeAdult) }
+        if (ImperialSuite > 0) { setmaxAdult(maxAdult += ImperialSuite * ImperialSuiteAdult) }
+        if (SupremeRetreat > 0) { setmaxAdult(maxAdult += SupremeRetreat * SupremeRetreatAdult) }
+        if (RoyalDeluxe > 0) { setmaxAdult(maxAdult += RoyalDeluxe * RoyalDeluxeAdult) }
+        if (PrestigeSuite > 0) { setmaxAdult(maxAdult += PrestigeSuite * PrestigeSuiteAdult) }
+        if (ExclusiveRetreat > 0) { setmaxAdult(maxAdult += ExclusiveRetreat * ExclusiveRetreatAdult) }
         if (Adult <= maxAdult) {
             setisOpen(true)
             setReservebtn(false)
@@ -480,6 +535,7 @@ export default function Landing(props) {
                                 ratechange={ratesChange}
                                 roomtype={element.roomType}
                                 Adult={element.adult}
+                                a={Available}
                                 type={element.roomTypeName}
                                 facilities={element.roomFacilities}
                                 images={element.roomImage}
@@ -494,10 +550,28 @@ export default function Landing(props) {
                                 setSuperDelux={setSuperDelux}
                                 setSuite={setSuite}
                                 setPremium={setPremium}
+                                setPremiereRetreat={setPremiereRetreat}
+                                setEliteSuite={setEliteSuite}
+                                setGrandDeluxe={setGrandDeluxe}
+                                setImperialSuite={setImperialSuite}
+                                setSupremeRetreat={setSupremeRetreat}
+                                setRoyalDeluxe={setRoyalDeluxe}
+                                setPrestigeSuite={setPrestigeSuite}
+                                setExclusiveRetreat={setExclusiveRetreat}
+
                                 setDeluxAdult={setDeluxAdult}
                                 setSuperDeluxAdult={setSuperDeluxAdult}
                                 setSuiteAdult={setSuiteAdult}
                                 setPremiumAdult={setPremiumAdult}
+                                setPremiereRetreatAdult={setPremiereRetreatAdult}
+                                setEliteSuiteAdult={setEliteSuiteAdult}
+                                setGrandDeluxeAdult={setGrandDeluxeAdult}
+                                setImperialSuiteAdult={setImperialSuiteAdult}
+                                setSupremeRetreatAdult={setSupremeRetreatAdult}
+                                setRoyalDeluxeAdult={setRoyalDeluxeAdult}
+                                setPrestigeSuiteAdult={setPrestigeSuiteAdult}
+                                setExclusiveRetreatAdult={setExclusiveRetreatAdult}
+
                                 setisOpen={setisOpen}
                                 BookingFinalize={BookingFinalize}
                                 RoomCategoryCombination = {RoomCategoryCombination}
@@ -524,6 +598,7 @@ export default function Landing(props) {
                         {Packages.map((element) => {
                         return <div key={element.url} >
                         <Adpackage
+                            addTax={props.addTax}
                             GatewayConnected={props.GatewayConnected}
                             baseUrl = {props.baseUrl}
                             isPayatHotel = {props.isPayatHotel}
@@ -559,11 +634,11 @@ export default function Landing(props) {
                 </div>:""}
 
                 <div className='container'>
-                    {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0)
+                    {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0 || PremiereRetreat!==0 || EliteSuite!==0 || GrandDeluxe!==0 || ImperialSuite!==0 || SupremeRetreat!==0 || RoyalDeluxe!==0 || PrestigeSuite!==0 || ExclusiveRetreat!==0)
                         ? <button className='ReserveButtonForPayment' style={{background:props.Bg_color}} onClick={BookingFinalize}><strong>{props.FinalConfirmButton}</strong></button> : ""}
                 </div>
 
-                {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0)&&mealplan.length!==0 ?
+                {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0 || PremiereRetreat!==0 || EliteSuite!==0 || GrandDeluxe!==0 || ImperialSuite!==0 || SupremeRetreat!==0 || RoyalDeluxe!==0 || PrestigeSuite!==0 || ExclusiveRetreat!==0 )&&mealplan.length!==0 ?
                     <Mealplan 
                         baseUrl = {props.baseUrl}
                         setisperRoom={setisperRoom}
@@ -578,6 +653,14 @@ export default function Landing(props) {
                         SuperDelux={SuperDelux}
                         Suite={Suite}
                         Premium={Premium}
+                        PremiereRetreat={PremiereRetreat}
+                        EliteSuite={EliteSuite}
+                        GrandDeluxe={GrandDeluxe}
+                        ImperialSuite={ImperialSuite}
+                        SupremeRetreat={SupremeRetreat}
+                        RoyalDeluxe={RoyalDeluxe}
+                        PrestigeSuite={PrestigeSuite}
+                        ExclusiveRetreat={ExclusiveRetreat}
                         Adult={Adult}
                         isperRoom={isperRoom}
                         color={props.color}
@@ -586,9 +669,10 @@ export default function Landing(props) {
                 
 
                     
-                {isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0) ? (
+                {isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0 || PremiereRetreat!==0 || EliteSuite!==0 || GrandDeluxe!==0 || ImperialSuite!==0 || SupremeRetreat!==0 || RoyalDeluxe!==0 || PrestigeSuite!==0 || ExclusiveRetreat!==0) ? (
                     
                     <Contactinfo 
+                        addTax={props.addTax}
                         GatewayConnected={props.GatewayConnected}
                         baseUrl = {props.baseUrl}
                         isPayatHotel = {props.isPayatHotel} isOnlinepay={props.isOnlinepay} currency={props.currency} setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
@@ -600,7 +684,16 @@ export default function Landing(props) {
                         SuperDelux={SuperDelux}
                         Suite={Suite}
                         Premium={Premium}
+                        PremiereRetreat={PremiereRetreat}
+                        EliteSuite={EliteSuite}
+                        GrandDeluxe={GrandDeluxe}
+                        ImperialSuite={ImperialSuite}
+                        SupremeRetreat={SupremeRetreat}
+                        RoyalDeluxe={RoyalDeluxe}
+                        PrestigeSuite={PrestigeSuite}
+                        ExclusiveRetreat={ExclusiveRetreat}
                         ratesChange={ratesChange}
+
                         Adult={Adult}
                         maxAdult={maxAdult}
                         setmaxAdult={setmaxAdult}
@@ -608,6 +701,16 @@ export default function Landing(props) {
                         SuperDeluxAdult={SuperDeluxAdult}
                         SuiteAdult={SuiteAdult}
                         PremiumAdult={PremiumAdult}
+                        PremiereRetreatAdult = {PremiereRetreatAdult}
+                        EliteSuiteAdult = {EliteSuiteAdult}
+                        GrandDeluxeAdult = {GrandDeluxeAdult}
+                        ImperialSuiteAdult = {ImperialSuiteAdult}
+                        SupremeRetreatAdult = {SupremeRetreatAdult}
+                        RoyalDeluxeAdult = {RoyalDeluxeAdult}
+                        PrestigeSuiteAdult = {PrestigeSuiteAdult}
+                        ExclusiveRetreatAdult = {ExclusiveRetreatAdult}
+
+
                         selectedMealPlan={selectedMealPlan}
                         selectedMealPlanPrice={selectedMealPlanPrice}
                         isperRoom={isperRoom}

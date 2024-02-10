@@ -1,14 +1,8 @@
 import axios from "axios";
-import { useCallback, useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useRazorpay from "react-razorpay";
 import "../style/Reserve.css";
-import Button from "react-bootstrap/Button";
 
-import {
-  getCountries,
-  getCountryCallingCode,
-} from "react-phone-number-input/input";
-import en from "react-phone-number-input/locale/en.json";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import Select from "react-select";
@@ -62,6 +56,15 @@ function Contactinfo(props) {
   const [Suite, setSuite] = useState(0);
   const [Superd, setSuperd] = useState(0);
   const [Premium, setPremium] = useState(0);
+  const [PremiereRetreat, setPremiereRetreat] = useState(0);
+  const [EliteSuite, setEliteSuite] = useState(0);
+  const [GrandDeluxe, setGrandDeluxe] = useState(0);
+  const [ImperialSuite, setImperialSuite] = useState(0);
+  const [SupremeRetreat, setSupremeRetreat] = useState(0);
+  const [RoyalDeluxe, setRoyalDeluxe] = useState(0);
+  const [PrestigeSuite, setPrestigeSuite] = useState(0);
+  const [ExclusiveRetreat, setExclusiveRetreat] = useState(0);
+
   const [rt, setrt] = useState(props.roomtype);
 
   // location api
@@ -190,6 +193,7 @@ function Contactinfo(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        roomNumbers:[],
         hId: localStorage.getItem("hid"),
         ndid: localStorage.getItem("hotelid"),
         amount: subTotal,
@@ -209,6 +213,14 @@ function Contactinfo(props) {
           { RoomType: "2", Qty: Superd },
           { RoomType: "3", Qty: Suite },
           { RoomType: "4", Qty: Premium },
+          { RoomType: "5", Qty:PremiereRetreat},
+          { RoomType: "6", Qty:EliteSuite},
+          { RoomType: "7", Qty:GrandDeluxe},
+          { RoomType: "8", Qty:ImperialSuite},
+          { RoomType: "9", Qty:SupremeRetreat},
+          { RoomType: "10", Qty:RoyalDeluxe},
+          { RoomType: "11", Qty:PrestigeSuite},
+          { RoomType: "12", Qty:ExclusiveRetreat},
         ],
         payment: {
           Status: "PENDING",
@@ -297,6 +309,7 @@ function Contactinfo(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        roomNumbers:[],
         hId: localStorage.getItem("hid"),
         ndid: localStorage.getItem("hotelid"),
         amount: 0.5 * subTotal,
@@ -316,6 +329,14 @@ function Contactinfo(props) {
           { RoomType: "2", Qty: Superd },
           { RoomType: "3", Qty: Suite },
           { RoomType: "4", Qty: Premium },
+          { RoomType: "5", Qty:PremiereRetreat},
+          { RoomType: "6", Qty:EliteSuite},
+          { RoomType: "7", Qty:GrandDeluxe},
+          { RoomType: "8", Qty:ImperialSuite},
+          { RoomType: "9", Qty:SupremeRetreat},
+          { RoomType: "10", Qty:RoyalDeluxe},
+          { RoomType: "11", Qty:PrestigeSuite},
+          { RoomType: "12", Qty:ExclusiveRetreat},
         ],
         payment: {
           Status: "PENDING",
@@ -377,6 +398,7 @@ function Contactinfo(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        roomNumbers:[],
         hId: localStorage.getItem("hid"),
         ndid: localStorage.getItem("hotelid"),
         amount: subTotal,
@@ -396,6 +418,14 @@ function Contactinfo(props) {
           { RoomType: "2", Qty: Superd },
           { RoomType: "3", Qty: Suite },
           { RoomType: "4", Qty: Premium },
+          { RoomType: "5", Qty:PremiereRetreat},
+          { RoomType: "6", Qty:EliteSuite},
+          { RoomType: "7", Qty:GrandDeluxe},
+          { RoomType: "8", Qty:ImperialSuite},
+          { RoomType: "9", Qty:SupremeRetreat},
+          { RoomType: "10", Qty:RoyalDeluxe},
+          { RoomType: "11", Qty:PrestigeSuite},
+          { RoomType: "12", Qty:ExclusiveRetreat},
         ],
         payment: {
           Status: "PENDING",

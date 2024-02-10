@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
-import '../style/SuccessPage.css'
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import '../style/SuccessPage.css';
 
 
 
-import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 function SuccessPage(props) {
 
@@ -159,24 +159,125 @@ function SuccessPage(props) {
                 <div className="succesDataTable">
                     <h6><strong>Booked Room</strong></h6>
 
-                    <Table striped bordered hover variant="light">
-                        <thead>
-                            <tr>
-                                <th>{props.Payment.Rooms.DELUX}</th>
-                                <th>{props.Payment.Rooms.SUPERDELUX}</th>
-                                <th>{props.Payment.Rooms.SUITE}</th>
-                                <th>{props.Payment.Rooms.PREMIUM}</th>
-                            </tr>
-                        </thead>
+                    {props.Payment.Rooms.DELUX!=="-"?<Table striped bordered hover variant="light">
+                        
                         <tbody>
                             <tr>
+                                <td>{props.Payment.Rooms.DELUX}</td>
                                 <td>{props.Payment.Delux}</td>
+                            </tr>
+                            
+                        </tbody>
+                    </Table>:""}
+
+                    {props.Payment.Rooms.SUPERDELUX!=="-"?<Table striped bordered hover variant="light">
+                        <tbody>
+                            <tr>
+                                <td>{props.Payment.Rooms.SUPERDELUX}</td>
                                 <td>{props.Payment.Sd}</td>
+                            </tr>
+                        </tbody>
+                    </Table>:""}
+
+                    {props.Payment.Rooms.SUITE!=="-"?<Table striped bordered hover variant="light">
+                        
+                        <tbody>
+                            <tr>
+                                <td>{props.Payment.Rooms.SUITE}</td>
                                 <td>{props.Payment.Suite}</td>
+                            </tr>
+                        </tbody>
+                    </Table>:""}
+
+                    {props.Payment.Rooms.PREMIUM!=="-"?<Table striped bordered hover variant="light">
+                        
+                        <tbody>
+                            <tr>
+                                <td>{props.Payment.Rooms.PREMIUM}</td>
                                 <td>{props.Payment.Premium}</td>
                             </tr>
                         </tbody>
-                    </Table>
+                    </Table>:""}
+
+                    {props.Payment.Rooms.PremiereRetreat!=="-"?<Table striped bordered hover variant="light">
+                       
+                        <tbody>
+                            <tr>
+                                <td>{props.Payment.Rooms.PremiereRetreat}</td>
+                                <td>{props.Payment.PremiereRetreat}</td>
+                            </tr>
+                        </tbody>
+                    </Table>:""}
+
+                    {props.Payment.Rooms.EliteSuite!=="-"?<Table striped bordered hover variant="light">
+                        
+                        <tbody>
+                            <tr>
+                                <td>{props.Payment.Rooms.EliteSuite}</td>
+                                <td>{props.Payment.EliteSuite}</td>
+                            </tr>
+                        </tbody>
+                    </Table>:""}
+
+                    {props.Payment.Rooms.GrandDeluxe!=="-"?<Table striped bordered hover variant="light">
+                        
+                        <tbody>
+                            <tr>
+                                <td>{props.Payment.Rooms.GrandDeluxe}</td>
+                                <td>{props.Payment.GrandDeluxe}</td>
+                            </tr>
+                        </tbody>
+                    </Table>:""}
+
+                    {props.Payment.Rooms.ImperialSuite!=="-"?<Table striped bordered hover variant="light">
+                        
+                        <tbody>
+                            <tr>
+                                <td>{props.Payment.Rooms.ImperialSuite}</td>
+                                <td>{props.Payment.ImperialSuite}</td>
+                            </tr>
+                        </tbody>
+                    </Table>:""}
+
+                    {props.Payment.Rooms.SupremeRetreat!=="-"?<Table striped bordered hover variant="light">
+                        
+                        <tbody>
+                            <tr>
+                                <td>{props.Payment.Rooms.SupremeRetreat}</td>
+                                <td>{props.Payment.SupremeRetreat}</td>
+                            </tr>
+                        </tbody>
+                    </Table>:""}
+
+                    {props.Payment.Rooms.RoyalDeluxe!=="-"?<Table striped bordered hover variant="light">
+                        
+                        <tbody>
+                            <tr>
+                                <td>{props.Payment.Rooms.RoyalDeluxe}</td>
+                                <td>{props.Payment.RoyalDeluxe}</td>
+                            </tr>
+                        </tbody>
+                    </Table>:""}
+
+                    {props.Payment.Rooms.PrestigeSuite!=="-"?<Table striped bordered hover variant="light">
+                        
+                        <tbody>
+                            <tr>
+                                <td>{props.Payment.Rooms.PrestigeSuite}</td>
+                                <td>{props.Payment.PrestigeSuite}</td>
+                            </tr>
+                        </tbody>
+                    </Table>:""}
+
+                    {props.Payment.Rooms.ExclusiveRetreat!=="-"?<Table striped bordered hover variant="light">
+                        
+                        <tbody>
+                            <tr>
+                                <td>{props.Payment.Rooms.ExclusiveRetreat}</td>
+                                <td>{props.Payment.ExclusiveRetreat}</td>
+                            </tr>
+                        </tbody>
+                    </Table>:""}
 
                     <h6><strong>Meal Plan</strong></h6>
 

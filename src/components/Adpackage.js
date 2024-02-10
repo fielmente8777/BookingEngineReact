@@ -1,15 +1,12 @@
 // import React from 'react';
+import HTMLReactParser from 'html-react-parser';
 import React, { useState } from 'react';
-import Contactinfo from '../components/Contactinfo';
 import Carousel from 'react-bootstrap/Carousel';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import Table from 'react-bootstrap/Table';
-import Form from 'react-bootstrap/Form';
-import { render } from '@testing-library/react';
-import './i18n'; // Import your i18n configuration
 import { useTranslation } from 'react-i18next';
-import HTMLReactParser from 'html-react-parser'
+import Contactinfo from '../components/Contactinfo';
+import './i18n'; // Import your i18n configuration
 
 
 export default function Cards(props) {
@@ -180,6 +177,7 @@ export default function Cards(props) {
                 </div>
                 {isOpen && (
                 <Contactinfo 
+                    addTax={props.addTax}
                     GatewayConnected={props.GatewayConnected}
                     baseUrl = {baseUrl}
                     isPayatHotel = {props.isPayatHotel}

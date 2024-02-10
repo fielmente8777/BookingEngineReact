@@ -59,6 +59,7 @@ function App() {
   const [Cancellation, setCancellation] = useState("Cancellation policy")
   const [Termsconditions, setTermsconditions] = useState("Terms and conditions")
   const [hotelwebsite, sethotelwebsite] = useState("")
+  const [addTax,setaddTax]=useState(false)
 
   const [Payment, setPayment] = useState({
     "Status": false,
@@ -81,11 +82,34 @@ function App() {
     "Sd":"4",
     "Suite":"4",
     "Premium":"4",
+    "PremiereRetreat":"1",
+    "EliteSuite":"0",
+    "GrandDeluxe":"0",
+    "ImperialSuite":"0",
+    "SupremeRetreat":"0",
+    "RoyalDeluxe":"0",
+    "PrestigeSuite":"0",
+    "ExclusiveRetreat":"0",
     "MealPlan":"Meal",
     "Mealprice":"200",
     "PackagePlan":"Package",
     "PackagePrice":"1200",
-    "Rooms":{"DELUX":"-","SUPERDELUX":"-","SUITE":"-","PREMIUM":"-"}
+    "Rooms":{
+      "DELUX":"a",
+      "SUPERDELUX":"a",
+      "SUITE":"a",
+      "PREMIUM":"a",
+      "PremiereRetreat":"a",
+      "EliteSuite":"a",
+      "GrandDeluxe":"a",
+      "ImperialSuite":"-",
+      "SupremeRetreat":"-",
+      "RoyalDeluxe":"-",
+      "PrestigeSuite":"-",
+      "ExclusiveRetreat":"-"
+      
+  
+  }
 
   })
   async function Get_Hotel_status_exists() {
@@ -150,6 +174,8 @@ function App() {
       setisPayatHotel(json.Details.isPayatHotel)
       //Gateway
       setGatewayConnected(json.Details.Gateway)
+      //tax add
+      setaddTax(json.Details.addTax)
 
       //Clarity code
       setClarityCode(json.Details.Clarity)
@@ -211,7 +237,7 @@ function App() {
         <Navbar hotelname={HotelName} logo={HotelLogo} display={Spinner_spin1} color={Bg_color} HotelNumber={HotelNumber}
           email={HotelEmail} hotelwebsite={hotelwebsite} />
 
-        {!Payment.Status ? <LandingPage GatewayConnected={GatewayConnected} isPayatHotel={isPayatHotel} isOnlinepay={isOnlinepay} currency={currency} Bg_color={Bg_color} HotelName={HotelName} HotelLogo={HotelLogo} baseUrl={baseUrl}
+        {!Payment.Status ? <LandingPage addTax={addTax} GatewayConnected={GatewayConnected} isPayatHotel={isPayatHotel} isOnlinepay={isOnlinepay} currency={currency} Bg_color={Bg_color} HotelName={HotelName} HotelLogo={HotelLogo} baseUrl={baseUrl}
           Bg_image={HotelImage} color={Box_color} display={Spinner_spin1} bt_color={Button_color}
           ReservationLabel={Reservation_button} ReservationButton={Room_searchButton} 
           FinalConfirmButton={RoomFinal_searchButton} Paymentbutton={PaymentButton} setPayment={setPayment} />

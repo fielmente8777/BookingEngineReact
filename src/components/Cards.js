@@ -1,14 +1,11 @@
 // import React from 'react';
 import React, { useState } from 'react';
-import Contactinfo from '../components/Contactinfo';
 import Carousel from 'react-bootstrap/Carousel';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import Table from 'react-bootstrap/Table';
-import Form from 'react-bootstrap/Form';
-import { render } from '@testing-library/react';
-import './i18n'; // Import your i18n configuration
 import { useTranslation } from 'react-i18next';
+import Contactinfo from '../components/Contactinfo';
+import './i18n'; // Import your i18n configuration
 
 
 export default function Cards(props) {
@@ -35,7 +32,14 @@ export default function Cards(props) {
     if (props.roomtype === "2") { props.setSuperDeluxAdult(props.Adult) }
     if (props.roomtype === "3") { props.setSuiteAdult(props.Adult) }
     if (props.roomtype === "4") { props.setPremiumAdult(props.Adult) }
-
+    if (props.roomtype === "5") { props.setPremiereRetreatAdult(props.Adult) }
+    if (props.roomtype === "6") { props.setEliteSuiteAdult(props.Adult) }
+    if (props.roomtype === "7") { props.setGrandDeluxeAdult(props.Adult) }
+    if (props.roomtype === "8") { props.setImperialSuiteAdult(props.Adult) }
+    if (props.roomtype === "9") { props.setSupremeRetreatAdult(props.Adult) }
+    if (props.roomtype === "10") { props.setRoyalDeluxeAdult(props.Adult) }
+    if (props.roomtype === "11") { props.setPrestigeSuiteAdult(props.Adult) }
+    if (props.roomtype === "12") { props.setExclusiveRetreatAdult(props.Adult) }
 
     const DelCount = (id) => {
         setIsOpen(false)
@@ -53,6 +57,30 @@ export default function Cards(props) {
             }
             if (id === "PREMIUM") {
                 props.setPremium(number)
+            }
+            if (id === "Premiere Retreat"){
+                props.setPremiereRetreat(number)
+            }
+            if (id === "Elite Suite"){
+                props.setEliteSuite(number)
+            }
+            if (id === "Grand Deluxe"){
+                props.setGrandDeluxe(number)
+            }
+            if (id === "Imperial Suite"){
+                props.setImperialSuite(number)
+            }
+            if (id === "Supreme Retreat"){
+                props.setSupremeRetreat(number)
+            }
+            if (id === "Royal Deluxe"){
+                props.setRoyalDeluxe(number)
+            }
+            if (id === "Prestige Suite"){
+                props.setPrestigeSuite(number)
+            }
+            if (id === "Exclusive Retreat"){
+                props.setExclusiveRetreat(number)
             }
             let price = number * Number(Original_Price)
             setPrice(price)
@@ -93,6 +121,62 @@ export default function Cards(props) {
                     ["PREMIUM"]: props.name,
                   }));
             }
+            if (id === "Premiere Retreat") {
+                props.setPremiereRetreat(number)
+                props.setRoomCategoryCombination((prevRoomcatname) => ({
+                    ...prevRoomcatname,
+                    ["PremiereRetreat"]: props.name,
+                  }));
+            }
+            if (id === "Elite Suite") {
+                props.setEliteSuite(number)
+                props.setRoomCategoryCombination((prevRoomcatname) => ({
+                    ...prevRoomcatname,
+                    ["EliteSuite"]: props.name,
+                  }));
+            }
+            if (id === "Grand Deluxe") {
+                props.setGrandDeluxe(number)
+                props.setRoomCategoryCombination((prevRoomcatname) => ({
+                    ...prevRoomcatname,
+                    ["GrandDeluxe"]: props.name,
+                  }));
+            }
+            if (id === "Imperial Suite") {
+                props.setImperialSuite(number)
+                props.setRoomCategoryCombination((prevRoomcatname) => ({
+                    ...prevRoomcatname,
+                    ["ImperialSuite"]: props.name,
+                  }));
+            }
+            if (id === "Supreme Retreat") {
+                props.setSupremeRetreat(number)
+                props.setRoomCategoryCombination((prevRoomcatname) => ({
+                    ...prevRoomcatname,
+                    ["SupremeRetreat"]: props.name,
+                  }));
+            }
+            if (id === "Royal Deluxe") {
+                props.setRoyalDeluxe(number)
+                props.setRoomCategoryCombination((prevRoomcatname) => ({
+                    ...prevRoomcatname,
+                    ["RoyalDeluxe"]: props.name,
+                  }));
+            }
+            if (id === "Prestige Suite") {
+                props.setPrestigeSuite(number)
+                props.setRoomCategoryCombination((prevRoomcatname) => ({
+                    ...prevRoomcatname,
+                    ["PrestigeSuite"]: props.name,
+                  }));
+            }
+            if (id === "Exclusive Retreat") {
+                props.setExclusiveRetreat(number)
+                props.setRoomCategoryCombination((prevRoomcatname) => ({
+                    ...prevRoomcatname,
+                    ["ExclusiveRetreat"]: props.name,
+                  }));
+            }
             let price = number * Number(Original_Price)
             setPrice(price)
             setRooms(number)
@@ -112,6 +196,7 @@ export default function Cards(props) {
     const handleRadioChange = (option) => {
         setSelectedOption(option);
     };
+
 
     return (
         <>
