@@ -1,18 +1,12 @@
-import React from 'react'
-import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import React, { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import { FaTripadvisor, FaTwitter } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
-import { FaFacebookF } from "react-icons/fa";
-import { FaYoutube } from "react-icons/fa";
-import { FaLinkedinIn } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTripadvisor, FaTwitter, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
 // import FooterLogo from '../Images/backgroundimge.jpeg'
-import FooterLogo from '../Images/WhatsApp.svg.png'
-import FooterLogo1 from '../Images/call1.png'
-import HTMLReactParser from 'html-react-parser'
+import HTMLReactParser from 'html-react-parser';
 import { useTranslation } from 'react-i18next';
+import FooterLogo from '../Images/WhatsApp.svg.png';
+import FooterLogo1 from '../Images/call1.png';
 import './i18n'; // Import your i18n configuration
 
 
@@ -102,6 +96,9 @@ export default function Footer(props) {
                 <li>
                   <p style={{ 'cursor': "pointer" }} onClick={() => setcancellationShow(true)}>Cancellation & Refund
                     Policy</p>
+                </li>
+                <li>
+                  <p style={{ 'cursor': "pointer" }} >Cancel Booking</p>
                 </li>
                 {/* <li>
                   <Link to="/#">FAQs</Link>

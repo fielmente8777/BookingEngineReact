@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { FaEnvelope, FaPhoneAlt, FaGlobe } from "react-icons/fa";
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 import './i18n'; // Import your i18n configuration
-import LanguageSelector from './Selectlanguage';
 
 
 
