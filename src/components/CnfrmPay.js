@@ -112,6 +112,8 @@ function CnfrmPay(props) {
   const [RoomTax, setRoomTax] = useState(tax);
   const [PaymentStatus, setPaymentStatus] = useState("PENDING");
   const [PayStatus, setPayStatus] = useState("PAID");
+  const [RedirectLink , setRedirectLink] = useState("")
+  const [ispaymentProcessing,setispaymentProcessing] = useState(false)
 
   const baseUrl = props.baseUrl;
 
@@ -163,6 +165,7 @@ function CnfrmPay(props) {
 
   //PAY AT HOTEL
   const GetPayLaterOrderId = async () => {
+    setispaymentProcessing(true)
     const response = await fetch(`${props.baseUrl}/payment/create_order`, {
       method: "POST",
       headers: {
@@ -278,6 +281,7 @@ function CnfrmPay(props) {
   };
   //HALF PAYMENT OPTION
   const GetHalfOrderId = async () => {
+    setispaymentProcessing(true)
     setPaymentStatus("ADVANCED");
     setPayStatus("HALF PAID");
     let halfcost = 0.5 * totoalcost;
@@ -357,12 +361,15 @@ function CnfrmPay(props) {
 
     if (json.Status === true) {
       setOrderId(json.order_id);
+      setRedirectLink(json.redirectLink)
+      setispaymentProcessing(false)
     } else {
       document.getElementById("No_rooms").style.display = "block";
     }
   };
   //FULL PAYMENT BUTTON
   const GetOrderId = async () => {
+    setispaymentProcessing(true)
     setPaymentStatus("SUCCESS");
     const response = await fetch(`${props.baseUrl}/payment/create_order`, {
       method: "POST",
@@ -439,6 +446,8 @@ function CnfrmPay(props) {
 
     if (json.Status === true) {
       setOrderId(json.order_id);
+      setRedirectLink(json.redirectLink)
+      setispaymentProcessing(false)
     } else {
       document.getElementById("No_rooms").style.display = "block";
     }
@@ -734,12 +743,15 @@ function CnfrmPay(props) {
                                         </div>
                                     </div> */}
                 </div>
-                {BookingFinalize() ? (
+                {props.GatewayConnected.Type!=="None"?BookingFinalize() ? (
                   <div className="alert alert-danger" role="alert">
                     Please Select More Rooms
                   </div>
                 ) : !OrderId ? (
                   <div className="button_s">
+                    {ispaymentProcessing?<div>
+                      <p style={{textAlign:"center"}}>Processing Please wait....</p>
+                    </div>:""}
                     {Name && Phone && Email && Country && City && !OrderId ? (
                       <>
                         {props.isPayatHotel ? (
@@ -825,7 +837,7 @@ function CnfrmPay(props) {
                       </>
                     )}
                   </div>
-                ) : (
+                ) : (props.GatewayConnected.Type==="Razorpay"?
                   <div className="bookingbtn">
                     <button
                       className="cmplt pay_button"
@@ -835,8 +847,19 @@ function CnfrmPay(props) {
                     >
                       {props.Paymentbutton}
                     </button>
+                  </div>:<div className="bookingbtn">
+                    <button
+                      className="cmplt pay_button"
+                      id=""
+                      onClick={()=>{window.open(RedirectLink)}}
+                      style={{ backgroundColor: props.color }}
+                    >
+                      {props.Paymentbutton}
+                    </button>
                   </div>
-                )}
+                ):<div className="alert alert-danger" role="alert">
+                    No Gateway Connected
+                  </div>}
 
                 {/* <div className="button_s">
                                     <button className="submitbtn" onClick={toggleDiv}>Submit</button>
