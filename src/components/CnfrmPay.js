@@ -444,6 +444,7 @@ function CnfrmPay(props) {
           Principal: cost,
           Tax: tax,
           Total: totoalcost,
+          amountPay: totoalcost,
         },
         isCheckedIn: false,
         isCheckedOut: false,

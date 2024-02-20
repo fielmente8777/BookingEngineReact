@@ -205,8 +205,8 @@ function App() {
     }
   }
 
-  // const baseUrl = "https://nexon.eazotel.com";
-  const baseUrl = "http://127.0.0.1:5000";
+  const baseUrl = "https://nexon.eazotel.com";
+  // const baseUrl = "http://127.0.0.1:5000";
   // const baseUrl = "https://testnexon.eazotel.com"
 
   const urlParams = new URLSearchParams(window.location.search);
