@@ -31,42 +31,50 @@ function CnfrmPay(props) {
     premiumcost = 0;
   }
   try {
-    var premiereretreatcost = props.PremiereRetreat * Number(props.ratesChange["5"]["Price"]);
+    var premiereretreatcost =
+      props.PremiereRetreat * Number(props.ratesChange["5"]["Price"]);
   } catch {
     premiereretreatcost = 0;
   }
   try {
-    var elitesuitecost = props.EliteSuite * Number(props.ratesChange["6"]["Price"]);
+    var elitesuitecost =
+      props.EliteSuite * Number(props.ratesChange["6"]["Price"]);
   } catch {
     elitesuitecost = 0;
   }
   try {
-    var granddeluxecost = props.GrandDeluxe * Number(props.ratesChange["7"]["Price"]);
+    var granddeluxecost =
+      props.GrandDeluxe * Number(props.ratesChange["7"]["Price"]);
   } catch {
     granddeluxecost = 0;
   }
   try {
-    var imperialsuitecost = props.ImperialSuite * Number(props.ratesChange["8"]["Price"]);
+    var imperialsuitecost =
+      props.ImperialSuite * Number(props.ratesChange["8"]["Price"]);
   } catch {
     imperialsuitecost = 0;
   }
   try {
-    var supremeretreatcost = props.SupremeRetreat * Number(props.ratesChange["9"]["Price"]);
+    var supremeretreatcost =
+      props.SupremeRetreat * Number(props.ratesChange["9"]["Price"]);
   } catch {
     supremeretreatcost = 0;
   }
   try {
-    var royaldeluxecost = props.RoyalDeluxe * Number(props.ratesChange["10"]["Price"]);
+    var royaldeluxecost =
+      props.RoyalDeluxe * Number(props.ratesChange["10"]["Price"]);
   } catch {
     royaldeluxecost = 0;
   }
   try {
-    var prestigesuitecost = props.PrestigeSuite * Number(props.ratesChange["11"]["Price"]);
+    var prestigesuitecost =
+      props.PrestigeSuite * Number(props.ratesChange["11"]["Price"]);
   } catch {
     prestigesuitecost = 0;
   }
   try {
-    var exclusiveretreatcost = props.ExclusiveRetreat * Number(props.ratesChange["12"]["Price"]);
+    var exclusiveretreatcost =
+      props.ExclusiveRetreat * Number(props.ratesChange["12"]["Price"]);
   } catch {
     exclusiveretreatcost = 0;
   }
@@ -77,17 +85,17 @@ function CnfrmPay(props) {
     Number(sdcost) +
     Number(suitecost) +
     Number(premiumcost) +
-    Number(premiereretreatcost)+
-    Number(elitesuitecost)+
-    Number(granddeluxecost)+
-    Number(imperialsuitecost)+
-    Number(supremeretreatcost)+
-    Number(royaldeluxecost)+
-    Number(prestigesuitecost)+
-    Number(exclusiveretreatcost)+
+    Number(premiereretreatcost) +
+    Number(elitesuitecost) +
+    Number(granddeluxecost) +
+    Number(imperialsuitecost) +
+    Number(supremeretreatcost) +
+    Number(royaldeluxecost) +
+    Number(prestigesuitecost) +
+    Number(exclusiveretreatcost) +
     Number(props.Mealprice);
   if (props.currency == "INR") {
-    if(props.addTax){
+    if (props.addTax) {
       tax = 0.18 * Number(cost);
     }
   } else {
@@ -112,8 +120,8 @@ function CnfrmPay(props) {
   const [RoomTax, setRoomTax] = useState(tax);
   const [PaymentStatus, setPaymentStatus] = useState("PENDING");
   const [PayStatus, setPayStatus] = useState("PAID");
-  const [RedirectLink , setRedirectLink] = useState("")
-  const [ispaymentProcessing,setispaymentProcessing] = useState(false)
+  const [RedirectLink, setRedirectLink] = useState("");
+  const [ispaymentProcessing, setispaymentProcessing] = useState(false);
 
   const baseUrl = props.baseUrl;
 
@@ -165,7 +173,7 @@ function CnfrmPay(props) {
 
   //PAY AT HOTEL
   const GetPayLaterOrderId = async () => {
-    setispaymentProcessing(true)
+    setispaymentProcessing(true);
     const response = await fetch(`${props.baseUrl}/payment/create_order`, {
       method: "POST",
       headers: {
@@ -173,7 +181,7 @@ function CnfrmPay(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        roomNumbers:[],
+        roomNumbers: [],
         hId: localStorage.getItem("hid"),
         ndid: localStorage.getItem("hotelid"),
         amount: totoalcost,
@@ -200,7 +208,7 @@ function CnfrmPay(props) {
           { RoomType: "9", Qty: props.SupremeRetreat },
           { RoomType: "10", Qty: props.RoyalDeluxe },
           { RoomType: "11", Qty: props.PrestigeSuite },
-          { RoomType: "12", Qty: props.ExclusiveRetreat }
+          { RoomType: "12", Qty: props.ExclusiveRetreat },
         ],
         payment: {
           Status: "PENDING",
@@ -256,14 +264,14 @@ function CnfrmPay(props) {
         Sd: props.SuperDelux,
         Suite: props.Suite,
         Premium: props.Premium,
-        PremiereRetreat:props.PremiereRetreat,
-        EliteSuite:props.EliteSuite,
-        GrandDeluxe:props.GrandDeluxe,
-        ImperialSuite:props.ImperialSuite,
-        SupremeRetreat:props.SupremeRetreat,
-        RoyalDeluxe:props.RoyalDeluxe,
-        PrestigeSuite:props.PrestigeSuite,
-        ExclusiveRetreat:props.ExclusiveRetreat,
+        PremiereRetreat: props.PremiereRetreat,
+        EliteSuite: props.EliteSuite,
+        GrandDeluxe: props.GrandDeluxe,
+        ImperialSuite: props.ImperialSuite,
+        SupremeRetreat: props.SupremeRetreat,
+        RoyalDeluxe: props.RoyalDeluxe,
+        PrestigeSuite: props.PrestigeSuite,
+        ExclusiveRetreat: props.ExclusiveRetreat,
         Checkin: localStorage.getItem("Checkin"),
         Checkout: localStorage.getItem("Checkout"),
         Adult: localStorage.getItem("Adult"),
@@ -281,7 +289,7 @@ function CnfrmPay(props) {
   };
   //HALF PAYMENT OPTION
   const GetHalfOrderId = async () => {
-    setispaymentProcessing(true)
+    setispaymentProcessing(true);
     setPaymentStatus("ADVANCED");
     setPayStatus("HALF PAID");
     let halfcost = 0.5 * totoalcost;
@@ -292,7 +300,7 @@ function CnfrmPay(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        roomNumbers:[],
+        roomNumbers: [],
         hId: localStorage.getItem("hid"),
         ndid: localStorage.getItem("hotelid"),
         amount: halfcost,
@@ -319,7 +327,7 @@ function CnfrmPay(props) {
           { RoomType: "9", Qty: props.SupremeRetreat },
           { RoomType: "10", Qty: props.RoyalDeluxe },
           { RoomType: "11", Qty: props.PrestigeSuite },
-          { RoomType: "12", Qty: props.ExclusiveRetreat }
+          { RoomType: "12", Qty: props.ExclusiveRetreat },
         ],
         payment: {
           Status: "PENDING",
@@ -361,15 +369,15 @@ function CnfrmPay(props) {
 
     if (json.Status === true) {
       setOrderId(json.order_id);
-      setRedirectLink(json.redirectLink)
-      setispaymentProcessing(false)
+      setRedirectLink(json.redirectLink);
+      setispaymentProcessing(false);
     } else {
       document.getElementById("No_rooms").style.display = "block";
     }
   };
   //FULL PAYMENT BUTTON
   const GetOrderId = async () => {
-    setispaymentProcessing(true)
+    setispaymentProcessing(true);
     setPaymentStatus("SUCCESS");
     const response = await fetch(`${props.baseUrl}/payment/create_order`, {
       method: "POST",
@@ -378,7 +386,7 @@ function CnfrmPay(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        roomNumbers:[],
+        roomNumbers: [],
         hId: localStorage.getItem("hid"),
         ndid: localStorage.getItem("hotelid"),
         amount: totoalcost,
@@ -405,7 +413,7 @@ function CnfrmPay(props) {
           { RoomType: "9", Qty: props.SupremeRetreat },
           { RoomType: "10", Qty: props.RoyalDeluxe },
           { RoomType: "11", Qty: props.PrestigeSuite },
-          { RoomType: "12", Qty: props.ExclusiveRetreat }
+          { RoomType: "12", Qty: props.ExclusiveRetreat },
         ],
         payment: {
           Status: "PENDING",
@@ -446,8 +454,8 @@ function CnfrmPay(props) {
 
     if (json.Status === true) {
       setOrderId(json.order_id);
-      setRedirectLink(json.redirectLink)
-      setispaymentProcessing(false)
+      setRedirectLink(json.redirectLink);
+      setispaymentProcessing(false);
     } else {
       document.getElementById("No_rooms").style.display = "block";
     }
@@ -485,28 +493,42 @@ function CnfrmPay(props) {
       props.setmaxAdult((maxAdult += props.Premium * props.PremiumAdult));
     }
     if (props.PremiereRetreat > 0) {
-      props.setmaxAdult((maxAdult += props.PremiereRetreat * props.PremiereRetreatAdult));
+      props.setmaxAdult(
+        (maxAdult += props.PremiereRetreat * props.PremiereRetreatAdult)
+      );
     }
     if (props.EliteSuite > 0) {
       props.setmaxAdult((maxAdult += props.EliteSuite * props.EliteSuiteAdult));
     }
     if (props.GrandDeluxe > 0) {
-      props.setmaxAdult((maxAdult += props.GrandDeluxe * props.GrandDeluxeAdult));
+      props.setmaxAdult(
+        (maxAdult += props.GrandDeluxe * props.GrandDeluxeAdult)
+      );
     }
     if (props.ImperialSuite > 0) {
-      props.setmaxAdult((maxAdult += props.ImperialSuite * props.ImperialSuiteAdult));
+      props.setmaxAdult(
+        (maxAdult += props.ImperialSuite * props.ImperialSuiteAdult)
+      );
     }
     if (props.SupremeRetreat > 0) {
-      props.setmaxAdult((maxAdult += props.SupremeRetreat * props.SupremeRetreatAdult));
+      props.setmaxAdult(
+        (maxAdult += props.SupremeRetreat * props.SupremeRetreatAdult)
+      );
     }
     if (props.RoyalDeluxe > 0) {
-      props.setmaxAdult((maxAdult += props.RoyalDeluxe * props.RoyalDeluxeAdult));
+      props.setmaxAdult(
+        (maxAdult += props.RoyalDeluxe * props.RoyalDeluxeAdult)
+      );
     }
     if (props.PrestigeSuite > 0) {
-      props.setmaxAdult((maxAdult += props.PrestigeSuite * props.PrestigeSuiteAdult));
+      props.setmaxAdult(
+        (maxAdult += props.PrestigeSuite * props.PrestigeSuiteAdult)
+      );
     }
     if (props.ExclusiveRetreat > 0) {
-      props.setmaxAdult((maxAdult += props.ExclusiveRetreat * props.ExclusiveRetreatAdult));
+      props.setmaxAdult(
+        (maxAdult += props.ExclusiveRetreat * props.ExclusiveRetreatAdult)
+      );
     }
     if (props.Adult <= props.maxAdult) {
       return false;
@@ -561,14 +583,14 @@ function CnfrmPay(props) {
             Sd: props.SuperDelux,
             Suite: props.Suite,
             Premium: props.Premium,
-            PremiereRetreat:props.PremiereRetreat,
-            EliteSuite:props.EliteSuite,
-            GrandDeluxe:props.GrandDeluxe,
-            ImperialSuite:props.ImperialSuite,
-            SupremeRetreat:props.SupremeRetreat,
-            RoyalDeluxe:props.RoyalDeluxe,
-            PrestigeSuite:props.PrestigeSuite,
-            ExclusiveRetreat:props.ExclusiveRetreat,
+            PremiereRetreat: props.PremiereRetreat,
+            EliteSuite: props.EliteSuite,
+            GrandDeluxe: props.GrandDeluxe,
+            ImperialSuite: props.ImperialSuite,
+            SupremeRetreat: props.SupremeRetreat,
+            RoyalDeluxe: props.RoyalDeluxe,
+            PrestigeSuite: props.PrestigeSuite,
+            ExclusiveRetreat: props.ExclusiveRetreat,
             MealPlan: props.selectedMealPlan,
             Mealprice: props.selectedMealPlanPrice,
             Rooms: props.RoomCategoryCombination,
@@ -743,123 +765,137 @@ function CnfrmPay(props) {
                                         </div>
                                     </div> */}
                 </div>
-                {props.GatewayConnected.Type!=="None"?BookingFinalize() ? (
+                {props.GatewayConnected.Type !== "None" ? (
+                  BookingFinalize() ? (
+                    <div className="alert alert-danger" role="alert">
+                      Please Select More Rooms
+                    </div>
+                  ) : !OrderId ? (
+                    <div className="button_s">
+                      {ispaymentProcessing ? (
+                        <div>
+                          <p style={{ textAlign: "center" }}>
+                            Processing Please wait....
+                          </p>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      {Name && Phone && Email && Country && City && !OrderId ? (
+                        <>
+                          {props.isPayatHotel ? (
+                            <button
+                              className="submitbtn"
+                              onClick={GetPayLaterOrderId}
+                            >
+                              PAY AT HOTEL
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                          {props.isOnlinepay ? (
+                            <button
+                              className="submitbtn"
+                              onClick={GetHalfOrderId}
+                            >
+                              PAY 50% AMOUNT{" "}
+                              <span>
+                                {0.5 * (cost + tax)} {props.currency}
+                              </span>
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                          {props.isOnlinepay ? (
+                            <button className="submitbtn" onClick={GetOrderId}>
+                              PAY FULL AMOUNT{" "}
+                              <span>
+                                {cost + tax} {props.currency}
+                              </span>
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                          <p className="button_s_p">
+                            By making this booking, you are accepting our terms
+                            and conditions***
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          {props.isPayatHotel ? (
+                            <button
+                              className="submitbtn"
+                              onClick={PopupFillFields}
+                            >
+                              PAY AT HOTEL
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                          {props.isOnlinepay ? (
+                            <button
+                              className="submitbtn"
+                              onClick={PopupFillFields}
+                            >
+                              PAY 50% AMOUNT{" "}
+                              <span>
+                                {0.5 * (cost + tax)} {props.currency}
+                              </span>
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                          {props.isOnlinepay ? (
+                            <button
+                              className="submitbtn"
+                              onClick={PopupFillFields}
+                            >
+                              PAY FULL AMOUNT{" "}
+                              <span>
+                                {cost + tax} {props.currency}
+                              </span>
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                          <p className="button_s_p">
+                            By making this booking, you are accepting our terms
+                            and conditions***
+                          </p>
+                        </>
+                      )}
+                    </div>
+                  ) : props.GatewayConnected.Type === "Razorpay" ? (
+                    <div className="bookingbtn">
+                      <button
+                        className="cmplt pay_button"
+                        id="rzp-button1"
+                        onClick={handlePayment}
+                        style={{ backgroundColor: props.color }}
+                      >
+                        {props.Paymentbutton}
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="bookingbtn">
+                      <button
+                        className="cmplt pay_button"
+                        id=""
+                        onClick={() => {
+                          window.location.replace(RedirectLink);
+                        }}
+                        style={{ backgroundColor: props.color }}
+                      >
+                        {props.Paymentbutton}
+                      </button>
+                    </div>
+                  )
+                ) : (
                   <div className="alert alert-danger" role="alert">
-                    Please Select More Rooms
-                  </div>
-                ) : !OrderId ? (
-                  <div className="button_s">
-                    {ispaymentProcessing?<div>
-                      <p style={{textAlign:"center"}}>Processing Please wait....</p>
-                    </div>:""}
-                    {Name && Phone && Email && Country && City && !OrderId ? (
-                      <>
-                        {props.isPayatHotel ? (
-                          <button
-                            className="submitbtn"
-                            onClick={GetPayLaterOrderId}
-                          >
-                            PAY AT HOTEL
-                          </button>
-                        ) : (
-                          ""
-                        )}
-                        {props.isOnlinepay ? (
-                          <button
-                            className="submitbtn"
-                            onClick={GetHalfOrderId}
-                          >
-                            PAY 50% AMOUNT{" "}
-                            <span>
-                              {0.5 * (cost + tax)} {props.currency}
-                            </span>
-                          </button>
-                        ) : (
-                          ""
-                        )}
-                        {props.isOnlinepay ? (
-                          <button className="submitbtn" onClick={GetOrderId}>
-                            PAY FULL AMOUNT{" "}
-                            <span>
-                              {cost + tax} {props.currency}
-                            </span>
-                          </button>
-                        ) : (
-                          ""
-                        )}
-                        <p className="button_s_p">
-                          By making this booking, you are accepting our terms
-                          and conditions***
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        {props.isPayatHotel ? (
-                          <button
-                            className="submitbtn"
-                            onClick={PopupFillFields}
-                          >
-                            PAY AT HOTEL
-                          </button>
-                        ) : (
-                          ""
-                        )}
-                        {props.isOnlinepay ? (
-                          <button
-                            className="submitbtn"
-                            onClick={PopupFillFields}
-                          >
-                            PAY 50% AMOUNT{" "}
-                            <span>
-                              {0.5 * (cost + tax)} {props.currency}
-                            </span>
-                          </button>
-                        ) : (
-                          ""
-                        )}
-                        {props.isOnlinepay ? (
-                          <button
-                            className="submitbtn"
-                            onClick={PopupFillFields}
-                          >
-                            PAY FULL AMOUNT{" "}
-                            <span>
-                              {cost + tax} {props.currency}
-                            </span>
-                          </button>
-                        ) : (
-                          ""
-                        )}
-                        <p className="button_s_p">
-                          By making this booking, you are accepting our terms
-                          and conditions***
-                        </p>
-                      </>
-                    )}
-                  </div>
-                ) : (props.GatewayConnected.Type==="Razorpay"?
-                  <div className="bookingbtn">
-                    <button
-                      className="cmplt pay_button"
-                      id="rzp-button1"
-                      onClick={handlePayment}
-                      style={{ backgroundColor: props.color }}
-                    >
-                      {props.Paymentbutton}
-                    </button>
-                  </div>:<div className="bookingbtn">
-                    <button
-                      className="cmplt pay_button"
-                      id=""
-                      onClick={()=>{window.open(RedirectLink)}}
-                      style={{ backgroundColor: props.color }}
-                    >
-                      {props.Paymentbutton}
-                    </button>
-                  </div>
-                ):<div className="alert alert-danger" role="alert">
                     No Gateway Connected
-                  </div>}
+                  </div>
+                )}
 
                 {/* <div className="button_s">
                                     <button className="submitbtn" onClick={toggleDiv}>Submit</button>
