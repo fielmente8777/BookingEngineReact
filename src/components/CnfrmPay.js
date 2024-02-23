@@ -287,6 +287,95 @@ function CnfrmPay(props) {
       document.getElementById("No_rooms").style.display = "block";
     }
   };
+  //pay 25%
+  const GetSemiHalfOrderId = async () => {
+    setispaymentProcessing(true);
+    setPaymentStatus("ADVANCED");
+    setPayStatus("25% PAID");
+    let halfcost = 0.25 * totoalcost;
+    const response = await fetch(`${props.baseUrl}/payment/create_order`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, /",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        roomNumbers: [],
+        hId: localStorage.getItem("hid"),
+        ndid: localStorage.getItem("hotelid"),
+        amount: halfcost,
+        currency: props.currency,
+        guestInfo: {
+          guestName: Name,
+          EmailId: Email,
+          Phone: Phone,
+          City: City,
+          Country: Country,
+          address: City,
+        },
+        Adults: localStorage.getItem("Adult"),
+        Kids: localStorage.getItem("Kid"),
+        Bookings: [
+          { RoomType: "1", Qty: props.Delux },
+          { RoomType: "2", Qty: props.SuperDelux },
+          { RoomType: "3", Qty: props.Suite },
+          { RoomType: "4", Qty: props.Premium },
+          { RoomType: "5", Qty: props.PremiereRetreat },
+          { RoomType: "6", Qty: props.EliteSuite },
+          { RoomType: "7", Qty: props.GrandDeluxe },
+          { RoomType: "8", Qty: props.ImperialSuite },
+          { RoomType: "9", Qty: props.SupremeRetreat },
+          { RoomType: "10", Qty: props.RoyalDeluxe },
+          { RoomType: "11", Qty: props.PrestigeSuite },
+          { RoomType: "12", Qty: props.ExclusiveRetreat },
+        ],
+        payment: {
+          Status: "PENDING",
+          RefNo: "",
+          PaymentProvider: "RazorPay",
+          Mode: "Online",
+        },
+        mealPlan: {
+          PackageId: props.mealplanId,
+          PackageName: props.selectedMealPlan,
+          PackagePrice: props.Mealprice,
+          PackageperRoom: props.isperRoom,
+        },
+        promocode: {
+          PromoId: "NA",
+          Code: "NA",
+          Discount: "NA",
+        },
+        packages: {
+          packageId: "NA",
+          packageName: "NA",
+          packagePrice: "NA",
+          specialRequest: "NA",
+        },
+        checkIn: localStorage.getItem("Checkin"),
+        checkOut: localStorage.getItem("Checkout"),
+        price: {
+          amountPay: halfcost,
+          Principal: cost,
+          Tax: tax,
+          Total: totoalcost,
+        },
+        isCheckedIn: false,
+        isCheckedOut: false,
+      }),
+    });
+
+    const json = await response.json();
+
+    if (json.Status === true) {
+      setOrderId(json.order_id);
+      setRedirectLink(json.redirectLink);
+      setispaymentProcessing(false);
+    } else {
+      document.getElementById("No_rooms").style.display = "block";
+    }
+  };
+
   //HALF PAYMENT OPTION
   const GetHalfOrderId = async () => {
     setispaymentProcessing(true);
@@ -375,6 +464,7 @@ function CnfrmPay(props) {
       document.getElementById("No_rooms").style.display = "block";
     }
   };
+  
   //FULL PAYMENT BUTTON
   const GetOrderId = async () => {
     setispaymentProcessing(true);
@@ -794,6 +884,19 @@ function CnfrmPay(props) {
                           ) : (
                             ""
                           )}
+                          {props.isSemiPayment ? (
+                            <button
+                              className="submitbtn"
+                              onClick={GetSemiHalfOrderId}
+                            >
+                              PAY 25% AMOUNT{" "}
+                              <span>
+                                {0.25 * (cost + tax)} {props.currency}
+                              </span>
+                            </button>
+                          ) : (
+                            ""
+                          )}
                           {props.isOnlinepay ? (
                             <button
                               className="submitbtn"
@@ -830,6 +933,19 @@ function CnfrmPay(props) {
                               onClick={PopupFillFields}
                             >
                               PAY AT HOTEL
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                          {props.isSemiPayment ? (
+                            <button
+                              className="submitbtn"
+                              onClick={PopupFillFields}
+                            >
+                              PAY 25% AMOUNT{" "}
+                              <span>
+                                {0.25 * (cost + tax)} {props.currency}
+                              </span>
                             </button>
                           ) : (
                             ""

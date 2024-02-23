@@ -33,6 +33,7 @@ function App() {
   const [Claritycode, setClarityCode] = useState("");
   const [isOnlinepay, setisOnlinepay] = useState(false);
   const [isPayatHotel, setisPayatHotel] = useState(false);
+  const [isSemiPayment, setisSemiPayment] = useState(false);
   const [GatewayConnected, setGatewayConnected] = useState({
     Type: "Razorpay",
     API_KEY: "rzp_test_UZ0V9jh3jMC0C9",
@@ -176,6 +177,8 @@ function App() {
       setisOnlinepay(json.Details.isOnlinePayment);
       //pay at hotel option
       setisPayatHotel(json.Details.isPayatHotel);
+      //25% 
+      setisSemiPayment(json.Details.isSemiPayment)
       //Gateway
       setGatewayConnected(json.Details.Gateway);
       //tax add
@@ -259,6 +262,7 @@ function App() {
             FinalConfirmButton={RoomFinal_searchButton}
             Paymentbutton={PaymentButton}
             setPayment={setPayment}
+            isSemiPayment={isSemiPayment}
           />
         ) : (
           <SuccessPage Payment={Payment} currency={currency} />

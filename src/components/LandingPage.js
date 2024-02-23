@@ -679,6 +679,7 @@ export default function Landing(props) {
                         HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={1200}
                         BookingTotalPrice={1200} BookingPrice={1200}
                         Paymentbutton={props.Paymentbutton} nights={Night} room={1}
+                        isSemiPayment={props.isSemiPayment}
                         color={props.color} price={1} grandtotal={1} type={props.roomtype}
                         Delux={Delux}
                         SuperDelux={SuperDelux}
