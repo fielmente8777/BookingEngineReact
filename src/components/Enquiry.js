@@ -1,17 +1,10 @@
-import axios from "axios";
-import { useCallback, useEffect, useState, useMemo,useRef } from "react";
-import useRazorpay from "react-razorpay";
-import "../style/Reserve.css"
-import Button from 'react-bootstrap/Button';
+import { useRef, useState } from "react";
+import "../style/Reserve.css";
 
 
-import { getCountries, getCountryCallingCode } from 'react-phone-number-input/input';
-import en from 'react-phone-number-input/locale/en.json';
-import PhoneInput from 'react-phone-number-input'
+import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 
-import Select from 'react-select'
-import countryList from 'react-select-country-list'
 
 
 
@@ -74,9 +67,9 @@ function Enquiryform(props) {
             document.getElementById("No_rooms").style.display = "block"
         }
     }
-    const [classhide,setclasshide] = useState(false)
+    const [classhide,setclasshide] = useState(true)
     const openclosehide=()=>{
-        setclasshide(!classhide)
+        setclasshide(classhide)
     }
     return (
         <>

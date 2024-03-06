@@ -884,7 +884,7 @@ function CnfrmPay(props) {
                           ) : (
                             ""
                           )}
-                          {props.isSemiPayment ? (
+                          {props.isSemiPayment&&props.isOnlinepay ? (
                             <button
                               className="submitbtn"
                               onClick={GetSemiHalfOrderId}
