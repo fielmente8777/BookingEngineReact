@@ -577,6 +577,7 @@ export default function Landing(props) {
                                 RoomCategoryCombination = {RoomCategoryCombination}
                                 setRoomCategoryCombination={setRoomCategoryCombination}
                                 isPayatHotel = {props.isPayatHotel}
+                                tag = {element.roomTag}
                             />
                         </div>
 

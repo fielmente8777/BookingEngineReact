@@ -231,12 +231,11 @@ export default function Cards(props) {
                             <div className="room-last d-flex justify-content-between ">
                                 <div className="room-name">
                                     <h3 style={{ fontWeight: '600' }}>{t(props.name)}</h3>
-                                    {/* <span className="dec-sqr">{props.type}</span> */}
+                                    
                                 </div>
-                                {/* <div className="last-rooms">
-                                    <p className="dec-lst">*Last {props.available} Rooms available<i
-                                        className="fa-sharp fa-solid fa-circle-exclamation"></i></p>
-                                </div> */}
+                                <div className="last-rooms">
+                                    <span class="badge text-bg-secondary">{props.tag}</span>
+                                </div>
 
                             </div>
                             <div className="description">
