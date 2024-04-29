@@ -11,8 +11,12 @@ import SuccessPage from "./components/SuccessPage";
 import "./components/i18n"; // Import your i18n configuration
 import "./style/Landing.css";
 import "./style/NavFoot.css";
+import Login from "./components/Login";
+import { useContext } from "react";
+import AuthContext from "./context/AuthProvider";
 
 function App() {
+  const { openLoginPopup, setOpenLoginPopup } = useContext(AuthContext)
   const [Bg_color, setBg_color] = useState("#153B5B"); //background for header and footer
   const [Box_color, setBox_color] = useState("#0A3A75"); //Box color for reservation
   const [Button_color, setButton_color] = useState("#0A3A75"); //Button color of checkin and out
@@ -229,6 +233,8 @@ function App() {
     i18n.changeLanguage(lng);
   };
 
+
+
   return (
     <>
       <BrowserRouter>
@@ -268,6 +274,7 @@ function App() {
           <SuccessPage Payment={Payment} currency={currency} />
         )}
 
+        {openLoginPopup ? <Login bt_color={Button_color} /> : ""}
         <Footer
           hotelwebsite={hotelwebsite}
           color={Bg_color}

@@ -1,20 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 import './i18n'; // Import your i18n configuration
+import AuthContext from '../context/AuthProvider';
 
 
 
 
 export default function Navbar(props) {
 
+
+    const { openLoginPopup, setOpenLoginPopup } = useContext(AuthContext)
     const { t, i18n } = useTranslation();
     const changeLanguage = (lng) => {
         i18n.changeLanguage(lng);
     };
 
 
-    
+    const handleLoginPopup = () => {
+        setOpenLoginPopup(true);
+    }
+
+
     const languages = [
         { code: 'en', label: 'English' },
         { code: 'es', label: 'Spanish' },
@@ -86,6 +93,8 @@ export default function Navbar(props) {
                         <li class="nav-item">
                             <a href={`mailto:${props.email}`} class="nav-link nav-icon" aria-current="page"><FaEnvelope /></a>
                         </li>
+
+                        <button onClick={handleLoginPopup} class='loginbutton'>Login</button>
                         {/* <li class="nav-item ">
                             <a class="nav-link" aria-current="page" href="#" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal1">{t('Login')}</a>

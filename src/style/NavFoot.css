@@ -17,6 +17,10 @@ ul {
     list-style: none;
 }
 
+.loginbutton {
+    padding: 5px 20px;
+}
+
 li a {
     text-decoration: none;
     color: aliceblue;
@@ -265,7 +269,7 @@ footer {
         grid-template-columns: repeat(1, 1fr);
     }
 
-    .FootAddrs{
+    .FootAddrs {
         padding: 10px 0;
     }
 }
@@ -505,6 +509,7 @@ footer a:hover {
         z-index: 3;
         height: auto;
     }
+
     .Social_foot_icon {
         margin-left: -5px;
     }
@@ -562,20 +567,22 @@ footer a:hover {
     }
 }
 
-.whatsapp_float{
-    position:fixed;
-    bottom:40px;
-    right:20px;
-}
-.whatsapp_float_btn{
-    width:50px;
+.whatsapp_float {
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
 }
 
-.call_float{
-    position:fixed;
-    bottom:40px;
-    left:20px;
+.whatsapp_float_btn {
+    width: 50px;
 }
-.call_float_btn{
-    width:50px;
+
+.call_float {
+    position: fixed;
+    bottom: 40px;
+    left: 20px;
+}
+
+.call_float_btn {
+    width: 50px;
 }
