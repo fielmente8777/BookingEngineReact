@@ -14,6 +14,7 @@ import "./style/NavFoot.css";
 import Login from "./components/Login";
 import { useContext } from "react";
 import AuthContext from "./context/AuthProvider";
+import { Register } from "./components/Register";
 
 function App() {
   const { openLoginPopup, setOpenLoginPopup } = useContext(AuthContext)
@@ -274,7 +275,9 @@ function App() {
           <SuccessPage Payment={Payment} currency={currency} />
         )}
 
-        {openLoginPopup ? <Login bt_color={Button_color} /> : ""}
+        {/* {openLoginPopup ? <Login bt_color={Button_color} /> : ""} */}
+
+        {openLoginPopup ? <Register bt_color={Button_color} /> : ""}
         <Footer
           hotelwebsite={hotelwebsite}
           color={Bg_color}

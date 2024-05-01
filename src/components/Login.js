@@ -45,8 +45,8 @@ const Login = (props) => {
                 <div className="div-3">See what is going on with your business</div>
 
                 <div className="div-7">
-                    <span style={{ color: "rgba(221,221,221,1)" }}>-------------</span> or Sign
-                    in with Email{" "}
+                    <span style={{ color: "rgba(221,221,221,1)" }}>-------------</span> login
+                    {" "}
                     <span style={{ color: "rgba(221,221,221,1)" }}>------------- </span>
                 </div>
                 <div>

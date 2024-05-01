@@ -94,7 +94,10 @@ export default function Navbar(props) {
                             <a href={`mailto:${props.email}`} class="nav-link nav-icon" aria-current="page"><FaEnvelope /></a>
                         </li>
 
-                        <button onClick={handleLoginPopup} class='loginbutton'>Login</button>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            <button onClick={handleLoginPopup} class='loginbutton' style={{ border: "none", padding: "5px 20px" }}>Login</button>
+
+                        </div>
                         {/* <li class="nav-item ">
                             <a class="nav-link" aria-current="page" href="#" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal1">{t('Login')}</a>
