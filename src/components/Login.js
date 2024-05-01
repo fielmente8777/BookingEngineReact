@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react'
-import "../style/Login.css"
-import AuthContext from '../context/AuthProvider'
+import React, { useContext, useState } from 'react';
 import { IoCloseSharp } from "react-icons/io5";
+import AuthContext from '../context/AuthProvider';
+import "../style/Login.css";
 const Login = (props) => {
 
 
@@ -45,7 +45,7 @@ const Login = (props) => {
                 <div className="div-3">See what is going on with your business</div>
 
                 <div className="div-7">
-                    <span style={{ color: "rgba(221,221,221,1)" }}>-------------</span> or Sign
+                    <span style={{ color: "rgba(221,221,221,1)" }}>-------------</span>Sign
                     in with Email{" "}
                     <span style={{ color: "rgba(221,221,221,1)" }}>------------- </span>
                 </div>
@@ -59,7 +59,7 @@ const Login = (props) => {
                         onChange={(e) => setPhone(e.target.value)}
                     />
 
-                    {"If number is not registered" ? <p style={{ color: "red" }}>Number is not Registered</p> : ""}
+                    {false ? <p style={{ color: "red" }}>Number is not Registered</p> : ""}
                 </div>
 
                 {otp ? <div>

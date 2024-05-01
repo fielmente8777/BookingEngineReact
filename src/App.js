@@ -1,19 +1,18 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/Footer";
 import LandingPage from "./components/LandingPage";
+import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import NotFoundPage from "./components/NotFoundPage";
 import SuccessPage from "./components/SuccessPage";
 import "./components/i18n"; // Import your i18n configuration
+import AuthContext from "./context/AuthProvider";
 import "./style/Landing.css";
 import "./style/NavFoot.css";
-import Login from "./components/Login";
-import { useContext } from "react";
-import AuthContext from "./context/AuthProvider";
 
 function App() {
   const { openLoginPopup, setOpenLoginPopup } = useContext(AuthContext)
@@ -211,9 +210,38 @@ function App() {
       setSpinner_spin2("");
     }
   }
+  const [AuthenticatedUser,setAuthenticatedUser] = useState(false)
+  const CheckLoginUserStatus = async()=>{
+    if(localStorage.getItem("engineAuth")==null){
+      setAuthenticatedUser(false)
+    }
+    else{
+      const response = await fetch(
+        `${baseUrl}/feature1/getuser/${localStorage.getItem("hotelid")}/${localStorage.getItem("hid")}/${localStorage.getItem("engineAuth")}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json, text/plain, /",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+  
+      const json = await response.json();
+      if(json.Status){
+        setAuthenticatedUser(true)
+      }
+      else{
+        setAuthenticatedUser(false)
+      }
+      // const json = await response1.json();
+    }
+  }
 
-  const baseUrl = "https://nexon.eazotel.com";
-  // const baseUrl = "http://127.0.0.1:5000";
+  
+
+  // const baseUrl = "https://nexon.eazotel.com";
+  const baseUrl = "http://127.0.0.1:5000";
   // const baseUrl = "https://testnexon.eazotel.com"
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -224,6 +252,7 @@ function App() {
 
   useEffect(() => {
     Get_Hotel_status_exists();
+    CheckLoginUserStatus();
   }, []);
 
   const { t, i18n } = useTranslation();
@@ -246,6 +275,7 @@ function App() {
           HotelNumber={HotelNumber}
           email={HotelEmail}
           hotelwebsite={hotelwebsite}
+          AuthenticatedUser={AuthenticatedUser}
         />
 
         {!Payment.Status ? (

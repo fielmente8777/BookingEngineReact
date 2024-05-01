@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
-import './i18n'; // Import your i18n configuration
 import AuthContext from '../context/AuthProvider';
+import './i18n'; // Import your i18n configuration
 
 
 
@@ -19,6 +19,10 @@ export default function Navbar(props) {
 
     const handleLoginPopup = () => {
         setOpenLoginPopup(true);
+    }
+
+    const handleLogoutPopup = ()=>{
+        localStorage.clear()
     }
 
 
@@ -94,7 +98,7 @@ export default function Navbar(props) {
                             <a href={`mailto:${props.email}`} class="nav-link nav-icon" aria-current="page"><FaEnvelope /></a>
                         </li>
 
-                        <button onClick={handleLoginPopup} class='loginbutton'>Login</button>
+                        {props.AuthenticatedUser?<button onClick={handleLogoutPopup} class='loginbutton'>Logout</button>:<button onClick={handleLoginPopup} class='loginbutton'>Login</button>}
                         {/* <li class="nav-item ">
                             <a class="nav-link" aria-current="page" href="#" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal1">{t('Login')}</a>
