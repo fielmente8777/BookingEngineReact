@@ -1,14 +1,15 @@
-import React, { useContext, useState } from 'react'
-import "../style/Login.css"
-import AuthContext from '../context/AuthProvider'
+import React, { useContext, useState } from 'react';
 import { IoCloseSharp } from "react-icons/io5";
+import AuthContext from '../context/AuthProvider';
+import "../style/Login.css";
 
-export const Register = () => {
+export const Register = (props) => {
 
 
     const { openLoginPopup, setOpenLoginPopup } = useContext(AuthContext);
 
     const [phone, setPhone] = useState("")
+    const [name, setName] = useState("")
 
     const [otp, setOtp] = useState(false);
     const [otpDigit, setOtpDigit] = useState(false);
@@ -32,7 +33,7 @@ export const Register = () => {
     }
 
     const handleCloseLogin = () => {
-        alert("jafnja")
+      
         setOpenLoginPopup(false)
     }
     return (
@@ -40,13 +41,24 @@ export const Register = () => {
             <form onSubmit={handleSubmit} className="div">
                 <div style={{ textAlign: "end", fontWeight: "700" }}><IoCloseSharp onClick={handleCloseLogin} size={24} style={{ cursor: "pointer" }} color='#525252' /></div>
 
-                <div className="div-2">Login to your Account</div>
+                <div className="div-2">Sign up to your Account</div>
                 <div className="div-3">See what is going on with your business</div>
 
                 <div className="div-7">
-                    <span style={{ color: "rgba(221,221,221,1)" }}>-------------</span> or Sign
-                    in with Email{" "}
+                    <span style={{ color: "rgba(221,221,221,1)" }}>-------------</span> Sign
+                    up {" "}
                     <span style={{ color: "rgba(221,221,221,1)" }}>------------- </span>
+                </div>
+                <div>
+                    <div className="div-8">Name</div>
+                    <input
+                        type='text'
+                        className="div-9 out"
+                        placeholder='John Smith'
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+
                 </div>
                 <div>
                     <div className="div-8">Phone</div>

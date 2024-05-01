@@ -5,7 +5,6 @@ import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/Footer";
 import LandingPage from "./components/LandingPage";
-import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import NotFoundPage from "./components/NotFoundPage";
 import SuccessPage from "./components/SuccessPage";
@@ -13,6 +12,9 @@ import "./components/i18n"; // Import your i18n configuration
 import AuthContext from "./context/AuthProvider";
 import "./style/Landing.css";
 import "./style/NavFoot.css";
+
+import { Register } from "./components/Register";
+
 
 function App() {
   const { openLoginPopup, setOpenLoginPopup } = useContext(AuthContext)
@@ -304,7 +306,9 @@ function App() {
           <SuccessPage Payment={Payment} currency={currency} />
         )}
 
-        {openLoginPopup ? <Login bt_color={Button_color} /> : ""}
+        {/* {openLoginPopup ? <Login bt_color={Button_color} /> : ""} */}
+
+        {openLoginPopup ? <Register bt_color={Button_color} /> : ""}
         <Footer
           hotelwebsite={hotelwebsite}
           color={Bg_color}
