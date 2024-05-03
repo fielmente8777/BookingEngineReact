@@ -5,41 +5,85 @@ import "../style/Login.css";
 
 export const Register = (props) => {
 
+    const {setAuthenticatedUser} = props
+    const { openLoginPopup, setOpenLoginPopup,setopenRegisterPopup,FetchUsersBookings,FetchUsersFutureBookings } = useContext(AuthContext);
 
-    const { openLoginPopup, setOpenLoginPopup } = useContext(AuthContext);
-
-    const [phone, setPhone] = useState("")
-    const [name, setName] = useState("")
+    const [phone, setPhone] = useState("");
+    const [name, setName] = useState("");
+    const [email, setemail] = useState("");
 
     const [otp, setOtp] = useState(false);
     const [otpDigit, setOtpDigit] = useState(false);
+    const [Message,setMessage] = useState("")
 
 
+    const RegisterUserToEngine = async() => {
+        const response = await fetch(`${props.baseUrl}/feature1/signup`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, /",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ 
+                "register":true,
+                "Name":name,
+                "emailId":email,
+                "phone":phone,
+                "hotelid":localStorage.getItem("hid"),
+                "ndid":localStorage.getItem("hotelid")
+            })
+        });
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        setOtp(true);
-
-        if (!otp) {
-            console.log("otp nhi aay")
-            return;
+        const details = await response.json()
+        if(details.Status){
+            setOtp(true);
         }
-        else {
-            console.log(phone, otpDigit)
-            console.log("otp aa gya hia ")
+        else{
+            setMessage(details.Message)
+            setPhone("")
+            setName("")
+            setemail("")
         }
-
     }
 
-    const handleCloseLogin = () => {
+    const VerifyUserToEngineWithOtp = async() => {
+        const response = await fetch(`${props.baseUrl}/feature1/otp-verify`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, /",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "hotelid":localStorage.getItem("hid"),
+                "ndid":localStorage.getItem("hotelid"),
+                "phone":phone,
+                "otp":otpDigit
+            })
+        });
+
+        const details = await response.json()
+        if(details.Status){
+            localStorage.setItem("engineAuth",details.Token)
+            setAuthenticatedUser(true)
+            setopenRegisterPopup(false)
+            FetchUsersBookings()
+            FetchUsersFutureBookings()
+        }
+        else{
+            setMessage("OTP is wrong")
+            
+        }
+    }
+   
+
+    const handleCloseRegister = () => {
       
-        setOpenLoginPopup(false)
+        setopenRegisterPopup(false)
     }
     return (
         <div className='loginPage'>
-            <form onSubmit={handleSubmit} className="div">
-                <div style={{ textAlign: "end", fontWeight: "700" }}><IoCloseSharp onClick={handleCloseLogin} size={24} style={{ cursor: "pointer" }} color='#525252' /></div>
+            <div  className="div">
+                <div style={{ textAlign: "end", fontWeight: "700" }}><IoCloseSharp onClick={handleCloseRegister} size={24} style={{ cursor: "pointer" }} color='#525252' /></div>
 
                 <div className="div-2">Sign up to your Account</div>
                 <div className="div-3">See what is going on with your business</div>
@@ -61,6 +105,17 @@ export const Register = (props) => {
 
                 </div>
                 <div>
+                    <div className="div-8">Email</div>
+                    <input
+                        type='text'
+                        className="div-9 out"
+                        placeholder='abc@email.com'
+                        value={email}
+                        onChange={(e) => setemail(e.target.value)}
+                    />
+
+                </div>
+                <div>
                     <div className="div-8">Phone</div>
                     <input
                         type='number'
@@ -70,7 +125,7 @@ export const Register = (props) => {
                         onChange={(e) => setPhone(e.target.value)}
                     />
 
-                    {"If number is not registered" ? <p style={{ color: "red" }}>Number is not Registered</p> : ""}
+                    {Message!==""? <p style={{ color: "red" }}>{Message}</p> :""}
                 </div>
 
                 {otp ? <div>
@@ -96,11 +151,13 @@ export const Register = (props) => {
                     <div className="div-15">Forgot Password?</div>
                 </div> */}
                 {otp ?
-                    <button type='submit' className="div-16" style={{ backgroundColor: props.bt_color }}>Submit</button>
+                    <button type='submit' onClick={()=>{VerifyUserToEngineWithOtp()}} className="div-16" style={{ backgroundColor: props.bt_color }}>Verify Otp</button>
                     :
-                    <button type='submit' className="div-16" style={{ backgroundColor: props.bt_color }}>Send OTP</button>
+                    <button type='submit' onClick={()=>{RegisterUserToEngine()}} className="div-16" style={{ backgroundColor: props.bt_color }}>Register</button>
                 }
-            </form>
+            </div>
         </div>
     )
 }
+
+

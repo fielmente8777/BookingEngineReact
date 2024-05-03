@@ -5,31 +5,72 @@ import "../style/Login.css";
 const Login = (props) => {
 
 
-    const { openLoginPopup, setOpenLoginPopup } = useContext(AuthContext);
+    const { openLoginPopup, setOpenLoginPopup,FetchUsersBookings,FetchUsersFutureBookings } = useContext(AuthContext);
 
     const [phone, setPhone] = useState("")
 
     const [otp, setOtp] = useState(false);
     const [otpDigit, setOtpDigit] = useState(false);
+    const [Message,setMessage] = useState("")
 
 
+    const LoginUserToEngine = async() => {
+        const response = await fetch(`${props.baseUrl}/feature1/signup`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, /",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ 
+                "register":false,
+                "Name":"",
+                "emailId":"",
+                "phone":phone,
+                "hotelid":localStorage.getItem("hid"),
+                "ndid":localStorage.getItem("hotelid")
+            })
+        });
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(phone, otp);
-
-        setOtp(true);
-
-        if (!otp) {
-            console.log("otp nhi aay")
-            return;
+        const details = await response.json()
+        if(details.Status){
+            setOtp(true);
         }
-        else {
-            console.log(phone, otpDigit)
-            console.log("otp aa gya hia ")
+        else{
+            setMessage(details.Message)
+            setPhone("")
         }
-
     }
+
+    const VerifyUserToEngineWithOtp = async() => {
+        const response = await fetch(`${props.baseUrl}/feature1/otp-verify`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json, text/plain, /",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "hotelid":localStorage.getItem("hid"),
+                "ndid":localStorage.getItem("hotelid"),
+                "phone":phone,
+                "otp":otpDigit
+            })
+        });
+
+        const details = await response.json()
+        if(details.Status){
+            localStorage.setItem("engineAuth",details.Token)
+            props.setAuthenticatedUser(true)
+            setOpenLoginPopup(false)
+            FetchUsersBookings()
+            FetchUsersFutureBookings()
+        }
+        else{
+            setMessage("OTP is wrong")
+            
+        }
+    }
+
+    
 
     const handleCloseLogin = () => {
         setOpenLoginPopup(false)
@@ -38,7 +79,7 @@ const Login = (props) => {
 
     return (
         <div className='loginPage'>
-            <form onSubmit={handleSubmit} className="div">
+            <div  className="div">
                 <div style={{ textAlign: "end", fontWeight: "700" }}><IoCloseSharp onClick={handleCloseLogin} size={24} style={{ cursor: "pointer" }} color='#525252' /></div>
 
                 <div className="div-2">Login to your Account</div>
@@ -59,7 +100,7 @@ const Login = (props) => {
                         onChange={(e) => setPhone(e.target.value)}
                     />
 
-                    {false ? <p style={{ color: "red" }}>Number is not Registered</p> : ""}
+                    {Message!=="" ? <p style={{ color: "red" }}>{Message}</p> : ""}
                 </div>
 
                 {otp ? <div>
@@ -85,11 +126,11 @@ const Login = (props) => {
                     <div className="div-15">Forgot Password?</div>
                 </div> */}
                 {otp ?
-                    <button type='submit' className="div-16" style={{ backgroundColor: props.bt_color }}>Submit</button>
+                    <button type='submit' onClick={()=>{VerifyUserToEngineWithOtp()}} className="div-16" style={{ backgroundColor: props.bt_color }}>Verify Otp</button>
                     :
-                    <button type='submit' className="div-16" style={{ backgroundColor: props.bt_color }}>Send OTP</button>
+                    <button type='submit' onClick={()=>{LoginUserToEngine()}} className="div-16" style={{ backgroundColor: props.bt_color }}>Login</button>
                 }
-            </form>
+            </div>
         </div>
 
     )

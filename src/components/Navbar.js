@@ -10,7 +10,7 @@ import './i18n'; // Import your i18n configuration
 export default function Navbar(props) {
 
 
-    const { openLoginPopup, setOpenLoginPopup } = useContext(AuthContext)
+    const { openLoginPopup, setOpenLoginPopup,openRegisterPopup,setopenRegisterPopup } = useContext(AuthContext)
     const { t, i18n } = useTranslation();
     const changeLanguage = (lng) => {
         i18n.changeLanguage(lng);
@@ -20,9 +20,13 @@ export default function Navbar(props) {
     const handleLoginPopup = () => {
         setOpenLoginPopup(true);
     }
+    const handleRegisterPopup = () => {
+        setopenRegisterPopup(true);
+    }
 
     const handleLogoutPopup = ()=>{
         localStorage.clear()
+        props.setAuthenticatedUser(false)
     }
 
 
@@ -99,7 +103,13 @@ export default function Navbar(props) {
                         </li>
 
                         <div style={{ display: "flex", alignItems: "center" }}>
-                            {props.AuthenticatedUser?<button onClick={handleLogoutPopup} class='loginbutton' style={{ border: "none", padding: "5px 20px" }}>Logout</button>:<button onClick={handleLoginPopup} style={{ border: "none", padding: "5px 20px" }} class='loginbutton'>Login</button>}
+                            {props.AuthenticatedUser?<button onClick={handleLogoutPopup} class='loginbutton' style={{ border: "none", padding: "5px 20px" }}>Logout</button>
+                            :
+                            <div>
+                                <button onClick={handleLoginPopup} style={{ border: "none", padding: "5px 20px" }} class='loginbutton'>Login</button>
+                                <button onClick={handleRegisterPopup} style={{ border: "none", padding: "5px 20px" }} class='loginbutton'>Register</button>
+                            </div>
+                            }
                         </div>
                         {/* <li class="nav-item ">
                             <a class="nav-link" aria-current="page" href="#" data-bs-toggle="modal"

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import OTPInput, { ResendOTP } from "otp-input-react";
+import Modal from "react-bootstrap/Modal";
 
 import {
   FaFacebookF,
@@ -14,12 +13,12 @@ import {
 import { Link } from "react-router-dom";
 // import FooterLogo from '../Images/backgroundimge.jpeg'
 import HTMLReactParser from "html-react-parser";
+import Button from "react-bootstrap/Button";
 import { useTranslation } from "react-i18next";
 import FooterLogo from "../Images/WhatsApp.svg.png";
 import FooterLogo1 from "../Images/call1.png";
-import "./i18n"; // Import your i18n configuration
-import Button from "react-bootstrap/Button";
 import "../style/DetailModal.css";
+import "./i18n"; // Import your i18n configuration
 function DetailModal(props) {
   const [isotpgenerated, setisotpgenerated] = useState(false);
   const [OTP, setOTP] = useState("");
@@ -422,14 +421,14 @@ export default function Footer(props) {
                     Cancellation & Refund Policy
                   </p>
                 </li>
-                <li>
+                {props.AuthenticatedUser?<li>
                   <p
                     style={{ cursor: "pointer" }}
                     onClick={() => setModalShow(true)}
                   >
                     Cancel Booking
                   </p>
-                </li>
+                </li>:""}
                 {/* <li>
                   <Link to="/#">FAQs</Link>
                 </li> */}

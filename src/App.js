@@ -13,11 +13,13 @@ import AuthContext from "./context/AuthProvider";
 import "./style/Landing.css";
 import "./style/NavFoot.css";
 
+import Login from "./components/Login";
 import { Register } from "./components/Register";
 
 
 function App() {
-  const { openLoginPopup, setOpenLoginPopup } = useContext(AuthContext)
+  const { openLoginPopup, setOpenLoginPopup ,openRegisterPopup,FetchUsersBookings,
+    FetchUsersFutureBookings} = useContext(AuthContext)
   const [Bg_color, setBg_color] = useState("#153B5B"); //background for header and footer
   const [Box_color, setBox_color] = useState("#0A3A75"); //Box color for reservation
   const [Button_color, setButton_color] = useState("#0A3A75"); //Button color of checkin and out
@@ -232,6 +234,8 @@ function App() {
       const json = await response.json();
       if(json.Status){
         setAuthenticatedUser(true)
+        FetchUsersBookings()
+        FetchUsersFutureBookings()
       }
       else{
         setAuthenticatedUser(false)
@@ -278,6 +282,7 @@ function App() {
           email={HotelEmail}
           hotelwebsite={hotelwebsite}
           AuthenticatedUser={AuthenticatedUser}
+          setAuthenticatedUser = {setAuthenticatedUser}
         />
 
         {!Payment.Status ? (
@@ -306,11 +311,12 @@ function App() {
           <SuccessPage Payment={Payment} currency={currency} />
         )}
 
-        {/* {openLoginPopup ? <Login bt_color={Button_color} /> : ""} */}
+        {openLoginPopup ? <Login setAuthenticatedUser={setAuthenticatedUser} baseUrl={baseUrl} bt_color={Button_color} /> : ""}
 
-        {openLoginPopup ? <Register bt_color={Button_color} /> : ""}
+        {openRegisterPopup ? <Register baseUrl={baseUrl} bt_color={Button_color} setAuthenticatedUser={setAuthenticatedUser} /> : ""}
         <Footer
           hotelwebsite={hotelwebsite}
+          AuthenticatedUser = {AuthenticatedUser}
           color={Bg_color}
           Logo={HotelLogo}
           HotelAddress={HotelAddress}
