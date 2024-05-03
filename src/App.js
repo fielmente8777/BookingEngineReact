@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/Footer";
 import LandingPage from "./components/LandingPage";
@@ -15,11 +15,13 @@ import "./style/NavFoot.css";
 
 import Login from "./components/Login";
 import { Register } from "./components/Register";
+import Profile from "./components/Profile";
+import Booking from "./components/Booking";
 
 
 function App() {
-  const { openLoginPopup, setOpenLoginPopup ,openRegisterPopup,FetchUsersBookings,
-    FetchUsersFutureBookings} = useContext(AuthContext)
+  const { openLoginPopup, setOpenLoginPopup, openRegisterPopup, FetchUsersBookings,
+    FetchUsersFutureBookings } = useContext(AuthContext)
   const [Bg_color, setBg_color] = useState("#153B5B"); //background for header and footer
   const [Box_color, setBox_color] = useState("#0A3A75"); //Box color for reservation
   const [Button_color, setButton_color] = useState("#0A3A75"); //Button color of checkin and out
@@ -214,12 +216,12 @@ function App() {
       setSpinner_spin2("");
     }
   }
-  const [AuthenticatedUser,setAuthenticatedUser] = useState(false)
-  const CheckLoginUserStatus = async()=>{
-    if(localStorage.getItem("engineAuth")==null){
+  const [AuthenticatedUser, setAuthenticatedUser] = useState(false)
+  const CheckLoginUserStatus = async () => {
+    if (localStorage.getItem("engineAuth") == null) {
       setAuthenticatedUser(false)
     }
-    else{
+    else {
       const response = await fetch(
         `${baseUrl}/feature1/getuser/${localStorage.getItem("hotelid")}/${localStorage.getItem("hid")}/${localStorage.getItem("engineAuth")}`,
         {
@@ -230,24 +232,24 @@ function App() {
           },
         }
       );
-  
+
       const json = await response.json();
-      if(json.Status){
+      if (json.Status) {
         setAuthenticatedUser(true)
         FetchUsersBookings()
         FetchUsersFutureBookings()
       }
-      else{
+      else {
         setAuthenticatedUser(false)
       }
       // const json = await response1.json();
     }
   }
 
-  
 
-  // const baseUrl = "https://nexon.eazotel.com";
-  const baseUrl = "http://127.0.0.1:5000";
+
+  const baseUrl = "https://nexon.eazotel.com";
+  // const baseUrl = "http://127.0.0.1:5000";
   // const baseUrl = "https://testnexon.eazotel.com"
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -272,73 +274,95 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
-        <Navbar
-          hotelname={HotelName}
-          logo={HotelLogo}
-          display={Spinner_spin1}
-          color={Bg_color}
-          HotelNumber={HotelNumber}
-          email={HotelEmail}
-          hotelwebsite={hotelwebsite}
-          AuthenticatedUser={AuthenticatedUser}
-          setAuthenticatedUser = {setAuthenticatedUser}
-        />
+      <Navbar
+        hotelname={HotelName}
+        logo={HotelLogo}
+        display={Spinner_spin1}
+        color={Bg_color}
+        HotelNumber={HotelNumber}
+        email={HotelEmail}
+        hotelwebsite={hotelwebsite}
+        AuthenticatedUser={AuthenticatedUser}
+        setAuthenticatedUser={setAuthenticatedUser}
+      />
 
-        {!Payment.Status ? (
-          <LandingPage
-            addTax={addTax}
-            GatewayConnected={GatewayConnected}
-            isPayatHotel={isPayatHotel}
-            isOnlinepay={isOnlinepay}
-            currency={currency}
-            Bg_color={Bg_color}
-            HotelName={HotelName}
-            HotelLogo={HotelLogo}
-            baseUrl={baseUrl}
-            Bg_image={HotelImage}
-            color={Box_color}
-            display={Spinner_spin1}
-            bt_color={Button_color}
-            ReservationLabel={Reservation_button}
-            ReservationButton={Room_searchButton}
-            FinalConfirmButton={RoomFinal_searchButton}
-            Paymentbutton={PaymentButton}
-            setPayment={setPayment}
-            isSemiPayment={isSemiPayment}
-          />
-        ) : (
-          <SuccessPage Payment={Payment} currency={currency} />
-        )}
+      <Routes>
 
-        {openLoginPopup ? <Login setAuthenticatedUser={setAuthenticatedUser} baseUrl={baseUrl} bt_color={Button_color} /> : ""}
+        <Route path="/" element={
 
-        {openRegisterPopup ? <Register baseUrl={baseUrl} bt_color={Button_color} setAuthenticatedUser={setAuthenticatedUser} /> : ""}
-        <Footer
-          hotelwebsite={hotelwebsite}
-          AuthenticatedUser = {AuthenticatedUser}
-          color={Bg_color}
-          Logo={HotelLogo}
-          HotelAddress={HotelAddress}
-          HotelNumber={HotelNumber}
-          aboutus={HotelAbout}
-          display={Spinner_spin1}
-          email={HotelEmail}
-          facebook={Facebook}
-          instagram={Instagram}
-          twitter={Twitter}
-          Tripadvisors={Tripadvisors}
-          Linkedin={Linkedin}
-          Youtube={Youtube}
-          Location={HotelLocation}
-          Privacypolicy={Privacypolicy}
-          Cancellation={Cancellation}
-          Termsconditions={Termsconditions}
-          baseUrl={baseUrl}
-        />
+          <>
+            {!Payment.Status ? (
+              <LandingPage
+                addTax={addTax}
+                GatewayConnected={GatewayConnected}
+                isPayatHotel={isPayatHotel}
+                isOnlinepay={isOnlinepay}
+                currency={currency}
+                Bg_color={Bg_color}
+                HotelName={HotelName}
+                HotelLogo={HotelLogo}
+                baseUrl={baseUrl}
+                Bg_image={HotelImage}
+                color={Box_color}
+                display={Spinner_spin1}
+                bt_color={Button_color}
+                ReservationLabel={Reservation_button}
+                ReservationButton={Room_searchButton}
+                FinalConfirmButton={RoomFinal_searchButton}
+                Paymentbutton={PaymentButton}
+                setPayment={setPayment}
+                isSemiPayment={isSemiPayment}
+              />
+            ) : (
+              <SuccessPage Payment={Payment} currency={currency} />
+            )}
 
-        <NotFoundPage display={Spinner_spin2} />
-      </BrowserRouter>
+
+            <NotFoundPage display={Spinner_spin2} />
+
+          </>
+
+        } />
+
+
+
+
+
+        <Route path='/profile' element={<Profile />} />
+        <Route path="/booking" element={<Booking />} />
+
+
+      </Routes>
+
+
+      {openLoginPopup ? <Login setAuthenticatedUser={setAuthenticatedUser} baseUrl={baseUrl} bt_color={Button_color} /> : ""}
+
+      {openRegisterPopup ? <Register baseUrl={baseUrl} bt_color={Button_color} setAuthenticatedUser={setAuthenticatedUser} /> : ""}
+
+
+      <Footer
+        hotelwebsite={hotelwebsite}
+        AuthenticatedUser={AuthenticatedUser}
+        color={Bg_color}
+        Logo={HotelLogo}
+        HotelAddress={HotelAddress}
+        HotelNumber={HotelNumber}
+        aboutus={HotelAbout}
+        display={Spinner_spin1}
+        email={HotelEmail}
+        facebook={Facebook}
+        instagram={Instagram}
+        twitter={Twitter}
+        Tripadvisors={Tripadvisors}
+        Linkedin={Linkedin}
+        Youtube={Youtube}
+        Location={HotelLocation}
+        Privacypolicy={Privacypolicy}
+        Cancellation={Cancellation}
+        Termsconditions={Termsconditions}
+        baseUrl={baseUrl}
+      />
+
     </>
   );
 }

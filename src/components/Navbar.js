@@ -2,7 +2,9 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 import AuthContext from '../context/AuthProvider';
+import { GiHamburgerMenu } from "react-icons/gi";
 import './i18n'; // Import your i18n configuration
+import Navmenu from './Navmenu';
 
 
 
@@ -10,11 +12,13 @@ import './i18n'; // Import your i18n configuration
 export default function Navbar(props) {
 
 
-    const { openLoginPopup, setOpenLoginPopup,openRegisterPopup,setopenRegisterPopup } = useContext(AuthContext)
+    const { openLoginPopup, setOpenLoginPopup, openRegisterPopup, setopenRegisterPopup, isMenuOpen, setIsMenuOpen } = useContext(AuthContext)
     const { t, i18n } = useTranslation();
     const changeLanguage = (lng) => {
         i18n.changeLanguage(lng);
     };
+
+
 
 
     const handleLoginPopup = () => {
@@ -23,12 +27,6 @@ export default function Navbar(props) {
     const handleRegisterPopup = () => {
         setopenRegisterPopup(true);
     }
-
-    const handleLogoutPopup = ()=>{
-        localStorage.clear()
-        props.setAuthenticatedUser(false)
-    }
-
 
     const languages = [
         { code: 'en', label: 'English' },
@@ -43,6 +41,11 @@ export default function Navbar(props) {
         { code: 'ru', label: 'Russian' },
         // Add more languages here as needed
     ];
+
+    const handleMenu = () => {
+
+        setIsMenuOpen(true)
+    }
     return (
 
         <nav class={`navbar navbar-expand-lg ${props.display}`} style={{ background: props.color }}>
@@ -103,12 +106,17 @@ export default function Navbar(props) {
                         </li>
 
                         <div style={{ display: "flex", alignItems: "center" }}>
-                            {props.AuthenticatedUser?<button onClick={handleLogoutPopup} class='loginbutton' style={{ border: "none", padding: "5px 20px" }}>Logout</button>
-                            :
-                            <div>
-                                <button onClick={handleLoginPopup} style={{ border: "none", padding: "5px 20px" }} class='loginbutton'>Login</button>
-                                <button onClick={handleRegisterPopup} style={{ border: "none", padding: "5px 20px" }} class='loginbutton'>Register</button>
-                            </div>
+                            {props.AuthenticatedUser ?
+                                <GiHamburgerMenu size={24} onClick={handleMenu} cursor={"pointer"} />
+
+                                :
+                                <div>
+
+
+                                    <button onClick={handleLoginPopup} style={{ border: "none", padding: "5px 20px" }} class='loginbutton'>Login</button>
+                                    <button onClick={handleRegisterPopup} style={{ border: "none", padding: "5px 20px" }} class='loginbutton'>Register</button>
+
+                                </div>
                             }
                         </div>
                         {/* <li class="nav-item ">
@@ -129,6 +137,8 @@ export default function Navbar(props) {
 
                     </ul>
                 </div>
+
+                {isMenuOpen && <Navmenu />}
 
             </div>
         </nav>

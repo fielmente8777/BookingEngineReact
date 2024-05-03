@@ -1,0 +1,31 @@
+.navmenu {
+    position: absolute;
+    top: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    right: 0;
+    width: 200px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.navmenu .items {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-decoration: none;
+
+}
+
+.navmenu .items .profile {
+    text-decoration: none;
+    color: black;
+}
+
+
+@media screen and (max-width: 768px) {
+    .navmenu {
+        right: 4%;
+    }
+}
