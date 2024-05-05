@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
-import AuthContext from '../context/AuthProvider';
 import { GiHamburgerMenu } from "react-icons/gi";
-import './i18n'; // Import your i18n configuration
+import AuthContext from '../context/AuthProvider';
 import Navmenu from './Navmenu';
+import './i18n'; // Import your i18n configuration
 
 
 
@@ -44,7 +44,7 @@ export default function Navbar(props) {
 
     const handleMenu = () => {
 
-        setIsMenuOpen(true)
+        setIsMenuOpen(!isMenuOpen)
     }
     return (
 
@@ -138,7 +138,7 @@ export default function Navbar(props) {
                     </ul>
                 </div>
 
-                {isMenuOpen && <Navmenu />}
+                {isMenuOpen && <Navmenu setAuthenticatedUser={props.setAuthenticatedUser} />}
 
             </div>
         </nav>

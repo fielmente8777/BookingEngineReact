@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
+import { Link } from 'react-router-dom'
 import AuthContext from '../context/AuthProvider'
 import "../style/Navmenu.css"
-import { Link } from 'react-router-dom'
 
 
 
 
-const Navmenu = () => {
+const Navmenu = (props) => {
     const { isMenuOpen, setIsMenuOpen } = useContext(AuthContext)
     const meHuParameter = "meHuParameter"
     const handleCloseMenu = () => {
@@ -14,16 +14,17 @@ const Navmenu = () => {
     }
 
     const handleLogoutPopup = () => {
-        // localStorage.clear()
-        // props.setAuthenticatedUser(false)
+        localStorage.clear()
+        props.setAuthenticatedUser(false)
     }
 
     return (
         <div className='navmenu' onBlur={handleCloseMenu}>
 
-            <div className='items' onBlur={handleCloseMenu} style={{ height: "200px" }}>
-                <Link className='profile' to={`/profile?shdf=${meHuParameter}`}>Profile</Link>
-                <Link className='profile' onClick={handleLogoutPopup}>Logout</Link>
+            <div className='items' onClick={()=>{handleCloseMenu()}} style={{ height: "auto" }}>
+                <Link className='profile' to={`/profile?id=${localStorage.getItem("hotelid")}&hid=${localStorage.getItem("hid")}`}>Profile</Link>
+                <Link className='profile' to={`/booking?id=${localStorage.getItem("hotelid")}&hid=${localStorage.getItem("hid")}`}>Bookings</Link>
+                <Link className='profile' onClick={handleLogoutPopup} to={`/?id=${localStorage.getItem("hotelid")}&hid=${localStorage.getItem("hid")}`}>Logout</Link>
 
             </div>
 

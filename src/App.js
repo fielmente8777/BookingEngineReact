@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/Footer";
 import LandingPage from "./components/LandingPage";
@@ -13,10 +13,10 @@ import AuthContext from "./context/AuthProvider";
 import "./style/Landing.css";
 import "./style/NavFoot.css";
 
-import Login from "./components/Login";
-import { Register } from "./components/Register";
-import Profile from "./components/Profile";
 import Booking from "./components/Booking";
+import Login from "./components/Login";
+import Profile from "./components/Profile";
+import { Register } from "./components/Register";
 
 
 function App() {
