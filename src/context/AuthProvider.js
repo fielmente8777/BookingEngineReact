@@ -11,8 +11,35 @@ export const AuthProvider = ({ children }) => {
 
     const [AllUserBookings, setAllUserBookings] = useState([])
     const [AllFutureUserBookings, setAllFutureUserBookings] = useState([]);
+    const [userInfo,setuserInfo] = useState({})
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
+    const FetchUsersInfo = async () => {
+        try {
+            const response = await fetch(
+                `${serverUrl}/feature1/getUserByPhoneNo/${localStorage.getItem("engineAuth")}`,
+                {
+                    method: "GET",
+                    headers: {
+                        Accept: "application/json, text/plain, /",
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            const json = await response.json()
+            if (json.Status) {
+                console.log(json.user)
+                setuserInfo(json.user)
+            }
+            else {
+                setuserInfo({})
+            }
+        }
+        catch {
+            console.log("Server Issue")
+        }
+    }
 
     const FetchUsersBookings = async () => {
         try {
@@ -71,7 +98,7 @@ export const AuthProvider = ({ children }) => {
     const DeleteUserBookings = async (bookingid) => {
         try {
             const response = await fetch(
-                `${serverUrl}/feature1/cancelBookings/${localStorage.getItem("hotelid")}/${localStorage.getItem("hid")}/${localStorage.getItem("engineAuth")}/${bookingid}`,
+                `${serverUrl}/feature1/cancelBooking/${localStorage.getItem("hotelid")}/${localStorage.getItem("hid")}/${localStorage.getItem("engineAuth")}/${bookingid}`,
                 {
                     method: "POST",
                     headers: {
@@ -79,7 +106,7 @@ export const AuthProvider = ({ children }) => {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        "hotelid": localStorage.getItem("hid")
+                        
                     })
                 }
 
@@ -88,7 +115,8 @@ export const AuthProvider = ({ children }) => {
             const json = await response.json()
             if (json.Status) {
                 console.log(json.data)
-                setAllFutureUserBookings(json.data)
+                FetchUsersBookings()
+                FetchUsersFutureBookings()
             }
             else {
                 setAllFutureUserBookings([])
@@ -105,7 +133,7 @@ export const AuthProvider = ({ children }) => {
                 openLoginPopup, setOpenLoginPopup, openRegisterPopup, setopenRegisterPopup, FetchUsersBookings,
                 FetchUsersFutureBookings, AllUserBookings,
                 AllFutureUserBookings, DeleteUserBookings,
-                isMenuOpen, setIsMenuOpen
+                isMenuOpen, setIsMenuOpen,userInfo,setuserInfo,FetchUsersInfo
             }}
         >
             {children}

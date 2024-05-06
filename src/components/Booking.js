@@ -1,14 +1,40 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import AuthContext from '../context/AuthProvider'
 import "../style/Booking.css"
 const Booking = () => {
+
+    const {AllUserBookings,FetchUsersBookings,AllFutureUserBookings,FetchUsersFutureBookings,DeleteUserBookings} = useContext(AuthContext)
+
+    useEffect(()=>{
+        FetchUsersBookings()
+        FetchUsersFutureBookings()
+    },[])
+
+    const [allbook,setallbook] = useState(true)
+    const [pastbook,setpastbook] = useState(true)
+    const [futurebook,setfuturebook] = useState(true)
+
+    const CancelBooking = (bookingid)=>{
+        const isConfirmed = window.confirm("Are you sure you want to cancel the booking?");
+
+        // Check if the user confirmed
+        if (isConfirmed) {
+            // Perform the cancellation action
+            // For example, you can call a function to cancel the booking here
+            DeleteUserBookings(bookingid)
+        } 
+    }
+
     return (
         <div className='ourbooking'>
+            <input type='radio' name='bookingType' onClick={()=>{setfuturebook(true);setpastbook(true)}} />All Bookings
+            <input type='radio' name='bookingType' onClick={()=>{setfuturebook(false);setpastbook(true)}} />Past Bookings
+            <input type='radio' name='bookingType' onClick={()=>{setpastbook(false);setfuturebook(true)}} />Upcomming Bookings
             <table className="ourbookingTable">
                 <thead>
                     <tr className="">
                         <th>Booking Id</th>
                         <th>Guest Name</th>
-                        <th>Reservation Date</th>
                         <th>Email-Id</th>
                         <th>Phone</th>
                         <th>Total Price</th>
@@ -19,34 +45,44 @@ const Booking = () => {
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
+                {allbook?<>
+                {pastbook?<tbody>
+                    {AllUserBookings.map((booking)=>{
+                        return <tr>
+                        <td>{booking.bookingId}</td>
+                        <td>{booking?.guestInfo?.guestName}</td>
+                        <td>{booking?.guestInfo.EmailId}</td>
+                        <td>{booking?.guestInfo.Phone}</td>
+                        <td>{booking?.price?.Total}</td>
+                        <td>{booking?.price?.Total - booking?.price?.amountPay}</td>
+                        <td>{booking?.payment?.Status}</td>
+                        <td>{booking.checkIn}</td>
+                        <td>{booking.checkOut}</td>
+                        <td>Done</td>
                     </tr>
-                    <tr>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
-                        <td>jsfkd</td>
+                    })}
+                    
+                    
+                </tbody>:""}
+                {futurebook?<tbody>
+                    {AllFutureUserBookings.map((booking)=>{
+                        return <tr>
+                        <td>{booking.bookingId}</td>
+                        <td>{booking?.guestInfo?.guestName}</td>
+                        <td>{booking?.guestInfo.EmailId}</td>
+                        <td>{booking?.guestInfo.Phone}</td>
+                        <td>{booking?.price?.Total}</td>
+                        <td>{booking?.price?.Total - booking?.price?.amountPay}</td>
+                        <td>{booking?.payment?.Status}</td>
+                        <td>{booking.checkIn}</td>
+                        <td>{booking.checkOut}</td>
+                        <td><button onClick={()=>{CancelBooking(booking.bookingId)}}>Cancel</button></td>
                     </tr>
-                </tbody>
+                    })}
+                    
+                    
+                </tbody>:""}
+                </>:""}
             </table>
         </div>
     )
