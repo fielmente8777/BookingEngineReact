@@ -2,7 +2,7 @@ import { createContext, useState } from "react";
 
 const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
-    const [serverUrl, setserverUrl] = useState("http://127.0.0.1:5000")
+    const [serverUrl, setserverUrl] = useState("https://nexon.eazotel.com")
 
 
 
