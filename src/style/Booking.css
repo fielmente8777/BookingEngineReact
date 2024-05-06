@@ -1,0 +1,54 @@
+.ourbooking {
+    border: "2px solid red";
+    overflow-x: auto;
+    height: 60vh;
+}
+
+.ourbookingTable {
+    width: 100%;
+    overflow-x: scroll;
+}
+
+.ourbookingTable th {
+    background-color: #AF5800;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0px;
+    color: white;
+    border: 1px solid #AF5800;
+    text-align: center;
+    padding: .5rem;
+    top: 0;
+    z-index: -1;
+    word-wrap: normal;
+}
+
+.ourbookingTable td {
+    width: auto;
+    background-color: #fff;
+    padding: .5rem .2rem;
+    text-align: center;
+    font-size: .9rem;
+    font-weight: 400;
+    border: 1px solid #ccc;
+}
+
+.btn-primary {
+    border-radius: 8px;
+    border: 1px solid #0A3A75;
+    background: #0A3A75;
+}
+
+.btn-primary:hover {
+    transition: all .2s linear;
+    background: white;
+    color: #0A3A75;
+}
+
+.badge {
+    padding: .5rem .3rem;
+    text-align: center;
+    font-size: .9rem;
+    font-weight: 400;
+}

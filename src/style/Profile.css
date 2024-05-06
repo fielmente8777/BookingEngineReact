@@ -1,0 +1,54 @@
+.profile_container {
+    max-width: 600px;
+    margin: auto;
+    padding: 3rem 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.profile_container .procontent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile_container .fo {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile_container .profileicon {
+    height: 150px;
+    width: 150px;
+    border-radius: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(236, 236, 236, 1);
+    overflow: hidden;
+}
+
+.profile_container .fo input {
+    outline: none;
+    border: none;
+    border-bottom: 2px solid rgba(236, 236, 236, 1);
+}
+
+.profile_container .butoon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile_container .butoon button {
+    border: none;
+    background-color: orange;
+    width: 150px;
+    padding: 8px;
+    color: #fff;
+}
