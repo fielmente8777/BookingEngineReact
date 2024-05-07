@@ -11,8 +11,11 @@ export const AuthProvider = ({ children }) => {
 
     const [AllUserBookings, setAllUserBookings] = useState([])
     const [AllFutureUserBookings, setAllFutureUserBookings] = useState([]);
-    const [userInfo,setuserInfo] = useState({})
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [userInfo, setuserInfo] = useState({})
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const [Button_color, setButton_color] = useState("#0A3A75");
+    const [Bg_color, setBg_color] = useState("#153B5B");
 
     const FetchUsersInfo = async () => {
         try {
@@ -106,7 +109,7 @@ export const AuthProvider = ({ children }) => {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        
+
                     })
                 }
 
@@ -133,7 +136,9 @@ export const AuthProvider = ({ children }) => {
                 openLoginPopup, setOpenLoginPopup, openRegisterPopup, setopenRegisterPopup, FetchUsersBookings,
                 FetchUsersFutureBookings, AllUserBookings,
                 AllFutureUserBookings, DeleteUserBookings,
-                isMenuOpen, setIsMenuOpen,userInfo,setuserInfo,FetchUsersInfo
+                isMenuOpen, setIsMenuOpen, userInfo, setuserInfo, FetchUsersInfo,
+                Button_color, setButton_color,
+                Bg_color, setBg_color
             }}
         >
             {children}

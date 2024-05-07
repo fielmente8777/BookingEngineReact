@@ -22,9 +22,8 @@ import { Register } from "./components/Register";
 function App() {
   const { openLoginPopup, setOpenLoginPopup, openRegisterPopup, FetchUsersBookings,
     FetchUsersFutureBookings } = useContext(AuthContext)
-  const [Bg_color, setBg_color] = useState("#153B5B"); //background for header and footer
   const [Box_color, setBox_color] = useState("#0A3A75"); //Box color for reservation
-  const [Button_color, setButton_color] = useState("#0A3A75"); //Button color of checkin and out
+  const { Button_color, setButton_color, Bg_color, setBg_color } = useContext(AuthContext); //Button color of checkin and out
 
   const [HotelEmail, setHotelEmail] = useState("test@gmail.com");
   const [HotelAbout, setHotelAbout] = useState("About Us");

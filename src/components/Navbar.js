@@ -49,7 +49,7 @@ export default function Navbar(props) {
     return (
 
         <nav class={`navbar navbar-expand-lg ${props.display}`} style={{ background: props.color }}>
-            <div class="container navbar">
+            <div class="container">
                 <div class="nav-logo">
                     <a href={props.hotelwebsite}><img src={props.logo}
                         alt="logo" /></a>
@@ -110,7 +110,7 @@ export default function Navbar(props) {
                                 <GiHamburgerMenu size={24} onClick={handleMenu} cursor={"pointer"} />
 
                                 :
-                                <div>
+                                <div className='d-flex gap-2'>
 
 
                                     <button onClick={handleLoginPopup} style={{ border: "none", padding: "5px 20px" }} class='loginbutton'>Login</button>
