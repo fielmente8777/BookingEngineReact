@@ -113,8 +113,8 @@ export default function Navbar(props) {
                                 <div className='d-flex gap-2'>
 
 
-                                    <button onClick={handleLoginPopup} style={{ border: "none", padding: "5px 20px" }} class='loginbutton'>Login</button>
-                                    <button onClick={handleRegisterPopup} style={{ border: "none", padding: "5px 20px" }} class='loginbutton'>Register</button>
+                                    <button onClick={handleLoginPopup} style={{ border: "none", padding: "5px 20px", borderRadius: "10px" }} class='loginbutton'>Login</button>
+                                    <button onClick={handleRegisterPopup} style={{ border: "none", padding: "5px 20px", borderRadius: "10px" }} class='loginbutton'>Register</button>
 
                                 </div>
                             }

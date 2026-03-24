@@ -9,10 +9,13 @@ import FullCalendar from './FullCalendar';
 import FullCalendar1 from './FullCalendar1';
 import Mealplan from './Mealplan';
 import './i18n'; // Import your i18n configuration
+import Banner from './Banner';
 
 
 
 export default function Landing(props) {
+    const {websiteData}=props
+    console.log(websiteData);
     const [Adult, setAdult] = useState(0)
     let [Headlines, setHeadlines] = useState([]);
     let [Reservebtn, setReservebtn] = useState(false);
@@ -45,28 +48,28 @@ export default function Landing(props) {
     const [ExclusiveRetreatAdult, setExclusiveRetreatAdult] = useState(0)
 
 
-    const [RoomCategoryCombination,setRoomCategoryCombination] = useState({
-        "DELUX":"-",
-        "SUPERDELUX":"-",
-        "SUITE":"-",
-        "PREMIUM":"-",
-        "PremiereRetreat":"-",
-        "EliteSuite":"-",
-        "GrandDeluxe":"-",
-        "ImperialSuite":"-",
-        "SupremeRetreat":"-",
-        "RoyalDeluxe":"-",
-        "PrestigeSuite":"-",
-        "ExclusiveRetreat":"-"
-        
-    
+    const [RoomCategoryCombination, setRoomCategoryCombination] = useState({
+        "DELUX": "-",
+        "SUPERDELUX": "-",
+        "SUITE": "-",
+        "PREMIUM": "-",
+        "PremiereRetreat": "-",
+        "EliteSuite": "-",
+        "GrandDeluxe": "-",
+        "ImperialSuite": "-",
+        "SupremeRetreat": "-",
+        "RoyalDeluxe": "-",
+        "PrestigeSuite": "-",
+        "ExclusiveRetreat": "-"
+
+
     })
     const [Night, setNights] = useState(0)
     let [maxAdult, setmaxAdult] = useState(0)
 
     const [CradisOpen, setCardsIsOpen] = useState(false);
     // rooms/package
-    const [islookingroom,setislookingroom] = useState(true)
+    const [islookingroom, setislookingroom] = useState(true)
     // Meal packages
     const [isperRoom, setisperRoom] = useState(false)
     const [mealplan, setMealPlan] = useState([]);
@@ -77,10 +80,10 @@ export default function Landing(props) {
 
 
     // Ads Packages
-    const [Packages,setPackages] = useState([])
+    const [Packages, setPackages] = useState([])
 
     //Multi-Locations
-    const [HotelLocations,setHotelLocations] = useState([])
+    const [HotelLocations, setHotelLocations] = useState([])
 
     const [isOpen, setisOpen] = useState(false)
     const [Available, setAvailable] = useState({
@@ -103,18 +106,18 @@ export default function Landing(props) {
         "PREMIUM": "PREMIUM",
         "SUITE": "SUITE",
         "SUPER DELUX": "SUPERDELUX",
-        "Premiere Retreat":"PremiereRetreat", 
-        "Elite Suite":"EliteSuite",
-        "Grand Deluxe":"GrandDeluxe",
-        "Imperial Suite":"ImperialSuite",
-        "Supreme Retreat":"SupremeRetreat",
-        "Royal Deluxe":"RoyalDeluxe",
-        "Prestige Suite":"PrestigeSuite",
-        "Exclusive Retreat":"ExclusiveRetreat"
+        "Premiere Retreat": "PremiereRetreat",
+        "Elite Suite": "EliteSuite",
+        "Grand Deluxe": "GrandDeluxe",
+        "Imperial Suite": "ImperialSuite",
+        "Supreme Retreat": "SupremeRetreat",
+        "Royal Deluxe": "RoyalDeluxe",
+        "Prestige Suite": "PrestigeSuite",
+        "Exclusive Retreat": "ExclusiveRetreat"
     })
     const [dataLoaded, setDataLoaded] = useState(false);
 
-    
+
     useEffect(() => {
         if (dataLoaded) {
             scrollToRoomsSection();
@@ -127,7 +130,7 @@ export default function Landing(props) {
 
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-   const [tomorrowdate, setTomorrowDate] = useState(tomorrow);
+    const [tomorrowdate, setTomorrowDate] = useState(tomorrow);
 
     const adultKidChange = () => {
         let adult = document.getElementById("adult").value;
@@ -137,39 +140,39 @@ export default function Landing(props) {
         localStorage.setItem("Kid", kid);
     }
 
-    const HotelLocationChange=()=>{
+    const HotelLocationChange = () => {
         let locationId = document.getElementById('hotelLocation').value;
         let urlParams = new URLSearchParams(window.location.search);
 
         // Set or update the 'locationId' parameter
-        urlParams.set('hid',locationId)
+        urlParams.set('hid', locationId)
 
         // Get the updated URL with the new parameters
         let newUrl = window.location.pathname + '?' + urlParams.toString();
 
-        
+
         // window.location.href = newUrl;
-        localStorage.setItem('hid',locationId)
+        localStorage.setItem('hid', locationId)
         toggleDiv()
         window.history.replaceState({}, '', newUrl);
 
     }
 
-    const getallLocations = async()=>{
+    const getallLocations = async () => {
         const response = await fetch(`${props.baseUrl}/multilocation/findlocations/engine/${localStorage.getItem("hotelid")}`, {
             method: "GET",
             headers: {
-              Accept: "application/json, text/plain, /",
-              "Content-Type": "application/json"
+                Accept: "application/json, text/plain, /",
+                "Content-Type": "application/json"
             },
-      
-          });
-      
+
+        });
+
         const json = await response.json();
         const resp = json.Locations
         setHotelLocations(resp)
 
-        
+
 
     }
 
@@ -181,16 +184,16 @@ export default function Landing(props) {
         }
     }
 
-    const FetchMeals=async ()=>{
+    const FetchMeals = async () => {
         const response = await fetch(`${props.baseUrl}/mpackage/packages/engine/${localStorage.getItem('hotelid')}/${localStorage.getItem('hid')}`, {
             method: "GET",
             headers: {
-              Accept: "application/json, text/plain, /",
-              "Content-Type": "application/json"
+                Accept: "application/json, text/plain, /",
+                "Content-Type": "application/json"
             },
-      
-          });
-      
+
+        });
+
         const json = await response.json();
         setMealPlan(json.Packages)
     }
@@ -216,7 +219,7 @@ export default function Landing(props) {
                 Accept: "application/json, text/plain, /",
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ "checkIn": checkin_date, "checkOut": checkout_date,"hId":localStorage.getItem("hid")})
+            body: JSON.stringify({ "checkIn": checkin_date, "checkOut": checkout_date, "hId": localStorage.getItem("hid") })
         });
 
         const response2 = await fetch(`${props.baseUrl}/rpackage/ad/packages/engine/${localStorage.getItem('hotelid')}`, {
@@ -225,7 +228,7 @@ export default function Landing(props) {
                 Accept: "application/json, text/plain, /",
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({"hId":localStorage.getItem("hid"),"checkin": checkin_date, "checkout": checkout_date })
+            body: JSON.stringify({ "hId": localStorage.getItem("hid"), "checkin": checkin_date, "checkout": checkout_date })
         });
 
         FetchMeals()
@@ -257,7 +260,7 @@ export default function Landing(props) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                "hId":localStorage.getItem('hid'),
+                "hId": localStorage.getItem('hid'),
                 "ndid": localStorage.getItem('hotelid'),
                 "checkin": checkin_date,
                 "checkout": checkout_date
@@ -329,9 +332,10 @@ export default function Landing(props) {
 
     return (
         <>
+        <Banner websiteData={websiteData}/>
             {/* backgroundImage: `url(${props.Bg_image})`, */}
             <div className='LandinMain' style={{ width: "100%", objectFit: "cover", backgroundImage: `url(${props.Bg_image})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }}>
-               
+
                 <div class="right-email">
                     <button id="open-popupRight" onClick={openPopup}><i class="fa-regular fa-envelope"></i></button>
                     <div class="popupRight" id="popupRight" style={popupStyle}>
@@ -344,11 +348,11 @@ export default function Landing(props) {
                         </div>
                     </div>
                 </div>
-                
+
                 <section className={`section`}>
                     {/* style={{width:"100%",objectFit:"cover",backgroundImage:`url(${props.Bg_image})`,backgroundRepeat:"no-repeat" }} */}
                     <div className={`container form-main ${props.display}`} >
-                        <div className="form" style={{width: HotelLocations.length>1?"100%":"100%"}}>
+                        <div className="form" style={{ width: HotelLocations.length > 1 ? "100%" : "100%" }}>
                             <div className="reservation" style={{ background: props.Bg_color }}>
                                 {/* <h4 >{props.ReservationLabel}</h4> */}
                                 <h4><strong>{t(props.ReservationLabel)}</strong></h4>
@@ -356,33 +360,33 @@ export default function Landing(props) {
                             </div>
 
                             <div className="form_inner">
-                                {HotelLocations.length>1?
-                                <div className="fill_detail">
-                                    <div className="members">
-                                        {/* We have to customize this color, this color will come form backend */}
+                                {HotelLocations.length > 1 ?
+                                    <div className="fill_detail">
+                                        <div className="members">
+                                            {/* We have to customize this color, this color will come form backend */}
 
-                                        <div className="members_inner">
-                                            <div className="details ">
-                                                <label for="#">Locations</label>
+                                            <div className="members_inner">
+                                                <div className="details ">
+                                                    <label for="#">Locations</label>
 
-                                                <select name="#" id='hotelLocation' onChange={()=>{HotelLocationChange()}} className="options text-light " style={{ background: props.bt_color,width:"100%" }}>
-                                                {HotelLocations.map((area) => {
-                                                    const isSelected = area.hId === localStorage.getItem('hid');
-                                                    return (
-                                                        <option key={area.hId} value={area.hId} selected={isSelected}>
-                                                            {area.location}, {area.pinCode}
-                                                        </option>
-                                                    );
-                                                })}
-                                                    
-                                                    
-                                                    
-                                                </select>
+                                                    <select name="#" id='hotelLocation' onChange={() => { HotelLocationChange() }} className="options text-light " style={{ background: props.bt_color, width: "100%" }}>
+                                                        {HotelLocations.map((area) => {
+                                                            const isSelected = area.hId === localStorage.getItem('hid');
+                                                            return (
+                                                                <option key={area.hId} value={area.hId} selected={isSelected}>
+                                                                    {area.location}, {area.pinCode}
+                                                                </option>
+                                                            );
+                                                        })}
+
+
+
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                    </div>
-                                </div>:""}
+                                        </div>
+                                    </div> : ""}
 
 
                                 <div className="form-rsv">
@@ -460,7 +464,7 @@ export default function Landing(props) {
 
                     </div>
                     <div className={`container ${props.display}`}>
-                        <div className="middle-div"> 
+                        <div className="middle-div">
 
                             <div className="why-book-us">
                                 <h3>{t("Why book with us?")}</h3>
@@ -486,162 +490,162 @@ export default function Landing(props) {
 
 
 
-                
-                <div className='cardDiv' id="No_rooms" style={{ textAlign: "center", color: "grey", display: "none",background: props.Bg_color }}>
+
+                <div className='cardDiv' id="No_rooms" style={{ textAlign: "center", color: "grey", display: "none", background: props.Bg_color }}>
                     <h3>{t('No rooms Available')}</h3>
                 </div>
 
                 <div className='container' id="id_filters" style={{ display: "none" }}>
-                        <div className='container' id="id_filters1" style={{ display: "block"}}>
-                            <div class="" style={{ background: props.color,borderRadius:"10px",textAlign:"center"}}>
-                                    {Headlines.length!==0?islookingroom?<span className='btn btn-success'>Rooms</span>:<span className='btn btn-secondary' onClick={()=>{setislookingroom(true)}}>Rooms</span>:""}
-                                    {Packages.length!==0?!islookingroom?<span className='btn btn-success'>Packages</span>:<span className='btn btn-secondary' onClick={()=>{setislookingroom(false)}}>Packages</span>:""}
-                            </div>
+                    <div className='container' id="id_filters1" style={{ display: "block" }}>
+                        <div class="my-2" style={{ borderRadius: "10px", textAlign: "center" }}>
+                            {Headlines.length !== 0 ? islookingroom ? <span className='btn btn-success'>Rooms</span> : <span className='btn btn-secondary' onClick={() => { setislookingroom(true) }}>Rooms</span> : ""}
+                            {Packages.length !== 0 ? !islookingroom ? <span className='btn btn-success'>Packages</span> : <span className='btn btn-secondary' onClick={() => { setislookingroom(false) }}>Packages</span> : ""}
                         </div>
-                        <div class="filters" style={{ backgroundColor: props.Bg_color }}>
-                            {/* <div class="inner_filter">
+                    </div>
+                    <div class="filters" style={{ backgroundColor: props.Bg_color }}>
+                        {/* <div class="inner_filter">
                                 <label>Show by</label>
                                 <div class="roomBtn">
                                     <buttton class="btn btn-secondary btn-fc">Rooms</buttton>
                                     <buttton class="btn btn-secondary btn-fc">Rates</buttton>
                                 </div>
                             </div> */}
-                            {Headlines.length!==0 ?
-                                <div className="crd-head w-100">
-                                    <h3 style={{ textAlign: 'center' }}><strong>select rooms</strong></h3>
-                                </div> :
-                                <div className="crd-head w-100">
-                                    <h3 style={{ textAlign: 'center' }}>No Rooms Available</h3>
-                                </div>
-                            }
+                        {Headlines.length !== 0 ?
+                            <div className="crd-head w-100">
+                                <h3 style={{ textAlign: 'center' }}><strong>select rooms</strong></h3>
+                            </div> :
+                            <div className="crd-head w-100">
+                                <h3 style={{ textAlign: 'center' }}>No Rooms Available</h3>
+                            </div>
+                        }
 
 
-                            
-                        </div>
+
+                    </div>
                 </div>
-                {islookingroom?
-                <div>
-                    
-                    {Headlines.sort((a, b) => (parseInt(a.price, 10) || 0) - (parseInt(b.price, 10) || 0)).map((element) => {
-                        
-                        return <div key={element.url} >
-                            <Cards
-                                baseUrl = {props.baseUrl}
-                                currency = {props.currency}
-                                name={element.roomName ? element.roomName.slice(0, 80) : ""}
-                                description={element.roomDescription ? element.roomDescription : ""}
-                                available={Available[RoomNameAvailable[element.roomTypeName]]}
-                                price={element.price ? element.price : ""}
-                                ratechange={ratesChange}
-                                roomtype={element.roomType}
-                                Adult={element.adult}
-                                a={Available}
-                                type={element.roomTypeName}
-                                facilities={element.roomFacilities}
-                                images={element.roomImage}
-                                color={props.color}
-                                FinalConfirmButton={props.FinalConfirmButton}
-                                Paymentbutton={props.Paymentbutton}
-                                Bg_color={props.Bg_color}
-                                HotelName={props.HotelName}
-                                HotelLogo={props.HotelLogo}
-                                setPayment={props.setPayment}
-                                setDelux={setDelux}
-                                setSuperDelux={setSuperDelux}
-                                setSuite={setSuite}
-                                setPremium={setPremium}
-                                setPremiereRetreat={setPremiereRetreat}
-                                setEliteSuite={setEliteSuite}
-                                setGrandDeluxe={setGrandDeluxe}
-                                setImperialSuite={setImperialSuite}
-                                setSupremeRetreat={setSupremeRetreat}
-                                setRoyalDeluxe={setRoyalDeluxe}
-                                setPrestigeSuite={setPrestigeSuite}
-                                setExclusiveRetreat={setExclusiveRetreat}
+                {islookingroom ?
+                    <div>
 
-                                setDeluxAdult={setDeluxAdult}
-                                setSuperDeluxAdult={setSuperDeluxAdult}
-                                setSuiteAdult={setSuiteAdult}
-                                setPremiumAdult={setPremiumAdult}
-                                setPremiereRetreatAdult={setPremiereRetreatAdult}
-                                setEliteSuiteAdult={setEliteSuiteAdult}
-                                setGrandDeluxeAdult={setGrandDeluxeAdult}
-                                setImperialSuiteAdult={setImperialSuiteAdult}
-                                setSupremeRetreatAdult={setSupremeRetreatAdult}
-                                setRoyalDeluxeAdult={setRoyalDeluxeAdult}
-                                setPrestigeSuiteAdult={setPrestigeSuiteAdult}
-                                setExclusiveRetreatAdult={setExclusiveRetreatAdult}
+                        {Headlines.sort((a, b) => (parseInt(a.price, 10) || 0) - (parseInt(b.price, 10) || 0)).map((element) => {
 
-                                setisOpen={setisOpen}
-                                BookingFinalize={BookingFinalize}
-                                RoomCategoryCombination = {RoomCategoryCombination}
-                                setRoomCategoryCombination={setRoomCategoryCombination}
-                                isPayatHotel = {props.isPayatHotel}
-                                tag = {element.roomTag}
-                            />
-                        </div>
+                            return <div key={element.url} >
+                                <Cards
+                                    baseUrl={props.baseUrl}
+                                    currency={props.currency}
+                                    name={element.roomName ? element.roomName.slice(0, 80) : ""}
+                                    description={element.roomDescription ? element.roomDescription : ""}
+                                    available={Available[RoomNameAvailable[element.roomTypeName]]}
+                                    price={element.price ? element.price : ""}
+                                    ratechange={ratesChange}
+                                    roomtype={element.roomType}
+                                    Adult={element.adult}
+                                    a={Available}
+                                    type={element.roomTypeName}
+                                    facilities={element.roomFacilities}
+                                    images={element.roomImage}
+                                    color={props.color}
+                                    FinalConfirmButton={props.FinalConfirmButton}
+                                    Paymentbutton={props.Paymentbutton}
+                                    Bg_color={props.Bg_color}
+                                    HotelName={props.HotelName}
+                                    HotelLogo={props.HotelLogo}
+                                    setPayment={props.setPayment}
+                                    setDelux={setDelux}
+                                    setSuperDelux={setSuperDelux}
+                                    setSuite={setSuite}
+                                    setPremium={setPremium}
+                                    setPremiereRetreat={setPremiereRetreat}
+                                    setEliteSuite={setEliteSuite}
+                                    setGrandDeluxe={setGrandDeluxe}
+                                    setImperialSuite={setImperialSuite}
+                                    setSupremeRetreat={setSupremeRetreat}
+                                    setRoyalDeluxe={setRoyalDeluxe}
+                                    setPrestigeSuite={setPrestigeSuite}
+                                    setExclusiveRetreat={setExclusiveRetreat}
+
+                                    setDeluxAdult={setDeluxAdult}
+                                    setSuperDeluxAdult={setSuperDeluxAdult}
+                                    setSuiteAdult={setSuiteAdult}
+                                    setPremiumAdult={setPremiumAdult}
+                                    setPremiereRetreatAdult={setPremiereRetreatAdult}
+                                    setEliteSuiteAdult={setEliteSuiteAdult}
+                                    setGrandDeluxeAdult={setGrandDeluxeAdult}
+                                    setImperialSuiteAdult={setImperialSuiteAdult}
+                                    setSupremeRetreatAdult={setSupremeRetreatAdult}
+                                    setRoyalDeluxeAdult={setRoyalDeluxeAdult}
+                                    setPrestigeSuiteAdult={setPrestigeSuiteAdult}
+                                    setExclusiveRetreatAdult={setExclusiveRetreatAdult}
+
+                                    setisOpen={setisOpen}
+                                    BookingFinalize={BookingFinalize}
+                                    RoomCategoryCombination={RoomCategoryCombination}
+                                    setRoomCategoryCombination={setRoomCategoryCombination}
+                                    isPayatHotel={props.isPayatHotel}
+                                    tag={element.roomTag}
+                                />
+                            </div>
 
 
 
-                    })}
-                </div>:""}
+                        })}
+                    </div> : ""}
 
-                {Packages.length!==0&&!islookingroom ?
+                {Packages.length !== 0 && !islookingroom ?
                     <div>
                         <div className='container mt-4' id="id_filters1" style={{ display: "block" }}>
                             <div class="filters" style={{ backgroundColor: props.Bg_color }}>
-                                
-                                    <div className="crd-head w-100">
-                                        <h3 style={{ textAlign: 'center' }}><strong>Select Packages</strong></h3>
-                                    </div>
+
+                                <div className="crd-head w-100">
+                                    <h3 style={{ textAlign: 'center' }}><strong>Select Packages</strong></h3>
+                                </div>
                             </div>
                         </div>
                         {Packages.map((element) => {
-                        return <div key={element.url} >
-                        <Adpackage
-                            addTax={props.addTax}
-                            GatewayConnected={props.GatewayConnected}
-                            baseUrl = {props.baseUrl}
-                            isPayatHotel = {props.isPayatHotel}
-                            isOnlinepay={props.isOnlinepay}
-                            currency = {props.currency}
-                            packageId={element.packageId}
-                            name={element.packageName ? element.packageName.slice(0, 80) : ""}
-                            description={element.packageName ? element.packageName : ""}
-                            packageInclusion={element.packageInclusion ? element.packageInclusion : ""}
-                            packageItinerary ={element.packageItinerary?element.packageItinerary:""}
-                            packageguests={element.packageguests ? element.packageguests : ""}
-                            NoofDays={element.NoofDays ? element.NoofDays : ""}
-                            NoofNight={element.NoofNight ? element.NoofNight : ""}
-                            price={element.packagePrice ? element.packagePrice : ""}
-                            roomType = {element.roomTypeProvided}
-                            ratechange={ratesChange}
-                            images={element.packageImage}
-                            color={props.color}
-                            FinalConfirmButton={props.FinalConfirmButton}
-                            Paymentbutton={props.Paymentbutton}
-                            Bg_color={props.Bg_color}
-                            setPayment={props.setPayment}
-                            HotelName={props.HotelName} 
-                            HotelLogo={props.HotelLogo}
-                            RoomCategoryCombination = {RoomCategoryCombination}
-                            setRoomCategoryCombination={setRoomCategoryCombination}
-                        />
-                    </div>
+                            return <div key={element.url} >
+                                <Adpackage
+                                    addTax={props.addTax}
+                                    GatewayConnected={props.GatewayConnected}
+                                    baseUrl={props.baseUrl}
+                                    isPayatHotel={props.isPayatHotel}
+                                    isOnlinepay={props.isOnlinepay}
+                                    currency={props.currency}
+                                    packageId={element.packageId}
+                                    name={element.packageName ? element.packageName.slice(0, 80) : ""}
+                                    description={element.packageName ? element.packageName : ""}
+                                    packageInclusion={element.packageInclusion ? element.packageInclusion : ""}
+                                    packageItinerary={element.packageItinerary ? element.packageItinerary : ""}
+                                    packageguests={element.packageguests ? element.packageguests : ""}
+                                    NoofDays={element.NoofDays ? element.NoofDays : ""}
+                                    NoofNight={element.NoofNight ? element.NoofNight : ""}
+                                    price={element.packagePrice ? element.packagePrice : ""}
+                                    roomType={element.roomTypeProvided}
+                                    ratechange={ratesChange}
+                                    images={element.packageImage}
+                                    color={props.color}
+                                    FinalConfirmButton={props.FinalConfirmButton}
+                                    Paymentbutton={props.Paymentbutton}
+                                    Bg_color={props.Bg_color}
+                                    setPayment={props.setPayment}
+                                    HotelName={props.HotelName}
+                                    HotelLogo={props.HotelLogo}
+                                    RoomCategoryCombination={RoomCategoryCombination}
+                                    setRoomCategoryCombination={setRoomCategoryCombination}
+                                />
+                            </div>
 
 
 
-                })}
-                </div>:""}
+                        })}
+                    </div> : ""}
 
                 <div className='container'>
-                    {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0 || PremiereRetreat!==0 || EliteSuite!==0 || GrandDeluxe!==0 || ImperialSuite!==0 || SupremeRetreat!==0 || RoyalDeluxe!==0 || PrestigeSuite!==0 || ExclusiveRetreat!==0)
-                        ? <button className='ReserveButtonForPayment' style={{background:props.Bg_color}} onClick={BookingFinalize}><strong>{props.FinalConfirmButton}</strong></button> : ""}
+                    {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0 || PremiereRetreat !== 0 || EliteSuite !== 0 || GrandDeluxe !== 0 || ImperialSuite !== 0 || SupremeRetreat !== 0 || RoyalDeluxe !== 0 || PrestigeSuite !== 0 || ExclusiveRetreat !== 0)
+                        ? <button className='ReserveButtonForPayment' style={{ background: props.Bg_color }} onClick={BookingFinalize}><strong>{props.FinalConfirmButton}</strong></button> : ""}
                 </div>
 
-                {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0 || PremiereRetreat!==0 || EliteSuite!==0 || GrandDeluxe!==0 || ImperialSuite!==0 || SupremeRetreat!==0 || RoyalDeluxe!==0 || PrestigeSuite!==0 || ExclusiveRetreat!==0 )&&mealplan.length!==0 ?
-                    <Mealplan 
-                        baseUrl = {props.baseUrl}
+                {(Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0 || PremiereRetreat !== 0 || EliteSuite !== 0 || GrandDeluxe !== 0 || ImperialSuite !== 0 || SupremeRetreat !== 0 || RoyalDeluxe !== 0 || PrestigeSuite !== 0 || ExclusiveRetreat !== 0) && mealplan.length !== 0 ?
+                    <Mealplan
+                        baseUrl={props.baseUrl}
                         setisperRoom={setisperRoom}
                         setmealplanId={setmealplanId}
                         mealplan={mealplan}
@@ -667,16 +671,16 @@ export default function Landing(props) {
                         color={props.color}
                         Bg_color={props.Bg_color} /> : ""}
 
-                
 
-                    
-                {isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0 || PremiereRetreat!==0 || EliteSuite!==0 || GrandDeluxe!==0 || ImperialSuite!==0 || SupremeRetreat!==0 || RoyalDeluxe!==0 || PrestigeSuite!==0 || ExclusiveRetreat!==0) ? (
-                    
-                    <Contactinfo 
+
+
+                {isOpen && (Delux !== 0 || SuperDelux !== 0 || Suite !== 0 || Premium !== 0 || PremiereRetreat !== 0 || EliteSuite !== 0 || GrandDeluxe !== 0 || ImperialSuite !== 0 || SupremeRetreat !== 0 || RoyalDeluxe !== 0 || PrestigeSuite !== 0 || ExclusiveRetreat !== 0) ? (
+
+                    <Contactinfo
                         addTax={props.addTax}
                         GatewayConnected={props.GatewayConnected}
-                        baseUrl = {props.baseUrl}
-                        isPayatHotel = {props.isPayatHotel} isOnlinepay={props.isOnlinepay} currency={props.currency} setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
+                        baseUrl={props.baseUrl}
+                        isPayatHotel={props.isPayatHotel} isOnlinepay={props.isOnlinepay} currency={props.currency} setIsOpen={1} Bg_color={props.Bg_color} setPayment={props.setPayment}
                         HotelName={props.HotelName} HotelLogo={props.HotelLogo} BookingTax={1200}
                         BookingTotalPrice={1200} BookingPrice={1200}
                         Paymentbutton={props.Paymentbutton} nights={Night} room={1}
@@ -703,14 +707,14 @@ export default function Landing(props) {
                         SuperDeluxAdult={SuperDeluxAdult}
                         SuiteAdult={SuiteAdult}
                         PremiumAdult={PremiumAdult}
-                        PremiereRetreatAdult = {PremiereRetreatAdult}
-                        EliteSuiteAdult = {EliteSuiteAdult}
-                        GrandDeluxeAdult = {GrandDeluxeAdult}
-                        ImperialSuiteAdult = {ImperialSuiteAdult}
-                        SupremeRetreatAdult = {SupremeRetreatAdult}
-                        RoyalDeluxeAdult = {RoyalDeluxeAdult}
-                        PrestigeSuiteAdult = {PrestigeSuiteAdult}
-                        ExclusiveRetreatAdult = {ExclusiveRetreatAdult}
+                        PremiereRetreatAdult={PremiereRetreatAdult}
+                        EliteSuiteAdult={EliteSuiteAdult}
+                        GrandDeluxeAdult={GrandDeluxeAdult}
+                        ImperialSuiteAdult={ImperialSuiteAdult}
+                        SupremeRetreatAdult={SupremeRetreatAdult}
+                        RoyalDeluxeAdult={RoyalDeluxeAdult}
+                        PrestigeSuiteAdult={PrestigeSuiteAdult}
+                        ExclusiveRetreatAdult={ExclusiveRetreatAdult}
 
 
                         selectedMealPlan={selectedMealPlan}
@@ -718,12 +722,12 @@ export default function Landing(props) {
                         isperRoom={isperRoom}
                         Mealprice={Mealprice}
                         mealplanId={mealplanId}
-                        RoomCategoryCombination = {RoomCategoryCombination}
+                        RoomCategoryCombination={RoomCategoryCombination}
                         setRoomCategoryCombination={setRoomCategoryCombination}
 
                     />
                 ) : ""}
-                <div className={`${props.display}`}>
+                <div className={`${props.display}`} >
                     <Enquiryform baseUrl={props.baseUrl} color={props.color} bg_color={props.Bg_color} />
                 </div>
 

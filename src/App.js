@@ -24,7 +24,6 @@ function App() {
     FetchUsersFutureBookings } = useContext(AuthContext)
   const [Box_color, setBox_color] = useState("#0A3A75"); //Box color for reservation
   const { Button_color, setButton_color, Bg_color, setBg_color } = useContext(AuthContext); //Button color of checkin and out
-
   const [HotelEmail, setHotelEmail] = useState("test@gmail.com");
   const [HotelAbout, setHotelAbout] = useState("About Us");
   const [HotelAddress, setHotelAddress] = useState("Address");
@@ -37,7 +36,6 @@ function App() {
     "https://images-platform.99static.com//G6t6CKODhWtwJt03cAKyRsMuv5U=/654x0:1299x645/fit-in/590x590/99designs-contests-attachments/115/115901/attachment_115901077"
   );
   const [HotelLocation, setHotelLocation] = useState("");
-
   const [Claritycode, setClarityCode] = useState("");
   const [isOnlinepay, setisOnlinepay] = useState(false);
   const [isPayatHotel, setisPayatHotel] = useState(false);
@@ -54,25 +52,21 @@ function App() {
   const [Tripadvisors, setTripadvisors] = useState("https://facebook.com/");
   const [Linkedin, setLinkedin] = useState("https://instagram.com/");
   const [Youtube, setYoutube] = useState("https://twitter.com/");
-
   const [Reservation_button, setReservation_button] = useState("Reservations");
   const [Room_searchButton, setRoom_searchButton] = useState("Look For Rooms");
-  const [RoomFinal_searchButton, setRoomFinal_searchButton] =
-    useState("Reserve");
+  const [RoomFinal_searchButton, setRoomFinal_searchButton] =useState("Reserve");
   const [PaymentButton, setPaymentButton] = useState("Pay Now");
-
   const [Spinner_spin, setSpinner_spin] = useState("d-none");
   const [Spinner_spin1, setSpinner_spin1] = useState("d-none");
   const [Spinner_spin2, setSpinner_spin2] = useState("d-none");
-
   const [Privacypolicy, setPrivacypolicy] = useState("Privacy policy");
   const [Cancellation, setCancellation] = useState("Cancellation policy");
-  const [Termsconditions, setTermsconditions] = useState(
-    "Terms and conditions"
-  );
+  const [Termsconditions, setTermsconditions] = useState("Terms and conditions");
   const [hotelwebsite, sethotelwebsite] = useState("");
   const [addTax, setaddTax] = useState(false);
-
+  const [AuthenticatedUser, setAuthenticatedUser] = useState(false)
+  const[websiteData,setWebsiteData]=useState();
+  const [domain,setDomain]=useState();
   const [Payment, setPayment] = useState({
     Status: false,
     Logo: "https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg?size=338&ext=jpg&ga=GA1.1.1546980028.1703548800&semt=sph",
@@ -120,8 +114,10 @@ function App() {
       PrestigeSuite: "-",
       ExclusiveRetreat: "-",
     },
-  });
-  async function Get_Hotel_status_exists() {
+});
+
+
+  const Get_Hotel_status_exists =async()=> {
     const response = await fetch(
       `${baseUrl}/booking/getenginedetails/${localStorage.getItem(
         "hotelid"
@@ -211,11 +207,13 @@ function App() {
       document.head.appendChild(clarityScript);
 
       setSpinner_spin1("");
+      await fetchWebsiteData(json.Profile.domain);
+
     } else {
       setSpinner_spin2("");
     }
   }
-  const [AuthenticatedUser, setAuthenticatedUser] = useState(false)
+
   const CheckLoginUserStatus = async () => {
     if (localStorage.getItem("engineAuth") == null) {
       setAuthenticatedUser(false)
@@ -245,6 +243,19 @@ function App() {
     }
   }
 
+  const fetchWebsiteData = async (domain) => {
+    try {
+      const response = await fetch(`https://nexon.eazotel.com/cms/get/website/${domain}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch website data");
+      }
+      const data = await response.json();
+      console.log(data);
+      setWebsiteData(data.WebsiteData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 
   const baseUrl = "https://nexon.eazotel.com";
@@ -257,9 +268,9 @@ function App() {
   localStorage.setItem("hotelid", hotelid);
   localStorage.setItem("hid", hid);
 
-  useEffect(() => {
-    Get_Hotel_status_exists();
-    CheckLoginUserStatus();
+  useEffect(async() => {
+    await Get_Hotel_status_exists();
+    await CheckLoginUserStatus();
   }, []);
 
   const { t, i18n } = useTranslation();
@@ -270,10 +281,10 @@ function App() {
   };
 
 
-
+  console.log("hotel images",domain);
   return (
     <>
-      <Navbar
+      {/* <Navbar
         hotelname={HotelName}
         logo={HotelLogo}
         display={Spinner_spin1}
@@ -283,7 +294,7 @@ function App() {
         hotelwebsite={hotelwebsite}
         AuthenticatedUser={AuthenticatedUser}
         setAuthenticatedUser={setAuthenticatedUser}
-      />
+      /> */}
 
       <Routes>
 
@@ -293,6 +304,7 @@ function App() {
             {!Payment.Status ? (
               <LandingPage
                 addTax={addTax}
+                websiteData={websiteData}
                 GatewayConnected={GatewayConnected}
                 isPayatHotel={isPayatHotel}
                 isOnlinepay={isOnlinepay}

@@ -56,14 +56,15 @@
     width: 100%;
 }
 
-.room_description_style{
+.room_description_style {
     font-size: 16px;
-    margin-right:120px;
+    margin-right: 120px;
 }
+
 @media screen and (max-width: 1008px) {
-    .room_description_style{
+    .room_description_style {
         font-size: 16px;
-        margin-right:0px;
+        margin-right: 0px;
     }
 }
 
@@ -120,7 +121,7 @@
 }
 
 .form {
-    
+
     height: auto;
     text-align: left;
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
@@ -144,7 +145,7 @@
     text-transform: uppercase;
     color: #FFFFFF;
     background: #1D619C;
-    border-radius: 15px 15px 0px 0px;
+    border-radius: 14px 14px 0px 0px;
 }
 
 .form_inner {
@@ -207,7 +208,7 @@
 .caldiv .datebtn {
     width: 100%;
     background-color: #9BCFF0;
-    border-radius: 10px;
+    border-radius: 14px;
     border: 0;
     display: flex;
     flex-direction: column;
@@ -301,7 +302,7 @@
     padding: 15px 0;
     color: #fff;
     border: 0;
-    border-radius: 0 0 15px 15px;
+    border-radius: 0 0 14px 14px;
     /* font-family: Arial; */
     font-size: 25px;
     font-weight: 700;
@@ -911,10 +912,22 @@
     text-transform: uppercase;
     /* background: #1D619C; */
     color: #ffff;
-    border-radius: 24.4841px 24.4841px 0px 0px;
+    /* border-radius: 24.4841px 24.4841px 0px 0px; */
     padding: 20px 0;
 
 }
+
+/* .caru {
+    height: 400px;
+} */
+
+/* @media screen and (max-width: 768px) {
+
+    .caru {
+        height: 400px;
+    }
+} */
+
 
 .contact-main {
     display: flex;
@@ -927,7 +940,7 @@
 
 .inner-contact-left {
     display: block;
-    border-right: 1px solid #B3B3B3;
+    /* border-right: 1px solid #B3B3B3; */
     width: 70%;
     padding: 2rem 2rem;
 }
@@ -1701,24 +1714,24 @@
 
 
 /* Meal plan component end  */
-.querycontainer{
-    width:40%;
+.querycontainer {
+    width: 40%;
 }
 
 @media screen and (max-width:1500px) {
-    .querycontainer{
-        width:60%;
+    .querycontainer {
+        width: 60%;
     }
 }
 
 @media screen and (max-width:992px) {
-    .querycontainer{
-        width:80%;
+    .querycontainer {
+        width: 80%;
     }
 }
 
 @media screen and (max-width:572px) {
-    .querycontainer{
-        width:100%;
+    .querycontainer {
+        width: 100%;
     }
 }

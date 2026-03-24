@@ -23,7 +23,7 @@ function Enquiryform(props) {
 
     const baseUrl = "https://nexon.eazotel.com"
 
-    
+
 
     const createquery = async () => {
         const response = await fetch(`${baseUrl}/booking/engine/queryrates/${localStorage.getItem('hotelid')}`, {
@@ -34,16 +34,16 @@ function Enquiryform(props) {
             },
             body: JSON.stringify(
                 {
-                    "Name":Name,
-                    "EmailId":EmailId,
-                    "Number":Number,
-                    "Adults":Adults,
-                    "Kids":Kids,
-                    "Rooms":Rooms,
-                    "Checkin":Checkin,
-                    "Checkout":Checkout,
-                    "City":City,
-                    "Message":Message
+                    "Name": Name,
+                    "EmailId": EmailId,
+                    "Number": Number,
+                    "Adults": Adults,
+                    "Kids": Kids,
+                    "Rooms": Rooms,
+                    "Checkin": Checkin,
+                    "Checkout": Checkout,
+                    "City": City,
+                    "Message": Message
                 }
             )
         });
@@ -67,26 +67,26 @@ function Enquiryform(props) {
             document.getElementById("No_rooms").style.display = "block"
         }
     }
-    const [classhide,setclasshide] = useState(true)
-    const openclosehide=()=>{
-        setclasshide(classhide)
+    const [classhide, setclasshide] = useState(true)
+    const openclosehide = () => {
+        setclasshide(!classhide)
     }
     return (
         <>
             <div className="container querycontainer">
                 <div className="contact-info" >
                     <div id="Contact" className="mt-4"  >
-                        <div className="heading" style={{cursor:"pointer",textAlign:"center",background:props.bg_color}} onClick={()=>{openclosehide()}} >
+                        <div className={`heading ${!classhide ? 'round' : "round1"}`} style={{ cursor: "pointer", textAlign: "center", background: props.bg_color, }} onClick={() => { openclosehide() }} >
                             <h5><strong >Looking for Group/Corporate Discounted Room Rates <i class="fa fa-question-circle"></i></strong></h5>
                             {/* <span class="badge bg-secondary">Click here</span>   &#9660;  */}
                         </div>
-                        {classhide?<div className={`contact-main`} >
-                            <div className="inner-contact-left" style={{width:"100%"}}>
+                        {classhide ? <div className={`contact-main`} >
+                            <div className="inner-contact-left" style={{ width: "100%" }}>
                                 <div className="code">
                                     <div className="inputBox">
                                         <span className="text-span">Name <span style={{ color: 'red' }}>*</span></span>
                                         <div className="names">
-                                            
+
                                             <div className="name-input">
                                                 <input type="text" className="bg" name="fullname" id="FullName" placeholder="Full Name" value={Name} onChange={(e) => { setName(e.target.value) }} required />
                                             </div>
@@ -122,7 +122,7 @@ function Enquiryform(props) {
                                     <div className="inputBox">
                                         <span className="text-span">Kids <span style={{ color: 'red' }}>*</span></span>
                                         <div className="names">
-                                        
+
                                             <div className="name-input">
                                                 <input type="number" className="bg" name="fullname" id="FullName" placeholder="Number of kids" value={Kids} onChange={(e) => { setKids(e.target.value) }} required />
                                             </div>
@@ -168,15 +168,15 @@ function Enquiryform(props) {
 
                                     <div className="content_inner">
                                         <span className="text-span">Message</span>
-                                        <textarea className="bg" name="text" id="request" value={Message} onChange={(e)=>{setMessage(e.target.value)}} placeholder="ADDITIONAL REQUEST"></textarea>
+                                        <textarea className="bg" name="text" id="request" value={Message} onChange={(e) => { setMessage(e.target.value) }} placeholder="ADDITIONAL REQUEST"></textarea>
                                     </div>
 
-                                    <button className='ReserveButtonForPayment' onClick={()=>{createquery()}} >Send Query</button>
+                                    <button style={{ backgroundColor: props.bg_color }} className='ReserveButtonForPayment' onClick={() => { createquery() }} >Send Query</button>
                                 </div>
-                                
+
                             </div>
 
-                        </div>:""}
+                        </div> : ""}
 
 
 
