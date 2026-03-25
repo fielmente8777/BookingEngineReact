@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Form from "react-bootstrap/Form";
-import Modal from "react-bootstrap/Modal";
+// import Form from "react-bootstrap/Form";
+// import Modal from "react-bootstrap/Modal";
 
 import {
   FaFacebookF,
@@ -13,7 +13,6 @@ import {
 import { Link } from "react-router-dom";
 // import FooterLogo from '../Images/backgroundimge.jpeg'
 import HTMLReactParser from "html-react-parser";
-import Button from "react-bootstrap/Button";
 import { useTranslation } from "react-i18next";
 import FooterLogo from "../Images/WhatsApp.svg.png";
 import FooterLogo1 from "../Images/call1.png";
@@ -82,118 +81,119 @@ function DetailModal(props) {
   };
   console.log(props.details);
   return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Booking Details
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div className="outerdetaildiv">
-          <div>BookingId</div>
-          <div>{props.details.bookingId}</div>
-        </div>
-        <div className="outerdetaildiv">
-          <div>Name</div>
-          <div>{props.details.guestInfo.guestName}</div>{" "}
-        </div>
-        <div className="outerdetaildiv">
-          <div>Phone</div>
-          <div>{props.details.guestInfo.Phone}</div>{" "}
-        </div>
-        <div className="outerdetaildiv">
-          <div>Email</div>
-          <div>{props.details.guestInfo.EmailId}</div>{" "}
-        </div>
-        <div className="outerdetaildiv">
-          <div>Booking Details</div>
-          {props.details.bookingDetails.map((ele, index) => (
-            <div key={index}>
-              {ele.RoomType} {"  ,"} {ele.Quantity}
-            </div>
-          ))}
-        </div>
+    <></>
+    // <Modal
+    //   {...props}
+    //   size="lg"
+    //   aria-labelledby="contained-modal-title-vcenter"
+    //   centered
+    // >
+    //   <Modal.Header closeButton>
+    //     <Modal.Title id="contained-modal-title-vcenter">
+    //       Booking Details
+    //     </Modal.Title>
+    //   </Modal.Header>
+    //   <Modal.Body>
+    //     <div className="outerdetaildiv">
+    //       <div>BookingId</div>
+    //       <div>{props.details.bookingId}</div>
+    //     </div>
+    //     <div className="outerdetaildiv">
+    //       <div>Name</div>
+    //       <div>{props.details.guestInfo.guestName}</div>{" "}
+    //     </div>
+    //     <div className="outerdetaildiv">
+    //       <div>Phone</div>
+    //       <div>{props.details.guestInfo.Phone}</div>{" "}
+    //     </div>
+    //     <div className="outerdetaildiv">
+    //       <div>Email</div>
+    //       <div>{props.details.guestInfo.EmailId}</div>{" "}
+    //     </div>
+    //     <div className="outerdetaildiv">
+    //       <div>Booking Details</div>
+    //       {props.details.bookingDetails.map((ele, index) => (
+    //         <div key={index}>
+    //           {ele.RoomType} {"  ,"} {ele.Quantity}
+    //         </div>
+    //       ))}
+    //     </div>
 
-        <div className="outerdetaildiv">
-          <div>BookingDate</div>
-          <div>{props.details.bookingDate}</div>{" "}
-        </div>
-        <div className="outerdetaildiv">
-          <div>Adults and Kids</div>
-          <div>
-            {props.details.Adults} Adults and {props.details.Kids} Kids
-          </div>{" "}
-        </div>
-        <div className="outerdetaildiv">
-          <div>Address</div>
-          <div>{props.details.guestInfo.address}</div>{" "}
-        </div>
-        <div className="outerdetaildiv">
-          <div>City And Country</div>
-          <div>
-            {props.details.guestInfo.City}
-            {" , "}
-            {props.details.guestInfo.Country.label}
-          </div>{" "}
-        </div>
-        <div className="outerdetaildiv">
-          <div>Room Number Assigned</div>
-          <div>{props.details.roomNumbers}</div>{" "}
-        </div>
-        <div className="outerdetaildiv">
-          <div>PaymentMode</div>
-          <div>{props.details.paymentMode}</div>{" "}
-        </div>
-        <div className="outerdetaildiv">
-          <div>PaymentStatus</div>
-          <div>{props.details.paymentStatus}</div>{" "}
-        </div>
-        {/* {isotpgenerated === true ? (
-          <div
-            style={{
-              display: "flex",
-              alignContent: "center",
-              justifyContent: "center",
-              gap: "2rem",
-              margin: "2rem",
-            }}
-          >
-            <OTPInput
-              value={OTP}
-              onChange={setOTP}
-              autoFocus
-              OTPLength={6}
-              otpType="number"
-              disabled={false}
-            />
-            <ResendOTP onResendClick={handleClick} />
-          </div>
-        ) : (
-          <div></div>
-        )} */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            alignContent: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Button
-            variant="primary"
-            // onClick={isotpgenerated ? cancelBooking : handleClick}
-            onClick={cancelBooking}
-          >
-            Cancel Booking
-          </Button>
-        </div>
-      </Modal.Body>
-    </Modal>
+    //     <div className="outerdetaildiv">
+    //       <div>BookingDate</div>
+    //       <div>{props.details.bookingDate}</div>{" "}
+    //     </div>
+    //     <div className="outerdetaildiv">
+    //       <div>Adults and Kids</div>
+    //       <div>
+    //         {props.details.Adults} Adults and {props.details.Kids} Kids
+    //       </div>{" "}
+    //     </div>
+    //     <div className="outerdetaildiv">
+    //       <div>Address</div>
+    //       <div>{props.details.guestInfo.address}</div>{" "}
+    //     </div>
+    //     <div className="outerdetaildiv">
+    //       <div>City And Country</div>
+    //       <div>
+    //         {props.details.guestInfo.City}
+    //         {" , "}
+    //         {props.details.guestInfo.Country.label}
+    //       </div>{" "}
+    //     </div>
+    //     <div className="outerdetaildiv">
+    //       <div>Room Number Assigned</div>
+    //       <div>{props.details.roomNumbers}</div>{" "}
+    //     </div>
+    //     <div className="outerdetaildiv">
+    //       <div>PaymentMode</div>
+    //       <div>{props.details.paymentMode}</div>{" "}
+    //     </div>
+    //     <div className="outerdetaildiv">
+    //       <div>PaymentStatus</div>
+    //       <div>{props.details.paymentStatus}</div>{" "}
+    //     </div>
+    //     {/* {isotpgenerated === true ? (
+    //       <div
+    //         style={{
+    //           display: "flex",
+    //           alignContent: "center",
+    //           justifyContent: "center",
+    //           gap: "2rem",
+    //           margin: "2rem",
+    //         }}
+    //       >
+    //         <OTPInput
+    //           value={OTP}
+    //           onChange={setOTP}
+    //           autoFocus
+    //           OTPLength={6}
+    //           otpType="number"
+    //           disabled={false}
+    //         />
+    //         <ResendOTP onResendClick={handleClick} />
+    //       </div>
+    //     ) : (
+    //       <div></div>
+    //     )} */}
+    //     <div
+    //       style={{
+    //         display: "flex",
+    //         alignItems: "center",
+    //         alignContent: "center",
+    //         justifyContent: "center",
+    //       }}
+    //     >
+    //       <Button
+    //         variant="primary"
+    //         // onClick={isotpgenerated ? cancelBooking : handleClick}
+    //         onClick={cancelBooking}
+    //       >
+    //         Cancel Booking
+    //       </Button>
+    //     </div>
+    //   </Modal.Body>
+    // </Modal>
   );
 }
 function MyVerticallyCenteredModal(props) {
@@ -231,7 +231,7 @@ function MyVerticallyCenteredModal(props) {
   const [details, setDetails] = useState(null);
   return (
     <>
-      <Modal
+      {/* <Modal
         {...props}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
@@ -258,13 +258,13 @@ function MyVerticallyCenteredModal(props) {
             </Button>
           </Form>
         </Modal.Body>
-      </Modal>
-      <DetailModal
+      </Modal> */}
+      {/* <DetailModal
         show={detailmodalShow}
         baseUrl={props.baseUrl}
         onHide={() => setdetailModalShow(false)}
         details={details}
-      />
+      /> */}
     </>
   );
 }
@@ -421,14 +421,18 @@ export default function Footer(props) {
                     Cancellation & Refund Policy
                   </p>
                 </li>
-                {props.AuthenticatedUser?<li>
-                  <p
-                    style={{ cursor: "pointer" }}
-                    onClick={() => setModalShow(true)}
-                  >
-                    Cancel Booking
-                  </p>
-                </li>:""}
+                {props.AuthenticatedUser ? (
+                  <li>
+                    <p
+                      style={{ cursor: "pointer" }}
+                      onClick={() => setModalShow(true)}
+                    >
+                      Cancel Booking
+                    </p>
+                  </li>
+                ) : (
+                  ""
+                )}
                 {/* <li>
                   <Link to="/#">FAQs</Link>
                 </li> */}
@@ -473,7 +477,7 @@ export default function Footer(props) {
         </a>
       </div>
 
-      <Modal
+      {/* <Modal
         size="lg"
         show={termsShow}
         onHide={() => settermsShow(false)}
@@ -513,7 +517,7 @@ export default function Footer(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>{HTMLReactParser(props.Cancellation)}</Modal.Body>
-      </Modal>
+      </Modal> */}
       <MyVerticallyCenteredModal
         show={modalShow}
         baseUrl={props.baseUrl}

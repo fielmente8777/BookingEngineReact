@@ -1,9 +1,7 @@
-import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Footer from "./components/Footer";
 import LandingPage from "./components/LandingPage";
 import Navbar from "./components/Navbar";
 import NotFoundPage from "./components/NotFoundPage";
@@ -15,15 +13,23 @@ import "./style/NavFoot.css";
 
 import Booking from "./components/Booking";
 import Login from "./components/Login";
+import NewFooter from "./components/NewFooter";
 import Profile from "./components/Profile";
 import { Register } from "./components/Register";
-
+import Banner from "./components/Banner";
+import ImagePopUp from "./components/pop-up/ImagePopUp";
 
 function App() {
-  const { openLoginPopup, setOpenLoginPopup, openRegisterPopup, FetchUsersBookings,
-    FetchUsersFutureBookings } = useContext(AuthContext)
+  const {
+    openLoginPopup,
+    setOpenLoginPopup,
+    openRegisterPopup,
+    FetchUsersBookings,
+    FetchUsersFutureBookings,
+  } = useContext(AuthContext);
   const [Box_color, setBox_color] = useState("#0A3A75"); //Box color for reservation
-  const { Button_color, setButton_color, Bg_color, setBg_color } = useContext(AuthContext); //Button color of checkin and out
+  const { Button_color, setButton_color, Bg_color, setBg_color } =
+    useContext(AuthContext); //Button color of checkin and out
   const [HotelEmail, setHotelEmail] = useState("test@gmail.com");
   const [HotelAbout, setHotelAbout] = useState("About Us");
   const [HotelAddress, setHotelAddress] = useState("Address");
@@ -54,19 +60,22 @@ function App() {
   const [Youtube, setYoutube] = useState("https://twitter.com/");
   const [Reservation_button, setReservation_button] = useState("Reservations");
   const [Room_searchButton, setRoom_searchButton] = useState("Look For Rooms");
-  const [RoomFinal_searchButton, setRoomFinal_searchButton] =useState("Reserve");
+  const [RoomFinal_searchButton, setRoomFinal_searchButton] =
+    useState("Reserve");
   const [PaymentButton, setPaymentButton] = useState("Pay Now");
   const [Spinner_spin, setSpinner_spin] = useState("d-none");
   const [Spinner_spin1, setSpinner_spin1] = useState("d-none");
   const [Spinner_spin2, setSpinner_spin2] = useState("d-none");
   const [Privacypolicy, setPrivacypolicy] = useState("Privacy policy");
   const [Cancellation, setCancellation] = useState("Cancellation policy");
-  const [Termsconditions, setTermsconditions] = useState("Terms and conditions");
+  const [Termsconditions, setTermsconditions] = useState(
+    "Terms and conditions"
+  );
   const [hotelwebsite, sethotelwebsite] = useState("");
   const [addTax, setaddTax] = useState(false);
-  const [AuthenticatedUser, setAuthenticatedUser] = useState(false)
-  const[websiteData,setWebsiteData]=useState();
-  const [domain,setDomain]=useState();
+  const [AuthenticatedUser, setAuthenticatedUser] = useState(false);
+  const [websiteData, setWebsiteData] = useState();
+  const [domain, setDomain] = useState();
   const [Payment, setPayment] = useState({
     Status: false,
     Logo: "https://img.freepik.com/free-vector/bird-colorful-logo-gradient-vector_343694-1365.jpg?size=338&ext=jpg&ga=GA1.1.1546980028.1703548800&semt=sph",
@@ -114,10 +123,9 @@ function App() {
       PrestigeSuite: "-",
       ExclusiveRetreat: "-",
     },
-});
+  });
 
-
-  const Get_Hotel_status_exists =async()=> {
+  const Get_Hotel_status_exists = async () => {
     const response = await fetch(
       `${baseUrl}/booking/getenginedetails/${localStorage.getItem(
         "hotelid"
@@ -181,8 +189,8 @@ function App() {
       setisOnlinepay(json.Details.isOnlinePayment);
       //pay at hotel option
       setisPayatHotel(json.Details.isPayatHotel);
-      //25% 
-      setisSemiPayment(json.Details.isSemiPayment)
+      //25%
+      setisSemiPayment(json.Details.isSemiPayment);
       //Gateway
       setGatewayConnected(json.Details.Gateway);
       //tax add
@@ -208,17 +216,15 @@ function App() {
 
       setSpinner_spin1("");
       await fetchWebsiteData(json.Profile.domain);
-
     } else {
       setSpinner_spin2("");
     }
-  }
+  };
 
   const CheckLoginUserStatus = async () => {
     if (localStorage.getItem("engineAuth") == null) {
-      setAuthenticatedUser(false)
-    }
-    else {
+      setAuthenticatedUser(false);
+    } else {
       const response = await fetch(
         `${baseUrl}/feature1/getuser/${localStorage.getItem("hotelid")}/${localStorage.getItem("hid")}/${localStorage.getItem("engineAuth")}`,
         {
@@ -232,20 +238,21 @@ function App() {
 
       const json = await response.json();
       if (json.Status) {
-        setAuthenticatedUser(true)
-        FetchUsersBookings()
-        FetchUsersFutureBookings()
-      }
-      else {
-        setAuthenticatedUser(false)
+        setAuthenticatedUser(true);
+        FetchUsersBookings();
+        FetchUsersFutureBookings();
+      } else {
+        setAuthenticatedUser(false);
       }
       // const json = await response1.json();
     }
-  }
+  };
 
   const fetchWebsiteData = async (domain) => {
     try {
-      const response = await fetch(`https://nexon.eazotel.com/cms/get/website/${domain}`);
+      const response = await fetch(
+        `https://nexon.eazotel.com/cms/get/website/${domain}`
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch website data");
       }
@@ -257,7 +264,6 @@ function App() {
     }
   };
 
-
   const baseUrl = "https://nexon.eazotel.com";
   // const baseUrl = "http://127.0.0.1:5000";
   // const baseUrl = "https://testnexon.eazotel.com"
@@ -268,7 +274,7 @@ function App() {
   localStorage.setItem("hotelid", hotelid);
   localStorage.setItem("hid", hid);
 
-  useEffect(async() => {
+  useEffect(async () => {
     await Get_Hotel_status_exists();
     await CheckLoginUserStatus();
   }, []);
@@ -280,11 +286,10 @@ function App() {
     i18n.changeLanguage(lng);
   };
 
-
-  console.log("hotel images",domain);
+  console.log("hotel images", domain);
   return (
     <>
-      {/* <Navbar
+      <Navbar
         hotelname={HotelName}
         logo={HotelLogo}
         display={Spinner_spin1}
@@ -294,64 +299,70 @@ function App() {
         hotelwebsite={hotelwebsite}
         AuthenticatedUser={AuthenticatedUser}
         setAuthenticatedUser={setAuthenticatedUser}
-      /> */}
-
+      />
+      <Banner websiteData={websiteData} />
       <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              {!Payment.Status ? (
+                <LandingPage
+                  addTax={addTax}
+                  websiteData={websiteData}
+                  GatewayConnected={GatewayConnected}
+                  isPayatHotel={isPayatHotel}
+                  isOnlinepay={isOnlinepay}
+                  currency={currency}
+                  Bg_color={Bg_color}
+                  HotelName={HotelName}
+                  HotelLogo={HotelLogo}
+                  baseUrl={baseUrl}
+                  Bg_image={HotelImage}
+                  color={Box_color}
+                  display={Spinner_spin1}
+                  bt_color={Button_color}
+                  ReservationLabel={Reservation_button}
+                  ReservationButton={Room_searchButton}
+                  FinalConfirmButton={RoomFinal_searchButton}
+                  Paymentbutton={PaymentButton}
+                  setPayment={setPayment}
+                  isSemiPayment={isSemiPayment}
+                />
+              ) : (
+                <SuccessPage Payment={Payment} currency={currency} />
+              )}
 
-        <Route path="/" element={
+              <NotFoundPage display={Spinner_spin2} />
+            </>
+          }
+        />
 
-          <>
-            {!Payment.Status ? (
-              <LandingPage
-                addTax={addTax}
-                websiteData={websiteData}
-                GatewayConnected={GatewayConnected}
-                isPayatHotel={isPayatHotel}
-                isOnlinepay={isOnlinepay}
-                currency={currency}
-                Bg_color={Bg_color}
-                HotelName={HotelName}
-                HotelLogo={HotelLogo}
-                baseUrl={baseUrl}
-                Bg_image={HotelImage}
-                color={Box_color}
-                display={Spinner_spin1}
-                bt_color={Button_color}
-                ReservationLabel={Reservation_button}
-                ReservationButton={Room_searchButton}
-                FinalConfirmButton={RoomFinal_searchButton}
-                Paymentbutton={PaymentButton}
-                setPayment={setPayment}
-                isSemiPayment={isSemiPayment}
-              />
-            ) : (
-              <SuccessPage Payment={Payment} currency={currency} />
-            )}
-
-
-            <NotFoundPage display={Spinner_spin2} />
-
-          </>
-
-        } />
-
-
-
-
-
-        <Route path='/profile' element={<Profile />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/booking" element={<Booking />} />
-
-
       </Routes>
 
+      {openLoginPopup ? (
+        <Login
+          setAuthenticatedUser={setAuthenticatedUser}
+          baseUrl={baseUrl}
+          bt_color={Button_color}
+        />
+      ) : (
+        ""
+      )}
 
-      {openLoginPopup ? <Login setAuthenticatedUser={setAuthenticatedUser} baseUrl={baseUrl} bt_color={Button_color} /> : ""}
-
-      {openRegisterPopup ? <Register baseUrl={baseUrl} bt_color={Button_color} setAuthenticatedUser={setAuthenticatedUser} /> : ""}
-
-
-      <Footer
+      {openRegisterPopup ? (
+        <Register
+          baseUrl={baseUrl}
+          bt_color={Button_color}
+          setAuthenticatedUser={setAuthenticatedUser}
+        />
+      ) : (
+        ""
+      )}
+      <ImagePopUp />
+      {/* <Footer
         hotelwebsite={hotelwebsite}
         AuthenticatedUser={AuthenticatedUser}
         color={Bg_color}
@@ -372,8 +383,8 @@ function App() {
         Cancellation={Cancellation}
         Termsconditions={Termsconditions}
         baseUrl={baseUrl}
-      />
-
+      /> */}
+      <NewFooter />
     </>
   );
 }

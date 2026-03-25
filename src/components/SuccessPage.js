@@ -1,103 +1,120 @@
-import React, { useRef } from 'react';
-import Button from 'react-bootstrap/Button';
-import Table from 'react-bootstrap/Table';
-import '../style/SuccessPage.css';
+import React, { useRef } from "react";
+// import Button from 'react-bootstrap/Button';
+// import Table from 'react-bootstrap/Table';
+import "../style/SuccessPage.css";
 
-
-
-import html2canvas from 'html2canvas';
-import { jsPDF } from 'jspdf';
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 
 function SuccessPage(props) {
+  const componentRef = useRef(null);
 
-    const componentRef = useRef(null);
+  const generatePDF = async () => {
+    // Get a reference to the component's DOM element
+    const component = componentRef.current;
 
-    const generatePDF = async () => {
-        // Get a reference to the component's DOM element
-        const component = componentRef.current;
-      
-        // Use html2canvas to capture the component's content as an image
-        const canvas = await html2canvas(component);
-      
-        // Create a new jsPDF instance
-        const doc = new jsPDF({
-          orientation: 'p', // 'p' for portrait, 'l' for landscape
-          unit: 'mm', // unit of measurement
-          format: 'a4', // page format
-        });
-      
-        // Calculate the image's dimensions to fit the PDF page
-        const imgData = canvas.toDataURL('image/png');
-        const imgWidth = doc.internal.pageSize.getWidth();
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      
-        // Calculate the number of pages needed
-        const totalPages = Math.ceil(imgHeight / doc.internal.pageSize.getHeight());
-      
-        // Loop through each page and add a portion of the image
-        for (let i = 0; i < totalPages; i++) {
-          // Add a new page if not the first iteration
-          if (i > 0) {
-            doc.addPage();
-          }
-      
-          // Calculate the portion of the image for this page
-          const startY = i * doc.internal.pageSize.getHeight();
-          const portionHeight = Math.min(doc.internal.pageSize.getHeight(), imgHeight - startY);
-      
-          // Add the image portion to the PDF
-          doc.addImage(imgData, 'PNG', 0, -startY, imgWidth, imgHeight, null, 'SLOW');
-        }
-      
-        // Save the PDF as a blob
-        const blob = doc.output('blob');
-      
-        // Create a URL for the Blob and create a link to trigger the download
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'invoice.pdf'; // Set the desired filename for the entire PDF
-      
-        // Trigger a click event on the link to start the download
-        a.click();
-      
-        // Clean up by revoking the Blob URL
-        URL.revokeObjectURL(url);
-      };
-      
-    
-    return (
-        <div className='main_success' >
-            <div className="succespage" ref={componentRef}>
-            <img
-                    src={props.Payment.Logo}
-                    alt="Your Logo"
-                    style={{ width: '100px', height: 'auto', marginBottom: '10px' }}
-                    />
-                <h3>Payment Receipt!</h3>
-                <p>for</p>
-                <h5>{props.Payment.HotelName}</h5>
-                <div><i class="fa-regular fa-circle-check m-4" style={{ fontSize: '60px' }}></i></div>
-                <div className='w-100'>
-                    <h6><strong>Guest Information</strong></h6>
+    // Use html2canvas to capture the component's content as an image
+    const canvas = await html2canvas(component);
 
-                    <div className='succuss_MDiv' >
-                        <div className='succuss_detailDiv'>
-                            <label htmlFor="/">Name</label>
-                            <label htmlFor="/">Phone</label>
-                            <label htmlFor="/">Email</label>
-                            <label htmlFor="/">Country</label>
-                        </div>
-                        <div className='succuss_detailDiv align-items-end'>
-                            <label htmlFor="/">{props.Payment.Name}</label>
-                            <label htmlFor="/">{props.Payment.Phone}</label>
-                            <label htmlFor="/">{props.Payment.Email}</label>
-                            <label htmlFor="/">{props.Payment.Country}</label>
-                        </div>
-                    </div>
-                    <div className="succesDataTable bookstatus my-2">
-                        <h6><strong>Booking Status</strong></h6>
-                        <Table striped bordered hover variant="light">
+    // Create a new jsPDF instance
+    const doc = new jsPDF({
+      orientation: "p", // 'p' for portrait, 'l' for landscape
+      unit: "mm", // unit of measurement
+      format: "a4", // page format
+    });
+
+    // Calculate the image's dimensions to fit the PDF page
+    const imgData = canvas.toDataURL("image/png");
+    const imgWidth = doc.internal.pageSize.getWidth();
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    // Calculate the number of pages needed
+    const totalPages = Math.ceil(imgHeight / doc.internal.pageSize.getHeight());
+
+    // Loop through each page and add a portion of the image
+    for (let i = 0; i < totalPages; i++) {
+      // Add a new page if not the first iteration
+      if (i > 0) {
+        doc.addPage();
+      }
+
+      // Calculate the portion of the image for this page
+      const startY = i * doc.internal.pageSize.getHeight();
+      const portionHeight = Math.min(
+        doc.internal.pageSize.getHeight(),
+        imgHeight - startY
+      );
+
+      // Add the image portion to the PDF
+      doc.addImage(
+        imgData,
+        "PNG",
+        0,
+        -startY,
+        imgWidth,
+        imgHeight,
+        null,
+        "SLOW"
+      );
+    }
+
+    // Save the PDF as a blob
+    const blob = doc.output("blob");
+
+    // Create a URL for the Blob and create a link to trigger the download
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "invoice.pdf"; // Set the desired filename for the entire PDF
+
+    // Trigger a click event on the link to start the download
+    a.click();
+
+    // Clean up by revoking the Blob URL
+    URL.revokeObjectURL(url);
+  };
+
+  return (
+    <div className="main_success">
+      <div className="succespage" ref={componentRef}>
+        <img
+          src={props.Payment.Logo}
+          alt="Your Logo"
+          style={{ width: "100px", height: "auto", marginBottom: "10px" }}
+        />
+        <h3>Payment Receipt!</h3>
+        <p>for</p>
+        <h5>{props.Payment.HotelName}</h5>
+        <div>
+          <i
+            class="fa-regular fa-circle-check m-4"
+            style={{ fontSize: "60px" }}
+          ></i>
+        </div>
+        <div className="w-100">
+          <h6>
+            <strong>Guest Information</strong>
+          </h6>
+
+          <div className="succuss_MDiv">
+            <div className="succuss_detailDiv">
+              <label htmlFor="/">Name</label>
+              <label htmlFor="/">Phone</label>
+              <label htmlFor="/">Email</label>
+              <label htmlFor="/">Country</label>
+            </div>
+            <div className="succuss_detailDiv align-items-end">
+              <label htmlFor="/">{props.Payment.Name}</label>
+              <label htmlFor="/">{props.Payment.Phone}</label>
+              <label htmlFor="/">{props.Payment.Email}</label>
+              <label htmlFor="/">{props.Payment.Country}</label>
+            </div>
+          </div>
+          <div className="succesDataTable bookstatus my-2">
+            <h6>
+              <strong>Booking Status</strong>
+            </h6>
+            {/* <Table striped bordered hover variant="light">
                             <thead>
                                 <tr>
                                     <th>Check In</th>
@@ -114,14 +131,15 @@ function SuccessPage(props) {
                                     <td>{props.Payment.Kid}</td>
                                 </tr>
                             </tbody>
-                        </Table>
-                    </div>
+                        </Table> */}
+          </div>
+        </div>
+        <div className="succesDataTable">
+          <h6>
+            <strong>Payment Information</strong>
+          </h6>
 
-                </div>
-                <div className="succesDataTable">
-                    <h6><strong>Payment Information</strong></h6>
-
-                    <Table striped bordered hover variant="light">
+          {/* <Table striped bordered hover variant="light">
                         <thead>
                             <tr>
                                 <th>Order ID</th>
@@ -151,12 +169,10 @@ function SuccessPage(props) {
                                 <td>{props.currency} {props.Payment.Amount}</td>
                             </tr>
                         </tbody>
-                    </Table>
+                    </Table> */}
+        </div>
 
-                    
-                </div>
-
-                <div className="succesDataTable">
+        {/* <div className="succesDataTable">
                     <h6><strong>Booked Room</strong></h6>
 
                     {props.Payment.Rooms.DELUX!=="-"?<Table striped bordered hover variant="light">
@@ -312,21 +328,19 @@ function SuccessPage(props) {
                             </tr>
                         </tbody>
                     </Table>
-                </div>
+                </div> */}
 
-                <div className='d-flex justify-content-center gap-4 m-4'>
-                    {/* <Button onClick={() => { window.print() }}>Print</Button> */}
-                    <Button onClick={generatePDF}>Download (PDF)</Button>
+        <div className="d-flex justify-content-center gap-4 m-4">
+          {/* <Button onClick={() => { window.print() }}>Print</Button> */}
+          {/* working */}
+          {/* <Button onClick={generatePDF}>Download (PDF)</Button> */}
+          {/* <Button onClick={() => { window.location.reload() }}>Close</Button> */}
 
-                    <Button onClick={() => { window.location.reload() }}>Close</Button>
-                    {/* <button onClick={generatePDF}>Download Invoice (PDF)</button> */}
-
-                </div>
-            </div>
-
-
+          {/* <button onClick={generatePDF}>Download Invoice (PDF)</button> */}
         </div>
-    )
+      </div>
+    </div>
+  );
 }
 
-export default SuccessPage
+export default SuccessPage;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import Form from 'react-bootstrap/Form';
+// import Form from 'react-bootstrap/Form';
 
 function Mealplan({isperRoom,mealplan,setMealPlan,setselectedMealPlan,setselectedMealPlanPrice,setisperRoom,Mealprice
     ,setMealprice,Delux,SuperDelux,Suite,Premium,PremiereRetreat,
@@ -103,7 +103,7 @@ function Mealplan({isperRoom,mealplan,setMealPlan,setselectedMealPlan,setselecte
                                 <span>₹ {planItem.packagePrice}</span>
                             </div>
                             <div class="col text-center">
-                                <Form>
+                                {/* <Form>
                                     {['checkbox'].map((type) => (
                                         <div key={`default-${type}`} className="mb-3">
                                             <Form.Check
@@ -117,7 +117,7 @@ function Mealplan({isperRoom,mealplan,setMealPlan,setselectedMealPlan,setselecte
                                             />
                                         </div>
                                     ))}
-                                </Form>
+                                </Form> */}
                             </div>
                         </div>
                     ))}
