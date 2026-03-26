@@ -18,6 +18,7 @@ import Profile from "./components/Profile";
 import { Register } from "./components/Register";
 import Banner from "./components/Banner";
 import ImagePopUp from "./components/pop-up/ImagePopUp";
+import Overview from "./components/Overview";
 
 function App() {
   const {
@@ -125,6 +126,8 @@ function App() {
     },
   });
 
+  const [hotelDetails,setHotelDetails]=useState();
+
   const Get_Hotel_status_exists = async () => {
     const response = await fetch(
       `${baseUrl}/booking/getenginedetails/${localStorage.getItem(
@@ -151,6 +154,7 @@ function App() {
       if (faviconLink) {
         faviconLink.href = json.Details.Footer.Logo;
       }
+      setHotelDetails(json.Details)
       setHotelLogo(json.Details.Footer.Logo);
       setHotelLocation(json.Details.Location);
       setHotelEmail(json.Details.Footer.Email);
@@ -264,8 +268,8 @@ function App() {
     }
   };
 
-  const baseUrl = "https://nexon.eazotel.com";
-  // const baseUrl = "http://127.0.0.1:5000";
+  // const baseUrl = "https://nexon.eazotel.com";
+  const baseUrl = "http://127.0.0.1:5000";
   // const baseUrl = "https://testnexon.eazotel.com"
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -309,6 +313,7 @@ function App() {
               {!Payment.Status ? (
                 <LandingPage
                   addTax={addTax}
+                  hotelDetails={hotelDetails}
                   websiteData={websiteData}
                   GatewayConnected={GatewayConnected}
                   isPayatHotel={isPayatHotel}

@@ -6,6 +6,8 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Contactinfo from "../components/Contactinfo";
 import "./i18n"; // Import your i18n configuration
+import ImageSlider from "./pop-up/ImageSlider";
+import { FaDollarSign, FaIndianRupeeSign, FaMinus, FaPlus, FaUser } from "react-icons/fa6";
 
 export default function Cards(props) {
   const [BookingTax, setBookingTax] = useState(0);
@@ -19,6 +21,7 @@ export default function Cards(props) {
   const [Grandtotal, setGrandtotal] = useState(0);
 
   const [selectedOption, setSelectedOption] = useState(null);
+  const [error,setError]=useState();
 
   let Available_rooms = props.available;
 
@@ -204,6 +207,10 @@ export default function Cards(props) {
       setPrice(price);
       setRooms(number);
     }
+    else{
+      setError("You reached at maximum available rooms")
+      console.log("Exceed")
+    }
   };
 
   const { t, i18n } = useTranslation();
@@ -219,122 +226,121 @@ export default function Cards(props) {
 
   return (
     <>
-      <div className="container">
-        {/* filters start   */}
 
         {/* filters end  */}
-        <div className="card_details" style={{ background: "#fff" }}>
-          <div className="card_inner">
-            {/* <Carousel>
-                            {images.map((element) => {
+        
+        <div className={` ${Available_rooms === 0 ?"opacity-50":""}  border-[1px] rounded-xl overflow-hidden`}>
+          <div className="grid grid-cols-2">
 
-                                return <Carousel.Item class="caru"
-                                    style={{ overflow: "hidden", }}>
 
-                                    <div class="carousel-item active car" style={{ height: "100%" }} >
-                                        <img src={element} class="" alt="..." style={{ objectFit: "cover", height: "100%" }} />
-                                    </div>
+            <ImageSlider 
+              imagesArray={
+                ["https://eazotel-clients-images.s3.ap-south-1.amazonaws.com/one-off-hotels/vns/img-7.jpg",
+                  "https://eazotel-clients-images.s3.ap-south-1.amazonaws.com/one-off-hotels/vns/img-7.jpg",
+                  "https://eazotel-clients-images.s3.ap-south-1.amazonaws.com/one-off-hotels/vns/img-7.jpg"
+                ]
+              }
+            />
 
-                                </Carousel.Item>
-                            }
-
-                            )}
-                        </Carousel> */}
-
-            <div className="main_description">
-              <div className="room-last d-flex justify-content-between ">
-                <div className="room-name">
-                  <h3 style={{ fontWeight: "600" }}>{t(props.name)}</h3>
-                </div>
-                <div className="last-rooms">
-                  <span class="badge text-bg-secondary">{props.tag}</span>
-                </div>
+            {/* {images.map((element) => (
+              <div key={element} class="carousel-item active car">
+                <img src={element} class="" alt="..." />
               </div>
-              <div className="description">
-                <p className="room_description_style">{t(props.description)}</p>
-              </div>
-              <div className="aminities-block">
-                <div className="aminities w-100">
-                  <div className="card_inr_icon">
-                    <i class="fa-solid fa-user"></i>X {props.Adult}
+            ))} */}
+
+            <div className="p-4 flex flex-col gap-2">
+
+                  <h3 className="capitalize! text-xl font-semibold">{t(props.name)}</h3>
+                  <span class="">{props.tag}</span>
+                <p className="text-[#464646] text-md">{t(props.description.slice(0,180))}...</p>
+
+              <div className="">
+                <div className="">
+                  <div className="flex items-center  text-lg gap-1">
+                   Adults: {props.Adult} <FaUser size={14}/>
                   </div>
                 </div>
-                <div className="room_price w-30">
+                <div className="flex justify-end flex-col items-end">
                   {/* <label>From</label>  */}
                   {Rooms * props.ratechange[props.roomtype].Price !== 0 ? (
-                    <h4 style={{ fontWeight: "600" }}>
-                      <span id="total_price" style={{ fontSize: "22px" }}>
+                    <h4 className="flex items-center">
+                      {props.currency==="INR"?<FaIndianRupeeSign/>:<FaDollarSign/>}
+
+                      <span id="total_price" className="text-lg">
                         {" "}
-                        {Rooms * props.ratechange[props.roomtype].Price}/-{" "}
+                        {Rooms * props.ratechange[props.roomtype].Price}/<span className="text-xs">Night plus taxes</span>{" "}
                       </span>
-                      {props.currency}
                     </h4>
                   ) : (
-                    <h4 style={{ fontWeight: "600" }}>
-                      <span id="total_price" style={{ fontSize: "22px" }}>
+                    <h4 className="flex items-center" >
+                       {props.currency==="INR"?<FaIndianRupeeSign/>:<FaDollarSign/>}
+                      <span id="total_price" className="text-lg" >
                         {" "}
-                        {props.ratechange[props.roomtype].Price}/-{" "}
+                        {props.ratechange[props.roomtype].Price}/<span className="text-xs">Night plus taxes</span>{" "}
                       </span>
-                      {props.currency}
                     </h4>
                   )}
                   {/* <span>Per Night</span> */}
 
                   {/* <span style="color:red" className="span m-1">Last {{ Available }} Rooms</span>  */}
-                  <div className="no-rooms d-flex">
-                    <span>Room(s)</span>
+                  <div className="">
+                    <span className="text-md flex justify-end">Price for {props.Adult} Guests</span>
+                    {/* <span>Room(s)</span> */}
                     {Available_rooms !== 0 ? (
                       Rooms === 0 ? (
-                        <div className="soldBtn">
-                          <span
-                            class="badge text-white"
-                            style={{
-                              cursor: "pointer",
-                              backgroundColor: props.Bg_color,
-                            }}
+                        <div className="mt-3">
+                          <button
+
+                          className="bg-[#0D54EB] px-5 text-white rounded-md py-1.5"
+                            // style={{
+                            //   cursor: "pointer",
+                            //   backgroundColor: props.Bg_color,
+                            // }}
                             onClick={() => {
                               AddCount(props.type);
+                            
                             }}
                           >
-                            Add room
-                          </span>
+                            Select
+                          </button>
                           <button
-                            className="btn-total d-none"
-                            id={`${props.type}`}
+                          id={`${props.type}`}
+                            
                           >
-                            {Rooms}
+                            {/* {Rooms} */}
                           </button>
                         </div>
                       ) : (
-                        <div className="room">
+                        <div className=" rounded-md overflow-hidden w-full flex  bg-[#0D54EB] justify-between mt-3" >
                           <button
-                            className="btn-minus"
+                          className="px-3 py-2.5 bg-[#181A1D]"
                             onClick={() => {
                               DelCount(props.type);
+                              setError(null)
                             }}
                           >
-                            -
+                            <FaMinus className="text-white"/>
                           </button>
-                          <button className="btn-total" id={`${props.type}`}>
+                          <button className="text-white" id={`${props.type}`}>
                             {Rooms}
                           </button>
                           <button
-                            className="btn-plus"
+                            className="px-3 py-1.5 bg-[#181A1D]"
                             onClick={() => {
                               AddCount(props.type);
                             }}
                           >
-                            +
+                            <FaPlus className="text-white"/>
                           </button>
                         </div>
                       )
                     ) : (
-                      <div className="soldBtn">
-                        <span class="badge text-bg-danger">SOLD OUT</span>
+                      <div className="w-full flex">
+                        <span class="bg-red-500 text-center text-white mt-3 px-3 py-1.5 rounded-md w-full">Sold Out</span>
                       </div>
                     )}
                   </div>
-
+                  {error&&<p className="italic text-sm font-semibold text-red-500">{error}</p>}
                   <div className="reser">
                     {/* <p>Adults Allowed: {props.Adult}</p> */}
 
@@ -343,10 +349,43 @@ export default function Cards(props) {
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
 
-          <div className="card_tab">
+            {/* This component has been removed and paster down on this file */}
+        </div>
+
+      {/* Contact informtion start  */}
+
+      {isOpen && (
+        <Contactinfo
+          setIsOpen={setIsOpen}
+          Bg_color={props.Bg_color}
+          setPayment={props.setPayment}
+          HotelName={props.HotelName}
+          HotelLogo={props.HotelLogo}
+          BookingTax={BookingTax}
+          BookingTotalPrice={BookingTotalPrice}
+          BookingPrice={BookingPrice}
+          Paymentbutton={props.Paymentbutton}
+          nights={Nights}
+          room={Rooms}
+          color={props.color}
+          price={Price}
+          grandtotal={Grandtotal}
+          type={props.roomtype}
+        />
+      )}
+    </>
+  );
+}
+
+
+
+
+
+//  <div className="card_tab">
             {/* <Tabs
               defaultActiveKey="amenities"
               id="fill-tab-example"
@@ -822,31 +861,4 @@ export default function Cards(props) {
                 </div>
               </Tab>
             </Tabs> */}
-          </div>
-        </div>
-      </div>
-
-      {/* Contact informtion start  */}
-
-      {isOpen && (
-        <Contactinfo
-          setIsOpen={setIsOpen}
-          Bg_color={props.Bg_color}
-          setPayment={props.setPayment}
-          HotelName={props.HotelName}
-          HotelLogo={props.HotelLogo}
-          BookingTax={BookingTax}
-          BookingTotalPrice={BookingTotalPrice}
-          BookingPrice={BookingPrice}
-          Paymentbutton={props.Paymentbutton}
-          nights={Nights}
-          room={Rooms}
-          color={props.color}
-          price={Price}
-          grandtotal={Grandtotal}
-          type={props.roomtype}
-        />
-      )}
-    </>
-  );
-}
+          {/* </div> */}

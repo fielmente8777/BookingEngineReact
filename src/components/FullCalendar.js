@@ -51,8 +51,11 @@ const FullCalendar = (props) => {
     localStorage.setItem("Checkin", checkin_date)
 
     return (
-        <div className='caldiv'>
-            <button className='datebtn' onClick={handleClick} style={{ background: props.bg_color }}>
+        <div className=''>
+            <button className='bg-[#181A1D] gap-2 flex px-4 py-[14px] rounded-2xl outline-none' 
+            onClick={handleClick} 
+            // style={{ background: props.bg_color }}
+            >
                 {/* We have to customize this color, this color will come form backend */}
                 <span className='text-light'>{checkinDate.toLocaleDateString('en-US', { weekday: 'long' })}</span>
                 <span className='date text-light'>{selectedDay}</span>
