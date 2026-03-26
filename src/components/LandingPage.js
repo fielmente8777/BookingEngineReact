@@ -645,7 +645,7 @@ export default function Landing(props) {
         </div>
 
         {islookingroom ? (
-          <div className="mt-3">
+          <div className="mt-3 space-y-6">
             {Headlines.sort(
               (a, b) =>
                 (parseInt(a.price, 10) || 0) - (parseInt(b.price, 10) || 0)

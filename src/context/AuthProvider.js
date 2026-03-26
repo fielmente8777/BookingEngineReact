@@ -11,6 +11,13 @@ export const AuthProvider = ({ children }) => {
   // set current image index in popup
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  // set rooms detail in popup
+  const [openRoomsDetailPopup, setOpenRoomsDetailPopup] = useState(false);
+  
+  const [roomName, setRoomName] = useState("");
+  const [roomDescription, setRoomDescription] = useState("");
+  const [roomAmenities, setRoomAmenities] = useState([]);
+
   const [openLoginPopup, setOpenLoginPopup] = useState(false);
   const [openRegisterPopup, setopenRegisterPopup] = useState(false);
 
@@ -127,6 +134,14 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
+        openRoomsDetailPopup,
+        setOpenRoomsDetailPopup,
+        roomName,
+        setRoomName,
+        roomDescription,
+        setRoomDescription,
+        roomAmenities,
+        setRoomAmenities,
         openImagePopup,
         setOpenImagePopup,
         imagesArray,

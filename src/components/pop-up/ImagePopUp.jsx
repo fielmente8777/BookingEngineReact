@@ -1,14 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/AuthProvider";
 import { IoCloseSharp } from "react-icons/io5";
+import { GrNext } from "react-icons/gr";
 
 const ImagePopUp = () => {
-  const {
-    openImagePopup,
-    setOpenImagePopup,
-    imagesArray,
-    currentImageIndex,
-  } = useContext(AuthContext);
+  const { openImagePopup, setOpenImagePopup, imagesArray, currentImageIndex } =
+    useContext(AuthContext);
   const [currentImage, setCurrentImage] = useState(0);
 
   useEffect(() => {
@@ -30,7 +27,6 @@ const ImagePopUp = () => {
     setCurrentImage(0);
   };
 
-
   return (
     <section
       onClick={(e) => {
@@ -49,15 +45,15 @@ const ImagePopUp = () => {
       <div className="absolute max-w-5xl w-full md:top-1/2 md:left-1/2 md:-translate-y-1/2 md:-translate-x-1/2 top-5 left-5  flex items-center md:justify-between gap-4 z-10">
         <button
           onClick={handlePrev}
-          className="text-2xl text-white p-2 rounded-full bg-white/30"
+          className="text-2xl text-white p-2 rounded-full bg-white/30 rotate-180"
         >
-          <IoCloseSharp />
+          <GrNext />
         </button>
         <button
           onClick={handleNext}
           className="text-2xl text-white p-2 rounded-full bg-white/30"
         >
-          <IoCloseSharp />
+          <GrNext />
         </button>
       </div>
       <div className="w-full h-dvh relative flex items-center justify-center pointer-events-none">

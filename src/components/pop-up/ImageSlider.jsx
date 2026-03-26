@@ -33,7 +33,6 @@ const ImageSlider = ({imagesArray}) => {
     setCurrentImage(0);
   };
 
-  console.log("first",imagesArray[currentImage])
 
   return (
     <section

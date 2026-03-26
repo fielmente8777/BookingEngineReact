@@ -1,5 +1,5 @@
 // import React from 'react';
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 // import Carousel from 'react-bootstrap/Carousel';
 // import Tab from 'react-bootstrap/Tab';
 // import Tabs from 'react-bootstrap/Tabs';
@@ -15,6 +15,7 @@ import {
   FaUser,
 } from "react-icons/fa6";
 import { TickIcon } from "../utils/icons";
+import AuthContext from "../context/AuthProvider";
 
 export default function Cards(props) {
   const [BookingTax, setBookingTax] = useState(0);
@@ -241,23 +242,37 @@ export default function Cards(props) {
     }
   }
 
-  console.log("facilitiesArray", facilitiesArray);
+  const {
+    setOpenRoomsDetailPopup,
+    setRoomName,
+    setRoomDescription,
+    setRoomAmenities,
+  } = useContext(AuthContext);
+
+  const handleClick = ({ roomName, roomDescription }) => {
+    setOpenRoomsDetailPopup(true);
+
+    setRoomName(roomName);
+    setRoomDescription(roomDescription);
+
+    setRoomAmenities(facilitiesArray);
+  };
 
   return (
     <>
       {/* filters end  */}
 
-      <div
-        className={` ${Available_rooms === 0 ? "opacity-50" : ""}  border-[1px] rounded-xl overflow-hidden`}
-      >
-        <div className="grid grid-cols-3">
-          <ImageSlider
-            imagesArray={[
-              "https://eazotel-clients-images.s3.ap-south-1.amazonaws.com/one-off-hotels/vns/img-7.jpg",
-              "https://eazotel-clients-images.s3.ap-south-1.amazonaws.com/one-off-hotels/vns/img-7.jpg",
-              "https://eazotel-clients-images.s3.ap-south-1.amazonaws.com/one-off-hotels/vns/img-7.jpg",
-            ]}
-          />
+      <div className={` ${Available_rooms === 0 ? "opacity-50" : ""}   `}>
+        <div className="grid grid-cols-1 md:grid-cols-7 border border-[#464646] rounded-xl overflow-hidden">
+          <div className="md:col-span-2">
+            <ImageSlider
+              imagesArray={[
+                "https://eazotel-clients-images.s3.ap-south-1.amazonaws.com/one-off-hotels/vns/img-7.jpg",
+                "https://eazotel-clients-images.s3.ap-south-1.amazonaws.com/one-off-hotels/vns/img-7.jpg",
+                "https://eazotel-clients-images.s3.ap-south-1.amazonaws.com/one-off-hotels/vns/img-7.jpg",
+              ]}
+            />
+          </div>
 
           {/* {images.map((element) => (
               <div key={element} class="carousel-item active car">
@@ -265,23 +280,23 @@ export default function Cards(props) {
               </div>
             ))} */}
 
-          <div className="p-4 flex flex-col gap-2">
+          {/* room details */}
+          <div className="p-4 flex flex-col gap-2 md:col-span-3 border-r border-[#464646]">
             <h3 className="capitalize! text-xl font-semibold">
               {t(props.name)}
             </h3>
             <span class="">{props.tag}</span>
             <p className="text-[#464646] text-md">
-              {t(props.description.slice(0, 180))}...
+              {t(props.description.slice(0, 180))}
+              {props.description.length > 180 ? "..." : ""}
             </p>
 
-            <div className="">
-              <div className="">
-                <div className="flex items-center  text-lg gap-1">
-                  Adults: {props.Adult} <FaUser size={14} />
-                </div>
+            <div className="space-y-2">
+              <div className="flex items-center  text-lg gap-1">
+                Adults: {props.Adult} <FaUser size={14} />
               </div>
-              <div className="grid grid-cols-2 gap-2">
-                {facilitiesArray.map((element) => (
+              <div className="grid grid-cols-2 gap-">
+                {facilitiesArray.slice(0, 6).map((element) => (
                   <div
                     key={element}
                     className="flex items-center text-lg gap-1"
@@ -295,10 +310,23 @@ export default function Cards(props) {
                   </div>
                 ))}
               </div>
+              <button
+                type="button"
+                className="text-[#0D54EB] font-semibold w-fit"
+                onClick={() =>
+                  handleClick({
+                    roomName: props?.name,
+                    roomDescription: props?.description,
+                  })
+                }
+              >
+                More details
+              </button>
             </div>
           </div>
+
           {/* price */}
-          <div className="">
+          <div className="md:col-span-2 p-4">
             {/* <label>From</label>  */}
             {Rooms * props.ratechange[props.roomtype].Price !== 0 ? (
               <h4 className="flex items-center">

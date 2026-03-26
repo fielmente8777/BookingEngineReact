@@ -19,6 +19,7 @@ import { Register } from "./components/Register";
 import Banner from "./components/Banner";
 import ImagePopUp from "./components/pop-up/ImagePopUp";
 import Overview from "./components/Overview";
+import RoomsDetailPopUp from "./components/pop-up/RoomsDetailPopUp";
 
 function App() {
   const {
@@ -126,7 +127,7 @@ function App() {
     },
   });
 
-  const [hotelDetails,setHotelDetails]=useState();
+  const [hotelDetails, setHotelDetails] = useState();
 
   const Get_Hotel_status_exists = async () => {
     const response = await fetch(
@@ -154,7 +155,7 @@ function App() {
       if (faviconLink) {
         faviconLink.href = json.Details.Footer.Logo;
       }
-      setHotelDetails(json.Details)
+      setHotelDetails(json.Details);
       setHotelLogo(json.Details.Footer.Logo);
       setHotelLocation(json.Details.Location);
       setHotelEmail(json.Details.Footer.Email);
@@ -367,6 +368,7 @@ function App() {
         ""
       )}
       <ImagePopUp />
+      <RoomsDetailPopUp />
       {/* <Footer
         hotelwebsite={hotelwebsite}
         AuthenticatedUser={AuthenticatedUser}
