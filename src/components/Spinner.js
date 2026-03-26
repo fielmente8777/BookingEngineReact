@@ -10,7 +10,7 @@ function Spinner(props) {
                 width="125"
                 color="#4fa94d"
                 wrapperStyle={{}}
-                wrapperClass=""
+                wrapperclassName=""
                 visible={true}
                 ariaLabel="three-circles-rotating"
                 outerCircleColor="orange"

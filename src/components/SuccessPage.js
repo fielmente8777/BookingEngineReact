@@ -87,7 +87,7 @@ function SuccessPage(props) {
         <h5>{props.Payment.HotelName}</h5>
         <div>
           <i
-            class="fa-regular fa-circle-check m-4"
+            className="fa-regular fa-circle-check m-4"
             style={{ fontSize: "60px" }}
           ></i>
         </div>

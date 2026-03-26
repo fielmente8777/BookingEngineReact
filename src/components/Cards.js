@@ -7,7 +7,14 @@ import { useTranslation } from "react-i18next";
 import Contactinfo from "../components/Contactinfo";
 import "./i18n"; // Import your i18n configuration
 import ImageSlider from "./pop-up/ImageSlider";
-import { FaDollarSign, FaIndianRupeeSign, FaMinus, FaPlus, FaUser } from "react-icons/fa6";
+import {
+  FaDollarSign,
+  FaIndianRupeeSign,
+  FaMinus,
+  FaPlus,
+  FaUser,
+} from "react-icons/fa6";
+import { TickIcon } from "../utils/icons";
 
 export default function Cards(props) {
   const [BookingTax, setBookingTax] = useState(0);
@@ -21,7 +28,7 @@ export default function Cards(props) {
   const [Grandtotal, setGrandtotal] = useState(0);
 
   const [selectedOption, setSelectedOption] = useState(null);
-  const [error,setError]=useState();
+  const [error, setError] = useState();
 
   let Available_rooms = props.available;
 
@@ -206,10 +213,9 @@ export default function Cards(props) {
       let price = number * Number(Original_Price);
       setPrice(price);
       setRooms(number);
-    }
-    else{
-      setError("You reached at maximum available rooms")
-      console.log("Exceed")
+    } else {
+      setError("You reached at maximum available rooms");
+      console.log("Exceed");
     }
   };
 
@@ -224,137 +230,175 @@ export default function Cards(props) {
     setSelectedOption(option);
   };
 
+  console.log("facilities", props.facilities);
+  // convert to array and loop key whose value is true
+  // const facilitiesArray = Object.keys(props.facilities);
+
+  const facilitiesArray = [];
+  for (const key in props.facilities) {
+    if (props.facilities[key] === true) {
+      facilitiesArray.push(key);
+    }
+  }
+
+  console.log("facilitiesArray", facilitiesArray);
+
   return (
     <>
+      {/* filters end  */}
 
-        {/* filters end  */}
-        
-        <div className={` ${Available_rooms === 0 ?"opacity-50":""}  border-[1px] rounded-xl overflow-hidden`}>
-          <div className="grid grid-cols-2">
+      <div
+        className={` ${Available_rooms === 0 ? "opacity-50" : ""}  border-[1px] rounded-xl overflow-hidden`}
+      >
+        <div className="grid grid-cols-3">
+          <ImageSlider
+            imagesArray={[
+              "https://eazotel-clients-images.s3.ap-south-1.amazonaws.com/one-off-hotels/vns/img-7.jpg",
+              "https://eazotel-clients-images.s3.ap-south-1.amazonaws.com/one-off-hotels/vns/img-7.jpg",
+              "https://eazotel-clients-images.s3.ap-south-1.amazonaws.com/one-off-hotels/vns/img-7.jpg",
+            ]}
+          />
 
-
-            <ImageSlider 
-              imagesArray={
-                ["https://eazotel-clients-images.s3.ap-south-1.amazonaws.com/one-off-hotels/vns/img-7.jpg",
-                  "https://eazotel-clients-images.s3.ap-south-1.amazonaws.com/one-off-hotels/vns/img-7.jpg",
-                  "https://eazotel-clients-images.s3.ap-south-1.amazonaws.com/one-off-hotels/vns/img-7.jpg"
-                ]
-              }
-            />
-
-            {/* {images.map((element) => (
+          {/* {images.map((element) => (
               <div key={element} class="carousel-item active car">
                 <img src={element} class="" alt="..." />
               </div>
             ))} */}
 
-            <div className="p-4 flex flex-col gap-2">
+          <div className="p-4 flex flex-col gap-2">
+            <h3 className="capitalize! text-xl font-semibold">
+              {t(props.name)}
+            </h3>
+            <span class="">{props.tag}</span>
+            <p className="text-[#464646] text-md">
+              {t(props.description.slice(0, 180))}...
+            </p>
 
-                  <h3 className="capitalize! text-xl font-semibold">{t(props.name)}</h3>
-                  <span class="">{props.tag}</span>
-                <p className="text-[#464646] text-md">{t(props.description.slice(0,180))}...</p>
-
+            <div className="">
               <div className="">
-                <div className="">
-                  <div className="flex items-center  text-lg gap-1">
-                   Adults: {props.Adult} <FaUser size={14}/>
-                  </div>
-                </div>
-                <div className="flex justify-end flex-col items-end">
-                  {/* <label>From</label>  */}
-                  {Rooms * props.ratechange[props.roomtype].Price !== 0 ? (
-                    <h4 className="flex items-center">
-                      {props.currency==="INR"?<FaIndianRupeeSign/>:<FaDollarSign/>}
-
-                      <span id="total_price" className="text-lg">
-                        {" "}
-                        {Rooms * props.ratechange[props.roomtype].Price}/<span className="text-xs">Night plus taxes</span>{" "}
-                      </span>
-                    </h4>
-                  ) : (
-                    <h4 className="flex items-center" >
-                       {props.currency==="INR"?<FaIndianRupeeSign/>:<FaDollarSign/>}
-                      <span id="total_price" className="text-lg" >
-                        {" "}
-                        {props.ratechange[props.roomtype].Price}/<span className="text-xs">Night plus taxes</span>{" "}
-                      </span>
-                    </h4>
-                  )}
-                  {/* <span>Per Night</span> */}
-
-                  {/* <span style="color:red" className="span m-1">Last {{ Available }} Rooms</span>  */}
-                  <div className="">
-                    <span className="text-md flex justify-end">Price for {props.Adult} Guests</span>
-                    {/* <span>Room(s)</span> */}
-                    {Available_rooms !== 0 ? (
-                      Rooms === 0 ? (
-                        <div className="mt-3">
-                          <button
-
-                          className="bg-[#0D54EB] px-5 text-white rounded-md py-1.5"
-                            // style={{
-                            //   cursor: "pointer",
-                            //   backgroundColor: props.Bg_color,
-                            // }}
-                            onClick={() => {
-                              AddCount(props.type);
-                            
-                            }}
-                          >
-                            Select
-                          </button>
-                          <button
-                          id={`${props.type}`}
-                            
-                          >
-                            {/* {Rooms} */}
-                          </button>
-                        </div>
-                      ) : (
-                        <div className=" rounded-md overflow-hidden w-full flex  bg-[#0D54EB] justify-between mt-3" >
-                          <button
-                          className="px-3 py-2.5 bg-[#181A1D]"
-                            onClick={() => {
-                              DelCount(props.type);
-                              setError(null)
-                            }}
-                          >
-                            <FaMinus className="text-white"/>
-                          </button>
-                          <button className="text-white" id={`${props.type}`}>
-                            {Rooms}
-                          </button>
-                          <button
-                            className="px-3 py-1.5 bg-[#181A1D]"
-                            onClick={() => {
-                              AddCount(props.type);
-                            }}
-                          >
-                            <FaPlus className="text-white"/>
-                          </button>
-                        </div>
-                      )
-                    ) : (
-                      <div className="w-full flex">
-                        <span class="bg-red-500 text-center text-white mt-3 px-3 py-1.5 rounded-md w-full">Sold Out</span>
-                      </div>
-                    )}
-                  </div>
-                  {error&&<p className="italic text-sm font-semibold text-red-500">{error}</p>}
-                  <div className="reser">
-                    {/* <p>Adults Allowed: {props.Adult}</p> */}
-
-                    {/* <button className="reserve_btn d-none" id="reserve_button" onclick="Redirect_Book()">RESERVE</button> */}
-                    {/* {Rooms!==0?<button className="reserve_btn" id="reserve_button" style={{ backgroundColor: props.color }} onClick={toggleDiv}>{props.FinalConfirmButton}</button>:""} */}
-                  </div>
+                <div className="flex items-center  text-lg gap-1">
+                  Adults: {props.Adult} <FaUser size={14} />
                 </div>
               </div>
-
+              <div className="grid grid-cols-2 gap-2">
+                {facilitiesArray.map((element) => (
+                  <div
+                    key={element}
+                    className="flex items-center text-lg gap-1"
+                  >
+                    <span>
+                      <TickIcon />
+                    </span>
+                    <span className="bg-white/10 text-black px-2 py-1 rounded">
+                      {element.replace(/_/g, " ")}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
+          {/* price */}
+          <div className="">
+            {/* <label>From</label>  */}
+            {Rooms * props.ratechange[props.roomtype].Price !== 0 ? (
+              <h4 className="flex items-center">
+                {props.currency === "INR" ? (
+                  <FaIndianRupeeSign />
+                ) : (
+                  <FaDollarSign />
+                )}
 
-            {/* This component has been removed and paster down on this file */}
+                <span id="total_price" className="text-lg">
+                  {" "}
+                  {Rooms * props.ratechange[props.roomtype].Price}/
+                  <span className="text-xs">Night plus taxes</span>{" "}
+                </span>
+              </h4>
+            ) : (
+              <h4 className="flex items-center">
+                {props.currency === "INR" ? (
+                  <FaIndianRupeeSign />
+                ) : (
+                  <FaDollarSign />
+                )}
+                <span id="total_price" className="text-lg">
+                  {" "}
+                  {props.ratechange[props.roomtype].Price}/
+                  <span className="text-xs">Night plus taxes</span>{" "}
+                </span>
+              </h4>
+            )}
+            {/* <span>Per Night</span> */}
+
+            {/* <span style="color:red" className="span m-1">Last {{ Available }} Rooms</span>  */}
+            <div className="">
+              <span className="">Price for {props.Adult} Guests</span>
+              {/* <span>Room(s)</span> */}
+              {Available_rooms !== 0 ? (
+                Rooms === 0 ? (
+                  <div className="">
+                    <button
+                      className="bg-[#0D54EB] px-5 text-white rounded-md py-1.5"
+                      // style={{
+                      //   cursor: "pointer",
+                      //   backgroundColor: props.Bg_color,
+                      // }}
+                      onClick={() => {
+                        AddCount(props.type);
+                      }}
+                    >
+                      Select
+                    </button>
+                    <button id={`${props.type}`}>{/* {Rooms} */}</button>
+                  </div>
+                ) : (
+                  <div className=" rounded-md overflow-hidden w-full flex  bg-[#0D54EB] justify-between mt-3">
+                    <button
+                      className="px-3 py-2.5 bg-[#181A1D]"
+                      onClick={() => {
+                        DelCount(props.type);
+                        setError(null);
+                      }}
+                    >
+                      <FaMinus className="text-white" />
+                    </button>
+                    <button className="text-white" id={`${props.type}`}>
+                      {Rooms}
+                    </button>
+                    <button
+                      className="px-3 py-1.5 bg-[#181A1D]"
+                      onClick={() => {
+                        AddCount(props.type);
+                      }}
+                    >
+                      <FaPlus className="text-white" />
+                    </button>
+                  </div>
+                )
+              ) : (
+                <div className="w-full flex">
+                  <span class="bg-red-500 text-center text-white mt-3 px-3 py-1.5 rounded-md w-full">
+                    Sold Out
+                  </span>
+                </div>
+              )}
+            </div>
+            {error && (
+              <p className="italic text-sm font-semibold text-red-500">
+                {error}
+              </p>
+            )}
+            <div className="reser">
+              {/* <p>Adults Allowed: {props.Adult}</p> */}
+
+              {/* <button className="reserve_btn d-none" id="reserve_button" onclick="Redirect_Book()">RESERVE</button> */}
+              {/* {Rooms!==0?<button className="reserve_btn" id="reserve_button" style={{ backgroundColor: props.color }} onClick={toggleDiv}>{props.FinalConfirmButton}</button>:""} */}
+            </div>
+          </div>
         </div>
+
+        {/* This component has been removed and paster down on this file */}
+      </div>
 
       {/* Contact informtion start  */}
 
@@ -381,12 +425,9 @@ export default function Cards(props) {
   );
 }
 
-
-
-
-
 //  <div className="card_tab">
-            {/* <Tabs
+{
+  /* <Tabs
               defaultActiveKey="amenities"
               id="fill-tab-example"
               className="mb-3"
@@ -860,5 +901,8 @@ export default function Cards(props) {
                   })}
                 </div>
               </Tab>
-            </Tabs> */}
-          {/* </div> */}
+            </Tabs> */
+}
+{
+  /* </div> */
+}

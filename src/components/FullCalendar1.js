@@ -53,10 +53,10 @@ const FullCalendar1 = (props) => {
 
     return (
         <div className=''>
-            <button className='bg-[#181A1D] gap-2 flex px-4 py-[14px] rounded-2xl outline-none' onClick={handleClick} 
+            <button className='bg-[#181A1D] gap-2 flex px-4 py-[14px] rounded-2xl outline-none w-full' onClick={handleClick} 
             // style={{ background: props.bg_color }}
             >
-                <span className='text-light'>{checkoutDate.toLocaleDateString('en-US', { weekday: 'long' })}</span>
+                {/* <span className='text-light'>{checkoutDate.toLocaleDateString('en-US', { weekday: 'long' })}</span> */}
                 <span className='date text-light' >{selectedDay}</span>
                 <span className='text-light'>{selectedMonth}</span>
                 <span className='text-light'>{selectedYear}</span>

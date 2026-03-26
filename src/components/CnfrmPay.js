@@ -8,6 +8,7 @@ import "react-phone-number-input/style.css";
 
 import Select from "react-select";
 import countryList from "react-select-country-list";
+import { BoxIcon } from "../utils/icons";
 
 function CnfrmPay(props) {
   try {
@@ -464,7 +465,7 @@ function CnfrmPay(props) {
       document.getElementById("No_rooms").style.display = "block";
     }
   };
-  
+
   //FULL PAYMENT BUTTON
   const GetOrderId = async () => {
     setispaymentProcessing(true);
@@ -724,556 +725,496 @@ function CnfrmPay(props) {
 
   return (
     <>
-      <div className="container">
-        <div className="contact-info">
-          <div id="Contact" className="mt-4">
-            <div
-              className="heading"
-              style={{ backgroundColor: props.Bg_color }}
-            >
-              <h5>Guest Information</h5>
+      <div className="w-full bg-black text-white rounded-2xl px-6 py-4 shadow-xl space-y-3">
+        <div className="flex items-center gap-2 w-fit px-4 py-2 shadow-inner bg-white/10 backdrop-blur-sm border-[0.5px] border-gray-600 rounded-full">
+          <span>
+            <BoxIcon />
+          </span>
+          <h2 className="md:text-lg">Guest Information</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-16">
+          <div className="md:col-span-2 col-span-1 flex flex-col gap-4">
+            {/* full name */}
+            <div className="grid grid-cols-1 md:grid-cols-[.4fr_1fr] gap-4 items-center">
+              <label for="FullName">
+                Full Name <span style={{ color: "red" }}>*</span>
+              </label>
+              <div className="flex items-center justify-center gap-2 w-full py-2 bg-black/90 border border-gray-600 rounded-md">
+                <select
+                  id="prefix"
+                  name="prefix"
+                  className="text-white bg-transparent block w-1/6 px-2.5"
+                  required
+                >
+                  {/* <option value="Mr.">Mr.</option>
+                  <option value="Mrs.">Mrs.</option>
+                  <option value="Mrs.">Miss.</option>
+                  <option value="Mrs.">Dr.</option>
+                  <option value="Mrs.">Prof.</option> */}
+                  {["Mr.", "Mrs.", "Miss.", "Dr.", "Prof."].map((option) => (
+                    <option key={option} value={option} className="bg-gray-900">
+                      {option}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="text"
+                  className="bg-transparent text-white block w-5/6 px-2.5 focus:outline-none"
+                  name="fullname"
+                  id="FullName"
+                  placeholder="Full Name"
+                  value={Name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                  required
+                />
+              </div>
             </div>
-            <div className="contact-main">
-              <div className="inner-contact-left">
-                <div className="code">
-                  <div className="inputBox">
-                    <span className="text-span">
-                      Full Name <span style={{ color: "red" }}>*</span>
-                    </span>
-                    <div className="names">
-                      <div className="prefix">
-                        <select
-                          id="prefix"
-                          name="prefix"
-                          className="form-control form-prefix bg"
-                          required
-                        >
-                          <option value="Mr.">Mr.</option>
-                          <option value="Mrs.">Mrs.</option>
-                          <option value="Mrs.">Miss.</option>
-                          <option value="Mrs.">Dr.</option>
-                          <option value="Mrs.">Prof.</option>
-                        </select>
-                      </div>
-                      <div className="name-input">
-                        <input
-                          type="text"
-                          className="bg"
-                          name="fullname"
-                          id="FullName"
-                          placeholder="Full Name"
-                          value={Name}
-                          onChange={(e) => {
-                            setName(e.target.value);
-                          }}
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="inputBox">
-                    <span className="text-span">
-                      Email Id <span style={{ color: "red" }}>*</span>
-                    </span>
-                    <input
-                      type="email"
-                      className="bg"
-                      value={Email}
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                      }}
-                      name="email"
-                      id="Email"
-                      placeholder="Please enter your email id"
-                      pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-                      required
-                    />
-                  </div>
-                  <div className="inputBox mobile">
-                    <span className="text-span">
-                      Phone No. <span style={{ color: "red" }}>*</span>
-                    </span>
-                    <div className="phone-input-container ">
-                      <PhoneInput
-                        international
-                        className="phone-input-field"
-                        defaultCountry="IN"
-                        placeholder="Enter phone number"
-                        value={Phone}
-                        onChange={(newPhone) => setPhone(newPhone)}
-                      />
-                    </div>
-                  </div>
 
-                  <div className="inputBox inputBox-city">
-                    <span className="text-span">
-                      City <span style={{ color: "red" }}>*</span>
-                    </span>
-                    <input
-                      value={City}
-                      onChange={(e) => setCity(e.target.value)}
-                      type="text"
-                      id="user_city"
-                      className="bg"
-                      name="city"
-                      required
-                    />
-                  </div>
+            {/* email */}
+            <div className="grid grid-cols-1 md:grid-cols-[.4fr_1fr] gap-4 items-center">
+              <label htmlFor="Email">
+                Email Id <span style={{ color: "red" }}>*</span>
+              </label>
+              <div className="w-full py-2 bg-black/90 border border-gray-600 rounded-md">
+                <input
+                  type="email"
+                  className="bg-inherit text-white block w-full px-2.5 focus:outline-none"
+                  value={Email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  name="email"
+                  id="Email"
+                  placeholder="Please enter your email id"
+                  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                  required
+                />
+              </div>
+            </div>
 
-                  <div className="inputBox content_inner">
-                    <span className="text-span">
-                      Country <span style={{ color: "red" }}>*</span>
-                    </span>
-                    <div className="country_select">
-                      <Select
-                        options={options}
-                        value={Country}
-                        onChange={changeHandler}
-                      />
-                    </div>
+            {/* phone */}
+            <div className="grid grid-cols-1 md:grid-cols-[.4fr_1fr] gap-4 items-center">
+              <label htmlFor="phone">
+                Phone No. <span style={{ color: "red" }}>*</span>
+              </label>
+              <div className="w-full py-2 bg-black/90 border border-gray-600 rounded-md">
+                <PhoneInput
+                  international
+                  className="bg-inherit text-white block w-1/6 px-2.5 focus:outline-none"
+                  defaultCountry="IN"
+                  placeholder="Enter phone number"
+                  value={Phone}
+                  onChange={(newPhone) => setPhone(newPhone)}
+                />
+              </div>
+            </div>
 
-                    {/* <input
+            <div className="grid grid-cols-1 md:grid-cols-[.4fr_1fr] gap-4 items-center">
+              <label htmlFor="user_city">
+                City <span style={{ color: "red" }}>*</span>
+              </label>
+              <input
+                value={City}
+                onChange={(e) => setCity(e.target.value)}
+                type="text"
+                id="user_city"
+                className="bg-inherit border border-gray-600 p-2.5 rounded-md text-white block w-full px-2.5 focus:outline-none"
+                name="city"
+                required
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-[.4fr_1fr] gap-4 items-center">
+              <label for="country">
+                Country <span style={{ color: "red" }}>*</span>
+              </label>
+              <Select
+                options={options}
+                value={Country}
+                onChange={changeHandler}
+                className="bg-inherit border border-gray-600 p-2.5 rounded-md text-white block w-full px-2.5 focus:outline-none"
+              />
+
+              {/* <input
                                             type="text"
                                             value={Country}
                                             onChange={(e) => setCountry(e.target.value)}
                                         /> */}
-                  </div>
-                  <div className="content_inner">
-                    <span className="text-span">Special Requests</span>
-                    <textarea
-                      className="bg"
-                      name="text"
-                      id="request"
-                      placeholder="ADDITIONAL REQUEST"
-                    ></textarea>
-                  </div>
+            </div>
 
-                  {/* <div className="content_inner">
+            <div className="grid grid-cols-1 md:grid-cols-[.4fr_1fr] gap-4">
+              <label htmlFor="request">Special Requests</label>
+              <textarea
+                className="bg-inherit border border-gray-600 p-2.5 rounded-md text-white block w-full px-2.5 focus:outline-none"
+                name="text"
+                id="request"
+                rows={4}
+                placeholder="ADDITIONAL REQUEST"
+              ></textarea>
+            </div>
+
+            {/* <div className="content_inner">
                                         <span className="text-span">Promo Code</span>
                                         <div className="promo_btn_div">
                                             <input type="text" placeholder="Enter Promo Code here" />
                                             <Button>Apply</Button>
                                         </div>
                                     </div> */}
+
+            {props.GatewayConnected.Type !== "None" ? (
+              BookingFinalize() ? (
+                <div className="alert alert-danger" role="alert">
+                  Please Select More Rooms
                 </div>
-                {props.GatewayConnected.Type !== "None" ? (
-                  BookingFinalize() ? (
-                    <div className="alert alert-danger" role="alert">
-                      Please Select More Rooms
-                    </div>
-                  ) : !OrderId ? (
-                    <div className="button_s">
-                      {ispaymentProcessing ? (
-                        <div>
-                          <p style={{ textAlign: "center" }}>
-                            Processing Please wait....
-                          </p>
-                        </div>
-                      ) : (
-                        ""
-                      )}
-                      {Name && Phone && Email && Country && City && !OrderId ? (
-                        <>
-                          {props.isPayatHotel ? (
-                            <button
-                              className="submitbtn"
-                              onClick={GetPayLaterOrderId}
-                            >
-                              PAY AT HOTEL
-                            </button>
-                          ) : (
-                            ""
-                          )}
-                          {props.isSemiPayment&&props.isOnlinepay ? (
-                            <button
-                              className="submitbtn"
-                              onClick={GetSemiHalfOrderId}
-                            >
-                              PAY 25% AMOUNT{" "}
-                              <span>
-                                {0.25 * (cost + tax)} {props.currency}
-                              </span>
-                            </button>
-                          ) : (
-                            ""
-                          )}
-                          {props.isOnlinepay ? (
-                            <button
-                              className="submitbtn"
-                              onClick={GetHalfOrderId}
-                            >
-                              PAY 50% AMOUNT{" "}
-                              <span>
-                                {0.5 * (cost + tax)} {props.currency}
-                              </span>
-                            </button>
-                          ) : (
-                            ""
-                          )}
-                          {props.isOnlinepay ? (
-                            <button className="submitbtn" onClick={GetOrderId}>
-                              PAY FULL AMOUNT{" "}
-                              <span>
-                                {cost + tax} {props.currency}
-                              </span>
-                            </button>
-                          ) : (
-                            ""
-                          )}
-                          <p className="button_s_p">
-                            By making this booking, you are accepting our terms
-                            and conditions***
-                          </p>
-                        </>
-                      ) : (
-                        <>
-                          {props.isPayatHotel ? (
-                            <button
-                              className="submitbtn"
-                              onClick={PopupFillFields}
-                            >
-                              PAY AT HOTEL
-                            </button>
-                          ) : (
-                            ""
-                          )}
-                          {props.isSemiPayment ? (
-                            <button
-                              className="submitbtn"
-                              onClick={PopupFillFields}
-                            >
-                              PAY 25% AMOUNT{" "}
-                              <span>
-                                {0.25 * (cost + tax)} {props.currency}
-                              </span>
-                            </button>
-                          ) : (
-                            ""
-                          )}
-                          {props.isOnlinepay ? (
-                            <button
-                              className="submitbtn"
-                              onClick={PopupFillFields}
-                            >
-                              PAY 50% AMOUNT{" "}
-                              <span>
-                                {0.5 * (cost + tax)} {props.currency}
-                              </span>
-                            </button>
-                          ) : (
-                            ""
-                          )}
-                          {props.isOnlinepay ? (
-                            <button
-                              className="submitbtn"
-                              onClick={PopupFillFields}
-                            >
-                              PAY FULL AMOUNT{" "}
-                              <span>
-                                {cost + tax} {props.currency}
-                              </span>
-                            </button>
-                          ) : (
-                            ""
-                          )}
-                          <p className="button_s_p">
-                            By making this booking, you are accepting our terms
-                            and conditions***
-                          </p>
-                        </>
-                      )}
-                    </div>
-                  ) : props.GatewayConnected.Type === "Razorpay" ? (
-                    <div className="bookingbtn">
-                      <button
-                        className="cmplt pay_button"
-                        id="rzp-button1"
-                        onClick={handlePayment}
-                        style={{ backgroundColor: props.color }}
-                      >
-                        {props.Paymentbutton}
-                      </button>
+              ) : !OrderId ? (
+                <div className="button_s">
+                  {ispaymentProcessing ? (
+                    <div>
+                      <p style={{ textAlign: "center" }}>
+                        Processing Please wait....
+                      </p>
                     </div>
                   ) : (
-                    <div className="bookingbtn">
-                      <button
-                        className="cmplt pay_button"
-                        id=""
-                        onClick={() => {
-                          window.location.replace(RedirectLink);
-                        }}
-                        style={{ backgroundColor: props.color }}
-                      >
-                        {props.Paymentbutton}
-                      </button>
-                    </div>
-                  )
-                ) : (
-                  <div className="alert alert-danger" role="alert">
-                    No Gateway Connected
-                  </div>
-                )}
-
-                {/* <div className="button_s">
+                    ""
+                  )}
+                  {Name && Phone && Email && Country && City && !OrderId ? (
+                    <>
+                      {props.isPayatHotel ? (
+                        <button
+                          className="submitbtn"
+                          onClick={GetPayLaterOrderId}
+                        >
+                          PAY AT HOTEL
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                      {props.isSemiPayment && props.isOnlinepay ? (
+                        <button
+                          className="submitbtn"
+                          onClick={GetSemiHalfOrderId}
+                        >
+                          PAY 25% AMOUNT{" "}
+                          <span>
+                            {0.25 * (cost + tax)} {props.currency}
+                          </span>
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                      {props.isOnlinepay ? (
+                        <button className="submitbtn" onClick={GetHalfOrderId}>
+                          PAY 50% AMOUNT{" "}
+                          <span>
+                            {0.5 * (cost + tax)} {props.currency}
+                          </span>
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                      {props.isOnlinepay ? (
+                        <button className="submitbtn" onClick={GetOrderId}>
+                          PAY FULL AMOUNT{" "}
+                          <span>
+                            {cost + tax} {props.currency}
+                          </span>
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                      <p className="button_s_p">
+                        By making this booking, you are accepting our terms and
+                        conditions***
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      {props.isPayatHotel ? (
+                        <button className="submitbtn" onClick={PopupFillFields}>
+                          PAY AT HOTEL
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                      {props.isSemiPayment ? (
+                        <button className="submitbtn" onClick={PopupFillFields}>
+                          PAY 25% AMOUNT{" "}
+                          <span>
+                            {0.25 * (cost + tax)} {props.currency}
+                          </span>
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                      {props.isOnlinepay ? (
+                        <button className="submitbtn" onClick={PopupFillFields}>
+                          PAY 50% AMOUNT{" "}
+                          <span>
+                            {0.5 * (cost + tax)} {props.currency}
+                          </span>
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                      {props.isOnlinepay ? (
+                        <button className="submitbtn" onClick={PopupFillFields}>
+                          PAY FULL AMOUNT{" "}
+                          <span>
+                            {cost + tax} {props.currency}
+                          </span>
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                      <p className="button_s_p">
+                        By making this booking, you are accepting our terms and
+                        conditions***
+                      </p>
+                    </>
+                  )}
+                </div>
+              ) : props.GatewayConnected.Type === "Razorpay" ? (
+                <div className="bookingbtn">
+                  <button
+                    className="cmplt pay_button"
+                    id="rzp-button1"
+                    onClick={handlePayment}
+                    style={{ backgroundColor: props.color }}
+                  >
+                    {props.Paymentbutton}
+                  </button>
+                </div>
+              ) : (
+                <div className="bookingbtn">
+                  <button
+                    className="cmplt pay_button"
+                    id=""
+                    onClick={() => {
+                      window.location.replace(RedirectLink);
+                    }}
+                    style={{ backgroundColor: props.color }}
+                  >
+                    {props.Paymentbutton}
+                  </button>
+                </div>
+              )
+            ) : (
+              <div className="alert alert-danger" role="alert">
+                No Gateway Connected
+              </div>
+            )}
+          </div>
+          {/* <div className="button_s">
                                     <button className="submitbtn" onClick={toggleDiv}>Submit</button>
                                 </div> */}
-              </div>
 
-              <div className="inner-contact-right">
-                <h4 className="m-4 text-center" style={{ fontWeight: "600" }}>
-                  Reservation details
-                </h4>
-                <div className="cust-detail">
-                  <div className="cust-inner">
-                    <div>
-                      <span className="left-span">Check In</span>
-                    </div>
-                    <div>
-                      <span className="right-span" id="Final_checkin">
-                        {changeDateFormat(localStorage.getItem("Checkin"))}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="cust-detail">
-                  <div className="cust-inner">
-                    <div>
-                      <span className="left-span">Check Out</span>
-                    </div>
-                    <div>
-                      <span className="right-span" id="Final_checkout">
-                        {changeDateFormat(localStorage.getItem("Checkout"))}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="cust-detail">
-                  <div className="cust-inner">
-                    <div>
-                      <span className="left-span">No. of Nights</span>
-                    </div>
-                    <div>
-                      <p className="right-span">
-                        <span id="Final_night">{props.nights}</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="cust-detail">
-                  <div className="cust-inner">
-                    <div>
-                      <span className="left-span">No. of Guests</span>
-                    </div>
-                    <div>
-                      <span className="right-span">
-                        <span id="Final_adult">
-                          {localStorage.getItem("Adult")}
-                        </span>{" "}
-                        adults,{" "}
-                        <span id="Final_kid">
-                          {localStorage.getItem("Kid")}
-                        </span>{" "}
-                        children
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="cust-detail">
-                  <div className="cust-inner">
-                    <div>
-                      <span className="left-span">Rooms</span>
-                    </div>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      {props.Delux !== 0 ? (
-                        <span className="right-span" id="Final_checkout">
-                          {props.RoomCategoryCombination["DELUX"]}:-{" "}
-                          {props.Delux}
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                      {props.SuperDelux !== 0 ? (
-                        <span className="right-span" id="Final_checkout">
-                          {props.RoomCategoryCombination["SUPERDELUX"]}:-{" "}
-                          {props.SuperDelux}
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                      {props.Suite !== 0 ? (
-                        <span className="right-span" id="Final_checkout">
-                          {props.RoomCategoryCombination["SUITE"]}:-{" "}
-                          {props.Suite}
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                      {props.Premium !== 0 ? (
-                        <span className="right-span" id="Final_checkout">
-                          {props.RoomCategoryCombination["PREMIUM"]}:-{" "}
-                          {props.Premium}
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                      {props.PremiereRetreat !== 0 ? (
-                        <span className="right-span" id="Final_checkout">
-                          {props.RoomCategoryCombination["PremiereRetreat"]}:-{" "}
-                          {props.PremiereRetreat}
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                      {props.EliteSuite !== 0 ? (
-                        <span className="right-span" id="Final_checkout">
-                          {props.RoomCategoryCombination["EliteSuite"]}:-{" "}
-                          {props.EliteSuite}
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                      {props.GrandDeluxe !== 0 ? (
-                        <span className="right-span" id="Final_checkout">
-                          {props.RoomCategoryCombination["GrandDeluxe"]}:-{" "}
-                          {props.GrandDeluxe}
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                      {props.ImperialSuite !== 0 ? (
-                        <span className="right-span" id="Final_checkout">
-                          {props.RoomCategoryCombination["ImperialSuite"]}:-{" "}
-                          {props.ImperialSuite}
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                      {props.SupremeRetreat !== 0 ? (
-                        <span className="right-span" id="Final_checkout">
-                          {props.RoomCategoryCombination["SupremeRetreat"]}:-{" "}
-                          {props.SupremeRetreat}
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                      {props.RoyalDeluxe !== 0 ? (
-                        <span className="right-span" id="Final_checkout">
-                          {props.RoomCategoryCombination["RoyalDeluxe"]}:-{" "}
-                          {props.RoyalDeluxe}
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                      {props.PrestigeSuite !== 0 ? (
-                        <span className="right-span" id="Final_checkout">
-                          {props.RoomCategoryCombination["PrestigeSuite"]}:-{" "}
-                          {props.PrestigeSuite}
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                      {props.ExclusiveRetreat !== 0 ? (
-                        <span className="right-span" id="Final_checkout">
-                          {props.RoomCategoryCombination["ExclusiveRetreat"]}:-{" "}
-                          {props.ExclusiveRetreat}
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                  </div>
-                </div>
+          <div className="flex flex-col gap-4 col-span-1">
+            <h4 className="text-center text-xl font-semibold">Reservation details</h4>
 
-                <div className="cust-detail">
-                  <div className="cust-inner">
-                    <div>
-                      <span className="left-span">Meal Selected</span>
-                    </div>
-                    <div>
-                      <p className="right-span">
-                        <span id="Final_room">
-                          {props.selectedMealPlan
-                            ? props.selectedMealPlan
-                            : "-"}
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="cust-detail">
-                  <div className="cust-inner">
-                    <div>
-                      <span className="left-span">Meal Price</span>
-                    </div>
-                    <div>
-                      <p className="right-span">
-                        <span id="Final_room">
-                          {props.selectedMealPlanPrice
-                            ? props.selectedMealPlanPrice
-                            : "-"}{" "}
-                          {props.isperRoom ? "per room" : "per adult"}
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                {/* <div className="cust-detail">
-                                    <div className="cust-inner">
-                                        <div>
-                                            <span className="left-span">Total Meal Price</span>
-                                        </div>
-                                        <div>
-                                            <p className="right-span"><span id="Final_room">{props.Mealprice}</span></p>
-                                        </div>
-                                    </div>
-                                </div> */}
-                <div className="cust-detail sub-price">
-                  <div className="cust-inner">
-                    <div className="cust-sub d-flex flex-column py-2">
-                      <span className="left-span">Sub total</span>
-                      <span className="left-span">Taxes and fees</span>
-                    </div>
-                    <div className="cust-sub d-flex flex-column py-2">
-                      <span style={{ padding: "5px 0", fontWeight: "600" }}>
-                        <span id="Final_price">{cost}</span> {props.currency}
-                      </span>
-                      <span style={{ fontWeight: "600" }}>
-                        <span id="Final_tax" style={{ fontWeight: "600" }}>
-                          {tax}
-                        </span>{" "}
-                        {props.currency}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="cust-detail"
-                  style={{ borderBottom: "1px solid #9BCFF0" }}
-                >
-                  <div className="cust-inner">
-                    <div className="py-2">
-                      <span
-                        className="left-span"
-                        style={{ color: "#153B5B", fontWeight: "700" }}
-                      >
-                        GRAND TOTAL
-                      </span>
-                    </div>
-                    <div className="py-2">
-                      <span className="right-span">
-                        <span id="Final_payable_price">{cost + tax}</span>{" "}
-                        {props.currency}
-                      </span>
-                    </div>
-                  </div>
-                </div>
+            {/* checkin */}
+
+            <div className="flex items-center justify-between">
+              <span className="left-span">Check In</span>
+              <div>
+                <span className="right-span" id="Final_checkin">
+                  {changeDateFormat(localStorage.getItem("Checkin"))}
+                </span>
               </div>
             </div>
-          </div>
 
-          {/* contact information end  */}
+            {/* checkout */}
+            <div className="flex items-center justify-between">
+              <span className="left-span">Check Out</span>
+              <span className="right-span" id="Final_checkout">
+                {changeDateFormat(localStorage.getItem("Checkout"))}
+              </span>
+            </div>
+
+            {/* nights */}
+            <div className="flex items-center justify-between">
+              <span className="left-span">No. of Nights</span>
+              <p className="right-span">
+                <span id="Final_night">{props.nights}</span>
+              </p>
+            </div>
+
+            {/* guests */}
+            <div className="flex items-center justify-between">
+              <span className="left-span">No. of Guests</span>
+              <span className="right-span">
+                <span id="Final_adult">{localStorage.getItem("Adult")}</span>{" "}
+                adults,{" "}
+                <span id="Final_kid">{localStorage.getItem("Kid")}</span>{" "}
+                children
+              </span>
+            </div>
+
+            {/* rooms */}
+            <div className="flex items-center justify-between">
+              <span className="left-span">Rooms</span>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                {props.Delux !== 0 ? (
+                  <span className="right-span" id="Final_checkout">
+                    {props.RoomCategoryCombination["DELUX"]}:- {props.Delux}
+                  </span>
+                ) : (
+                  ""
+                )}
+                {props.SuperDelux !== 0 ? (
+                  <span className="right-span" id="Final_checkout">
+                    {props.RoomCategoryCombination["SUPERDELUX"]}:-{" "}
+                    {props.SuperDelux}
+                  </span>
+                ) : (
+                  ""
+                )}
+                {props.Suite !== 0 ? (
+                  <span className="right-span" id="Final_checkout">
+                    {props.RoomCategoryCombination["SUITE"]}:- {props.Suite}
+                  </span>
+                ) : (
+                  ""
+                )}
+                {props.Premium !== 0 ? (
+                  <span className="right-span" id="Final_checkout">
+                    {props.RoomCategoryCombination["PREMIUM"]}:- {props.Premium}
+                  </span>
+                ) : (
+                  ""
+                )}
+                {props.PremiereRetreat !== 0 ? (
+                  <span className="right-span" id="Final_checkout">
+                    {props.RoomCategoryCombination["PremiereRetreat"]}:-{" "}
+                    {props.PremiereRetreat}
+                  </span>
+                ) : (
+                  ""
+                )}
+                {props.EliteSuite !== 0 ? (
+                  <span className="right-span" id="Final_checkout">
+                    {props.RoomCategoryCombination["EliteSuite"]}:-{" "}
+                    {props.EliteSuite}
+                  </span>
+                ) : (
+                  ""
+                )}
+                {props.GrandDeluxe !== 0 ? (
+                  <span className="right-span" id="Final_checkout">
+                    {props.RoomCategoryCombination["GrandDeluxe"]}:-{" "}
+                    {props.GrandDeluxe}
+                  </span>
+                ) : (
+                  ""
+                )}
+                {props.ImperialSuite !== 0 ? (
+                  <span className="right-span" id="Final_checkout">
+                    {props.RoomCategoryCombination["ImperialSuite"]}:-{" "}
+                    {props.ImperialSuite}
+                  </span>
+                ) : (
+                  ""
+                )}
+                {props.SupremeRetreat !== 0 ? (
+                  <span className="right-span" id="Final_checkout">
+                    {props.RoomCategoryCombination["SupremeRetreat"]}:-{" "}
+                    {props.SupremeRetreat}
+                  </span>
+                ) : (
+                  ""
+                )}
+                {props.RoyalDeluxe !== 0 ? (
+                  <span className="right-span" id="Final_checkout">
+                    {props.RoomCategoryCombination["RoyalDeluxe"]}:-{" "}
+                    {props.RoyalDeluxe}
+                  </span>
+                ) : (
+                  ""
+                )}
+                {props.PrestigeSuite !== 0 ? (
+                  <span className="right-span" id="Final_checkout">
+                    {props.RoomCategoryCombination["PrestigeSuite"]}:-{" "}
+                    {props.PrestigeSuite}
+                  </span>
+                ) : (
+                  ""
+                )}
+                {props.ExclusiveRetreat !== 0 ? (
+                  <span className="right-span" id="Final_checkout">
+                    {props.RoomCategoryCombination["ExclusiveRetreat"]}:-{" "}
+                    {props.ExclusiveRetreat}
+                  </span>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
+
+            {/* meal */}
+            <div className="flex items-center justify-between">
+              <span className="left-span">Meal Selected</span>
+              <p className="right-span">
+                <span id="Final_room">
+                  {props.selectedMealPlan ? props.selectedMealPlan : "-"}
+                </span>
+              </p>
+            </div>
+
+            {/* meal */}
+            <div className="flex items-center justify-between">
+              <span className="left-span">Meal Price</span>
+              <p className="right-span">
+                <span id="Final_room">
+                  {props.selectedMealPlanPrice
+                    ? props.selectedMealPlanPrice
+                    : "-"}{" "}
+                  {props.isperRoom ? "per room" : "per adult"}
+                </span>
+              </p>
+            </div>
+
+            {/* <div className="flex items-center justify-between">
+              <span className="left-span">Total Meal Price</span>
+              <p className="right-span">
+                <span id="Final_room">{props.Mealprice}</span>
+              </p>
+            </div> */}
+            {/* price */}
+            <div className="py-3 space-y-2 border-y border-white">
+              {/* sub total */}
+              <div className="flex items-center justify-between">
+                <span className="left-span">Sub total</span>
+                <span>
+                  <span id="Final_price">{cost}</span> {props.currency}
+                </span>
+              </div>
+
+              {/* tax */}
+              <div className="flex items-center justify-between">
+                <span className="">Taxes and fees</span>
+                <p className="text-white">
+                  <span id="Final_tax" style={{ fontWeight: "600" }}>
+                    {tax}
+                  </span>{" "}
+                  {props.currency}
+                </p>
+              </div>
+            </div>
+
+            {/* grand total */}
+            <div className="flex items-center justify-between py-3 border-b border-white">
+              <span className="">GRAND TOTAL</span>
+              <span className="">
+                <span id="Final_payable_price">{cost + tax}</span>{" "}
+                {props.currency}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* contact information end  */}
 
       {/* {isOpen && (
                 <Payment />

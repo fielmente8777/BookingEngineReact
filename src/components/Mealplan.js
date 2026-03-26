@@ -84,7 +84,7 @@ function Mealplan({isperRoom,mealplan,setMealPlan,setselectedMealPlan,setselecte
                 <h5><strong>Add-Ons</strong></h5>
             </div>
             <div className="plansDiv">
-                <div class="container plansinr text-decoration-none">
+                <div className="container plansinr text-decoration-none">
 
 
                     {/* {plan.map((planItem, index) => (
@@ -95,14 +95,14 @@ function Mealplan({isperRoom,mealplan,setMealPlan,setselectedMealPlan,setselecte
                     ))} */}
 
                     {mealplan.map((planItem, index) => (
-                        <div class="row" key={index}>
-                            <div class="col-5">
-                                <span class='plnshead'>{planItem.packageName}</span>
+                        <div className="row" key={index}>
+                            <div className="col-5">
+                                <span className='plnshead'>{planItem.packageName}</span>
                             </div>
-                            <div class="col text-center">
+                            <div className="col text-center">
                                 <span>₹ {planItem.packagePrice}</span>
                             </div>
-                            <div class="col text-center">
+                            <div className="col text-center">
                                 {/* <Form>
                                     {['checkbox'].map((type) => (
                                         <div key={`default-${type}`} className="mb-3">

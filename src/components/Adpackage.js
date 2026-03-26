@@ -46,10 +46,10 @@ export default function Cards(props) {
               {images.map((element) => {
                 return (
                   <Carousel.Item>
-                    <div class="carousel-item active">
+                    <div className="carousel-item active">
                       <img
                         src={element}
-                        class="d-block w-100 h-auto"
+                        className="d-block w-100 h-auto"
                         alt="..."
                       />
                     </div>

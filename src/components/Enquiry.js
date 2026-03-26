@@ -77,8 +77,8 @@ function Enquiryform(props) {
                 <div className="contact-info" >
                     <div id="Contact" className="mt-4"  >
                         <div className={`heading ${!classhide ? 'round' : "round1"}`} style={{ cursor: "pointer", textAlign: "center", background: props.bg_color, }} onClick={() => { openclosehide() }} >
-                            <h5><strong >Looking for Group/Corporate Discounted Room Rates <i class="fa fa-question-circle"></i></strong></h5>
-                            {/* <span class="badge bg-secondary">Click here</span>   &#9660;  */}
+                            <h5><strong >Looking for Group/Corporate Discounted Room Rates <i className="fa fa-question-circle"></i></strong></h5>
+                            {/* <span className="badge bg-secondary">Click here</span>   &#9660;  */}
                         </div>
                         {classhide ? <div className={`contact-main`} >
                             <div className="inner-contact-left" style={{ width: "100%" }}>

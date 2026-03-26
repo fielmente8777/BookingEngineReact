@@ -1,8 +1,5 @@
 /* Landing page start  */
 
-* {
-    font-family: Arial;
-}
 
 
 /* for get price icon  */
@@ -1269,13 +1266,13 @@
 }
 
 
-.sub-price {
+/* .sub-price {
     border-top: 1px solid #9BCFF0;
     border-bottom: 1px solid #9BCFF0;
-}
+} */
 
 
-#Final_price {
+/* #Final_price {
     font-style: normal;
     line-height: 27px;
     align-items: center;
@@ -1288,7 +1285,7 @@
     line-height: 27px;
     align-items: center;
     color: #153B5B;
-}
+} */
 
 /* final booking button start  */
 

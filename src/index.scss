@@ -2,18 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+
 body {
   margin: 0;
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-    "Helvetica Neue", sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-}
+// code {
+//   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+// }
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
@@ -22,7 +23,6 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 @layer utilities {
-
   .max_screen_width {
     max-width: 1600px;
     width: 100%;
@@ -49,7 +49,7 @@ input[type="number"]::-webkit-outer-spin-button {
       padding-inline: 1rem;
     }
     @media (min-width: 1400px) {
-      max-width: 1320px;
+      max-width: 1420px;
       padding-inline: 0;
     }
   }
